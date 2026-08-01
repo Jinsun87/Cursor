@@ -1,0 +1,16 @@
+[Unit]
+Description=Arsenal News Facebook Agent
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+WorkingDirectory=/opt/arsenal-news-agent
+EnvironmentFile=/opt/arsenal-news-agent/.env
+ExecStartPre=/opt/arsenal-news-agent/.venv/bin/arsenal-agent bootstrap
+ExecStart=/opt/arsenal-news-agent/.venv/bin/arsenal-agent run
+Restart=always
+RestartSec=15
+
+[Install]
+WantedBy=multi-user.target
