@@ -73,6 +73,23 @@ def export_markdown(content: GeneratedContent, output_path: Path) -> Path:
             lines.append(f"- **SFX:** {shot.sfx}")
         lines.append("")
 
+    if c.scene_previews:
+        sp = c.scene_previews
+        lines.extend([
+            "## Scene Previews",
+            "",
+            f"Provider: **{sp.provider}** | Output: `{sp.output_dir}`",
+            "",
+        ])
+        for p in sp.previews:
+            status = "✓" if p.status == "success" else f"✗ {p.error}"
+            lines.append(f"- Shot {p.shot_number}: {status}")
+            if p.status == "success":
+                lines.append(f"  - `{p.image_path}`")
+        if sp.thumbnail and sp.thumbnail.status == "success":
+            lines.append(f"- Thumbnail: `{sp.thumbnail.image_path}`")
+        lines.append("")
+
     lines.extend([
         "## LEGO Build Notes",
         "",

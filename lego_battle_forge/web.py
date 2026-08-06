@@ -8,22 +8,38 @@ from typing import Optional
 
 from fastapi import FastAPI, HTTPException
 from fastapi.responses import HTMLResponse, JSONResponse
+from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 
 from lego_battle_forge.battles.database import list_battles
 from lego_battle_forge.export import export_all
 from lego_battle_forge.forge import generate_battle_content
+from lego_battle_forge.images.config import ProviderName
+from lego_battle_forge.images.export import export_previews
+from lego_battle_forge.images.generator import generate_scene_previews, list_available_providers
 from lego_battle_forge.models import ContentFormat, ViralAngle
 
-app = FastAPI(title="LEGO Battle Forge", version="0.1.0")
+app = FastAPI(title="LEGO Battle Forge", version="0.2.0")
 
 OUTPUT_DIR = Path("output/web")
+OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+app.mount("/output", StaticFiles(directory=str(OUTPUT_DIR)), name="output")
 
 
 class GenerateRequest(BaseModel):
     battle_id: str
     format: str = "reel"
     angle: Optional[str] = None
+    previews: bool = False
+    provider: str = "auto"
+    max_shots: Optional[int] = None
+
+
+class PreviewRequest(BaseModel):
+    battle_id: str
+    format: str = "reel"
+    provider: str = "auto"
+    max_shots: Optional[int] = None
 
 
 @app.get("/", response_class=HTMLResponse)
@@ -49,19 +65,60 @@ async def api_battles():
     ]
 
 
+@app.get("/api/providers")
+async def api_providers():
+    return list_available_providers()
+
+
 @app.post("/api/generate")
 async def api_generate(req: GenerateRequest):
     try:
         fmt = ContentFormat(req.format.lower())
         angle = ViralAngle(req.angle.lower()) if req.angle else None
         content = generate_battle_content(req.battle_id, fmt, angle)
+
+        preview_data = None
+        preview_files = {}
+        if req.previews:
+            preview_pkg = generate_scene_previews(
+                content, OUTPUT_DIR,
+                provider=ProviderName(req.provider.lower()),
+                max_shots=req.max_shots,
+            )
+            content.scene_previews = preview_pkg
+            preview_files = export_previews(content, preview_pkg, OUTPUT_DIR)
+            preview_data = json.loads(preview_pkg.model_dump_json())
+
         paths = export_all(content, OUTPUT_DIR)
         return JSONResponse({
             "success": True,
             "content": json.loads(content.model_dump_json()),
             "files": {k: str(v) for k, v in paths.items()},
+            "previews": preview_data,
+            "preview_files": {k: str(v) for k, v in preview_files.items()},
         })
     except (KeyError, ValueError) as e:
+        raise HTTPException(status_code=400, detail=str(e))
+
+
+@app.post("/api/previews")
+async def api_previews(req: PreviewRequest):
+    try:
+        fmt = ContentFormat(req.format.lower())
+        content = generate_battle_content(req.battle_id, fmt)
+        preview_pkg = generate_scene_previews(
+            content, OUTPUT_DIR,
+            provider=ProviderName(req.provider.lower()),
+            max_shots=req.max_shots,
+        )
+        content.scene_previews = preview_pkg
+        preview_files = export_previews(content, preview_pkg, OUTPUT_DIR)
+        return JSONResponse({
+            "success": True,
+            "previews": json.loads(preview_pkg.model_dump_json()),
+            "files": {k: str(v) for k, v in preview_files.items()},
+        })
+    except (KeyError, ValueError, RuntimeError) as e:
         raise HTTPException(status_code=400, detail=str(e))
 
 
@@ -114,6 +171,13 @@ HTML_PAGE = """<!DOCTYPE html>
   .loading { text-align: center; padding: 3rem; color: var(--muted); }
   @keyframes spin { to { transform: rotate(360deg); } }
   .spinner { display: inline-block; width: 24px; height: 24px; border: 3px solid var(--border); border-top-color: var(--accent); border-radius: 50%; animation: spin 0.8s linear infinite; }
+  .preview-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem; }
+  .preview-card { background: #0a0a10; border-radius: 8px; overflow: hidden; border: 1px solid var(--border); }
+  .preview-card img { width: 100%; aspect-ratio: 9/16; object-fit: cover; display: block; }
+  .preview-card .label { padding: 0.5rem; font-size: 0.8rem; color: var(--muted); }
+  .preview-card .label strong { color: var(--accent2); }
+  .checkbox-label { display: flex; align-items: center; gap: 0.5rem; font-size: 0.9rem; color: var(--text); cursor: pointer; }
+  .checkbox-label input { width: 18px; height: 18px; accent-color: var(--accent); }
 </style>
 </head>
 <body>
@@ -144,6 +208,17 @@ HTML_PAGE = """<!DOCTYPE html>
         <option value="countdown">Countdown</option>
       </select>
     </div>
+    <div class="control-group">
+      <label>Image Provider</label>
+      <select id="provider">
+        <option value="auto">Auto (OpenAI if key set)</option>
+        <option value="mock">Mock (free placeholders)</option>
+        <option value="openai">OpenAI DALL-E 3</option>
+      </select>
+    </div>
+    <label class="checkbox-label">
+      <input type="checkbox" id="previews"> Generate AI scene previews
+    </label>
     <button id="generateBtn" disabled onclick="generate()">Generate Content</button>
   </div>
   <div class="grid" id="battleGrid"></div>
@@ -189,6 +264,8 @@ async function generate() {
       battle_id: selectedId,
       format: document.getElementById('format').value,
       angle: document.getElementById('angle').value || null,
+      previews: document.getElementById('previews').checked,
+      provider: document.getElementById('provider').value,
     }),
   });
   const data = await res.json();
@@ -206,6 +283,29 @@ async function generate() {
     </div>
   `).join('');
 
+  let previewHtml = '<p style="color:var(--muted)">No previews generated. Enable "Generate AI scene previews" above.</p>';
+  if (data.previews && data.previews.previews) {
+    const cards = data.previews.previews.filter(p => p.status === 'success' && p.image_path).map(p => {
+      const fname = p.image_path.split('/').pop();
+      const battleId = data.previews.battle_id;
+      return `<div class="preview-card">
+        <img src="/output/${battleId}/previews/${fname}" alt="Shot ${p.shot_number}">
+        <div class="label"><strong>Shot ${p.shot_number}</strong> — ${p.description || ''}</div>
+      </div>`;
+    }).join('');
+    const thumb = data.previews.thumbnail && data.previews.thumbnail.status === 'success'
+      ? `<div style="text-align:center;margin-bottom:1rem">
+           <img src="/output/${data.previews.battle_id}/previews/thumbnail.png" style="max-width:200px;border-radius:8px;border:2px solid var(--accent2)">
+           <p style="color:var(--accent2);font-weight:bold;margin-top:0.5rem">${vm.thumbnail_text}</p>
+         </div>` : '';
+    previewHtml = thumb + '<div class="preview-grid">' + cards + '</div>';
+    if (data.preview_files && data.preview_files.gallery) {
+      previewHtml += '<p style="margin-top:1rem;color:var(--muted)">Gallery: ' + data.preview_files.gallery + '</p>';
+    }
+  }
+
+  const tabs = ['script','storyboard','previews','caption','build','meta'];
+
   result.innerHTML = `
     <div class="result-panel">
       <h2 style="margin-bottom:1rem">${vm.title}</h2>
@@ -213,12 +313,14 @@ async function generate() {
       <div class="tabs">
         <button class="tab active" onclick="showTab('script')">Script</button>
         <button class="tab" onclick="showTab('storyboard')">Storyboard</button>
+        <button class="tab" onclick="showTab('previews')">Previews</button>
         <button class="tab" onclick="showTab('caption')">Caption</button>
         <button class="tab" onclick="showTab('build')">LEGO Build</button>
         <button class="tab" onclick="showTab('meta')">Posting</button>
       </div>
       <div id="tab-script" class="tab-content active"><pre>${c.script_full}</pre></div>
       <div id="tab-storyboard" class="tab-content">${shots}</div>
+      <div id="tab-previews" class="tab-content">${previewHtml}</div>
       <div id="tab-caption" class="tab-content">
         <pre>${vm.caption}</pre>
         <p class="hashtags" style="margin-top:1rem">${vm.hashtags.join(' ')}</p>
@@ -237,8 +339,8 @@ async function generate() {
 }
 
 function showTab(name) {
+  const tabs = ['script','storyboard','previews','caption','build','meta'];
   document.querySelectorAll('.tab').forEach((t, i) => {
-    const tabs = ['script','storyboard','caption','build','meta'];
     t.classList.toggle('active', tabs[i] === name);
   });
   document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));

@@ -141,3 +141,24 @@ class GeneratedContent(BaseModel):
     lego_build_notes: list[str]
     total_duration_seconds: float
     parts_needed: dict[str, int]
+    scene_previews: Optional["ScenePreviewPackage"] = None
+
+
+class ScenePreview(BaseModel):
+    shot_number: int
+    prompt: str
+    image_path: str
+    provider: str
+    status: str  # success | failed
+    error: Optional[str] = None
+    timestamp_start: Optional[float] = None
+    timestamp_end: Optional[float] = None
+    description: Optional[str] = None
+
+
+class ScenePreviewPackage(BaseModel):
+    battle_id: str
+    provider: str
+    previews: list[ScenePreview]
+    thumbnail: Optional[ScenePreview] = None
+    output_dir: str

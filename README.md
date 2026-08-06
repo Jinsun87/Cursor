@@ -13,6 +13,7 @@ Each package includes:
 - **Storyboard** — shot-by-shot with camera angles, LEGO setup, SFX, and on-screen text
 - **LEGO build plan** — terrain, minifig placement, parts inventory, stop-motion tips
 - **Social metadata** — caption, hashtags, suggested audio, thumbnail text, posting tips
+- **AI scene previews** — generated images for each storyboard shot (OpenAI DALL-E 3 or free mock placeholders)
 
 ## Quick Start
 
@@ -20,18 +21,31 @@ Each package includes:
 pip install -r requirements.txt
 
 # List available battles
-python -m lego_battle_forge.cli list
+python3 -m lego_battle_forge.cli list
 
 # Generate content for Thermopylae
-python -m lego_battle_forge.cli generate thermopylae
+python3 -m lego_battle_forge.cli generate thermopylae
+
+# Generate with AI scene preview images (mock provider, no API key needed)
+python3 -m lego_battle_forge.cli generate thermopylae --previews
+
+# Generate previews only for a battle
+python3 -m lego_battle_forge.cli previews thermopylae --provider mock
+
+# Use OpenAI DALL-E 3 for photorealistic previews
+export OPENAI_API_KEY=sk-...
+python3 -m lego_battle_forge.cli previews thermopylae --provider openai
+
+# Check available image providers
+python3 -m lego_battle_forge.cli providers
 
 # Generate a random battle as a 60s reel
-python -m lego_battle_forge.cli generate -f reel
+python3 -m lego_battle_forge.cli generate -f reel
 
 # Batch-generate all battles (content calendar)
-python -m lego_battle_forge.cli batch
+python3 -m lego_battle_forge.cli batch
 
-# Launch web UI
+# Launch web UI (enable "Generate AI scene previews" checkbox)
 uvicorn lego_battle_forge.web:app --reload --port 8080
 ```
 
@@ -64,6 +78,39 @@ uvicorn lego_battle_forge.web:app --reload --port 8080
 | `short` | ~25s | TikTok quick hits |
 | `reel` | ~55s | YouTube Shorts, IG Reels |
 | `extended` | ~85s | Longer-form shorts |
+
+## AI Scene Previews
+
+Generate visual previews for every storyboard shot before you build the LEGO diorama.
+
+| Provider | API Key | Quality | Cost |
+|----------|---------|---------|------|
+| `mock` | None | Styled placeholders with scene info | Free |
+| `openai` | `OPENAI_API_KEY` | Photorealistic DALL-E 3 LEGO dioramas | ~$0.04/image |
+| `auto` | Uses OpenAI if key set, else mock | Best available | Varies |
+
+```bash
+# Free mock previews (great for planning)
+python3 -m lego_battle_forge.cli previews thermopylae --provider mock
+
+# Real AI previews with OpenAI
+export OPENAI_API_KEY=sk-your-key
+python3 -m lego_battle_forge.cli previews cannae --provider openai
+
+# Limit shots to save API costs
+python3 -m lego_battle_forge.cli previews stalingrad --max-shots 3
+```
+
+**Output:**
+- `output/{battle}/previews/shot_00.png` — per-shot preview images (9:16 portrait)
+- `output/{battle}/previews/thumbnail.png` — click-optimized thumbnail
+- `output/{battle}/{battle}_gallery.html` — visual storyboard gallery
+- `output/{battle}/{battle}_previews.json` — preview metadata + prompts
+
+**Environment variables:**
+- `OPENAI_API_KEY` — required for OpenAI provider
+- `OPENAI_IMAGE_MODEL` — default `dall-e-3`
+- `OPENAI_IMAGE_SIZE` — default `1024x1792` (portrait for shorts)
 
 ## Output Files
 
@@ -99,6 +146,10 @@ lego_battle_forge/
 ├── battles/database.py    # Historical battle data
 ├── viral/optimizer.py     # Hooks, captions, hashtags
 ├── lego/scene_planner.py  # Build plans & parts lists
+├── images/                # AI scene preview generation
+│   ├── prompts.py         # LEGO-optimized image prompts
+│   ├── generator.py       # Preview orchestration
+│   └── providers/         # OpenAI DALL-E + mock providers
 ├── generator.py           # Storyboard & script engine
 ├── forge.py               # Main pipeline
 ├── export.py              # JSON/Markdown export
