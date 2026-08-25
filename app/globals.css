@@ -1,0 +1,23 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
+
+html,
+body {
+  min-height: 100%;
+}
+
+body {
+  @apply bg-pine-950 text-parchment antialiased;
+  background-image:
+    radial-gradient(ellipse at top, rgba(64, 145, 108, 0.18), transparent 50%),
+    radial-gradient(ellipse at bottom, rgba(232, 197, 71, 0.06), transparent 45%);
+}
+
+a {
+  @apply transition-colors;
+}
