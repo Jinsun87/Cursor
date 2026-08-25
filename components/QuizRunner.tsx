@@ -45,9 +45,9 @@ export function QuizRunner({ quiz }: { quiz: Quiz }) {
   if (done) {
     const pct = Math.round((finalScore / quiz.questions.length) * 100);
     return (
-      <div className="rounded-2xl border border-pine-700 bg-pine-900/60 p-8">
+      <div className="rounded-2xl border p-8" style={{ borderColor: "var(--line)", background: "var(--canvas-2)" }}>
         {quiz.isSecret ? <AdSlot label="Post-quiz ad" /> : null}
-        <p className="text-sm uppercase tracking-widest text-gold-400" data-testid="quiz-complete">
+        <p className="text-sm uppercase tracking-widest" style={{ color: "var(--gold)" }} data-testid="quiz-complete">
           Complete
         </p>
         <h2 className="mt-2 font-display text-3xl">
@@ -74,11 +74,11 @@ export function QuizRunner({ quiz }: { quiz: Quiz }) {
           </p>
         ) : null}
         <div className="mt-6 flex flex-wrap gap-3">
-          <Link href="/quizzes" className="rounded-full bg-gold-400 px-4 py-2 text-pine-950">
+          <Link href="/quizzes" className="btn btn-primary">
             More quizzes
           </Link>
           {quiz.seriesSlug ? (
-            <Link href={`/series/${quiz.seriesSlug}`} className="rounded-full border border-pine-500 px-4 py-2">
+            <Link href={`/series/${quiz.seriesSlug}`} className="btn btn-ghost">
               Back to series
             </Link>
           ) : null}
@@ -88,12 +88,20 @@ export function QuizRunner({ quiz }: { quiz: Quiz }) {
   }
 
   return (
-    <div className="rounded-2xl border border-pine-700 bg-pine-900/60 p-6 md:p-8">
+    <div className="rounded-2xl border p-6 md:p-8" style={{ borderColor: "var(--line)", background: "var(--canvas-2)" }}>
       {quiz.isSecret ? <AdSlot /> : null}
-      <div className="mb-6 h-2 overflow-hidden rounded-full bg-pine-800">
-        <div className="h-full bg-gold-400" style={{ width: `${progress}%` }} />
+      <div
+        className="mb-6 h-2 overflow-hidden rounded-full"
+        style={{ background: "var(--pine-800)" }}
+        role="progressbar"
+        aria-valuemin={0}
+        aria-valuemax={100}
+        aria-valuenow={progress}
+        aria-label="Quiz progress"
+      >
+        <div className="h-full" style={{ width: `${progress}%`, background: "var(--gold)" }} />
       </div>
-      <p className="text-sm text-pine-400">
+      <p className="text-sm" style={{ color: "var(--muted)" }}>
         Question {index + 1} of {quiz.questions.length}
       </p>
       <h2 className="mt-2 font-display text-2xl md:text-3xl">{question.prompt}</h2>
@@ -102,16 +110,24 @@ export function QuizRunner({ quiz }: { quiz: Quiz }) {
           const show = picked !== null;
           const correct = i === question.answerIndex;
           const selected = i === picked;
-          let cls = "border-pine-600 hover:border-gold-400";
-          if (show && correct) cls = "border-pine-400 bg-pine-700";
-          if (show && selected && !correct) cls = "border-red-400/70 bg-red-950/40";
+          let border = "var(--line)";
+          let bg = "transparent";
+          if (show && correct) {
+            border = "var(--pine-400)";
+            bg = "var(--pine-800)";
+          }
+          if (show && selected && !correct) {
+            border = "#c45c5c";
+            bg = "color-mix(in srgb, #c45c5c 16%, transparent)";
+          }
           return (
             <button
               key={choice}
               type="button"
               data-testid={`choice-${i}`}
               onClick={() => choose(i)}
-              className={`rounded-xl border px-4 py-3 text-left ${cls}`}
+              className="min-h-12 rounded-xl border px-4 py-3 text-left"
+              style={{ borderColor: border, background: bg }}
             >
               {choice}
             </button>
@@ -120,13 +136,10 @@ export function QuizRunner({ quiz }: { quiz: Quiz }) {
       </div>
       {picked !== null ? (
         <div className="mt-6">
-          <p className="text-sm text-parchment/80">{question.explanation}</p>
-          <button
-            type="button"
-            data-testid="quiz-next"
-            onClick={next}
-            className="mt-4 rounded-full bg-gold-400 px-5 py-2 font-medium text-pine-950"
-          >
+          <p className="text-sm" style={{ color: "var(--muted)" }}>
+            {question.explanation}
+          </p>
+          <button type="button" data-testid="quiz-next" onClick={next} className="btn btn-primary mt-4">
             {index + 1 >= quiz.questions.length ? "See results" : "Next"}
           </button>
         </div>

@@ -18,7 +18,7 @@ npm run dev
 
 CI runs lint, unit tests, Playwright, and production build on every PR (`.github/workflows/test.yml`).
 
-Open [http://localhost:3000](http://localhost:3000).
+Open [http://localhost:3000](http://localhost:3000). Use **Light / Dark** in the header to switch theme (defaults to your OS preference).
 
 Demo login after first page load: `maple@quizforge.demo` / `demo`.
 

@@ -21,8 +21,8 @@ const config: Config = {
         parchment: "#f6f1e6",
       },
       fontFamily: {
-        display: ["Georgia", "Times New Roman", "serif"],
-        sans: ["Segoe UI", "system-ui", "sans-serif"],
+        display: ["var(--font-display)", "Georgia", "serif"],
+        sans: ["var(--font-sans)", "system-ui", "sans-serif"],
       },
     },
   },

@@ -33,22 +33,22 @@ export default function RegisterPage() {
       <form onSubmit={onSubmit} className="mt-8 grid gap-4">
         <label className="grid gap-1 text-sm">
           Email
-          <input name="email" type="email" required className="rounded-xl border border-pine-600 bg-pine-900 px-3 py-2" />
+          <input name="email" type="email" required autoComplete="email" className="field" />
         </label>
         <label className="grid gap-1 text-sm">
           Username
-          <input name="username" required minLength={3} className="rounded-xl border border-pine-600 bg-pine-900 px-3 py-2" />
+          <input name="username" required minLength={3} autoComplete="username" className="field" />
         </label>
         <label className="grid gap-1 text-sm">
           Password
-          <input name="password" type="password" required minLength={4} className="rounded-xl border border-pine-600 bg-pine-900 px-3 py-2" />
+          <input name="password" type="password" required minLength={4} autoComplete="new-password" className="field" />
         </label>
         <label className="flex items-center gap-2 text-sm">
-          <input name="newsletter" type="checkbox" />
+          <input name="newsletter" type="checkbox" className="h-5 w-5" />
           Send me new quiz series
         </label>
         {error ? <p className="text-sm text-red-300">{error}</p> : null}
-        <button type="submit" className="rounded-full bg-gold-400 py-2 text-pine-950">
+        <button type="submit" className="btn btn-primary">
           Sign up
         </button>
       </form>

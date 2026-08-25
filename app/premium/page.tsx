@@ -77,7 +77,7 @@ export default function PremiumPage() {
       <button
         type="button"
         onClick={checkout}
-        className="mt-6 rounded-full bg-gold-400 px-6 py-3 font-medium text-pine-950"
+        className="btn btn-primary mt-6"
       >
         {user ? "Activate simulated Premium" : "Create an account to upgrade"}
       </button>

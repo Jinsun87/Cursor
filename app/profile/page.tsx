@@ -68,11 +68,11 @@ export default function ProfilePage() {
       ) : null}
       <div className="mt-8 flex gap-3">
         {!user.premium ? (
-          <Link href="/premium" className="rounded-full bg-gold-400 px-4 py-2 text-pine-950">
+          <Link href="/premium" className="btn btn-primary">
             Upgrade
           </Link>
         ) : null}
-        <button type="button" onClick={logout} className="rounded-full border border-pine-500 px-4 py-2">
+        <button type="button" onClick={logout} className="btn btn-ghost">
           Log out
         </button>
       </div>
