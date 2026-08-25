@@ -27,13 +27,17 @@ export default function ProfilePage() {
           <p className="mt-1 text-parchment/70">{user.email}</p>
         </div>
         {user.premium ? (
-          <span className="rounded-full bg-gold-400 px-3 py-1 text-sm text-pine-950">Premium</span>
+          <span data-testid="premium-badge" className="rounded-full bg-gold-400 px-3 py-1 text-sm text-pine-950">
+            Premium
+          </span>
         ) : null}
       </div>
       <dl className="mt-8 grid grid-cols-2 gap-4 text-sm">
         <div className="rounded-2xl border border-pine-700 p-4">
           <dt className="text-pine-400">Coins</dt>
-          <dd className="font-display text-2xl">{user.coins.toLocaleString()}</dd>
+          <dd data-testid="coin-balance" className="font-display text-2xl">
+            {user.coins.toLocaleString()}
+          </dd>
         </div>
         <div className="rounded-2xl border border-pine-700 p-4">
           <dt className="text-pine-400">Quizzes logged</dt>

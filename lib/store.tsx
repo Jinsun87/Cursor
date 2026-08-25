@@ -11,6 +11,14 @@ import {
 } from "react";
 import type { Attempt, User } from "./types";
 import { getQuiz, getSeries } from "./catalog";
+import {
+  PREMIUM_COIN_GRANT,
+  SIGNUP_COINS,
+  coinsForAttempt,
+  coinsForDonation,
+  DEFAULT_COMPLETE_COINS,
+  masteryFromReview,
+} from "./economy";
 
 const STORAGE_KEY = "quizforge-users-v1";
 const SESSION_KEY = "quizforge-session-v1";
@@ -144,7 +152,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
       email: input.email.trim(),
       username: input.username.trim(),
       password: input.password,
-      coins: 100,
+      coins: SIGNUP_COINS,
       premium: false,
       createdAt: new Date().toISOString(),
       attempts: [],
@@ -171,8 +179,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const recordAttempt: Store["recordAttempt"] = (quizSlug, score, total) => {
     if (!user) return { coinsEarned: 0 };
     const quiz = getQuiz(quizSlug);
-    const pct = total ? Math.round((score / total) * 100) : 0;
-    const coinsEarned = (quiz?.coinsOnComplete ?? 50) + score * 10;
+    const coinsEarned = coinsForAttempt(quiz?.coinsOnComplete ?? DEFAULT_COMPLETE_COINS, score);
     const attempt: Attempt = {
       quizSlug,
       score,
@@ -183,14 +190,18 @@ export function AppProvider({ children }: { children: ReactNode }) {
     let masteredSeries = [...user.masteredSeries];
     let mastered: string | undefined;
     const series = quiz?.seriesSlug ? getSeries(quiz.seriesSlug) : undefined;
-    if (series && quiz?.isReview) {
-      const packDone = series.quizSlugs.every((slug) =>
-        attempts.some((a) => a.quizSlug === slug),
-      );
-      const reviewOk = pct >= series.masteryThreshold;
-      if (packDone && reviewOk && !masteredSeries.includes(series.slug)) {
+    if (series) {
+      const result = masteryFromReview({
+        series,
+        isReviewQuiz: Boolean(quiz?.isReview),
+        attemptsIncludingThis: attempts,
+        alreadyMastered: masteredSeries,
+        score,
+        total,
+      });
+      if (result.masteredTitle) {
         masteredSeries = [...masteredSeries, series.slug];
-        mastered = series.title;
+        mastered = result.masteredTitle;
       }
     }
     persist({
@@ -208,13 +219,17 @@ export function AppProvider({ children }: { children: ReactNode }) {
       ...user,
       premium: true,
       premiumPlan: plan,
-      coins: user.coins + 5000,
+      coins: user.coins + PREMIUM_COIN_GRANT,
     });
   };
 
   const donate: Store["donate"] = (cents) => {
     if (!user) return;
-    persist({ ...user, donatedCents: user.donatedCents + cents, coins: user.coins + Math.floor(cents / 10) });
+    persist({
+      ...user,
+      donatedCents: user.donatedCents + cents,
+      coins: user.coins + coinsForDonation(cents),
+    });
   };
 
   const bestScore = (quizSlug: string) => {

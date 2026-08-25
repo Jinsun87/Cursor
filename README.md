@@ -10,8 +10,13 @@ Read [BUSINESS_MODEL.md](./BUSINESS_MODEL.md) for the analysis and the build pla
 
 ```bash
 npm install
+npx playwright install chromium
+npm test
+npm run test:e2e
 npm run dev
 ```
+
+CI runs lint, unit tests, Playwright, and production build on every PR (`.github/workflows/test.yml`).
 
 Open [http://localhost:3000](http://localhost:3000).
 

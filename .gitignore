@@ -5,3 +5,7 @@ out
 *.log
 .env*
 tsconfig.tsbuildinfo
+playwright-report
+test-results
+blob-report
+.playwright

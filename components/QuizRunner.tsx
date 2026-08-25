@@ -47,7 +47,9 @@ export function QuizRunner({ quiz }: { quiz: Quiz }) {
     return (
       <div className="rounded-2xl border border-pine-700 bg-pine-900/60 p-8">
         {quiz.isSecret ? <AdSlot label="Post-quiz ad" /> : null}
-        <p className="text-sm uppercase tracking-widest text-gold-400">Complete</p>
+        <p className="text-sm uppercase tracking-widest text-gold-400" data-testid="quiz-complete">
+          Complete
+        </p>
         <h2 className="mt-2 font-display text-3xl">
           {finalScore}/{quiz.questions.length} · {pct}%
         </h2>
@@ -107,6 +109,7 @@ export function QuizRunner({ quiz }: { quiz: Quiz }) {
             <button
               key={choice}
               type="button"
+              data-testid={`choice-${i}`}
               onClick={() => choose(i)}
               className={`rounded-xl border px-4 py-3 text-left ${cls}`}
             >
@@ -120,6 +123,7 @@ export function QuizRunner({ quiz }: { quiz: Quiz }) {
           <p className="text-sm text-parchment/80">{question.explanation}</p>
           <button
             type="button"
+            data-testid="quiz-next"
             onClick={next}
             className="mt-4 rounded-full bg-gold-400 px-5 py-2 font-medium text-pine-950"
           >
