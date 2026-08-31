@@ -6,6 +6,8 @@ test("home sells the gym and routes into inventory", async ({ page }) => {
   await page.getByRole("link", { name: /take your first quiz/i }).click();
   await expect(page).toHaveURL(/get-your-fill-restaurant/);
   await expect(page.getByRole("heading", { name: /get your fill/i })).toBeVisible();
+  await expect(page.getByTestId("course-medals")).toBeVisible();
+  await expect(page.getByTestId("course-medal-1")).toHaveAttribute("data-plated", "false");
 });
 
 test("a guest can finish a quiz and see a score", async ({ page }) => {
@@ -54,4 +56,32 @@ test("register, secret ads, premium grant, then ads drop", async ({ page }) => {
   await page.goto("/secret");
   await expect(page.getByText(/premium trail is clear/i)).toBeVisible();
   await expect(page.getByTestId("ad-slot")).toHaveCount(0);
+});
+
+test("a guest can resume a sitting after reload", async ({ page }) => {
+  await page.goto("/quizzes/us-capitals");
+  await expect(page.getByTestId("choice-0")).toHaveText(/.+/);
+  await expect(page.getByTestId("course-medals")).toHaveCount(0);
+  await page.getByTestId("choice-0").click();
+  await expect(page.getByTestId("answer-fact")).toBeVisible();
+  const prompt = await page.getByRole("heading", { level: 2 }).innerText();
+  await page.reload();
+  await expect(page.getByTestId("answer-fact")).toBeVisible();
+  await expect(page.getByRole("heading", { level: 2 })).toHaveText(prompt);
+  await expect(page.getByTestId("hud-question")).toContainText("Question 1");
+  await page.getByTestId("quiz-next").click();
+  await expect(page.getByTestId("hud-question")).toContainText("Question 2");
+});
+
+test("restart wipes a saved sitting", async ({ page }) => {
+  await page.goto("/quizzes/us-capitals");
+  await expect(page.getByTestId("choice-0")).toHaveText(/.+/);
+  await page.getByTestId("choice-0").click();
+  await expect(page.getByTestId("answer-fact")).toBeVisible();
+  await page.getByTestId("hud-restart").click();
+  await expect(page.getByTestId("answer-fact")).toHaveCount(0);
+  await expect(page.getByTestId("hud-question")).toContainText("Question 1");
+  await page.reload();
+  await expect(page.getByTestId("answer-fact")).toHaveCount(0);
+  await expect(page.getByTestId("hud-question")).toContainText("Question 1");
 });

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import Link from "next/link";
 import type { Question, Quiz } from "@/lib/types";
 import { useApp } from "@/lib/store";
@@ -8,6 +8,15 @@ import { AdSlot } from "./AdSlot";
 import { QuizHud } from "./QuizHud";
 import { LONGFORM_AD_EVERY, shouldShowLongformAdBreak } from "@/lib/economy";
 import { shuffleQuizDeck } from "@/lib/shuffle";
+import {
+  browserStorage,
+  clearSitting,
+  loadSitting,
+  medalsPlated,
+  saveSitting,
+  sittingIsResumable,
+} from "@/lib/sitting";
+import { CourseMedals } from "./CourseMedals";
 
 export function QuizRunner({ quiz }: { quiz: Quiz }) {
   const { user, recordAttempt } = useApp();
@@ -24,16 +33,20 @@ export function QuizRunner({ quiz }: { quiz: Quiz }) {
     null,
   );
 
+  const booted = useRef(false);
+
   const questions = deck ?? quiz.questions;
   const question = questions[index];
   const course = Math.floor(index / LONGFORM_AD_EVERY) + 1;
   const courses = Math.ceil(questions.length / LONGFORM_AD_EVERY);
+  const plated = medalsPlated(answered, LONGFORM_AD_EVERY, quiz.questions.length);
   const progress = useMemo(
     () => Math.round((index / questions.length) * 100),
     [index, questions.length],
   );
 
-  function deal() {
+  function freshDeal() {
+    clearSitting(quiz.slug, browserStorage());
     setDeck(shuffleQuizDeck(quiz.questions));
     setIndex(0);
     setPicked(null);
@@ -47,10 +60,48 @@ export function QuizRunner({ quiz }: { quiz: Quiz }) {
   }
 
   useEffect(() => {
-    deal();
-    // Fresh order whenever the quiz changes.
+    booted.current = false;
+    const saved = loadSitting(quiz.slug, browserStorage());
+    if (sittingIsResumable(saved, quiz.slug, quiz.questions.length)) {
+      setDeck(saved.deck);
+      setIndex(saved.index);
+      setPicked(saved.picked);
+      setCorrectCount(saved.correctCount);
+      setAnswered(saved.answered);
+      setStreak(saved.streak);
+      setPageBreak(saved.pageBreak);
+      setDone(false);
+      setFinalScore(0);
+      setReward(null);
+    } else {
+      freshDeal();
+    }
+    booted.current = true;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [quiz.slug]);
+
+  useEffect(() => {
+    if (!booted.current || !deck) return;
+    const storage = browserStorage();
+    if (done) {
+      clearSitting(quiz.slug, storage);
+      return;
+    }
+    saveSitting(
+      {
+        slug: quiz.slug,
+        index,
+        picked,
+        correctCount,
+        answered,
+        streak,
+        pageBreak,
+        deck,
+        savedAt: new Date().toISOString(),
+      },
+      storage,
+    );
+  }, [quiz.slug, index, picked, correctCount, answered, streak, pageBreak, done, deck]);
 
   function choose(i: number) {
     if (picked !== null) return;
@@ -66,7 +117,7 @@ export function QuizRunner({ quiz }: { quiz: Quiz }) {
   }
 
   function restart() {
-    deal();
+    freshDeal();
   }
 
   const hud = (
@@ -79,6 +130,20 @@ export function QuizRunner({ quiz }: { quiz: Quiz }) {
       onRestart={restart}
     />
   );
+
+  const medals = quiz.isLongform ? (
+    <CourseMedals answered={answered} total={quiz.questions.length} />
+  ) : null;
+
+  function frame(body: ReactNode) {
+    return (
+      <div>
+        {hud}
+        {medals}
+        {body}
+      </div>
+    );
+  }
 
   function advance() {
     if (index + 1 >= quiz.questions.length) {
@@ -108,22 +173,17 @@ export function QuizRunner({ quiz }: { quiz: Quiz }) {
   }
 
   if (!deck) {
-    return (
-      <div>
-        {hud}
-        <p className="rounded-2xl border p-8 text-sm" style={{ borderColor: "var(--line)" }}>
-          Shuffling the options…
-        </p>
-      </div>
+    return frame(
+      <p className="rounded-2xl border p-8 text-sm" style={{ borderColor: "var(--line)" }}>
+        Shuffling the options…
+      </p>,
     );
   }
 
   if (done) {
     const pct = Math.round((finalScore / quiz.questions.length) * 100);
-    return (
-      <div>
-        {hud}
-        <div className="rounded-2xl border p-8" style={{ borderColor: "var(--line)", background: "var(--canvas-2)" }}>
+    return frame(
+      <div className="rounded-2xl border p-8" style={{ borderColor: "var(--line)", background: "var(--canvas-2)" }}>
         {quiz.isSecret || quiz.isLongform ? <AdSlot label="Post-quiz ad" /> : null}
         <p className="text-sm uppercase tracking-widest" style={{ color: "var(--gold)" }} data-testid="quiz-complete">
           Complete
@@ -161,37 +221,31 @@ export function QuizRunner({ quiz }: { quiz: Quiz }) {
             </Link>
           ) : null}
         </div>
-        </div>
-      </div>
+      </div>,
     );
   }
 
   if (pageBreak) {
-    return (
-      <div>
-        {hud}
-        <div className="rounded-2xl border p-6 md:p-8" style={{ borderColor: "var(--line)", background: "var(--canvas-2)" }}>
+    return frame(
+      <div className="rounded-2xl border p-6 md:p-8" style={{ borderColor: "var(--line)", background: "var(--canvas-2)" }}>
         <p className="text-sm uppercase tracking-widest" style={{ color: "var(--gold)" }}>
           Course {course} of {courses} plated
         </p>
         <h2 className="mt-2 font-display text-2xl">Next course is firing</h2>
         <p className="mt-2 text-sm" style={{ color: "var(--muted)" }}>
-          Question {index + 1} of {quiz.questions.length} is up after this break. Premium skips the
-          kitchen radio.
+          {plated} of {courses} course medals are plated. Question {index + 1} of{" "}
+          {quiz.questions.length} is up after this break. Premium skips the kitchen radio.
         </p>
         <AdSlot label="Between-course ad" />
         <button type="button" className="btn btn-primary mt-2" onClick={() => setPageBreak(false)}>
           Continue the sitting
         </button>
-        </div>
-      </div>
+      </div>,
     );
   }
 
-  return (
-    <div>
-      {hud}
-      <div className="rounded-2xl border p-6 md:p-8" style={{ borderColor: "var(--line)", background: "var(--canvas-2)" }}>
+  return frame(
+    <div className="rounded-2xl border p-6 md:p-8" style={{ borderColor: "var(--line)", background: "var(--canvas-2)" }}>
       {quiz.isSecret ? <AdSlot /> : null}
       <div
         className="mb-6 h-2 overflow-hidden rounded-full"
@@ -268,7 +322,6 @@ export function QuizRunner({ quiz }: { quiz: Quiz }) {
           </button>
         </div>
       ) : null}
-      </div>
-    </div>
+      </div>,
   );
 }
