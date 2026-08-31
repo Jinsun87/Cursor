@@ -167,18 +167,38 @@ export function QuizRunner({ quiz }: { quiz: Quiz }) {
               className="min-h-12 rounded-xl border px-4 py-3 text-left"
               style={{ borderColor: border, background: bg }}
             >
-              {choice}
+              {show && correct ? " · Correct" : ""}
+              {show && selected && !correct ? " · Your pick" : ""}
             </button>
           );
         })}
       </div>
       {picked !== null ? (
-        <div className="mt-6">
-          <p className="text-sm" style={{ color: "var(--muted)" }}>
+        <div
+          className="mt-6 rounded-2xl border p-4"
+          data-testid="answer-fact"
+          role="status"
+          aria-live="polite"
+          style={{
+            borderColor: picked === question.answerIndex ? "var(--gold)" : "#c45c5c",
+            background: "var(--canvas)",
+          }}
+        >
+          <p className="text-sm font-semibold">
+            {picked === question.answerIndex ? "That's right." : "Not this time."}
+          </p>
+          <p className="mt-1 text-sm">
+            Correct answer:{" "}
+            <strong>{question.choices[question.answerIndex]}</strong>
+          </p>
+          <p className="mt-3 text-sm" style={{ color: "var(--muted)" }}>
+            <span className="font-semibold" style={{ color: "var(--ink)" }}>
+              Fact:{" "}
+            </span>
             {question.explanation}
           </p>
           <button type="button" data-testid="quiz-next" onClick={advance} className="btn btn-primary mt-4">
-            {index + 1 >= quiz.questions.length ? "See results" : "Next"}
+            {index + 1 >= quiz.questions.length ? "See results" : "Next question"}
           </button>
         </div>
       ) : null}

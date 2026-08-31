@@ -12,6 +12,9 @@ test("a guest can finish a quiz and see a score", async ({ page }) => {
   await page.goto("/quizzes/us-capitals");
   for (let i = 0; i < 6; i++) {
     await page.getByTestId("choice-0").click();
+    await expect(page.getByTestId("answer-fact")).toBeVisible();
+    await expect(page.getByTestId("answer-fact")).toContainText(/correct answer:/i);
+    await expect(page.getByTestId("answer-fact")).toContainText(/fact:/i);
     await page.getByTestId("quiz-next").click();
   }
   await expect(page.getByTestId("quiz-complete")).toBeVisible();
