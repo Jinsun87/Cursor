@@ -31,6 +31,7 @@ const sitting: Sitting = {
   answered: 2,
   streak: 0,
   pageBreak: false,
+  hiddenChoices: [],
   deck: [
     { prompt: "a", choices: ["1", "2", "3", "4"], answerIndex: 0, explanation: "x" },
     { prompt: "b", choices: ["1", "2", "3", "4"], answerIndex: 1, explanation: "x" },

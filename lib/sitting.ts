@@ -11,6 +11,7 @@ export type Sitting = {
   answered: number;
   streak: number;
   pageBreak: boolean;
+  hiddenChoices: number[];
   deck: Question[];
   savedAt: string;
 };
@@ -55,6 +56,7 @@ export function loadSitting(slug: string, storage?: Store | null): Sitting | nul
     if (!parsed || typeof parsed.slug !== "string" || !Array.isArray(parsed.deck)) {
       return null;
     }
+    if (!Array.isArray(parsed.hiddenChoices)) parsed.hiddenChoices = [];
     return parsed;
   } catch {
     return null;

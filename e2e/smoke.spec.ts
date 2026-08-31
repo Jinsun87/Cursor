@@ -27,6 +27,8 @@ test("a guest can finish a quiz and see a score", async ({ page }) => {
     await page.getByTestId("quiz-next").click();
   }
   await expect(page.getByTestId("quiz-complete")).toBeVisible();
+  await expect(page.getByTestId("end-grade")).toBeVisible();
+  await expect(page.getByTestId("share-score")).toBeVisible();
   await expect(page.getByText(/\d+\/6/)).toBeVisible();
   await page.getByTestId("hud-restart").click();
   await expect(page.getByTestId("hud-question")).toContainText("Question 1");
@@ -84,4 +86,25 @@ test("restart wipes a saved sitting", async ({ page }) => {
   await page.reload();
   await expect(page.getByTestId("answer-fact")).toHaveCount(0);
   await expect(page.getByTestId("hud-question")).toContainText("Question 1");
+});
+
+test("daily sitting is ten questions", async ({ page }) => {
+  await page.goto("/daily");
+  await expect(page.getByTestId("hud-question")).toContainText("/ 10");
+  await expect(page.getByTestId("choice-0")).toHaveText(/.+/);
+});
+
+test("a signed-in player can buy a 50/50", async ({ page }) => {
+  const id = `t${Date.now()}x`;
+  await page.goto("/register");
+  await page.getByLabel("Email").fill(`${id}@quizforge.test`);
+  await page.getByLabel("Username").fill(id);
+  await page.getByLabel("Password").fill("testpass");
+  await page.getByRole("button", { name: /sign up/i }).click();
+  await expect(page).toHaveURL(/\/profile/);
+  await page.goto("/quizzes/us-capitals");
+  await expect(page.getByTestId("choice-0")).toHaveText(/.+/);
+  await expect(page.locator('[data-testid^="choice-"]')).toHaveCount(4);
+  await page.getByTestId("lifeline-5050").click();
+  await expect(page.locator('[data-testid^="choice-"]')).toHaveCount(2);
 });

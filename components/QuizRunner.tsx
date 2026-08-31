@@ -6,7 +6,16 @@ import type { Question, Quiz } from "@/lib/types";
 import { useApp } from "@/lib/store";
 import { AdSlot } from "./AdSlot";
 import { QuizHud } from "./QuizHud";
-import { LONGFORM_AD_EVERY, shouldShowLongformAdBreak } from "@/lib/economy";
+import {
+  FIFTY_FIFTY_COST,
+  LONGFORM_AD_EVERY,
+  SKIP_AD_COST,
+  STREAK_SKIPS_AD,
+  shouldShowLongformAdBreak,
+  wouldLongformAdBreak,
+} from "@/lib/economy";
+import { shareScoreText, sittingGrade } from "@/lib/grade";
+import { fiftyFiftyHidden } from "@/lib/lifelines";
 import { shuffleQuizDeck } from "@/lib/shuffle";
 import {
   browserStorage,
@@ -19,7 +28,7 @@ import {
 import { CourseMedals } from "./CourseMedals";
 
 export function QuizRunner({ quiz }: { quiz: Quiz }) {
-  const { user, recordAttempt } = useApp();
+  const { user, recordAttempt, spendCoins } = useApp();
   const [deck, setDeck] = useState<Question[] | null>(null);
   const [index, setIndex] = useState(0);
   const [picked, setPicked] = useState<number | null>(null);
@@ -29,11 +38,15 @@ export function QuizRunner({ quiz }: { quiz: Quiz }) {
   const [done, setDone] = useState(false);
   const [finalScore, setFinalScore] = useState(0);
   const [pageBreak, setPageBreak] = useState(false);
+  const [hiddenChoices, setHiddenChoices] = useState<number[]>([]);
+  const [streakSkipNote, setStreakSkipNote] = useState(false);
+  const [shareStatus, setShareStatus] = useState<string | null>(null);
   const [reward, setReward] = useState<{ coinsEarned: number; mastered?: string } | null>(
     null,
   );
 
   const booted = useRef(false);
+  const fiftyLock = useRef(false);
 
   const questions = deck ?? quiz.questions;
   const question = questions[index];
@@ -56,7 +69,11 @@ export function QuizRunner({ quiz }: { quiz: Quiz }) {
     setDone(false);
     setFinalScore(0);
     setPageBreak(false);
+    setHiddenChoices([]);
+    setStreakSkipNote(false);
+    setShareStatus(null);
     setReward(null);
+    fiftyLock.current = false;
   }
 
   useEffect(() => {
@@ -70,6 +87,8 @@ export function QuizRunner({ quiz }: { quiz: Quiz }) {
       setAnswered(saved.answered);
       setStreak(saved.streak);
       setPageBreak(saved.pageBreak);
+      setHiddenChoices(saved.hiddenChoices ?? []);
+      fiftyLock.current = (saved.hiddenChoices ?? []).length > 0;
       setDone(false);
       setFinalScore(0);
       setReward(null);
@@ -96,15 +115,28 @@ export function QuizRunner({ quiz }: { quiz: Quiz }) {
         answered,
         streak,
         pageBreak,
+        hiddenChoices,
         deck,
         savedAt: new Date().toISOString(),
       },
       storage,
     );
-  }, [quiz.slug, index, picked, correctCount, answered, streak, pageBreak, done, deck]);
+  }, [
+    quiz.slug,
+    index,
+    picked,
+    correctCount,
+    answered,
+    streak,
+    pageBreak,
+    hiddenChoices,
+    done,
+    deck,
+  ]);
 
   function choose(i: number) {
     if (picked !== null) return;
+    if (hiddenChoices.includes(i)) return;
     const ok = i === question.answerIndex;
     setPicked(i);
     setAnswered((n) => n + 1);
@@ -118,6 +150,44 @@ export function QuizRunner({ quiz }: { quiz: Quiz }) {
 
   function restart() {
     freshDeal();
+  }
+
+  function useFiftyFifty() {
+    if (fiftyLock.current || picked !== null || hiddenChoices.length > 0) return;
+    if (!spendCoins(FIFTY_FIFTY_COST)) return;
+    fiftyLock.current = true;
+    setHiddenChoices(fiftyFiftyHidden(question.answerIndex, question.choices.length));
+  }
+
+  function skipAdBreak() {
+    if (!spendCoins(SKIP_AD_COST)) return;
+    setPageBreak(false);
+  }
+
+  async function shareScore() {
+    const grade = sittingGrade(finalScore, quiz.questions.length);
+    const text = shareScoreText({
+      title: quiz.title,
+      score: finalScore,
+      total: quiz.questions.length,
+      letter: grade.letter,
+      url: window.location.href,
+    });
+    try {
+      if (navigator.share) {
+        await navigator.share({ title: "QuizForge", text });
+        setShareStatus("Shared.");
+        return;
+      }
+    } catch {
+      /* fall through to clipboard */
+    }
+    try {
+      await navigator.clipboard.writeText(text);
+      setShareStatus("Copied to clipboard.");
+    } catch {
+      setShareStatus("Copy the score from the card.");
+    }
   }
 
   const hud = (
@@ -155,21 +225,33 @@ export function QuizRunner({ quiz }: { quiz: Quiz }) {
       return;
     }
     const completed = index + 1;
-    if (
-      shouldShowLongformAdBreak({
-        isLongform: quiz.isLongform,
-        premium: user?.premium,
-        questionsCompleted: completed,
-        total: quiz.questions.length,
-      })
-    ) {
+    const breakInput = {
+      isLongform: quiz.isLongform,
+      premium: user?.premium,
+      questionsCompleted: completed,
+      total: quiz.questions.length,
+    };
+    if (wouldLongformAdBreak(breakInput) && streak >= STREAK_SKIPS_AD) {
+      setStreakSkipNote(true);
       setIndex(completed);
       setPicked(null);
+      setHiddenChoices([]);
+      fiftyLock.current = false;
+      return;
+    }
+    if (shouldShowLongformAdBreak({ ...breakInput, streak })) {
+      setIndex(completed);
+      setPicked(null);
+      setHiddenChoices([]);
+      fiftyLock.current = false;
       setPageBreak(true);
+      setStreakSkipNote(false);
       return;
     }
     setIndex((n) => n + 1);
     setPicked(null);
+    setHiddenChoices([]);
+    fiftyLock.current = false;
   }
 
   if (!deck) {
@@ -182,11 +264,22 @@ export function QuizRunner({ quiz }: { quiz: Quiz }) {
 
   if (done) {
     const pct = Math.round((finalScore / quiz.questions.length) * 100);
+    const grade = sittingGrade(finalScore, quiz.questions.length);
     return frame(
       <div className="rounded-2xl border p-8" style={{ borderColor: "var(--line)", background: "var(--canvas-2)" }}>
         {quiz.isSecret || quiz.isLongform ? <AdSlot label="Post-quiz ad" /> : null}
         <p className="text-sm uppercase tracking-widest" style={{ color: "var(--gold)" }} data-testid="quiz-complete">
           Complete
+        </p>
+        <p
+          className="mt-3 inline-flex min-h-12 min-w-12 items-center justify-center rounded-full border text-2xl font-display"
+          data-testid="end-grade"
+          style={{ borderColor: "var(--gold)", color: "var(--gold)" }}
+        >
+          {grade.letter}
+        </p>
+        <p className="mt-2 text-sm" style={{ color: "var(--muted)" }}>
+          {grade.title}
         </p>
         <h2 className="mt-2 font-display text-3xl">
           {finalScore}/{quiz.questions.length} · {pct}%
@@ -212,7 +305,10 @@ export function QuizRunner({ quiz }: { quiz: Quiz }) {
           </p>
         ) : null}
         <div className="mt-6 flex flex-wrap gap-3">
-          <Link href="/quizzes" className="btn btn-primary">
+          <button type="button" className="btn btn-primary" data-testid="share-score" onClick={shareScore}>
+            Share score
+          </button>
+          <Link href="/quizzes" className="btn btn-ghost">
             More quizzes
           </Link>
           {quiz.seriesSlug ? (
@@ -221,11 +317,17 @@ export function QuizRunner({ quiz }: { quiz: Quiz }) {
             </Link>
           ) : null}
         </div>
+        {shareStatus ? (
+          <p className="mt-3 text-sm" data-testid="share-status" style={{ color: "var(--muted)" }}>
+            {shareStatus}
+          </p>
+        ) : null}
       </div>,
     );
   }
 
   if (pageBreak) {
+    const canSkip = Boolean(user && !user.premium && user.coins >= SKIP_AD_COST);
     return frame(
       <div className="rounded-2xl border p-6 md:p-8" style={{ borderColor: "var(--line)", background: "var(--canvas-2)" }}>
         <p className="text-sm uppercase tracking-widest" style={{ color: "var(--gold)" }}>
@@ -234,19 +336,47 @@ export function QuizRunner({ quiz }: { quiz: Quiz }) {
         <h2 className="mt-2 font-display text-2xl">Next course is firing</h2>
         <p className="mt-2 text-sm" style={{ color: "var(--muted)" }}>
           {plated} of {courses} course medals are plated. Question {index + 1} of{" "}
-          {quiz.questions.length} is up after this break. Premium skips the kitchen radio.
+          {quiz.questions.length} is up after this break. A streak of {STREAK_SKIPS_AD} skips the
+          radio. Coins skip it once.
         </p>
         <AdSlot label="Between-course ad" />
-        <button type="button" className="btn btn-primary mt-2" onClick={() => setPageBreak(false)}>
-          Continue the sitting
-        </button>
+        <div className="mt-2 flex flex-wrap gap-3">
+          <button type="button" className="btn btn-primary" onClick={() => setPageBreak(false)}>
+            Continue the sitting
+          </button>
+          {user && !user.premium ? (
+            <button
+              type="button"
+              className="btn btn-ghost"
+              data-testid="skip-ad"
+              disabled={!canSkip}
+              onClick={skipAdBreak}
+            >
+              Skip break · {SKIP_AD_COST} coins
+            </button>
+          ) : null}
+        </div>
       </div>,
     );
   }
 
+  const visibleChoices = question.choices.map((choice, i) => ({ choice, i })).filter(({ i }) => {
+    if (picked !== null) return true;
+    return !hiddenChoices.includes(i);
+  });
+
   return frame(
     <div className="rounded-2xl border p-6 md:p-8" style={{ borderColor: "var(--line)", background: "var(--canvas-2)" }}>
       {quiz.isSecret ? <AdSlot /> : null}
+      {streakSkipNote ? (
+        <p
+          className="mb-4 rounded-xl border px-3 py-2 text-sm"
+          data-testid="streak-skip-note"
+          style={{ borderColor: "var(--gold)", color: "var(--gold)" }}
+        >
+          Hot streak of {STREAK_SKIPS_AD} — the kitchen radio skipped this plate.
+        </p>
+      ) : null}
       <div
         className="mb-6 h-2 overflow-hidden rounded-full"
         style={{ background: "var(--pine-800)" }}
@@ -262,8 +392,25 @@ export function QuizRunner({ quiz }: { quiz: Quiz }) {
         {quiz.isLongform ? `Course ${course} of ${courses}` : `${quiz.questions.length} questions`}
       </p>
       <h2 className="mt-2 font-display text-2xl md:text-3xl">{question.prompt}</h2>
+      <div className="mt-4 flex flex-wrap gap-2">
+        {user ? (
+          <button
+            type="button"
+            data-testid="lifeline-5050"
+            className="btn btn-ghost"
+            disabled={picked !== null || hiddenChoices.length > 0 || user.coins < FIFTY_FIFTY_COST}
+            onClick={useFiftyFifty}
+          >
+            50/50 · {FIFTY_FIFTY_COST} coins
+          </button>
+        ) : (
+          <Link href="/register" className="btn btn-ghost" data-testid="lifeline-5050-locked">
+            Join to use 50/50
+          </Link>
+        )}
+      </div>
       <div className="mt-6 grid gap-3">
-        {question.choices.map((choice, i) => {
+        {visibleChoices.map(({ choice, i }) => {
           const show = picked !== null;
           const correct = i === question.answerIndex;
           const selected = i === picked;
@@ -322,6 +469,6 @@ export function QuizRunner({ quiz }: { quiz: Quiz }) {
           </button>
         </div>
       ) : null}
-      </div>,
+    </div>,
   );
 }

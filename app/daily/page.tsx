@@ -10,7 +10,7 @@ export default function DailyPage() {
       <h1 className="mt-2 font-display text-4xl">{quiz.title}</h1>
       <p className="mt-3 text-parchment/75">{quiz.blurb}</p>
       <p className="mt-4 text-sm text-parchment/70">
-        Rotates on UTC midnight.{" "}
+        Rotates on UTC midnight — ten questions, one sitting.{" "}
         <Link href="/secret" className="text-gold-400">
           Try secret quizzes
         </Link>{" "}

@@ -8,6 +8,10 @@ import {
   PREMIUM_COIN_GRANT,
   shouldShowLongformAdBreak,
   SIGNUP_COINS,
+  STREAK_SKIPS_AD,
+  FIFTY_FIFTY_COST,
+  SKIP_AD_COST,
+  wouldLongformAdBreak,
 } from "./economy";
 import type { Attempt, Series } from "./types";
 
@@ -116,5 +120,24 @@ describe("economy", () => {
         total: 54,
       }),
     ).toBe(false);
+    expect(
+      shouldShowLongformAdBreak({
+        isLongform: true,
+        premium: false,
+        questionsCompleted: 5,
+        total: 54,
+        streak: STREAK_SKIPS_AD,
+      }),
+    ).toBe(false);
+    expect(
+      wouldLongformAdBreak({
+        isLongform: true,
+        premium: false,
+        questionsCompleted: 5,
+        total: 54,
+      }),
+    ).toBe(true);
+    expect(FIFTY_FIFTY_COST).toBe(50);
+    expect(SKIP_AD_COST).toBe(50);
   });
 });

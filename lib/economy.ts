@@ -7,16 +7,33 @@ export const DEFAULT_COMPLETE_COINS = 50;
 export const DONATION_COINS_PER_CENT = 0.1;
 /** Free users on longform quizzes see a mid-roll ad every N completed items (Grizly-style pagination). */
 export const LONGFORM_AD_EVERY = 5;
+/** Consecutive correct answers that skip the next mid-course ad. */
+export const STREAK_SKIPS_AD = 5;
+export const FIFTY_FIFTY_COST = 50;
+export const SKIP_AD_COST = 50;
+export const DAILY_LENGTH = 10;
 
 export function shouldShowLongformAdBreak(input: {
   isLongform?: boolean;
   premium?: boolean;
   questionsCompleted: number;
   total: number;
+  streak?: number;
 }) {
   if (!input.isLongform || input.premium) return false;
   if (input.questionsCompleted <= 0 || input.questionsCompleted >= input.total) return false;
-  return input.questionsCompleted % LONGFORM_AD_EVERY === 0;
+  if (input.questionsCompleted % LONGFORM_AD_EVERY !== 0) return false;
+  if ((input.streak ?? 0) >= STREAK_SKIPS_AD) return false;
+  return true;
+}
+
+export function wouldLongformAdBreak(input: {
+  isLongform?: boolean;
+  premium?: boolean;
+  questionsCompleted: number;
+  total: number;
+}) {
+  return shouldShowLongformAdBreak({ ...input, streak: 0 });
 }
 
 export function percentScore(score: number, total: number) {

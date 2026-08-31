@@ -18,7 +18,8 @@ export default function HowItWorksPage() {
         <li>
           <strong className="text-parchment">Learn in public or as a guest.</strong>{" "}
           You can play without an account. Progress, coins, and certificates
-          require registration.
+          require registration. Coins buy a 50/50 or skip one mid-course ad. A
+          streak of five correct answers skips the next longform ad for free.
         </li>
         <li>
           <strong className="text-parchment">Master the topic.</strong> Finish every
@@ -26,7 +27,8 @@ export default function HowItWorksPage() {
         </li>
         <li>
           <strong className="text-parchment">Earn coins.</strong> Completions and
-          correct answers pay out. Premium grants 5,000 coins.
+          correct answers pay out. Spend them on 50/50 and ad skips. Premium
+          grants 5,000 coins.
         </li>
         <li>
           <strong className="text-parchment">Support the mission.</strong> Ads on

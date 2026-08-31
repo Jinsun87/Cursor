@@ -1,5 +1,6 @@
 import type { Category, Quiz, Series } from "./types";
 import { RESTAURANT_FILL_QUESTIONS } from "./quizzes/restaurant-fill";
+import { DAILY_LENGTH } from "./economy";
 
 export const CATEGORIES: Category[] = [
   {
@@ -674,19 +675,29 @@ const DAILY_BANK: { prompt: string; choices: string[]; answerIndex: number; expl
   q("Sound travels fastest through:", ["Vacuum", "Steel (typically vs air)", "Outer space", "A perfect vacuum on Earth"], 1, "Solids generally beat gases."),
   q("The capital of Canada is:", ["Toronto", "Ottawa", "Vancouver", "Montreal"], 1, "Ottawa, Ontario."),
   q("Photosynthesis releases:", ["Nitrogen as the main product people cite", "Oxygen", "Helium", "Crude oil"], 1, "From splitting water."),
+  q("A marathon is officially:", ["26.2 miles", "25 miles", "30 kilometers exactly", "50 miles"], 0, "26 miles and 385 yards."),
+  q("The primary colors of light (additive) are:", ["Red, yellow, blue", "Red, green, blue", "Cyan, magenta, yellow", "Black, white, gray"], 1, "RGB mixing makes white."),
+  q("The Nile's two major tributaries meet near:", ["Cairo only", "Khartoum", "Alexandria", "Aswan exclusively"], 1, "The Blue and White Nile meet at Khartoum."),
+  q("Penicillin was famously isolated from:", ["Algae", "Mold", "Sand", "Coal tar only"], 1, "A Penicillium mold."),
+  q("The smallest prime number is:", ["0", "1", "2", "3"], 2, "2 is the only even prime."),
+  q("Hertz measure:", ["Mass", "Frequency", "Temperature", "Luminous intensity"], 1, "Cycles per second."),
+  q("The Great Barrier Reef is off:", ["California", "Queensland, Australia", "Norway", "Kenya"], 1, "It sits in the Coral Sea."),
+  q("HTML is primarily a:", ["Database", "Markup language", "Operating system", "Compiler"], 1, "HyperText Markup Language."),
+  q("The boiling point of water at standard pressure is:", ["0°C", "32°C", "100°C", "212°C only in Celsius"], 2, "100 degrees Celsius."),
 ];
 
-export function getDailyQuiz(): Quiz {
-  const start = new Date(Date.UTC(new Date().getUTCFullYear(), 0, 0));
-  const now = new Date();
+export function getDailyQuiz(now = new Date()): Quiz {
+  const start = new Date(Date.UTC(now.getUTCFullYear(), 0, 0));
   const utc = Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate());
   const day = Math.floor((utc - start.getTime()) / 86400000);
-  const questions = [0, 1, 2, 3, 4, 5].map((offset) => DAILY_BANK[(day + offset) % DAILY_BANK.length]);
+  const questions = Array.from({ length: DAILY_LENGTH }, (_, offset) => {
+    return DAILY_BANK[(day * 3 + offset) % DAILY_BANK.length];
+  });
   const dateLabel = now.toISOString().slice(0, 10);
   return {
     slug: `daily-${dateLabel}`,
     title: `Quiz of the Day — ${dateLabel}`,
-    blurb: "A fresh mix every UTC day. Streak your mind, not your screen time.",
+    blurb: "Ten fresh questions every UTC day. Streak your mind, not your screen time.",
     category: "general-knowledge",
     isDaily: true,
     coinsOnComplete: 90,

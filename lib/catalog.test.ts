@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { CATEGORIES, QUIZZES, SERIES, getQuiz, getSeries } from "./catalog";
+import { CATEGORIES, QUIZZES, SERIES, getDailyQuiz, getQuiz, getSeries } from "./catalog";
+import { DAILY_LENGTH } from "./economy";
 
 describe("catalog integrity", () => {
   it("has unique category, series, and quiz slugs", () => {
@@ -52,6 +53,7 @@ describe("catalog integrity", () => {
     expect(QUIZZES.filter((q) => q.isSecret).length).toBeGreaterThanOrEqual(2);
     const daily = getQuiz("daily-fixture");
     expect(daily?.isDaily).toBe(true);
-    expect(daily?.questions.length).toBe(6);
+    expect(daily?.questions.length).toBe(DAILY_LENGTH);
+    expect(getDailyQuiz(new Date("2026-08-31T12:00:00Z")).questions.length).toBe(10);
   });
 });

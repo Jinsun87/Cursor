@@ -40,6 +40,7 @@ type Store = {
   };
   upgrade: (plan: "monthly" | "annual") => void;
   donate: (cents: number) => void;
+  spendCoins: (amount: number) => boolean;
   bestScore: (quizSlug: string) => Attempt | undefined;
   seriesProgress: (seriesSlug: string) => {
     completed: number;
@@ -232,6 +233,12 @@ export function AppProvider({ children }: { children: ReactNode }) {
     });
   };
 
+  const spendCoins: Store["spendCoins"] = (amount) => {
+    if (!user || amount <= 0 || user.coins < amount) return false;
+    persist({ ...user, coins: user.coins - amount });
+    return true;
+  };
+
   const bestScore = (quizSlug: string) => {
     if (!user) return undefined;
     return user.attempts
@@ -269,6 +276,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
       recordAttempt,
       upgrade,
       donate,
+      spendCoins,
       bestScore,
       seriesProgress,
     }),
