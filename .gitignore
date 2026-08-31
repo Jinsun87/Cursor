@@ -1,0 +1,11 @@
+node_modules
+.next
+out
+.DS_Store
+*.log
+.env*
+tsconfig.tsbuildinfo
+playwright-report
+test-results
+blob-report
+.playwright

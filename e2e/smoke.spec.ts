@@ -1,0 +1,110 @@
+import { expect, test } from "@playwright/test";
+
+test("home sells the gym and routes into inventory", async ({ page }) => {
+  await page.goto("/");
+  await expect(page.getByRole("heading", { name: /master a subject/i })).toBeVisible();
+  await page.getByRole("link", { name: /take your first quiz/i }).click();
+  await expect(page).toHaveURL(/get-your-fill-restaurant/);
+  await expect(page.getByRole("heading", { name: /get your fill/i })).toBeVisible();
+  await expect(page.getByTestId("course-medals")).toBeVisible();
+  await expect(page.getByTestId("course-medal-1")).toHaveAttribute("data-plated", "false");
+});
+
+test("a guest can finish a quiz and see a score", async ({ page }) => {
+  await page.goto("/quizzes/us-capitals");
+  await expect(page.getByTestId("quiz-hud")).toBeVisible();
+  await expect(page.getByTestId("hud-question")).toContainText("Question 1");
+  await expect(page.getByTestId("hud-accuracy")).toContainText("0%");
+  await expect(page.getByTestId("hud-coins")).toContainText("0");
+  await expect(page.getByTestId("hud-streak")).toContainText("0");
+  await expect(page.getByTestId("choice-0")).toHaveText(/.+/);
+  for (let i = 0; i < 6; i++) {
+    await expect(page.getByTestId("choice-0")).toHaveText(/.+/);
+    await page.getByTestId("choice-0").click();
+    await expect(page.getByTestId("answer-fact")).toBeVisible();
+    await expect(page.getByTestId("answer-fact")).toContainText(/correct answer:/i);
+    await expect(page.getByTestId("answer-fact")).toContainText(/fact:/i);
+    await page.getByTestId("quiz-next").click();
+  }
+  await expect(page.getByTestId("quiz-complete")).toBeVisible();
+  await expect(page.getByTestId("end-grade")).toBeVisible();
+  await expect(page.getByTestId("share-score")).toBeVisible();
+  await expect(page.getByText(/\d+\/6/)).toBeVisible();
+  await page.getByTestId("hud-restart").click();
+  await expect(page.getByTestId("hud-question")).toContainText("Question 1");
+  await expect(page.getByTestId("hud-accuracy")).toContainText("0%");
+  await expect(page.getByRole("heading", { name: /capital of california/i })).toBeVisible();
+});
+
+test("register, secret ads, premium grant, then ads drop", async ({ page }) => {
+  const id = `t${Date.now()}`;
+  await page.goto("/register");
+  await page.getByLabel("Email").fill(`${id}@quizforge.test`);
+  await page.getByLabel("Username").fill(id);
+  await page.getByLabel("Password").fill("testpass");
+  await page.getByRole("button", { name: /sign up/i }).click();
+  await expect(page).toHaveURL(/\/profile/);
+  await expect(page.getByTestId("coin-balance")).toHaveText(/^100/);
+
+  await page.goto("/secret");
+  await expect(page.getByTestId("ad-slot")).toBeVisible();
+
+  await page.goto("/premium");
+  await page.getByRole("button", { name: /activate simulated premium/i }).click();
+  await expect(page).toHaveURL(/\/profile/);
+  await expect(page.getByTestId("premium-badge")).toBeVisible();
+  await expect(page.getByTestId("coin-balance")).toHaveText(/^5,100|^5100/);
+
+  await page.goto("/secret");
+  await expect(page.getByText(/premium trail is clear/i)).toBeVisible();
+  await expect(page.getByTestId("ad-slot")).toHaveCount(0);
+});
+
+test("a guest can resume a sitting after reload", async ({ page }) => {
+  await page.goto("/quizzes/us-capitals");
+  await expect(page.getByTestId("choice-0")).toHaveText(/.+/);
+  await expect(page.getByTestId("course-medals")).toHaveCount(0);
+  await page.getByTestId("choice-0").click();
+  await expect(page.getByTestId("answer-fact")).toBeVisible();
+  const prompt = await page.getByRole("heading", { level: 2 }).innerText();
+  await page.reload();
+  await expect(page.getByTestId("answer-fact")).toBeVisible();
+  await expect(page.getByRole("heading", { level: 2 })).toHaveText(prompt);
+  await expect(page.getByTestId("hud-question")).toContainText("Question 1");
+  await page.getByTestId("quiz-next").click();
+  await expect(page.getByTestId("hud-question")).toContainText("Question 2");
+});
+
+test("restart wipes a saved sitting", async ({ page }) => {
+  await page.goto("/quizzes/us-capitals");
+  await expect(page.getByTestId("choice-0")).toHaveText(/.+/);
+  await page.getByTestId("choice-0").click();
+  await expect(page.getByTestId("answer-fact")).toBeVisible();
+  await page.getByTestId("hud-restart").click();
+  await expect(page.getByTestId("answer-fact")).toHaveCount(0);
+  await expect(page.getByTestId("hud-question")).toContainText("Question 1");
+  await page.reload();
+  await expect(page.getByTestId("answer-fact")).toHaveCount(0);
+  await expect(page.getByTestId("hud-question")).toContainText("Question 1");
+});
+
+test("daily sitting is ten questions", async ({ page }) => {
+  await page.goto("/daily");
+  await expect(page.getByTestId("hud-question")).toContainText("/ 10");
+  await expect(page.getByTestId("choice-0")).toHaveText(/.+/);
+});
+
+test("a signed-in player can buy a 50/50", async ({ page }) => {
+  const id = `t${Date.now()}x`;
+  await page.goto("/register");
+  await page.getByLabel("Email").fill(`${id}@quizforge.test`);
+  await page.getByLabel("Username").fill(id);
+  await page.getByLabel("Password").fill("testpass");
+  await page.getByRole("button", { name: /sign up/i }).click();
+  await expect(page).toHaveURL(/\/profile/);
+  await page.goto("/quizzes/us-capitals");
+  await expect(page.getByTestId("choice-0")).toHaveText(/.+/);
+  await expect(page.locator('[data-testid^="choice-"]')).toHaveCount(4);
+  await page.getByTestId("lifeline-5050").click();
+  await expect(page.locator('[data-testid^="choice-"]')).toHaveCount(2);
+});
