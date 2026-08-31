@@ -165,8 +165,9 @@ export function QuizRunner({ quiz }: { quiz: Quiz }) {
               data-testid={`choice-${i}`}
               onClick={() => choose(i)}
               className="min-h-12 rounded-xl border px-4 py-3 text-left"
-              style={{ borderColor: border, background: bg }}
+              style={{ borderColor: border, background: bg, color: "var(--ink)" }}
             >
+              {choice}
               {show && correct ? " · Correct" : ""}
               {show && selected && !correct ? " · Your pick" : ""}
             </button>
