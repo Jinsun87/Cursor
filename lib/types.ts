@@ -24,6 +24,8 @@ export type Quiz = {
   expert?: string;
   coinsOnComplete: number;
   questions: Question[];
+  /** Long sitting (50+ items). Mid-roll ads for free users, modeled on paginated quiz pages. */
+  isLongform?: boolean;
 };
 
 export type Series = {

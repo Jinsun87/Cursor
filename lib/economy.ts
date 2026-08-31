@@ -5,6 +5,19 @@ export const PREMIUM_COIN_GRANT = 5000;
 export const COINS_PER_CORRECT = 10;
 export const DEFAULT_COMPLETE_COINS = 50;
 export const DONATION_COINS_PER_CENT = 0.1;
+/** Free users on longform quizzes see a mid-roll ad every N completed items (Grizly-style pagination). */
+export const LONGFORM_AD_EVERY = 5;
+
+export function shouldShowLongformAdBreak(input: {
+  isLongform?: boolean;
+  premium?: boolean;
+  questionsCompleted: number;
+  total: number;
+}) {
+  if (!input.isLongform || input.premium) return false;
+  if (input.questionsCompleted <= 0 || input.questionsCompleted >= input.total) return false;
+  return input.questionsCompleted % LONGFORM_AD_EVERY === 0;
+}
 
 export function percentScore(score: number, total: number) {
   return total ? Math.round((score / total) * 100) : 0;

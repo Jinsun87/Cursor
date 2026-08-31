@@ -20,6 +20,12 @@ export default async function QuizPage({
       {quiz.expert ? (
         <p className="mt-2 text-sm text-gold-400">Written in the voice of {quiz.expert}.</p>
       ) : null}
+      {quiz.isLongform ? (
+        <p className="mt-3 text-sm" style={{ color: "var(--muted)" }}>
+          {quiz.questions.length} questions in courses of 5. Free accounts see a short ad between
+          courses — that sitting is the unit Meta is paying for.
+        </p>
+      ) : null}
       {quiz.seriesSlug ? (
         <Link href={`/series/${quiz.seriesSlug}`} className="mt-3 inline-block text-sm text-pine-400">
           Part of a mastery pack →

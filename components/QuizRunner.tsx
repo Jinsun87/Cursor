@@ -5,6 +5,7 @@ import Link from "next/link";
 import type { Quiz } from "@/lib/types";
 import { useApp } from "@/lib/store";
 import { AdSlot } from "./AdSlot";
+import { LONGFORM_AD_EVERY, shouldShowLongformAdBreak } from "@/lib/economy";
 
 export function QuizRunner({ quiz }: { quiz: Quiz }) {
   const { user, recordAttempt } = useApp();
@@ -13,11 +14,14 @@ export function QuizRunner({ quiz }: { quiz: Quiz }) {
   const [correctCount, setCorrectCount] = useState(0);
   const [done, setDone] = useState(false);
   const [finalScore, setFinalScore] = useState(0);
+  const [pageBreak, setPageBreak] = useState(false);
   const [reward, setReward] = useState<{ coinsEarned: number; mastered?: string } | null>(
     null,
   );
 
   const question = quiz.questions[index];
+  const course = Math.floor(index / LONGFORM_AD_EVERY) + 1;
+  const courses = Math.ceil(quiz.questions.length / LONGFORM_AD_EVERY);
   const progress = useMemo(
     () => Math.round((index / quiz.questions.length) * 100),
     [index, quiz.questions.length],
@@ -29,13 +33,27 @@ export function QuizRunner({ quiz }: { quiz: Quiz }) {
     if (i === question.answerIndex) setCorrectCount((s) => s + 1);
   }
 
-  function next() {
+  function advance() {
     if (index + 1 >= quiz.questions.length) {
       const totalScore = correctCount;
       const result = recordAttempt(quiz.slug, totalScore, quiz.questions.length);
       setFinalScore(totalScore);
       setReward(result);
       setDone(true);
+      return;
+    }
+    const completed = index + 1;
+    if (
+      shouldShowLongformAdBreak({
+        isLongform: quiz.isLongform,
+        premium: user?.premium,
+        questionsCompleted: completed,
+        total: quiz.questions.length,
+      })
+    ) {
+      setIndex(completed);
+      setPicked(null);
+      setPageBreak(true);
       return;
     }
     setIndex((n) => n + 1);
@@ -46,7 +64,7 @@ export function QuizRunner({ quiz }: { quiz: Quiz }) {
     const pct = Math.round((finalScore / quiz.questions.length) * 100);
     return (
       <div className="rounded-2xl border p-8" style={{ borderColor: "var(--line)", background: "var(--canvas-2)" }}>
-        {quiz.isSecret ? <AdSlot label="Post-quiz ad" /> : null}
+        {quiz.isSecret || quiz.isLongform ? <AdSlot label="Post-quiz ad" /> : null}
         <p className="text-sm uppercase tracking-widest" style={{ color: "var(--gold)" }} data-testid="quiz-complete">
           Complete
         </p>
@@ -87,6 +105,25 @@ export function QuizRunner({ quiz }: { quiz: Quiz }) {
     );
   }
 
+  if (pageBreak) {
+    return (
+      <div className="rounded-2xl border p-6 md:p-8" style={{ borderColor: "var(--line)", background: "var(--canvas-2)" }}>
+        <p className="text-sm uppercase tracking-widest" style={{ color: "var(--gold)" }}>
+          Course {course} of {courses} plated
+        </p>
+        <h2 className="mt-2 font-display text-2xl">Next course is firing</h2>
+        <p className="mt-2 text-sm" style={{ color: "var(--muted)" }}>
+          Question {index + 1} of {quiz.questions.length} is up after this break. Premium skips the
+          kitchen radio.
+        </p>
+        <AdSlot label="Between-course ad" />
+        <button type="button" className="btn btn-primary mt-2" onClick={() => setPageBreak(false)}>
+          Continue the sitting
+        </button>
+      </div>
+    );
+  }
+
   return (
     <div className="rounded-2xl border p-6 md:p-8" style={{ borderColor: "var(--line)", background: "var(--canvas-2)" }}>
       {quiz.isSecret ? <AdSlot /> : null}
@@ -103,6 +140,7 @@ export function QuizRunner({ quiz }: { quiz: Quiz }) {
       </div>
       <p className="text-sm" style={{ color: "var(--muted)" }}>
         Question {index + 1} of {quiz.questions.length}
+        {quiz.isLongform ? ` · Course ${course} of ${courses}` : ""}
       </p>
       <h2 className="mt-2 font-display text-2xl md:text-3xl">{question.prompt}</h2>
       <div className="mt-6 grid gap-3">
@@ -139,7 +177,7 @@ export function QuizRunner({ quiz }: { quiz: Quiz }) {
           <p className="text-sm" style={{ color: "var(--muted)" }}>
             {question.explanation}
           </p>
-          <button type="button" data-testid="quiz-next" onClick={next} className="btn btn-primary mt-4">
+          <button type="button" data-testid="quiz-next" onClick={advance} className="btn btn-primary mt-4">
             {index + 1 >= quiz.questions.length ? "See results" : "Next"}
           </button>
         </div>

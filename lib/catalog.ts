@@ -1,4 +1,5 @@
 import type { Category, Quiz, Series } from "./types";
+import { RESTAURANT_FILL_QUESTIONS } from "./quizzes/restaurant-fill";
 
 export const CATEGORIES: Category[] = [
   {
@@ -25,9 +26,9 @@ export const CATEGORIES: Category[] = [
     description: "Countries, capitals, cities, and the map of the living world.",
   },
   {
-    slug: "general-knowledge",
-    name: "General Knowledge",
-    description: "Wide-ranging trivia that keeps a curious mind sharp.",
+    slug: "food",
+    name: "Food & Dining",
+    description: "Restaurants, kitchens, and the difference between a drive-thru and a tasting menu.",
   },
   {
     slug: "sports",
@@ -66,6 +67,16 @@ function q(
 }
 
 export const QUIZZES: Quiz[] = [
+  {
+    slug: "get-your-fill-restaurant",
+    title: "Get Your Fill: The Restaurant Floor Quiz",
+    blurb:
+      "Original remix of a long-form restaurant hit: fast food, family dining, and fine dining — 50+ questions so the sitting is long enough to matter.",
+    category: "food",
+    isLongform: true,
+    coinsOnComplete: 250,
+    questions: RESTAURANT_FILL_QUESTIONS,
+  },
   {
     slug: "worlds-largest-cities",
     title: "World's Largest Cities",

@@ -41,6 +41,13 @@ describe("catalog integrity", () => {
     }
   });
 
+  it("ships a 50+ question restaurant flagship for long sessions", () => {
+    const quiz = getQuiz("get-your-fill-restaurant");
+    expect(quiz?.isLongform).toBe(true);
+    expect(quiz?.questions.length).toBeGreaterThanOrEqual(50);
+    expect(quiz?.category).toBe("food");
+  });
+
   it("marks secret quizzes and at least one daily generator", () => {
     expect(QUIZZES.filter((q) => q.isSecret).length).toBeGreaterThanOrEqual(2);
     const daily = getQuiz("daily-fixture");

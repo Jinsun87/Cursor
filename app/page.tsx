@@ -3,7 +3,11 @@ import { CATEGORIES, FEATURED_EXPERTS, QUIZZES, SERIES } from "@/lib/catalog";
 import { QuizCard } from "@/components/QuizCard";
 
 export default function HomePage() {
-  const featured = QUIZZES.filter((q) => !q.isSecret && !q.isReview).slice(0, 6);
+  const flagship = QUIZZES.find((q) => q.slug === "get-your-fill-restaurant");
+  const featured = [
+    ...(flagship ? [flagship] : []),
+    ...QUIZZES.filter((q) => q.slug !== flagship?.slug && !q.isSecret && !q.isReview),
+  ].slice(0, 6);
 
   return (
     <div>
@@ -26,13 +30,16 @@ export default function HomePage() {
           Certificate of Mastery when they actually learn the material.
         </p>
         <div className="mt-8 flex flex-wrap gap-3">
-          <Link href="/quizzes" className="btn btn-primary">
+          <Link href="/quizzes/get-your-fill-restaurant" className="btn btn-primary">
             Take your first quiz
           </Link>
           <Link href="/how-it-works" className="btn btn-ghost">
             How packs work
           </Link>
         </div>
+        <p className="mt-4 text-sm" style={{ color: "var(--muted)" }}>
+          Flagship sitting: 54-question restaurant remix (fast food, family dining, fine dining).
+        </p>
       </section>
 
       <section className="mt-14">

@@ -6,6 +6,7 @@ import {
   masteryFromReview,
   percentScore,
   PREMIUM_COIN_GRANT,
+  shouldShowLongformAdBreak,
   SIGNUP_COINS,
 } from "./economy";
 import type { Attempt, Series } from "./types";
@@ -88,5 +89,32 @@ describe("economy", () => {
         total: 8,
       }).masteredTitle,
     ).toBeUndefined();
+  });
+
+  it("inserts longform ad breaks every five completed questions for free users", () => {
+    expect(
+      shouldShowLongformAdBreak({
+        isLongform: true,
+        premium: false,
+        questionsCompleted: 5,
+        total: 54,
+      }),
+    ).toBe(true);
+    expect(
+      shouldShowLongformAdBreak({
+        isLongform: true,
+        premium: true,
+        questionsCompleted: 5,
+        total: 54,
+      }),
+    ).toBe(false);
+    expect(
+      shouldShowLongformAdBreak({
+        isLongform: true,
+        premium: false,
+        questionsCompleted: 54,
+        total: 54,
+      }),
+    ).toBe(false);
   });
 });
