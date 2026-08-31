@@ -15,7 +15,9 @@ test("a guest can finish a quiz and see a score", async ({ page }) => {
   await expect(page.getByTestId("hud-accuracy")).toContainText("0%");
   await expect(page.getByTestId("hud-coins")).toContainText("0");
   await expect(page.getByTestId("hud-streak")).toContainText("0");
+  await expect(page.getByTestId("choice-0")).toHaveText(/.+/);
   for (let i = 0; i < 6; i++) {
+    await expect(page.getByTestId("choice-0")).toHaveText(/.+/);
     await page.getByTestId("choice-0").click();
     await expect(page.getByTestId("answer-fact")).toBeVisible();
     await expect(page.getByTestId("answer-fact")).toContainText(/correct answer:/i);

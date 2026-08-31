@@ -1,15 +1,17 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
-import type { Quiz } from "@/lib/types";
+import type { Question, Quiz } from "@/lib/types";
 import { useApp } from "@/lib/store";
 import { AdSlot } from "./AdSlot";
 import { QuizHud } from "./QuizHud";
 import { LONGFORM_AD_EVERY, shouldShowLongformAdBreak } from "@/lib/economy";
+import { shuffleQuizDeck } from "@/lib/shuffle";
 
 export function QuizRunner({ quiz }: { quiz: Quiz }) {
   const { user, recordAttempt } = useApp();
+  const [deck, setDeck] = useState<Question[] | null>(null);
   const [index, setIndex] = useState(0);
   const [picked, setPicked] = useState<number | null>(null);
   const [correctCount, setCorrectCount] = useState(0);
@@ -22,13 +24,33 @@ export function QuizRunner({ quiz }: { quiz: Quiz }) {
     null,
   );
 
-  const question = quiz.questions[index];
+  const questions = deck ?? quiz.questions;
+  const question = questions[index];
   const course = Math.floor(index / LONGFORM_AD_EVERY) + 1;
-  const courses = Math.ceil(quiz.questions.length / LONGFORM_AD_EVERY);
+  const courses = Math.ceil(questions.length / LONGFORM_AD_EVERY);
   const progress = useMemo(
-    () => Math.round((index / quiz.questions.length) * 100),
-    [index, quiz.questions.length],
+    () => Math.round((index / questions.length) * 100),
+    [index, questions.length],
   );
+
+  function deal() {
+    setDeck(shuffleQuizDeck(quiz.questions));
+    setIndex(0);
+    setPicked(null);
+    setCorrectCount(0);
+    setAnswered(0);
+    setStreak(0);
+    setDone(false);
+    setFinalScore(0);
+    setPageBreak(false);
+    setReward(null);
+  }
+
+  useEffect(() => {
+    deal();
+    // Fresh order whenever the quiz changes.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [quiz.slug]);
 
   function choose(i: number) {
     if (picked !== null) return;
@@ -44,15 +66,7 @@ export function QuizRunner({ quiz }: { quiz: Quiz }) {
   }
 
   function restart() {
-    setIndex(0);
-    setPicked(null);
-    setCorrectCount(0);
-    setAnswered(0);
-    setStreak(0);
-    setDone(false);
-    setFinalScore(0);
-    setPageBreak(false);
-    setReward(null);
+    deal();
   }
 
   const hud = (
@@ -91,6 +105,17 @@ export function QuizRunner({ quiz }: { quiz: Quiz }) {
     }
     setIndex((n) => n + 1);
     setPicked(null);
+  }
+
+  if (!deck) {
+    return (
+      <div>
+        {hud}
+        <p className="rounded-2xl border p-8 text-sm" style={{ borderColor: "var(--line)" }}>
+          Shuffling the options…
+        </p>
+      </div>
+    );
   }
 
   if (done) {
