@@ -10,6 +10,11 @@ test("home sells the gym and routes into inventory", async ({ page }) => {
 
 test("a guest can finish a quiz and see a score", async ({ page }) => {
   await page.goto("/quizzes/us-capitals");
+  await expect(page.getByTestId("quiz-hud")).toBeVisible();
+  await expect(page.getByTestId("hud-question")).toContainText("Question 1");
+  await expect(page.getByTestId("hud-accuracy")).toContainText("0%");
+  await expect(page.getByTestId("hud-coins")).toContainText("0");
+  await expect(page.getByTestId("hud-streak")).toContainText("0");
   for (let i = 0; i < 6; i++) {
     await page.getByTestId("choice-0").click();
     await expect(page.getByTestId("answer-fact")).toBeVisible();
@@ -19,6 +24,10 @@ test("a guest can finish a quiz and see a score", async ({ page }) => {
   }
   await expect(page.getByTestId("quiz-complete")).toBeVisible();
   await expect(page.getByText(/\d+\/6/)).toBeVisible();
+  await page.getByTestId("hud-restart").click();
+  await expect(page.getByTestId("hud-question")).toContainText("Question 1");
+  await expect(page.getByTestId("hud-accuracy")).toContainText("0%");
+  await expect(page.getByRole("heading", { name: /capital of california/i })).toBeVisible();
 });
 
 test("register, secret ads, premium grant, then ads drop", async ({ page }) => {

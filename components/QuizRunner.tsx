@@ -5,6 +5,7 @@ import Link from "next/link";
 import type { Quiz } from "@/lib/types";
 import { useApp } from "@/lib/store";
 import { AdSlot } from "./AdSlot";
+import { QuizHud } from "./QuizHud";
 import { LONGFORM_AD_EVERY, shouldShowLongformAdBreak } from "@/lib/economy";
 
 export function QuizRunner({ quiz }: { quiz: Quiz }) {
@@ -12,6 +13,8 @@ export function QuizRunner({ quiz }: { quiz: Quiz }) {
   const [index, setIndex] = useState(0);
   const [picked, setPicked] = useState<number | null>(null);
   const [correctCount, setCorrectCount] = useState(0);
+  const [answered, setAnswered] = useState(0);
+  const [streak, setStreak] = useState(0);
   const [done, setDone] = useState(false);
   const [finalScore, setFinalScore] = useState(0);
   const [pageBreak, setPageBreak] = useState(false);
@@ -29,9 +32,39 @@ export function QuizRunner({ quiz }: { quiz: Quiz }) {
 
   function choose(i: number) {
     if (picked !== null) return;
+    const ok = i === question.answerIndex;
     setPicked(i);
-    if (i === question.answerIndex) setCorrectCount((s) => s + 1);
+    setAnswered((n) => n + 1);
+    if (ok) {
+      setCorrectCount((s) => s + 1);
+      setStreak((s) => s + 1);
+    } else {
+      setStreak(0);
+    }
   }
+
+  function restart() {
+    setIndex(0);
+    setPicked(null);
+    setCorrectCount(0);
+    setAnswered(0);
+    setStreak(0);
+    setDone(false);
+    setFinalScore(0);
+    setPageBreak(false);
+    setReward(null);
+  }
+
+  const hud = (
+    <QuizHud
+      questionNumber={Math.min(index + 1, quiz.questions.length)}
+      total={quiz.questions.length}
+      correct={correctCount}
+      answered={answered}
+      streak={streak}
+      onRestart={restart}
+    />
+  );
 
   function advance() {
     if (index + 1 >= quiz.questions.length) {
@@ -63,7 +96,9 @@ export function QuizRunner({ quiz }: { quiz: Quiz }) {
   if (done) {
     const pct = Math.round((finalScore / quiz.questions.length) * 100);
     return (
-      <div className="rounded-2xl border p-8" style={{ borderColor: "var(--line)", background: "var(--canvas-2)" }}>
+      <div>
+        {hud}
+        <div className="rounded-2xl border p-8" style={{ borderColor: "var(--line)", background: "var(--canvas-2)" }}>
         {quiz.isSecret || quiz.isLongform ? <AdSlot label="Post-quiz ad" /> : null}
         <p className="text-sm uppercase tracking-widest" style={{ color: "var(--gold)" }} data-testid="quiz-complete">
           Complete
@@ -101,13 +136,16 @@ export function QuizRunner({ quiz }: { quiz: Quiz }) {
             </Link>
           ) : null}
         </div>
+        </div>
       </div>
     );
   }
 
   if (pageBreak) {
     return (
-      <div className="rounded-2xl border p-6 md:p-8" style={{ borderColor: "var(--line)", background: "var(--canvas-2)" }}>
+      <div>
+        {hud}
+        <div className="rounded-2xl border p-6 md:p-8" style={{ borderColor: "var(--line)", background: "var(--canvas-2)" }}>
         <p className="text-sm uppercase tracking-widest" style={{ color: "var(--gold)" }}>
           Course {course} of {courses} plated
         </p>
@@ -120,12 +158,15 @@ export function QuizRunner({ quiz }: { quiz: Quiz }) {
         <button type="button" className="btn btn-primary mt-2" onClick={() => setPageBreak(false)}>
           Continue the sitting
         </button>
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="rounded-2xl border p-6 md:p-8" style={{ borderColor: "var(--line)", background: "var(--canvas-2)" }}>
+    <div>
+      {hud}
+      <div className="rounded-2xl border p-6 md:p-8" style={{ borderColor: "var(--line)", background: "var(--canvas-2)" }}>
       {quiz.isSecret ? <AdSlot /> : null}
       <div
         className="mb-6 h-2 overflow-hidden rounded-full"
@@ -139,8 +180,7 @@ export function QuizRunner({ quiz }: { quiz: Quiz }) {
         <div className="h-full" style={{ width: `${progress}%`, background: "var(--gold)" }} />
       </div>
       <p className="text-sm" style={{ color: "var(--muted)" }}>
-        Question {index + 1} of {quiz.questions.length}
-        {quiz.isLongform ? ` · Course ${course} of ${courses}` : ""}
+        {quiz.isLongform ? `Course ${course} of ${courses}` : `${quiz.questions.length} questions`}
       </p>
       <h2 className="mt-2 font-display text-2xl md:text-3xl">{question.prompt}</h2>
       <div className="mt-6 grid gap-3">
@@ -203,6 +243,7 @@ export function QuizRunner({ quiz }: { quiz: Quiz }) {
           </button>
         </div>
       ) : null}
+      </div>
     </div>
   );
 }
