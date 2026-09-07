@@ -22,8 +22,8 @@ export default async function QuizPage({
       ) : null}
       {quiz.isLongform ? (
         <p className="mt-3 text-sm" style={{ color: "var(--muted)" }}>
-          {quiz.questions.length} questions in courses of 5. Free accounts see a short ad between
-          courses — that sitting is the unit Meta is paying for.
+          {quiz.questions.length} questions in courses of 5. Free accounts see a short pause
+          between courses so the sitting can stay free.
         </p>
       ) : null}
       {quiz.seriesSlug ? (

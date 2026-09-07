@@ -42,11 +42,11 @@ describe("catalog integrity", () => {
     }
   });
 
-  it("ships a 50+ question restaurant flagship for long sessions", () => {
-    const quiz = getQuiz("get-your-fill-restaurant");
+  it("ships a 50+ question Scripture flagship for long sessions", () => {
+    const quiz = getQuiz("open-the-book");
     expect(quiz?.isLongform).toBe(true);
     expect(quiz?.questions.length).toBeGreaterThanOrEqual(50);
-    expect(quiz?.category).toBe("food");
+    expect(quiz?.category).toBe("bible");
   });
 
   it("marks secret quizzes and at least one daily generator", () => {

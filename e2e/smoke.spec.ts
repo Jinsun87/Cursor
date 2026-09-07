@@ -4,8 +4,8 @@ test("home sells the gym and routes into inventory", async ({ page }) => {
   await page.goto("/");
   await expect(page.getByRole("heading", { name: /master a subject/i })).toBeVisible();
   await page.getByRole("link", { name: /take your first quiz/i }).click();
-  await expect(page).toHaveURL(/get-your-fill-restaurant/);
-  await expect(page.getByRole("heading", { name: /get your fill/i })).toBeVisible();
+  await expect(page).toHaveURL(/open-the-book/);
+  await expect(page.getByRole("heading", { name: /open the book/i })).toBeVisible();
   await expect(page.getByTestId("course-medals")).toBeVisible();
   await expect(page.getByTestId("course-medal-1")).toHaveAttribute("data-plated", "false");
 });

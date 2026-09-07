@@ -1,4 +1,5 @@
 import type { Category, Quiz, Series } from "./types";
+import { OPEN_THE_BOOK_QUESTIONS } from "./quizzes/open-the-book";
 import { RESTAURANT_FILL_QUESTIONS } from "./quizzes/restaurant-fill";
 import { DAILY_LENGTH } from "./economy";
 
@@ -68,6 +69,16 @@ function q(
 }
 
 export const QUIZZES: Quiz[] = [
+  {
+    slug: "open-the-book",
+    title: "Open the Book: People, Places, and the Text",
+    blurb:
+      "Fifty-four original questions on Scripture — patriarchs, prophets, Gospels, and letters. A long sitting with a fact after every answer. Not a sermon.",
+    category: "bible",
+    isLongform: true,
+    coinsOnComplete: 250,
+    questions: OPEN_THE_BOOK_QUESTIONS,
+  },
   {
     slug: "get-your-fill-restaurant",
     title: "Get Your Fill: The Restaurant Floor Quiz",
