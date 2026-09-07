@@ -5,6 +5,11 @@ import { DAILY_LENGTH } from "./economy";
 
 export const CATEGORIES: Category[] = [
   {
+    slug: "bible",
+    name: "Bible",
+    description: "People, places, and the text — knowledge quizzes, not sermons.",
+  },
+  {
     slug: "survival",
     name: "Survival",
     description: "Wilderness skills, preparedness, and staying alive when plans fail.",
@@ -51,11 +56,6 @@ export const CATEGORIES: Category[] = [
     slug: "cars",
     name: "Cars & Trucks",
     description: "Engines, marques, and the road that got us here.",
-  },
-  {
-    slug: "bible",
-    name: "Bible",
-    description: "People, places, and stories from scripture.",
   },
 ];
 
