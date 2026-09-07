@@ -1,0 +1,3 @@
+# quiz.mediareferee.com — authorized digital sellers
+# Empty until a live AdSense / Google Ad Manager / Meta account is connected.
+# Paste the exact lines from that account here. Do not invent a pub ID.

@@ -13,6 +13,9 @@ export function Footer() {
             questions. Independent — not a church, not pastoral care, not
             affiliated with any denomination.
           </p>
+          <p className="mt-2 text-sm" style={{ color: "var(--muted)" }}>
+            Live host: quiz.mediareferee.com
+          </p>
         </div>
         <nav className="text-sm" aria-label="Footer">
           <p className="mb-2 font-semibold" style={{ color: "var(--gold)" }}>
@@ -50,6 +53,9 @@ export function Footer() {
           </p>
           <Link href="/donate" className="mt-3 inline-flex min-h-11 items-center" style={{ color: "var(--gold)" }}>
             Donate →
+          </Link>
+          <Link href="/privacy" className="mt-2 inline-flex min-h-11 items-center">
+            Privacy
           </Link>
         </div>
       </div>

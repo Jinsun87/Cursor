@@ -40,3 +40,21 @@ Next.js 15 (App Router), React 19, Tailwind CSS. Progress lives in `localStorage
 | `/register`, `/login`, `/profile` | Account |
 | `/leaderboard` | Social proof |
 | `/how-it-works` | Onboarding copy |
+| `/privacy` | What this build stores |
+
+## Go live (quiz.mediareferee.com)
+
+Keep **mediareferee.com** on the existing site. Point a **subdomain** at this app so you can test sittings and, later, real ads without moving the apex.
+
+1. Create a Vercel (or similar) project from this GitHub repo, production branch `cursor/quizforge-business-model-94c3` until it is merged to `main`.
+2. Set env `NEXT_PUBLIC_SITE_URL=https://quiz.mediareferee.com`.
+3. DNS at the mediareferee.com registrar:
+
+   `quiz`  `CNAME`  `cname.vercel-dns.com`  
+   (use the exact target Vercel shows if it differs.)
+
+4. Confirm `https://quiz.mediareferee.com` loads Lampstand and `https://quiz.mediareferee.com/ads.txt` is reachable.
+5. When an ad account is approved, paste that network’s `ads.txt` lines into `public/ads.txt` and replace the placeholder `AdSlot` with real tags.
+
+Placeholders do not earn RPM. The subdomain is for HTTPS, share URLs, and policy review first.
+
