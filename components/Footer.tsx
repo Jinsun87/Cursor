@@ -6,12 +6,12 @@ export function Footer() {
       <div className="mx-auto grid max-w-6xl gap-8 px-4 py-12 md:grid-cols-3">
         <div>
           <p className="font-display text-lg">
-            Quiz<span style={{ color: "var(--gold)" }}>Forge</span>
+            Lamp<span style={{ color: "var(--gold)" }}>stand</span>
           </p>
           <p className="mt-2 text-sm" style={{ color: "var(--muted)" }}>
-            An independent recreation of the expert-quiz + mastery + freemium
-            model popularized by sites like QuizGriz. Original questions and
-            branding. Not affiliated with QG Marketing LLC.
+            Scripture quizzes for people who want to know the text. Original
+            questions. Independent — not a church, not pastoral care, not
+            affiliated with any denomination.
           </p>
         </div>
         <nav className="text-sm" aria-label="Footer">
@@ -46,8 +46,7 @@ export function Footer() {
             Mission
           </p>
           <p style={{ color: "var(--muted)" }}>
-            Train your mind. Master a topic. Support cognitive-health causes
-            with optional donations.
+            Know the text. Finish a pack. Optional gifts keep the lamps lit.
           </p>
           <Link href="/donate" className="mt-3 inline-flex min-h-11 items-center" style={{ color: "var(--gold)" }}>
             Donate →

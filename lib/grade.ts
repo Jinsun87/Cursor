@@ -24,5 +24,5 @@ export function shareScoreText(input: {
 }) {
   const pct = percentScore(input.score, input.total);
   const url = input.url ? ` ${input.url}` : "";
-  return `I scored ${input.score}/${input.total} (${pct}%, ${input.letter}) on ${input.title} at QuizForge.${url}`;
+  return `I scored ${input.score}/${input.total} (${pct}%, ${input.letter}) on ${input.title} at Lampstand.${url}`;
 }

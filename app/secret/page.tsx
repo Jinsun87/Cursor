@@ -10,7 +10,7 @@ export default function SecretPage() {
   const { user } = useApp();
   return (
     <div>
-      <h1 className="font-display text-4xl">Secret quizzes</h1>
+      <h1 className="font-display text-4xl">Quiet room</h1>
       <p className="mt-3 max-w-2xl text-parchment/75">
         Off-homepage challenges. Free accounts see ads here. Premium members get
         the quiet version and a badge on their profile.

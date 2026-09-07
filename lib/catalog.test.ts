@@ -47,6 +47,8 @@ describe("catalog integrity", () => {
     expect(quiz?.isLongform).toBe(true);
     expect(quiz?.questions.length).toBeGreaterThanOrEqual(50);
     expect(quiz?.category).toBe("bible");
+    expect(CATEGORIES[0]?.slug).toBe("bible");
+    expect(getSeries("bible-foundations")?.quizSlugs).toContain("scripture-places");
   });
 
   it("marks secret quizzes and at least one daily generator", () => {
@@ -55,5 +57,6 @@ describe("catalog integrity", () => {
     expect(daily?.isDaily).toBe(true);
     expect(daily?.questions.length).toBe(DAILY_LENGTH);
     expect(getDailyQuiz(new Date("2026-08-31T12:00:00Z")).questions.length).toBe(10);
+    expect(getDailyQuiz(new Date("2026-08-31T12:00:00Z")).category).toBe("bible");
   });
 });

@@ -20,8 +20,8 @@ import {
   masteryFromReview,
 } from "./economy";
 
-const STORAGE_KEY = "quizforge-users-v1";
-const SESSION_KEY = "quizforge-session-v1";
+const STORAGE_KEY = "lampstand-users-v1";
+const SESSION_KEY = "lampstand-session-v1";
 
 type Store = {
   user: User | null;
@@ -68,10 +68,10 @@ function saveUsers(users: User[]) {
 
 function seedLeaderboard(): User[] {
   const existing = loadUsers();
-  if (existing.some((u) => u.email.endsWith("@quizforge.demo"))) return existing;
+  if (existing.some((u) => u.email.endsWith("@lampstand.demo"))) return existing;
   const demos: User[] = [
     {
-      email: "maple@quizforge.demo",
+      email: "maple@lampstand.demo",
       username: "MapleMind",
       password: "demo",
       coins: 1840,
@@ -79,13 +79,13 @@ function seedLeaderboard(): User[] {
       premiumPlan: "annual",
       createdAt: new Date().toISOString(),
       attempts: [],
-      masteredSeries: ["geography-1"],
+      masteredSeries: ["bible-foundations"],
       donatedCents: 2500,
       newsletter: false,
     },
     {
-      email: "ridge@quizforge.demo",
-      username: "RidgeRunner",
+      email: "ridge@lampstand.demo",
+      username: "RidgeReader",
       password: "demo",
       coins: 920,
       premium: false,
@@ -96,8 +96,8 @@ function seedLeaderboard(): User[] {
       newsletter: false,
     },
     {
-      email: "atlas@quizforge.demo",
-      username: "AtlasQuiz",
+      email: "atlas@lampstand.demo",
+      username: "AtlasText",
       password: "demo",
       coins: 610,
       premium: false,

@@ -1,6 +1,6 @@
 import type { Question } from "./types";
 
-export const SITTING_PREFIX = "quizforge-sitting-v1:";
+export const SITTING_PREFIX = "lampstand-sitting-v1:";
 export const SITTING_TTL_MS = 7 * 24 * 60 * 60 * 1000;
 
 export type Sitting = {

@@ -175,7 +175,7 @@ export function QuizRunner({ quiz }: { quiz: Quiz }) {
     });
     try {
       if (navigator.share) {
-        await navigator.share({ title: "QuizForge", text });
+        await navigator.share({ title: "Lampstand", text });
         setShareStatus("Shared.");
         return;
       }
@@ -331,13 +331,13 @@ export function QuizRunner({ quiz }: { quiz: Quiz }) {
     return frame(
       <div className="rounded-2xl border p-6 md:p-8" style={{ borderColor: "var(--line)", background: "var(--canvas-2)" }}>
         <p className="text-sm uppercase tracking-widest" style={{ color: "var(--gold)" }}>
-          Course {course} of {courses} plated
+          Course {course} of {courses}
         </p>
-        <h2 className="mt-2 font-display text-2xl">Next course is firing</h2>
+        <h2 className="mt-2 font-display text-2xl">Pause between courses</h2>
         <p className="mt-2 text-sm" style={{ color: "var(--muted)" }}>
-          {plated} of {courses} course medals are plated. Question {index + 1} of{" "}
+          {plated} of {courses} course medals are lit. Question {index + 1} of{" "}
           {quiz.questions.length} is up after this break. A streak of {STREAK_SKIPS_AD} skips the
-          radio. Coins skip it once.
+          pause. Coins skip it once.
         </p>
         <AdSlot label="Between-course ad" />
         <div className="mt-2 flex flex-wrap gap-3">
@@ -374,7 +374,7 @@ export function QuizRunner({ quiz }: { quiz: Quiz }) {
           data-testid="streak-skip-note"
           style={{ borderColor: "var(--gold)", color: "var(--gold)" }}
         >
-          Hot streak of {STREAK_SKIPS_AD} — the kitchen radio skipped this plate.
+          Hot streak of {STREAK_SKIPS_AD} — this course pause was skipped.
         </p>
       ) : null}
       <div

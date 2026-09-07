@@ -16,5 +16,8 @@ describe("end-card grade", () => {
       "5/6",
     );
     expect(shareScoreText({ title: "U.S. Capitals", score: 5, total: 6, letter: "B" })).toContain("B");
+    expect(shareScoreText({ title: "U.S. Capitals", score: 5, total: 6, letter: "B" })).toContain(
+      "Lampstand",
+    );
   });
 });

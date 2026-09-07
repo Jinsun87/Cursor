@@ -3,14 +3,17 @@ import { QuizCard } from "@/components/QuizCard";
 import Link from "next/link";
 
 export default function QuizzesPage() {
-  const popular = QUIZZES.filter((q) => !q.isSecret);
+  const popular = [
+    ...QUIZZES.filter((q) => q.category === "bible" && !q.isSecret),
+    ...QUIZZES.filter((q) => q.category !== "bible" && !q.isSecret),
+  ];
 
   return (
     <div>
-      <h1 className="font-display text-4xl">Popular quizzes</h1>
+      <h1 className="font-display text-4xl">Quiz library</h1>
       <p className="mt-2 text-parchment/70">
-        Packs, reviews, and one-off challenges. Secret quizzes live on their own
-        trail.
+        Scripture sittings first, then the rest of the library. The Quiet room
+        lives at /secret.
       </p>
       <div className="mt-6 flex flex-wrap gap-2">
         {CATEGORIES.map((c) => (

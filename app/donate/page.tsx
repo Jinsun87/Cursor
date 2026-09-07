@@ -6,8 +6,8 @@ import { useApp } from "@/lib/store";
 import Link from "next/link";
 
 const CAUSES = [
-  { id: "caf", name: "Cognitive health fund", note: "Stand-in for a Cure Alzheimer's Fund style gift." },
-  { id: "platform", name: "QuizForge operations", note: "Keep packs researched and the gym lights on." },
+  { id: "caf", name: "Literacy & memory fund", note: "Stand-in gift toward keeping minds in the text — not a church tithe." },
+  { id: "platform", name: "Lampstand operations", note: "Keep questions researched and the lamps lit." },
 ];
 
 export default function DonatePage() {
@@ -30,9 +30,8 @@ export default function DonatePage() {
     <div className="mx-auto max-w-2xl">
       <h1 className="font-display text-4xl">Donate</h1>
       <p className="mt-3 text-parchment/75">
-        The source product splits support three ways: Premium, a named medical
-        charity, and the company itself. This recreation uses simulated gifts
-        only — no money leaves your browser.
+        Optional gifts and Premium keep original questions coming. Simulated
+        only — no money leaves your browser. Not a church offering.
       </p>
       {done ? (
         <p className="mt-8 rounded-2xl border border-gold-500/40 p-6">

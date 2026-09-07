@@ -37,7 +37,7 @@ export default function LoginPage() {
         </button>
       </form>
       <p className="mt-4 text-sm text-parchment/70">
-        Demo accounts exist on first visit: maple@quizforge.demo / demo
+        Demo accounts exist on first visit: maple@lampstand.demo / demo
       </p>
       <p className="mt-2 text-sm">
         No account?{" "}

@@ -19,12 +19,12 @@ const display = Newsreader({
 });
 
 export const metadata: Metadata = {
-  title: "QuizForge — Train your mind. Master a topic.",
+  title: "Lampstand — Know the text.",
   description:
-    "Expert-style quiz packs, certificates of mastery, coins, premium, and a cognitive-health mission. An original recreation of the QuizGriz business model.",
+    "Christian Scripture quizzes: long sittings, pack mastery, coins, and Premium. Original questions. Not a church and not affiliated with any denomination.",
 };
 
-const themeBoot = `(function(){try{var t=localStorage.getItem('quizforge-theme');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t);else document.documentElement.setAttribute('data-theme',matchMedia('(prefers-color-scheme: light)').matches?'light':'dark');}catch(e){document.documentElement.setAttribute('data-theme','dark');}})();`;
+const themeBoot = `(function(){try{var t=localStorage.getItem('lampstand-theme')||localStorage.getItem('quizforge-theme');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t);else document.documentElement.setAttribute('data-theme',matchMedia('(prefers-color-scheme: light)').matches?'light':'dark');}catch(e){document.documentElement.setAttribute('data-theme','dark');}})();`;
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (

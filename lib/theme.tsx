@@ -10,7 +10,7 @@ const Ctx = createContext<{ theme: Theme; setTheme: (t: Theme) => void; cycle: (
 
 function readTheme(): Theme {
   if (typeof window === "undefined") return "dark";
-  const stored = localStorage.getItem("quizforge-theme");
+  const stored = localStorage.getItem("lampstand-theme") ?? localStorage.getItem("quizforge-theme");
   if (stored === "light" || stored === "dark") return stored;
   return window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
 }
@@ -28,7 +28,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", theme);
-    localStorage.setItem("quizforge-theme", theme);
+    localStorage.setItem("lampstand-theme", theme);
   }, [theme]);
 
   function setTheme(next: Theme) {

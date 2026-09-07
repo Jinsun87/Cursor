@@ -34,7 +34,7 @@ export default function CertificatePage() {
             profile.
           </p>
         )}
-        <p className="mt-8 font-display text-sm text-pine-400">QuizForge Mind Gym</p>
+        <p className="mt-8 font-display text-sm text-pine-400">Lampstand · Know the text.</p>
       </div>
       <p className="mt-6 text-center">
         <Link href={`/series/${series.slug}`} className="text-gold-400">

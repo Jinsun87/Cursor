@@ -20,10 +20,10 @@ export default function LeaderboardPage() {
 
   return (
     <div>
-      <h1 className="font-display text-4xl">Bragging board</h1>
+      <h1 className="font-display text-4xl">Board</h1>
       <p className="mt-2 text-parchment/70">
-        Ranked by certificates, then quizzes logged, then coins. Demo hikers
-        appear on first visit so the trail is not empty.
+        Ranked by certificates, then quizzes logged, then coins. Demo readers
+        appear on first visit so the board is not empty.
       </p>
       <ol className="mt-8 space-y-3">
         {ranked.map((row, i) => (
@@ -44,7 +44,7 @@ export default function LeaderboardPage() {
         ))}
       </ol>
       <p className="mt-6 text-xs text-parchment/50">
-        Series in this gym: {SERIES.map((s) => s.title).join(", ")}.
+        Series on Lampstand: {SERIES.map((s) => s.title).join(", ")}.
       </p>
     </div>
   );

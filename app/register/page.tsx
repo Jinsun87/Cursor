@@ -25,10 +25,10 @@ export default function RegisterPage() {
 
   return (
     <div className="mx-auto max-w-md">
-      <h1 className="font-display text-4xl">Join QuizForge</h1>
+      <h1 className="font-display text-4xl">Join Lampstand</h1>
       <p className="mt-2 text-parchment/70">
-        The source product cites hundreds of thousands of quiz-takers. This gym
-        starts you at 100 coins.
+        Know the text. A free account starts you at 100 coins so packs, 50/50,
+        and certificates can stick.
       </p>
       <form onSubmit={onSubmit} className="mt-8 grid gap-4">
         <label className="grid gap-1 text-sm">

@@ -1,8 +1,8 @@
 import { expect, test } from "@playwright/test";
 
-test("home sells the gym and routes into inventory", async ({ page }) => {
+test("home sells Scripture and routes into Open the Book", async ({ page }) => {
   await page.goto("/");
-  await expect(page.getByRole("heading", { name: /master a subject/i })).toBeVisible();
+  await expect(page.getByRole("heading", { name: /know the text/i })).toBeVisible();
   await page.getByRole("link", { name: /take your first quiz/i }).click();
   await expect(page).toHaveURL(/open-the-book/);
   await expect(page.getByRole("heading", { name: /open the book/i })).toBeVisible();

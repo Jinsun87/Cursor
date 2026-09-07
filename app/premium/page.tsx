@@ -21,10 +21,10 @@ export default function PremiumPage() {
 
   return (
     <div className="mx-auto max-w-3xl">
-      <h1 className="font-display text-4xl">QuizForge Premium</h1>
+      <h1 className="font-display text-4xl">Lampstand Premium</h1>
       <p className="mt-3 text-parchment/75">
-        The best trivia trail on this recreation of the model: secret quizzes
-        without ads, a coin grant, and a badge worth bragging about.
+        Quiet room without ads, a coin grant, and a badge. Simulated checkout
+        only — same pricing psychology as a typical trivia membership.
       </p>
       <table className="mt-8 w-full text-left text-sm">
         <thead>
@@ -82,8 +82,8 @@ export default function PremiumPage() {
         {user ? "Activate simulated Premium" : "Create an account to upgrade"}
       </button>
       <p className="mt-4 text-xs text-parchment/50">
-        No real charges. This sandbox recreates pricing psychology from the
-        source product ($9.99 / $99.99).
+        No real charges. This sandbox uses $9.99 / $99.99 as familiar membership
+        prices, not as a claim about another product.
       </p>
       <p className="mt-2 text-sm">
         Prefer to support the mission without a sub? <Link href="/donate" className="text-gold-400">Donate</Link>

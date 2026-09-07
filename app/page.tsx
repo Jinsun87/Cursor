@@ -6,7 +6,16 @@ export default function HomePage() {
   const flagship = QUIZZES.find((q) => q.slug === "open-the-book");
   const featured = [
     ...(flagship ? [flagship] : []),
-    ...QUIZZES.filter((q) => q.slug !== flagship?.slug && !q.isSecret && !q.isReview),
+    ...QUIZZES.filter(
+      (q) =>
+        q.category === "bible" &&
+        q.slug !== flagship?.slug &&
+        !q.isSecret &&
+        !q.isReview,
+    ),
+    ...QUIZZES.filter(
+      (q) => q.category !== "bible" && !q.isSecret && !q.isReview,
+    ),
   ].slice(0, 6);
 
   return (
@@ -19,15 +28,15 @@ export default function HomePage() {
         }}
       >
         <p className="text-sm uppercase tracking-[0.22em]" style={{ color: "var(--gold)" }}>
-          Mind gym · Topic mastery
+          Lampstand · Scripture sittings
         </p>
         <h1 className="mt-4 max-w-3xl font-display leading-[1.08]" style={{ fontSize: "clamp(2.1rem, 5vw, 4.25rem)" }}>
-          Prove you can master a subject, not just clear a feed.
+          Know the text.
         </h1>
         <p className="mt-5 max-w-2xl text-lg" style={{ color: "var(--muted)" }}>
-          QuizForge is a community of knowledge-seekers who train on
-          interest-based packs written like field manuals — then earn a
-          Certificate of Mastery when they actually learn the material.
+          Lampstand is a Christian quiz desk: original questions on people,
+          places, and lines in Scripture. Finish a pack, pass the review, hang
+          a Certificate of Mastery. Not a church. Not pastoral care.
         </p>
         <div className="mt-8 flex flex-wrap gap-3">
           <Link href="/quizzes/open-the-book" className="btn btn-primary">
@@ -38,12 +47,13 @@ export default function HomePage() {
           </Link>
         </div>
         <p className="mt-4 text-sm" style={{ color: "var(--muted)" }}>
-          Flagship sitting: 54 questions on Scripture (people, places, and the text).
+          Flagship sitting: Open the Book — 54 questions. History, geography,
+          and other packs stay in the library.
         </p>
       </section>
 
       <section className="mt-14">
-        <h2 className="font-display text-3xl">Featuring quizzes written like industry briefs</h2>
+        <h2 className="font-display text-3xl">Written to the text, then the map</h2>
         <div className="bento mt-6">
           {FEATURED_EXPERTS.map((e, i) => (
             <Link
@@ -103,14 +113,13 @@ export default function HomePage() {
       >
         <h2 className="font-display text-3xl">Our mission</h2>
         <p className="mt-4 max-w-3xl" style={{ color: "var(--muted)" }}>
-          Create engaging, educational quizzes that spark curiosity, promote
-          lifelong learning, and keep minds active. Entertainment with a
-          cognitive-health thesis: learning something new is a workout, and
-          communities that stay curious age better.
+          Help readers stay with Scripture long enough to remember it. Long
+          sittings, facts after every answer, and packs that earn a certificate
+          when you actually learn the material. Other topics remain for variety.
         </p>
         <p className="mt-4" style={{ color: "var(--muted)" }}>
-          Take a stand for healthier minds. Subscribe to Premium, donate to a
-          cognitive-health fund, or support the platform directly.
+          Premium quiets ads on secret quizzes. Gifts keep research going. We
+          are not a congregation and we do not offer pastoral care.
         </p>
         <div className="mt-6 flex flex-wrap gap-3">
           <Link href="/premium" className="btn btn-primary">
@@ -122,7 +131,7 @@ export default function HomePage() {
         </div>
         <ul className="mt-8 grid gap-2 text-sm md:grid-cols-2" style={{ color: "var(--muted)" }}>
           <li>5,000 extra coins when you upgrade</li>
-          <li>Ad-free Secret Quizzes</li>
+          <li>Ad-free Quiet room</li>
           <li>First notice when new series drop</li>
           <li>Premium badge on your profile</li>
         </ul>

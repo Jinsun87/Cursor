@@ -56,10 +56,10 @@ export function Header() {
             style={{ background: "var(--gold)", color: "var(--gold-ink)" }}
             aria-hidden
           >
-            QF
+            L
           </span>
           <span>
-            Quiz<span style={{ color: "var(--gold)" }}>Forge</span>
+            Lamp<span style={{ color: "var(--gold)" }}>stand</span>
           </span>
         </Link>
         <nav className="hidden items-center gap-1 text-sm md:flex" aria-label="Primary">

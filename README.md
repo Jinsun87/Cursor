@@ -1,10 +1,10 @@
-# QuizForge
+# Lampstand
 
-Original recreation of the **QuizGriz (grizly.com)** business model: expert-style quiz packs, Certificates of Mastery, coins, Premium, ads on secret quizzes, and a cognitive-health donation story.
+Christian Scripture quizzes with the promise **Know the text.** Long sittings, Certificates of Mastery, coins, Premium, ads on secret quizzes, and optional gifts.
 
-Not affiliated with QG Marketing LLC. Questions and branding are original.
+Independent — not a church, not pastoral care, not affiliated with any denomination. Questions and branding are original.
 
-Read [BUSINESS_MODEL.md](./BUSINESS_MODEL.md) for the analysis and the build plan.
+Read [BUSINESS_MODEL.md](./BUSINESS_MODEL.md) for the niche, the paid-click + long sitting loop, and what this repo implements.
 
 ## Run locally
 
@@ -20,22 +20,22 @@ CI runs lint, unit tests, Playwright, and production build on every PR (`.github
 
 Open [http://localhost:3000](http://localhost:3000). Use **Light / Dark** in the header to switch theme (defaults to your OS preference).
 
-Demo login after first page load: `maple@quizforge.demo` / `demo`.
+Demo login after first page load: `maple@lampstand.demo` / `demo`.
 
 ## Stack
 
-Next.js 15 (App Router), React 19, Tailwind CSS. Progress lives in `localStorage` so the gym runs without a database.
+Next.js 15 (App Router), React 19, Tailwind CSS. Progress lives in `localStorage` so the desk runs without a database.
 
 ## Product map
 
 | Path | Loop |
 | --- | --- |
-| `/` | Acquisition: mission, experts, Premium |
-| `/quizzes`, `/category/[slug]` | SEO-style inventory |
+| `/` | Acquisition: Open the Book, Bible packs, Premium |
+| `/quizzes`, `/category/[slug]` | SEO-style inventory (Bible first; secular packs remain) |
 | `/series/[slug]` | Pack → 70% review → certificate |
 | `/quizzes/[slug]` | Play + coins |
-| `/daily` | Habit |
-| `/secret` | Ad wall / Premium wedge |
+| `/daily` | Ten-question Scripture sitting (UTC) |
+| `/secret` | Quiet room: ad wall / Premium wedge |
 | `/premium`, `/donate` | Revenue |
 | `/register`, `/login`, `/profile` | Account |
 | `/leaderboard` | Social proof |

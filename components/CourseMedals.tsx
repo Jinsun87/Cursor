@@ -17,8 +17,8 @@ export function CourseMedals({
   return (
     <div data-testid="course-medals" className="mb-4" aria-label="Course plates">
       <p className="mb-2 text-xs uppercase tracking-widest" style={{ color: "var(--muted)" }}>
-        {plated === 0 ? "No plates yet" : `${plated} plated`}
-        {plated < courses ? ` · now course ${current}` : " · kitchen closed"}
+        {plated === 0 ? "No lamps yet" : `${plated} lit`}
+        {plated < courses ? ` · now course ${current}` : " · lamps out — sitting complete"}
       </p>
       <ol className="flex flex-wrap gap-2">
         {Array.from({ length: courses }, (_, i) => {

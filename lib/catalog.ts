@@ -1,4 +1,11 @@
 import type { Category, Quiz, Series } from "./types";
+import {
+  BIBLE_FOUNDATIONS_REVIEW,
+  EARLY_CHURCH_PATH,
+  GOSPELS_MINISTRY,
+  PATRIARCHS_AND_EXODUS,
+  PROPHETS_AND_WRITINGS,
+} from "./quizzes/bible-foundations";
 import { OPEN_THE_BOOK_QUESTIONS } from "./quizzes/open-the-book";
 import { RESTAURANT_FILL_QUESTIONS } from "./quizzes/restaurant-fill";
 import { DAILY_LENGTH } from "./economy";
@@ -568,6 +575,7 @@ export const QUIZZES: Quiz[] = [
     title: "People and Places in Scripture",
     blurb: "A respectful knowledge quiz, not a sermon.",
     category: "bible",
+    seriesSlug: "bible-foundations",
     coinsOnComplete: 70,
     questions: [
       q("The Exodus narrative is set as a departure from:", ["Rome", "Egypt", "Babylon as the only setting", "Nineveh exclusively"], 1, "Moses and the Israelites."),
@@ -577,6 +585,52 @@ export const QUIZZES: Quiz[] = [
       q("Paul's letters are part of the:", ["New Testament", "Analects of Confucius", "U.S. Constitution", "Epic of Gilgamesh"], 0, "Epistles."),
       q("The Psalms are primarily:", ["Legal tax tables", "Poems and songs", "Roman military manuals", "Ship logs"], 1, "Worship poetry."),
     ],
+  },
+  {
+    slug: "patriarchs-and-exodus",
+    title: "Patriarchs and Exodus",
+    blurb: "Names and journeys from Genesis through the wilderness — original items, not a sermon.",
+    category: "bible",
+    seriesSlug: "bible-foundations",
+    coinsOnComplete: 80,
+    questions: PATRIARCHS_AND_EXODUS,
+  },
+  {
+    slug: "prophets-and-writings",
+    title: "Prophets and Writings",
+    blurb: "Poets, prophets, and the books that sit beside the law.",
+    category: "bible",
+    seriesSlug: "bible-foundations",
+    coinsOnComplete: 80,
+    questions: PROPHETS_AND_WRITINGS,
+  },
+  {
+    slug: "gospels-ministry",
+    title: "Gospels: Towns and Signs",
+    blurb: "Nazareth, Cana, Galilee, Gethsemane — geography of the narratives.",
+    category: "bible",
+    seriesSlug: "bible-foundations",
+    coinsOnComplete: 80,
+    questions: GOSPELS_MINISTRY,
+  },
+  {
+    slug: "early-church-path",
+    title: "Acts and the Early Path",
+    blurb: "From Jerusalem to Antioch and Athens — people named in Acts.",
+    category: "bible",
+    seriesSlug: "bible-foundations",
+    coinsOnComplete: 80,
+    questions: EARLY_CHURCH_PATH,
+  },
+  {
+    slug: "bible-foundations-review",
+    title: "Bible Foundations Review",
+    blurb: "Score 70% or better after the pack to earn a Certificate of Mastery.",
+    category: "bible",
+    seriesSlug: "bible-foundations",
+    isReview: true,
+    coinsOnComplete: 120,
+    questions: BIBLE_FOUNDATIONS_REVIEW,
   },
   {
     slug: "secret-odd-knowledge",
@@ -613,6 +667,22 @@ export const QUIZZES: Quiz[] = [
 ];
 
 export const SERIES: Series[] = [
+  {
+    slug: "bible-foundations",
+    title: "Bible Foundations",
+    description:
+      "Places, patriarchs, prophets, Gospels, and Acts. Finish the pack and pass the review. Independent study — not a church.",
+    category: "bible",
+    quizSlugs: [
+      "scripture-places",
+      "patriarchs-and-exodus",
+      "prophets-and-writings",
+      "gospels-ministry",
+      "early-church-path",
+    ],
+    reviewSlug: "bible-foundations-review",
+    masteryThreshold: 70,
+  },
   {
     slug: "geography-1",
     title: "Geography 1",
@@ -676,25 +746,25 @@ export const SERIES: Series[] = [
 ];
 
 const DAILY_BANK: { prompt: string; choices: string[]; answerIndex: number; explanation: string }[] = [
-  q("Which planet is known for its Great Red Spot?", ["Mars", "Jupiter", "Venus", "Mercury"], 1, "A long-lived anticyclonic storm."),
-  q("The chemical symbol for gold is:", ["Ag", "Au", "Gd", "Go"], 1, "From Latin aurum."),
-  q("Mount Everest lies on the border of Nepal and:", ["India only", "China (Tibet)", "Bhutan only", "Pakistan"], 1, "The summit ridge is the border."),
-  q("Shakespeare wrote:", ["The Odyssey", "Hamlet", "The Aeneid", "Beowulf as original author"], 1, "A tragedy."),
-  q("The Pacific is:", ["The smallest ocean", "The largest ocean", "A sea in Europe", "A river"], 1, "By far the largest."),
-  q("A heptagon has how many sides?", ["5", "6", "7", "8"], 2, "Hepta means seven."),
-  q("The author of Pride and Prejudice is:", ["Charlotte Brontë", "Jane Austen", "George Eliot", "Mary Shelley"], 1, "Published 1813."),
-  q("Sound travels fastest through:", ["Vacuum", "Steel (typically vs air)", "Outer space", "A perfect vacuum on Earth"], 1, "Solids generally beat gases."),
-  q("The capital of Canada is:", ["Toronto", "Ottawa", "Vancouver", "Montreal"], 1, "Ottawa, Ontario."),
-  q("Photosynthesis releases:", ["Nitrogen as the main product people cite", "Oxygen", "Helium", "Crude oil"], 1, "From splitting water."),
-  q("A marathon is officially:", ["26.2 miles", "25 miles", "30 kilometers exactly", "50 miles"], 0, "26 miles and 385 yards."),
-  q("The primary colors of light (additive) are:", ["Red, yellow, blue", "Red, green, blue", "Cyan, magenta, yellow", "Black, white, gray"], 1, "RGB mixing makes white."),
-  q("The Nile's two major tributaries meet near:", ["Cairo only", "Khartoum", "Alexandria", "Aswan exclusively"], 1, "The Blue and White Nile meet at Khartoum."),
-  q("Penicillin was famously isolated from:", ["Algae", "Mold", "Sand", "Coal tar only"], 1, "A Penicillium mold."),
-  q("The smallest prime number is:", ["0", "1", "2", "3"], 2, "2 is the only even prime."),
-  q("Hertz measure:", ["Mass", "Frequency", "Temperature", "Luminous intensity"], 1, "Cycles per second."),
-  q("The Great Barrier Reef is off:", ["California", "Queensland, Australia", "Norway", "Kenya"], 1, "It sits in the Coral Sea."),
-  q("HTML is primarily a:", ["Database", "Markup language", "Operating system", "Compiler"], 1, "HyperText Markup Language."),
-  q("The boiling point of water at standard pressure is:", ["0°C", "32°C", "100°C", "212°C only in Celsius"], 2, "100 degrees Celsius."),
+  q("The first book of the Christian Old Testament is:", ["Exodus", "Genesis", "Acts", "Romans"], 1, "Genesis opens the canon in Protestant and Catholic orderings of the OT."),
+  q("Moses receives the commandments at:", ["Sinai (Horeb)", "Patmos", "Athens", "Rome"], 0, "Exodus and Deuteronomy."),
+  q("Ruth stays with:", ["Naomi", "Jezebel", "Herodias", "Lydia as her mother-in-law"], 0, "The book of Ruth."),
+  q("David is first introduced as a:", ["Shepherd", "Roman sailor", "Persian satrap", "Levite in Egypt"], 0, "1 Samuel."),
+  q("The Psalms are primarily:", ["Songs and poems", "Roman edicts", "Ship logs", "Temple blueprints only"], 0, "Worship poetry."),
+  q("Bethlehem in the Gospels is tied to:", ["The birth of Jesus", "Paul's shipwreck", "The tower of Babel", "The fall of Jericho"], 0, "Matthew and Luke."),
+  q("Jesus is baptized in the:", ["Jordan", "Nile", "Tiber", "Euphrates"], 0, "The Baptist's ministry."),
+  q("The prodigal son parable is in:", ["Luke", "Nahum", "Obadiah", "3 John"], 0, "Luke 15."),
+  q("Peter denies Jesus:", ["Three times", "Once in every Gospel identically as a census", "Never in any account", "Twelve times"], 0, "The passion narratives."),
+  q("Pentecost in Acts is in:", ["Jerusalem", "Nineveh", "Babylon", "Tarshish"], 0, "Acts 2."),
+  q("Saul of Tarsus is also called:", ["Paul", "Solomon", "Ezra", "Silas as his only name"], 0, "Acts."),
+  q("The fruit of the Spirit list is in:", ["Galatians", "Jonah", "Ruth", "Jude only"], 0, "Galatians 5."),
+  q("Revelation addresses churches in:", ["Asia Minor", "Gaul only", "Britain", "Ethiopia as the seven"], 0, "Ephesus, Smyrna, and the rest."),
+  q("Joshua leads Israel across the:", ["Jordan", "Amazon", "Rhine", "Mississippi"], 0, "Joshua 3."),
+  q("Nehemiah rebuilds:", ["Jerusalem's walls", "Noah's ark", "The Colosseum", "Caesar's palace"], 0, "The memoir of Nehemiah."),
+  q("'In the beginning was the Word' opens:", ["John", "Leviticus", "Amos", "Philemon"], 0, "John 1."),
+  q("The Shema ('Hear, O Israel') is in:", ["Deuteronomy", "Acts 27", "Revelation 12 as its only home", "Esther"], 0, "Deuteronomy 6."),
+  q("Lydia is baptized in:", ["Philippi", "Ur", "Sodom", "Hebron as a dealer in purple"], 0, "Acts 16."),
+  q("The shortest verse in many English Bibles is:", ["Jesus wept", "Selah", "Amen as John 11", "In the beginning"], 0, "John 11:35 in common numbering."),
 ];
 
 export function getDailyQuiz(now = new Date()): Quiz {
@@ -708,8 +778,8 @@ export function getDailyQuiz(now = new Date()): Quiz {
   return {
     slug: `daily-${dateLabel}`,
     title: `Quiz of the Day — ${dateLabel}`,
-    blurb: "Ten fresh questions every UTC day. Streak your mind, not your screen time.",
-    category: "general-knowledge",
+    blurb: "Ten Scripture questions every UTC day. Know the text — not a feed.",
+    category: "bible",
     isDaily: true,
     coinsOnComplete: 90,
     questions,
@@ -744,7 +814,7 @@ export function getSeriesForQuiz(quiz: Quiz) {
 
 export const SECRET_QUIZZES = QUIZZES.filter((q) => q.isSecret);
 export const FEATURED_EXPERTS = [
-  { category: "survival", name: "Field instructors", line: "Priorities, not panics." },
+  { category: "bible", name: "Scripture readers", line: "The text, not a sermon." },
   { category: "history", name: "Working historians", line: "Sources over slogans." },
-  { category: "science", name: "STEM educators", line: "Mechanisms, not myths." },
+  { category: "geography", name: "Map teachers", line: "Places the narratives name." },
 ];

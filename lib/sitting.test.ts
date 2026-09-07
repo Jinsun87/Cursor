@@ -57,7 +57,7 @@ describe("sitting save", () => {
       false,
     );
     expect(isFreshSitting(new Date(Date.now() - 8 * 24 * 60 * 60 * 1000).toISOString())).toBe(false);
-    expect(sittingKey("us-capitals")).toContain("us-capitals");
+    expect(sittingKey("us-capitals")).toContain("lampstand-sitting-v1:us-capitals");
   });
 
   it("awards a plate every five answers", () => {
