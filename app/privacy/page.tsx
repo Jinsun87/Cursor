@@ -19,9 +19,9 @@ export default function PrivacyPage() {
         <a href="/ads.txt" className="text-gold-400">
           ads.txt
         </a>{" "}
-        and privacy page. Production also needs Google MCM approval for that
-        domain — either Ezoic&apos;s ads.txt file or a 301 to the Ads.txt
-        Manager URL from the publisher dashboard. Set{" "}
+        and privacy page. quiz.mediareferee.com/ads.txt 301s to the same
+        Ads.txt Manager file as mediareferee.com. Production also needs Google
+        MCM approval for that domain. Set{" "}
         <code>NEXT_PUBLIC_EZOIC_ADS=true</code> on the host to load CMP and ad
         scripts in the document head.
       </p>

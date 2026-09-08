@@ -1,7 +1,0 @@
-# quiz.mediareferee.com — authorized digital sellers for THIS host.
-# Ezoic Add a Site uses the registrable domain (mediareferee.com), not this subdomain.
-# Paste the exact file from EzoicAds → Ad Transparency, or 301 via EZOIC_ADS_TXT_URL
-# (the manager URL may end in /mediareferee.com; still serve it from this origin).
-# Also merge the same seller lines (or the same 301) into mediareferee.com/ads.txt
-# on the existing apex host so Ezoic Verify/MCM can see the root file.
-# Until that file is pasted, this host has no authorized sellers.

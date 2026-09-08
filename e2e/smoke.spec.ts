@@ -112,7 +112,9 @@ test("a signed-in player can buy a 50/50", async ({ page }) => {
 test("privacy and ads.txt are on the quiz host", async ({ page, request }) => {
   const ads = await request.get("/ads.txt");
   expect(ads.ok()).toBeTruthy();
-  expect(await ads.text()).toMatch(/quiz\.mediareferee\.com/i);
+  const body = await ads.text();
+  expect(body).toMatch(/ezoic\.ai/i);
+  expect(body).toMatch(/ownerdomain=mediareferee\.com/i);
   await page.goto("/privacy");
   await expect(page.getByRole("heading", { name: /privacy/i })).toBeVisible();
   await expect(page.getByText("Lampstand on quiz.mediareferee.com")).toBeVisible();

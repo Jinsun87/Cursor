@@ -5,13 +5,16 @@ export const EZOIC_PLACEHOLDERS = {
   quietRoom: 104,
 } as const;
 
+/** Same Ads.txt Manager URL the live apex already 301s to (WordPress on mediareferee.com). */
+export const MEDIAREFEREE_ADS_TXT_MANAGER =
+  "https://srv.adstxtmanager.com/85097/mediareferee.com";
+
 export function ezoicAdsEnabled() {
   return process.env.NEXT_PUBLIC_EZOIC_ADS === "true";
 }
 
 export function adsTxtRedirects() {
-  const destination = process.env.EZOIC_ADS_TXT_URL?.trim();
-  if (!destination) return [];
+  const destination = process.env.EZOIC_ADS_TXT_URL?.trim() || MEDIAREFEREE_ADS_TXT_MANAGER;
   return [{ source: "/ads.txt", destination, permanent: true as const }];
 }
 

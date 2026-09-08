@@ -99,12 +99,12 @@ Code already:
 
 You still own the dashboard:
 
-1. Add **`mediareferee.com`** (or a second registrable domain). Do not use Name Servers. Skip this if that domain is already an Ezoic site on this account — then only finish JS + ads.txt + MCM on this host.
-2. Vercel **Config**: `NEXT_PUBLIC_EZOIC_ADS=true` on Production, then Redeploy. Confirm CMP/`sa.min.js` in View Source (not only after client JS).
-3. **EzoicAds → Ad Transparency → Ads.txt** — JavaScript integration. Paste the generated file over this repo’s `public/ads.txt`, or set `EZOIC_ADS_TXT_URL` (301). The manager URL may end in `/mediareferee.com`; still serve it from **this** origin. Also put those seller lines (or the same 301) on **mediareferee.com/ads.txt** at the existing apex host so Verify/MCM can see them. Then **Verify**. Do not invent a publisher ID.
-4. **Google MCM** — send invite, accept in Google, wait for the **registered domain** to be approved. Ads will not fill without it. ads.txt must be valid first.
-5. **Settings → Privacy** — turn GDPR/CCPA on, submit `https://quiz.mediareferee.com/privacy`, clear consent cache.
-6. **EzoicAds → Placeholders** — create four placements and match the IDs in code.
+1. **`mediareferee.com` is already an Ezoic site.** Do not Add a Site again. Do not use Name Servers.
+2. Apex ads.txt is already a 301 to Ads.txt Manager (`https://srv.adstxtmanager.com/85097/mediareferee.com`). This app 301s `https://quiz.mediareferee.com/ads.txt` to the **same** URL. After deploy, open that quiz URL and confirm seller lines (`ezoic.ai`, `ownerdomain=mediareferee.com`). Then **Verify** in EzoicAds → Ad Transparency → Ads.txt.
+3. Vercel **Config**: `NEXT_PUBLIC_EZOIC_ADS=true` on Production, then Redeploy. Confirm CMP/`sa.min.js` in View Source on the quiz host only.
+4. **Google MCM** — if the apex is already approved, confirm **quiz** inventory is in scope; if MCM is still pending, finish the Google invite. Ads will not fill without it.
+5. **Settings → Privacy** — GDPR/CCPA on, submit `https://quiz.mediareferee.com/privacy`, clear consent cache.
+6. **EzoicAds → Placeholders** — create four placements and match the IDs in `lib/ezoic.ts` if they are not 101–104.
 7. In-browser: `https://quiz.mediareferee.com/?ez_js_debugger=1` and `/secret`, `/quizzes/open-the-book`. Expect 14–30 days of ramp-up after MCM.
 
 Do not buy paid traffic until slots actually fill.

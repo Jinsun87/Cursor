@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { adsTxtRedirects, ezoicAdsEnabled, EZOIC_PLACEHOLDERS } from "./ezoic";
+import { adsTxtRedirects, ezoicAdsEnabled, EZOIC_PLACEHOLDERS, MEDIAREFEREE_ADS_TXT_MANAGER } from "./ezoic";
 
 describe("Ezoic flag", () => {
   it("stays off unless NEXT_PUBLIC_EZOIC_ADS is true", () => {
@@ -8,8 +8,14 @@ describe("Ezoic flag", () => {
 });
 
 describe("ads.txt redirect", () => {
-  it("is off until EZOIC_ADS_TXT_URL is set", () => {
-    expect(adsTxtRedirects()).toEqual([]);
+  it("defaults to the live mediareferee.com Ads.txt Manager URL", () => {
+    expect(adsTxtRedirects()).toEqual([
+      {
+        source: "/ads.txt",
+        destination: MEDIAREFEREE_ADS_TXT_MANAGER,
+        permanent: true,
+      },
+    ]);
   });
 });
 
