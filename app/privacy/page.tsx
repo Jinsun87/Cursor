@@ -13,13 +13,15 @@ export default function PrivacyPage() {
       </p>
       <p className="text-parchment/80">
         Free sittings may show ads via Ezoic standalone JavaScript (Gatekeeper
-        CMP for consent). Premium hides the placeholders. Production also needs
-        Google MCM approval and a real{" "}
+        CMP for consent). Premium hides the placeholders. The Ezoic dashboard
+        site is the registrable domain mediareferee.com (subdomains are not
+        separate Ezoic sites); this quiz host still serves its own{" "}
         <a href="/ads.txt" className="text-gold-400">
           ads.txt
         </a>{" "}
-        for quiz.mediareferee.com — either Ezoic&apos;s file or a 301 to the
-        Ads.txt Manager URL from the publisher dashboard. Set{" "}
+        and privacy page. Production also needs Google MCM approval for that
+        domain — either Ezoic&apos;s ads.txt file or a 301 to the Ads.txt
+        Manager URL from the publisher dashboard. Set{" "}
         <code>NEXT_PUBLIC_EZOIC_ADS=true</code> on the host to load CMP and ad
         scripts in the document head.
       </p>
