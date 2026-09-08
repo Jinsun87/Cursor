@@ -38,7 +38,9 @@ export function AdSlot({
     >
       <p className="text-xs uppercase tracking-widest text-pine-400">{label}</p>
       {live && ready ? (
-        <div id={`ezoic-pub-ad-placeholder-${placeholderId}`} className="mx-auto min-h-24" />
+        <div className="mx-auto min-h-24">
+          <div id={`ezoic-pub-ad-placeholder-${placeholderId}`} />
+        </div>
       ) : (
         <>
           <p className="mt-2 font-display text-lg">Sponsored placement</p>

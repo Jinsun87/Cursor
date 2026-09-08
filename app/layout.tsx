@@ -7,6 +7,7 @@ import { AppProvider } from "@/lib/store";
 import { ThemeProvider } from "@/lib/theme";
 import { siteUrl } from "@/lib/site";
 import { EzoicBoot } from "@/components/EzoicBoot";
+import { EzoicHead } from "@/components/EzoicHead";
 
 const sans = Inter({
   subsets: ["latin"],
@@ -35,6 +36,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" className={`${sans.variable} ${display.variable}`} suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeBoot }} />
+        <EzoicHead />
       </head>
       <body className="font-sans antialiased">
         <ThemeProvider>

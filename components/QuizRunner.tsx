@@ -5,6 +5,7 @@ import Link from "next/link";
 import type { Question, Quiz } from "@/lib/types";
 import { useApp } from "@/lib/store";
 import { AdSlot } from "./AdSlot";
+import { EZOIC_PLACEHOLDERS } from "@/lib/ezoic";
 import { QuizHud } from "./QuizHud";
 import {
   FIFTY_FIFTY_COST,
@@ -267,7 +268,9 @@ export function QuizRunner({ quiz }: { quiz: Quiz }) {
     const grade = sittingGrade(finalScore, quiz.questions.length);
     return frame(
       <div className="rounded-2xl border p-8" style={{ borderColor: "var(--line)", background: "var(--canvas-2)" }}>
-        {quiz.isSecret || quiz.isLongform ? <AdSlot label="Post-quiz ad" placeholderId={103} /> : null}
+        {quiz.isSecret || quiz.isLongform ? (
+          <AdSlot label="Post-quiz ad" placeholderId={EZOIC_PLACEHOLDERS.postQuiz} />
+        ) : null}
         <p className="text-sm uppercase tracking-widest" style={{ color: "var(--gold)" }} data-testid="quiz-complete">
           Complete
         </p>
@@ -339,7 +342,7 @@ export function QuizRunner({ quiz }: { quiz: Quiz }) {
           {quiz.questions.length} is up after this break. A streak of {STREAK_SKIPS_AD} skips the
           pause. Coins skip it once.
         </p>
-        <AdSlot label="Between-course ad" placeholderId={102} />
+        <AdSlot label="Between-course ad" placeholderId={EZOIC_PLACEHOLDERS.betweenCourse} />
         <div className="mt-2 flex flex-wrap gap-3">
           <button type="button" className="btn btn-primary" onClick={() => setPageBreak(false)}>
             Continue the sitting
@@ -367,7 +370,7 @@ export function QuizRunner({ quiz }: { quiz: Quiz }) {
 
   return frame(
     <div className="rounded-2xl border p-6 md:p-8" style={{ borderColor: "var(--line)", background: "var(--canvas-2)" }}>
-      {quiz.isSecret ? <AdSlot placeholderId={101} /> : null}
+      {quiz.isSecret ? <AdSlot placeholderId={EZOIC_PLACEHOLDERS.inQuizSecret} /> : null}
       {streakSkipNote ? (
         <p
           className="mb-4 rounded-xl border px-3 py-2 text-sm"

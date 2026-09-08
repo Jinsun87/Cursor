@@ -56,13 +56,28 @@ A CLI anonymous deploy expires in an hour unless you claim it. Git import is wha
 
 ## Ezoic ads
 
-Standalone Ezoic (not nameserver takeover) fits Vercel. In Cursor, `.cursor/mcp.json` points at `https://setup-agent.ezoic.com/mcp` — reload MCP servers in the desktop app if the cloud agent cannot see it.
+Yes — standalone JavaScript (not nameserver takeover). Apex `mediareferee.com` stays on the existing site; only **quiz.mediareferee.com** is this app. Vercel already owns that subdomain’s DNS.
 
-1. Create an Ezoic publisher account and add **quiz.mediareferee.com**.
-2. Vercel env (Config): `NEXT_PUBLIC_EZOIC_ADS` = `true` on Production, then Redeploy.
-3. Download Ezoic’s `ads.txt` for that domain and replace `public/ads.txt`.
-4. Placeholders 101–104 are already in the quiet room and longform sitting. Create matching placements in the Ezoic dashboard.
+Cursor MCP: `.cursor/mcp.json` → `https://setup-agent.ezoic.com/mcp` (streamable HTTP, no auth). Reload MCP in desktop Cursor. Cloud agents do not load that server automatically.
 
-Premium still hides slots. Local Playwright leaves `NEXT_PUBLIC_EZOIC_ADS` unset so tests stay placeholder-only.
+Code already:
+
+- Puts Gatekeeper CMP + `sa.min.js` in `<head>` when `NEXT_PUBLIC_EZOIC_ADS=true` (native tags, not `next/script` `beforeInteractive`, which broke hydration)
+- Marks the app as an SPA and re-requests ads on App Router pathname changes
+- Renders placeholders **101** (in-quiz secret), **102** (between-course), **103** (post-quiz), **104** (quiet room). If the dashboard assigns other IDs, change `EZOIC_PLACEHOLDERS` in `lib/ezoic.ts` — do not invent IDs
+- Hides slots for Premium
+- Leaves Playwright with the flag unset so tests stay copy-only
+
+You still own the dashboard:
+
+1. [login.ezoic.com](https://login.ezoic.com/) — add **quiz.mediareferee.com**, integration **JavaScript**, not Name Servers.
+2. Vercel **Config**: `NEXT_PUBLIC_EZOIC_ADS=true` on Production, then Redeploy. Confirm CMP/`sa.min.js` in View Source (not only after client JS).
+3. **EzoicAds → Ad Transparency → Ads.txt** — JavaScript integration. Either paste the generated file over `public/ads.txt`, or set server env `EZOIC_ADS_TXT_URL` to the Ads.txt Manager URL the dashboard shows (301). Crawlers hit the **subdomain** file; the apex does not cover this host. Then **Verify**. Do not invent a publisher ID.
+4. **Google MCM** — send invite, accept in Google, wait for this domain to be approved. Ads will not fill without it. ads.txt must be valid first.
+5. **Settings → Privacy** — turn GDPR/CCPA on, submit `https://quiz.mediareferee.com/privacy`, clear consent cache.
+6. **EzoicAds → Placeholders** — create four placements and match the IDs in code.
+7. In-browser: `https://quiz.mediareferee.com/?ez_js_debugger=1` and `/secret`, `/quizzes/open-the-book`. Expect 14–30 days of ramp-up after MCM.
+
+Do not buy paid traffic until slots actually fill.
 
 
