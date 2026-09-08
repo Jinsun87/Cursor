@@ -6,6 +6,7 @@ import { Footer } from "@/components/Footer";
 import { AppProvider } from "@/lib/store";
 import { ThemeProvider } from "@/lib/theme";
 import { siteUrl } from "@/lib/site";
+import { EzoicBoot } from "@/components/EzoicBoot";
 
 const sans = Inter({
   subsets: ["latin"],
@@ -38,6 +39,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className="font-sans antialiased">
         <ThemeProvider>
           <AppProvider>
+            <EzoicBoot />
             <a href="#main" className="skip-link">
               Skip to content
             </a>

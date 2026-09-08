@@ -54,5 +54,15 @@ Keep **mediareferee.com** on the existing site. Point a **subdomain** at this ap
 
 A CLI anonymous deploy expires in an hour unless you claim it. Git import is what you want for going live.
 
-Placeholders do not earn RPM. The subdomain is for HTTPS, share URLs, and policy review first.
+## Ezoic ads
+
+Standalone Ezoic (not nameserver takeover) fits Vercel. In Cursor, `.cursor/mcp.json` points at `https://setup-agent.ezoic.com/mcp` — reload MCP servers in the desktop app if the cloud agent cannot see it.
+
+1. Create an Ezoic publisher account and add **quiz.mediareferee.com**.
+2. Vercel env (Config): `NEXT_PUBLIC_EZOIC_ADS` = `true` on Production, then Redeploy.
+3. Download Ezoic’s `ads.txt` for that domain and replace `public/ads.txt`.
+4. Placeholders 101–104 are already in the quiet room and longform sitting. Create matching placements in the Ezoic dashboard.
+
+Premium still hides slots. Local Playwright leaves `NEXT_PUBLIC_EZOIC_ADS` unset so tests stay placeholder-only.
+
 
