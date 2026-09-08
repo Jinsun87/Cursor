@@ -70,7 +70,7 @@ What *is* documented:
 | --- | --- |
 | **Add a Site** | Enter a **bare domain** like `newsite.com` — no `https://`. The published example is a registrable domain, not `quiz.example.com`. Subdomains (`quiz`, `www`, `blog`) are treated as **hostnames of that domain**, not a second dashboard site. If the form rejects `quiz.mediareferee.com`, that is expected. |
 | **Cloud / nameservers** | DNS for the **whole zone**, including apex. Do **not** point `mediareferee.com` nameservers (or an apex CNAME) at Ezoic or Vercel. That would take the existing apex site with it. |
-| **ads.txt** | Inventory on `quiz.mediareferee.com` needs `https://quiz.mediareferee.com/ads.txt`. Apex `mediareferee.com/ads.txt` does **not** cover the quiz host by itself. Domain MCM/Verify still looks at the **root** file, so merge Ezoic’s seller lines into `https://mediareferee.com/ads.txt` (or the same 301) without wiping sellers the apex already uses. |
+| **ads.txt** | Quiz impressions need `https://quiz.mediareferee.com/ads.txt`. Ezoic’s **site** is `mediareferee.com`, so dashboard **Verify** / MCM typically fetch `https://mediareferee.com/ads.txt` as well. Serve Ezoic’s file (or the same 301) on **both** hosts. On the apex, **merge** Ezoic seller lines into the existing file — do not wipe sellers the current mediareferee.com site already uses. |
 | **New sites (after 19 Feb 2026)** | New publishers need **250,000 monthly users**, or apply to [Incubator](https://www.ezoic.com/incubator) (20 sites/month). Existing Ezoic sites from before that date are grandfathered; a **new** Add Site row can still hit this bar. |
 
 Sources: [Add a site](https://support.ezoic.com/kb/article/how-do-i-add-a-new-site-or-domain-to-my-account), [ads.txt](https://support.ezoic.com/kb/article/everything-you-need-to-know-about-adstxt), [Incubator](https://www.ezoic.com/incubator).
@@ -81,7 +81,7 @@ Sources: [Add a site](https://support.ezoic.com/kb/article/how-do-i-add-a-new-si
 
 1. [login.ezoic.com](https://login.ezoic.com/) → **Add a Site** → **`mediareferee.com`** (no scheme, no `quiz.`). Integration **JavaScript**, not Name Servers.
 2. Put Ezoic JS **only** on this quiz app (`NEXT_PUBLIC_EZOIC_ADS=true` on the Vercel project). Do not paste Ezoic tags onto the existing apex pages unless you want ads there.
-3. Serve ads.txt **on the quiz host** (step 3 below). Google MCM will review **mediareferee.com** as a domain — including whatever is live on the apex. If that review would mix two products in a way you do not want, use a second domain instead.
+3. Serve ads.txt on **the quiz host** and, for dashboard Verify, on **the apex** (step 3 below). Google MCM reviews **mediareferee.com** — including whatever is live on the apex. If that review would mix two products in a way you do not want, use a second domain instead.
 
 **Do not** move Lampstand to `www.mediareferee.com`. `www` is the same Ezoic site as the apex, and it would collide with the current apex product.
 
@@ -101,7 +101,7 @@ You still own the dashboard:
 
 1. Add **`mediareferee.com`** (or a second registrable domain). Do not use Name Servers. Skip this if that domain is already an Ezoic site on this account — then only finish JS + ads.txt + MCM on this host.
 2. Vercel **Config**: `NEXT_PUBLIC_EZOIC_ADS=true` on Production, then Redeploy. Confirm CMP/`sa.min.js` in View Source (not only after client JS).
-3. **EzoicAds → Ad Transparency → Ads.txt** — JavaScript integration. Either paste the generated file over `public/ads.txt`, or set server env `EZOIC_ADS_TXT_URL` to the Ads.txt Manager URL the dashboard shows (301). The manager URL’s hostname may be the **apex** (`…/mediareferee.com`); the **redirect still belongs on this quiz origin**. Then **Verify**. Do not invent a publisher ID.
+3. **EzoicAds → Ad Transparency → Ads.txt** — JavaScript integration. Paste the generated file over this repo’s `public/ads.txt`, or set `EZOIC_ADS_TXT_URL` (301). The manager URL may end in `/mediareferee.com`; still serve it from **this** origin. Also put those seller lines (or the same 301) on **mediareferee.com/ads.txt** at the existing apex host so Verify/MCM can see them. Then **Verify**. Do not invent a publisher ID.
 4. **Google MCM** — send invite, accept in Google, wait for the **registered domain** to be approved. Ads will not fill without it. ads.txt must be valid first.
 5. **Settings → Privacy** — turn GDPR/CCPA on, submit `https://quiz.mediareferee.com/privacy`, clear consent cache.
 6. **EzoicAds → Placeholders** — create four placements and match the IDs in code.
