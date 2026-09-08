@@ -70,7 +70,7 @@ What *is* documented:
 | --- | --- |
 | **Add a Site** | Enter a **bare domain** like `newsite.com` — no `https://`. The published example is a registrable domain, not `quiz.example.com`. Subdomains (`quiz`, `www`, `blog`) are treated as **hostnames of that domain**, not a second dashboard site. If the form rejects `quiz.mediareferee.com`, that is expected. |
 | **Cloud / nameservers** | DNS for the **whole zone**, including apex. Do **not** point `mediareferee.com` nameservers (or an apex CNAME) at Ezoic or Vercel. That would take the existing apex site with it. |
-| **ads.txt** | Inventory on `quiz.mediareferee.com` needs `https://quiz.mediareferee.com/ads.txt`. Apex `mediareferee.com/ads.txt` does **not** cover the quiz host. If the apex also runs ads, keep that file separate; do not replace it with Ezoic’s file unless you intend to authorize Ezoic on the apex too. |
+| **ads.txt** | Inventory on `quiz.mediareferee.com` needs `https://quiz.mediareferee.com/ads.txt`. Apex `mediareferee.com/ads.txt` does **not** cover the quiz host by itself. Domain MCM/Verify still looks at the **root** file, so merge Ezoic’s seller lines into `https://mediareferee.com/ads.txt` (or the same 301) without wiping sellers the apex already uses. |
 | **New sites (after 19 Feb 2026)** | New publishers need **250,000 monthly users**, or apply to [Incubator](https://www.ezoic.com/incubator) (20 sites/month). Existing Ezoic sites from before that date are grandfathered; a **new** Add Site row can still hit this bar. |
 
 Sources: [Add a site](https://support.ezoic.com/kb/article/how-do-i-add-a-new-site-or-domain-to-my-account), [ads.txt](https://support.ezoic.com/kb/article/everything-you-need-to-know-about-adstxt), [Incubator](https://www.ezoic.com/incubator).
