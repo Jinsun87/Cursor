@@ -22,10 +22,10 @@ describe("ads.txt redirect", () => {
 describe("placeholder ids", () => {
   it("keeps the four dashboard slots in one map", () => {
     expect(EZOIC_PLACEHOLDERS).toEqual({
-      inQuizSecret: 101,
-      betweenCourse: 102,
-      postQuiz: 103,
-      quietRoom: 104,
+      inQuizSecret: 645,
+      betweenCourse: 646,
+      postQuiz: 647,
+      quietRoom: 648,
     });
   });
 });

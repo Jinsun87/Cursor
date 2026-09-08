@@ -2,11 +2,11 @@
 
 import { useEffect, useState } from "react";
 import { useApp } from "@/lib/store";
-import { ezoicAdsEnabled, runEzoic } from "@/lib/ezoic";
+import { EZOIC_PLACEHOLDERS, ezoicAdsEnabled, runEzoic } from "@/lib/ezoic";
 
 export function AdSlot({
   label = "Advertisement",
-  placeholderId = 101,
+  placeholderId = EZOIC_PLACEHOLDERS.inQuizSecret,
 }: {
   label?: string;
   placeholderId?: number;

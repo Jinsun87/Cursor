@@ -93,7 +93,7 @@ Code already:
 
 - Puts Gatekeeper CMP + `sa.min.js` in `<head>` when `NEXT_PUBLIC_EZOIC_ADS=true` (native tags, not `next/script` `beforeInteractive`, which broke hydration)
 - Marks the app as an SPA and re-requests ads on App Router pathname changes
-- Renders placeholders **101** (in-quiz secret), **102** (between-course), **103** (post-quiz), **104** (quiet room). If the dashboard assigns other IDs, change `EZOIC_PLACEHOLDERS` in `lib/ezoic.ts` — do not invent IDs
+- Renders dashboard placeholders **645** (in-quiz secret), **646** (between-course), **647** (post-quiz), **648** (quiet room) from `EZOIC_PLACEHOLDERS` in `lib/ezoic.ts`
 - Hides slots for Premium
 - Leaves Playwright with the flag unset so tests stay copy-only
 
@@ -104,7 +104,7 @@ You still own the dashboard:
 3. Vercel **Config**: `NEXT_PUBLIC_EZOIC_ADS=true` on Production, then Redeploy. Confirm CMP/`sa.min.js` in View Source on the quiz host only.
 4. **Google MCM** — if the apex is already approved, confirm **quiz** inventory is in scope; if MCM is still pending, finish the Google invite. Ads will not fill without it.
 5. **Settings → Privacy** — GDPR/CCPA on, submit `https://quiz.mediareferee.com/privacy`, clear consent cache.
-6. **EzoicAds → Placeholders** — create four placements and match the IDs in `lib/ezoic.ts` if they are not 101–104.
+6. Placeholders **645–648** are already wired. If you recreate them and get new IDs, update `EZOIC_PLACEHOLDERS`.
 7. In-browser: `https://quiz.mediareferee.com/?ez_js_debugger=1` and `/secret`, `/quizzes/open-the-book`. Expect 14–30 days of ramp-up after MCM.
 
 Do not buy paid traffic until slots actually fill.

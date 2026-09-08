@@ -1,8 +1,9 @@
+/** Placement IDs from EzoicAds → Placeholders for mediareferee.com (not examples). */
 export const EZOIC_PLACEHOLDERS = {
-  inQuizSecret: 101,
-  betweenCourse: 102,
-  postQuiz: 103,
-  quietRoom: 104,
+  inQuizSecret: 645,
+  betweenCourse: 646,
+  postQuiz: 647,
+  quietRoom: 648,
 } as const;
 
 /** Same Ads.txt Manager URL the live apex already 301s to (WordPress on mediareferee.com). */
