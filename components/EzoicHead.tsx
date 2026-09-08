@@ -1,6 +1,9 @@
 import { ezoicAdsEnabled } from "@/lib/ezoic";
 
-/** Native head tags so crawlers and CMP see scripts without next/script beforeInteractive. */
+/**
+ * Native head tags, no async. Next.js hoists async scripts above CMP,
+ * which the Ezoic debugger flags as "cmp.min.js should be placed before sa.min.js".
+ */
 export function EzoicHead() {
   if (!ezoicAdsEnabled()) return null;
   return (
@@ -13,8 +16,8 @@ export function EzoicHead() {
             "window.ezstandalone=window.ezstandalone||{};window.ezstandalone.cmd=window.ezstandalone.cmd||[];",
         }}
       />
-      <script async src="https://www.ezojs.com/ezoic/sa.min.js" />
-      <script async src="https://ezoicanalytics.com/analytics.js" />
+      <script data-cfasync="false" src="https://www.ezojs.com/ezoic/sa.min.js" />
+      <script src="https://ezoicanalytics.com/analytics.js" />
     </>
   );
 }
