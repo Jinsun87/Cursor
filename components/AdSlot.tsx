@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useApp } from "@/lib/store";
+import { adsenseClient, adsenseEnabled, adsenseSlot } from "@/lib/adsense";
 import { EZOIC_PLACEHOLDERS, ezoicAdsEnabled, runEzoic } from "@/lib/ezoic";
 
 export function AdSlot({
@@ -13,10 +14,13 @@ export function AdSlot({
 }) {
   const { user } = useApp();
   const [ready, setReady] = useState(false);
-  const live = ezoicAdsEnabled();
+  const ezoic = ezoicAdsEnabled();
+  const adsense = adsenseEnabled();
+  const client = adsenseClient();
+  const slot = adsenseSlot();
 
   useEffect(() => {
-    if (user?.premium || !live) return;
+    if (user?.premium || !ezoic) return;
     setReady(true);
     runEzoic(() => {
       window.ezstandalone?.showAds?.(placeholderId);
@@ -26,7 +30,18 @@ export function AdSlot({
         window.ezstandalone?.destroyPlaceholders?.(placeholderId);
       });
     };
-  }, [live, placeholderId, user?.premium]);
+  }, [ezoic, placeholderId, user?.premium]);
+
+  useEffect(() => {
+    if (user?.premium || !adsense) return;
+    setReady(true);
+    try {
+      window.adsbygoogle = window.adsbygoogle || [];
+      window.adsbygoogle.push({});
+    } catch {
+      /* AdSense script may still be loading */
+    }
+  }, [adsense, slot, user?.premium]);
 
   if (user?.premium) return null;
 
@@ -37,9 +52,20 @@ export function AdSlot({
       style={{ borderColor: "var(--line)", background: "var(--canvas)" }}
     >
       <p className="text-xs uppercase tracking-widest text-pine-400">{label}</p>
-      {live && ready ? (
+      {ezoic && ready ? (
         <div className="mx-auto min-h-24">
           <div id={`ezoic-pub-ad-placeholder-${placeholderId}`} />
+        </div>
+      ) : adsense && ready ? (
+        <div className="mx-auto min-h-24 overflow-hidden">
+          <ins
+            className="adsbygoogle"
+            style={{ display: "block" }}
+            data-ad-client={client}
+            {...(slot ? { "data-ad-slot": slot } : {})}
+            data-ad-format="auto"
+            data-full-width-responsive="true"
+          />
         </div>
       ) : (
         <>

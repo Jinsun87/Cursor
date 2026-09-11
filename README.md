@@ -54,7 +54,19 @@ Keep **mediareferee.com** on the existing site. Point a **subdomain** at this ap
 
 A CLI anonymous deploy expires in an hour unless you claim it. Git import is what you want for going live.
 
+## Ads (AdSense on apex and quiz)
+
+**Yes — implement AdSense** for the approved apex. Do not run AdSense and Ezoic tags on the same HTML document.
+
+**WordPress `mediareferee.com` (not this repo):** In AdSense, enable the site and Auto ads (or paste the official snippet once). Remove the Ezoic plugin, any extra `ezojs.com` header snippets, and a second `adsbygoogle.js` if Auto ads already injects one. Purge cache.
+
+**This quiz app:** In Vercel Config set `NEXT_PUBLIC_ADSENSE_CLIENT` to `ca-pub-3795330167795048` (the id already on the apex). Leave `NEXT_PUBLIC_EZOIC_ADS` unset or `false` so Ezoic scripts stay off. Optional: `NEXT_PUBLIC_ADSENSE_SLOT` if you create a display unit. In AdSense → Sites, include `quiz.mediareferee.com`. Redeploy, then View Source for `adsbygoogle.js`.
+
+ads.txt on both hosts already 301s to AdsTxtManager and already lists this Google publisher id.
+
 ## Ezoic ads
+
+Ezoic standalone JS remains in the codebase if you switch back. Do not enable it while AdSense is on.
 
 Standalone JavaScript only (not nameserver / Cloud takeover). Apex **mediareferee.com** stays on the existing site. Lampstand stays on **quiz.mediareferee.com** (Vercel already owns that CNAME).
 

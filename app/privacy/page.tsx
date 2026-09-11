@@ -12,18 +12,19 @@ export default function PrivacyPage() {
         are for trying the product, not a production identity system.
       </p>
       <p className="text-parchment/80">
-        Free sittings may show ads via Ezoic standalone JavaScript (Gatekeeper
-        CMP for consent). Premium hides the placeholders. The Ezoic dashboard
-        site is the registrable domain mediareferee.com (subdomains are not
-        separate Ezoic sites); this quiz host still serves its own{" "}
+        Free sittings may show ads. Prefer Google AdSense on this quiz host
+        (same publisher id as the approved apex,{" "}
+        <code>NEXT_PUBLIC_ADSENSE_CLIENT</code>
+        ). Do not load AdSense and Ezoic on the same page. Premium hides the
+        in-page slots. The Ezoic dashboard site is the registrable domain
+        mediareferee.com (subdomains are not separate Ezoic sites). This quiz
+        host still serves{" "}
         <a href="/ads.txt" className="text-gold-400">
           ads.txt
         </a>{" "}
-        and privacy page. quiz.mediareferee.com/ads.txt 301s to the same
-        Ads.txt Manager file as mediareferee.com. Production also needs Google
-        MCM approval for that domain. Set{" "}
-        <code>NEXT_PUBLIC_EZOIC_ADS=true</code> on the host to load CMP and ad
-        scripts in the document head.
+        (301 to the same Ads.txt Manager file as mediareferee.com). If you
+        still use Ezoic instead, set <code>NEXT_PUBLIC_EZOIC_ADS=true</code>{" "}
+        and leave the AdSense client unset.
       </p>
       <p className="text-parchment/80">
         The site is meant for adults. Do not use it to collect information from

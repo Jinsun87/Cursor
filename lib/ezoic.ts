@@ -1,3 +1,5 @@
+import { adsenseEnabled } from "./adsense";
+
 /** Placement IDs from EzoicAds → Placeholders for mediareferee.com (not examples). */
 export const EZOIC_PLACEHOLDERS = {
   inQuizSecret: 645,
@@ -11,6 +13,7 @@ export const MEDIAREFEREE_ADS_TXT_MANAGER =
   "https://srv.adstxtmanager.com/85097/mediareferee.com";
 
 export function ezoicAdsEnabled() {
+  if (adsenseEnabled()) return false;
   return process.env.NEXT_PUBLIC_EZOIC_ADS === "true";
 }
 

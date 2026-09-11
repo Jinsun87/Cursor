@@ -117,6 +117,6 @@ test("privacy and ads.txt are on the quiz host", async ({ page, request }) => {
   await expect(page.getByRole("heading", { name: /privacy/i })).toBeVisible();
   await expect(page.getByText("Lampstand on quiz.mediareferee.com")).toBeVisible();
   await expect(
-    page.getByText("The Ezoic dashboard site is the registrable domain mediareferee.com"),
+    page.getByText("The Ezoic dashboard site is the registrable domain"),
   ).toBeVisible();
 });
