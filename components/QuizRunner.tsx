@@ -370,7 +370,12 @@ export function QuizRunner({ quiz }: { quiz: Quiz }) {
 
   return frame(
     <div className="rounded-2xl border p-6 md:p-8" style={{ borderColor: "var(--line)", background: "var(--canvas-2)" }}>
-      {quiz.isSecret ? <AdSlot placeholderId={EZOIC_PLACEHOLDERS.inQuizSecret} /> : null}
+      {quiz.isSecret || quiz.isLongform ? (
+        <AdSlot
+          label={quiz.isLongform ? "In-quiz ad" : "Advertisement"}
+          placeholderId={EZOIC_PLACEHOLDERS.inQuizSecret}
+        />
+      ) : null}
       {streakSkipNote ? (
         <p
           className="mb-4 rounded-xl border px-3 py-2 text-sm"

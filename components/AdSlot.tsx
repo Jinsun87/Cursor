@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useApp } from "@/lib/store";
-import { adsenseClient, adsenseEnabled, adsenseSlot } from "@/lib/adsense";
+import { adsenseClient, adsenseEnabled, adsenseSlot, whenAdSenseReady, requestAdSense } from "@/lib/adsense";
 import { EZOIC_PLACEHOLDERS, ezoicAdsEnabled, runEzoic } from "@/lib/ezoic";
 
 export function AdSlot({
@@ -35,12 +35,7 @@ export function AdSlot({
   useEffect(() => {
     if (user?.premium || !adsense) return;
     setReady(true);
-    try {
-      window.adsbygoogle = window.adsbygoogle || [];
-      window.adsbygoogle.push({});
-    } catch {
-      /* AdSense script may still be loading */
-    }
+    return whenAdSenseReady(() => requestAdSense());
   }, [adsense, slot, user?.premium]);
 
   if (user?.premium) return null;
