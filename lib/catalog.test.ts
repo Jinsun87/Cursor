@@ -42,11 +42,16 @@ describe("catalog integrity", () => {
     }
   });
 
-  it("ships a 50+ question Scripture flagship for long sessions", () => {
+  it("ships a 50+ question Scripture flagship with 4 structural epoch chapters", () => {
     const quiz = getQuiz("open-the-book");
     expect(quiz?.isLongform).toBe(true);
     expect(quiz?.questions.length).toBeGreaterThanOrEqual(50);
     expect(quiz?.category).toBe("bible");
+    expect(quiz?.chapters?.length).toBe(4);
+    expect(quiz?.chapters?.[0].startIndex).toBe(0);
+    expect(quiz?.chapters?.[1].startIndex).toBe(13);
+    expect(quiz?.chapters?.[2].startIndex).toBe(26);
+    expect(quiz?.chapters?.[3].startIndex).toBe(40);
     expect(CATEGORIES[0]?.slug).toBe("bible");
     expect(getSeries("bible-foundations")?.quizSlugs).toContain("scripture-places");
   });

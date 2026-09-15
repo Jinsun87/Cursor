@@ -1,4 +1,4 @@
-import type { Question } from "@/lib/types";
+import type { Question, QuizChapter } from "@/lib/types";
 
 function q(
   prompt: string,
@@ -8,6 +8,29 @@ function q(
 ): Question {
   return { prompt, choices, answerIndex, explanation };
 }
+
+export const OPEN_THE_BOOK_CHAPTERS: QuizChapter[] = [
+  {
+    title: "Act I: Patriarchs & Exodus",
+    subtitle: "Creation, the Patriarchs, the Exodus, and Sinai Law",
+    startIndex: 0,
+  },
+  {
+    title: "Act II: Kings, Prophets & Wisdom",
+    subtitle: "Judges, United Monarchy, Exile, Psalms, and Wisdom",
+    startIndex: 13,
+  },
+  {
+    title: "Act III: Gospels & The Life of Jesus",
+    subtitle: "Infancy, Jordan Baptism, Parables, Passion, and Resurrection",
+    startIndex: 26,
+  },
+  {
+    title: "Act IV: Acts, Epistles & Revelation",
+    subtitle: "Pentecost, Paul's Journeys, Letters, and the Vision on Patmos",
+    startIndex: 40,
+  },
+];
 
 /** Original 54-item Scripture sitting. Public-domain biblical facts, not a sermon and not copied from another quiz site. */
 export const OPEN_THE_BOOK_QUESTIONS: Question[] = [

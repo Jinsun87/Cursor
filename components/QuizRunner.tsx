@@ -27,6 +27,14 @@ import {
   sittingIsResumable,
 } from "@/lib/sitting";
 import { CourseMedals } from "./CourseMedals";
+import { ChapterProgress } from "./ChapterProgress";
+import { ChapterTransitionCard } from "./ChapterTransitionCard";
+import {
+  getChapterForIndex,
+  getChapterNumber,
+  getPreviousChapter,
+  isChapterStart,
+} from "@/lib/chapters";
 
 export function QuizRunner({ quiz }: { quiz: Quiz }) {
   const { user, recordAttempt, spendCoins } = useApp();
@@ -39,6 +47,7 @@ export function QuizRunner({ quiz }: { quiz: Quiz }) {
   const [done, setDone] = useState(false);
   const [finalScore, setFinalScore] = useState(0);
   const [pageBreak, setPageBreak] = useState(false);
+  const [chapterBreak, setChapterBreak] = useState(false);
   const [hiddenChoices, setHiddenChoices] = useState<number[]>([]);
   const [streakSkipNote, setStreakSkipNote] = useState(false);
   const [shareStatus, setShareStatus] = useState<string | null>(null);
@@ -70,6 +79,7 @@ export function QuizRunner({ quiz }: { quiz: Quiz }) {
     setDone(false);
     setFinalScore(0);
     setPageBreak(false);
+    setChapterBreak(false);
     setHiddenChoices([]);
     setStreakSkipNote(false);
     setShareStatus(null);
@@ -226,6 +236,16 @@ export function QuizRunner({ quiz }: { quiz: Quiz }) {
       return;
     }
     const completed = index + 1;
+
+    if (quiz.chapters && isChapterStart(quiz.chapters, completed)) {
+      setIndex(completed);
+      setPicked(null);
+      setHiddenChoices([]);
+      fiftyLock.current = false;
+      setChapterBreak(true);
+      return;
+    }
+
     const breakInput = {
       isLongform: quiz.isLongform,
       premium: user?.premium,
@@ -329,6 +349,23 @@ export function QuizRunner({ quiz }: { quiz: Quiz }) {
     );
   }
 
+  if (chapterBreak && quiz.chapters) {
+    const nextCh = getChapterForIndex(quiz.chapters, index);
+    const prevCh = getPreviousChapter(quiz.chapters, index);
+    const chNum = getChapterNumber(quiz.chapters, index);
+    if (nextCh) {
+      return frame(
+        <ChapterTransitionCard
+          prevChapter={prevCh}
+          nextChapter={nextCh}
+          chapterNumber={chNum}
+          totalChapters={quiz.chapters.length}
+          onContinue={() => setChapterBreak(false)}
+        />,
+      );
+    }
+  }
+
   if (pageBreak) {
     const canSkip = Boolean(user && !user.premium && user.coins >= SKIP_AD_COST);
     return frame(
@@ -385,17 +422,25 @@ export function QuizRunner({ quiz }: { quiz: Quiz }) {
           Hot streak of {STREAK_SKIPS_AD} — this course pause was skipped.
         </p>
       ) : null}
-      <div
-        className="mb-6 h-2 overflow-hidden rounded-full"
-        style={{ background: "var(--pine-800)" }}
-        role="progressbar"
-        aria-valuemin={0}
-        aria-valuemax={100}
-        aria-valuenow={progress}
-        aria-label="Quiz progress"
-      >
-        <div className="h-full" style={{ width: `${progress}%`, background: "var(--gold)" }} />
-      </div>
+      {quiz.chapters ? (
+        <ChapterProgress
+          chapters={quiz.chapters}
+          currentIndex={index}
+          totalQuestions={quiz.questions.length}
+        />
+      ) : (
+        <div
+          className="mb-6 h-2 overflow-hidden rounded-full"
+          style={{ background: "var(--pine-800)" }}
+          role="progressbar"
+          aria-valuemin={0}
+          aria-valuemax={100}
+          aria-valuenow={progress}
+          aria-label="Quiz progress"
+        >
+          <div className="h-full" style={{ width: `${progress}%`, background: "var(--gold)" }} />
+        </div>
+      )}
       <p className="text-sm" style={{ color: "var(--muted)" }}>
         {quiz.isLongform ? `Course ${course} of ${courses}` : `${quiz.questions.length} questions`}
       </p>

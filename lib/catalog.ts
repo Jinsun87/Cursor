@@ -6,7 +6,7 @@ import {
   PATRIARCHS_AND_EXODUS,
   PROPHETS_AND_WRITINGS,
 } from "./quizzes/bible-foundations";
-import { OPEN_THE_BOOK_QUESTIONS } from "./quizzes/open-the-book";
+import { OPEN_THE_BOOK_CHAPTERS, OPEN_THE_BOOK_QUESTIONS } from "./quizzes/open-the-book";
 import { RESTAURANT_FILL_QUESTIONS } from "./quizzes/restaurant-fill";
 import { DAILY_LENGTH } from "./economy";
 
@@ -84,6 +84,7 @@ export const QUIZZES: Quiz[] = [
     category: "bible",
     isLongform: true,
     coinsOnComplete: 250,
+    chapters: OPEN_THE_BOOK_CHAPTERS,
     questions: OPEN_THE_BOOK_QUESTIONS,
   },
   {

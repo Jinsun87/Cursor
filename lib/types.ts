@@ -12,6 +12,12 @@ export type Question = {
   explanation: string;
 };
 
+export type QuizChapter = {
+  title: string;
+  subtitle?: string;
+  startIndex: number;
+};
+
 export type Quiz = {
   slug: string;
   title: string;
@@ -26,6 +32,8 @@ export type Quiz = {
   questions: Question[];
   /** Long sitting (50+ items). Mid-roll ads for free users, modeled on paginated quiz pages. */
   isLongform?: boolean;
+  /** Epoch chapters for structural chunking of long sittings. */
+  chapters?: QuizChapter[];
 };
 
 export type Series = {
