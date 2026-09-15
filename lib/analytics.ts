@@ -17,7 +17,11 @@ declare global {
   }
 }
 
-export const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
+export function getGaMeasurementId(): string {
+  if (typeof process === "undefined") return "";
+  const id = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID?.trim();
+  return id && /^G-[A-Z0-9]+$/i.test(id) ? id : "";
+}
 
 export function isAnalyticsSupported(): boolean {
   return typeof window !== "undefined";

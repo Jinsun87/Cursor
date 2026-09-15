@@ -1,14 +1,15 @@
-import { GA_MEASUREMENT_ID } from "@/lib/analytics";
+"use client";
 
 export function GA4Head() {
-  if (!GA_MEASUREMENT_ID) return null;
+  const gaId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID?.trim();
+  if (!gaId || !/^G-[A-Z0-9]+$/i.test(gaId)) return null;
 
-  const scriptSrc = `https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`;
+  const scriptSrc = `https://www.googletagmanager.com/gtag/js?id=${gaId}`;
   const initScript = `
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
-    gtag('config', '${GA_MEASUREMENT_ID}', { page_path: window.location.pathname });
+    gtag('config', '${gaId}', { page_path: window.location.pathname });
   `;
 
   return (
