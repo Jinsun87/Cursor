@@ -12,6 +12,7 @@ import {
   LONGFORM_AD_EVERY,
   SKIP_AD_COST,
   STREAK_SKIPS_AD,
+  percentScore,
   shouldShowLongformAdBreak,
   wouldLongformAdBreak,
 } from "@/lib/economy";
@@ -35,6 +36,14 @@ import {
   getPreviousChapter,
   isChapterStart,
 } from "@/lib/chapters";
+import {
+  trackAdBreak,
+  trackChapterComplete,
+  trackLifelineUse,
+  trackQuestionAnswer,
+  trackQuizComplete,
+  trackQuizStart,
+} from "@/lib/analytics";
 
 export function QuizRunner({ quiz }: { quiz: Quiz }) {
   const { user, recordAttempt, spendCoins } = useApp();
@@ -57,6 +66,8 @@ export function QuizRunner({ quiz }: { quiz: Quiz }) {
 
   const booted = useRef(false);
   const fiftyLock = useRef(false);
+  const questionStartTime = useRef(Date.now());
+  const quizStartTime = useRef(Date.now());
 
   const questions = deck ?? quiz.questions;
   const question = questions[index];
@@ -85,6 +96,16 @@ export function QuizRunner({ quiz }: { quiz: Quiz }) {
     setShareStatus(null);
     setReward(null);
     fiftyLock.current = false;
+    questionStartTime.current = Date.now();
+    quizStartTime.current = Date.now();
+
+    trackQuizStart({
+      quizSlug: quiz.slug,
+      title: quiz.title,
+      questionCount: quiz.questions.length,
+      isLongform: quiz.isLongform,
+      isSecret: quiz.isSecret,
+    });
   }
 
   useEffect(() => {
@@ -103,6 +124,8 @@ export function QuizRunner({ quiz }: { quiz: Quiz }) {
       setDone(false);
       setFinalScore(0);
       setReward(null);
+      questionStartTime.current = Date.now();
+      quizStartTime.current = Date.now();
     } else {
       freshDeal();
     }
@@ -149,6 +172,14 @@ export function QuizRunner({ quiz }: { quiz: Quiz }) {
     if (picked !== null) return;
     if (hiddenChoices.includes(i)) return;
     const ok = i === question.answerIndex;
+    const timeSpentMs = Date.now() - questionStartTime.current;
+    trackQuestionAnswer({
+      quizSlug: quiz.slug,
+      questionIndex: index,
+      isCorrect: ok,
+      timeSpentMs,
+      streak: ok ? streak + 1 : 0,
+    });
     setPicked(i);
     setAnswered((n) => n + 1);
     if (ok) {
@@ -167,11 +198,14 @@ export function QuizRunner({ quiz }: { quiz: Quiz }) {
     if (fiftyLock.current || picked !== null || hiddenChoices.length > 0) return;
     if (!spendCoins(FIFTY_FIFTY_COST)) return;
     fiftyLock.current = true;
+    trackLifelineUse({ lifeline: "5050", quizSlug: quiz.slug, questionIndex: index });
     setHiddenChoices(fiftyFiftyHidden(question.answerIndex, question.choices.length));
   }
 
   function skipAdBreak() {
     if (!spendCoins(SKIP_AD_COST)) return;
+    trackLifelineUse({ lifeline: "skip_ad", quizSlug: quiz.slug, questionIndex: index });
+    trackAdBreak({ quizSlug: quiz.slug, courseIndex: course, skipped: true, skipReason: "coins" });
     setPageBreak(false);
   }
 
@@ -227,9 +261,20 @@ export function QuizRunner({ quiz }: { quiz: Quiz }) {
   }
 
   function advance() {
+    questionStartTime.current = Date.now();
     if (index + 1 >= quiz.questions.length) {
       const totalScore = correctCount;
       const result = recordAttempt(quiz.slug, totalScore, quiz.questions.length);
+      const totalSec = (Date.now() - quizStartTime.current) / 1000;
+      const grade = sittingGrade(totalScore, quiz.questions.length);
+      trackQuizComplete({
+        quizSlug: quiz.slug,
+        score: totalScore,
+        total: quiz.questions.length,
+        accuracyPct: percentScore(totalScore, quiz.questions.length),
+        totalTimeSeconds: totalSec,
+        grade: grade.letter,
+      });
       setFinalScore(totalScore);
       setReward(result);
       setDone(true);
@@ -238,6 +283,14 @@ export function QuizRunner({ quiz }: { quiz: Quiz }) {
     const completed = index + 1;
 
     if (quiz.chapters && isChapterStart(quiz.chapters, completed)) {
+      const currentCh = getChapterForIndex(quiz.chapters, completed);
+      if (currentCh) {
+        trackChapterComplete({
+          quizSlug: quiz.slug,
+          chapterIndex: getChapterNumber(quiz.chapters, completed),
+          title: currentCh.title,
+        });
+      }
       setIndex(completed);
       setPicked(null);
       setHiddenChoices([]);
@@ -253,6 +306,12 @@ export function QuizRunner({ quiz }: { quiz: Quiz }) {
       total: quiz.questions.length,
     };
     if (wouldLongformAdBreak(breakInput) && streak >= STREAK_SKIPS_AD) {
+      trackAdBreak({
+        quizSlug: quiz.slug,
+        courseIndex: course,
+        skipped: true,
+        skipReason: "streak",
+      });
       setStreakSkipNote(true);
       setIndex(completed);
       setPicked(null);
@@ -261,6 +320,11 @@ export function QuizRunner({ quiz }: { quiz: Quiz }) {
       return;
     }
     if (shouldShowLongformAdBreak({ ...breakInput, streak })) {
+      trackAdBreak({
+        quizSlug: quiz.slug,
+        courseIndex: course,
+        skipped: false,
+      });
       setIndex(completed);
       setPicked(null);
       setHiddenChoices([]);

@@ -9,6 +9,8 @@ import { siteUrl } from "@/lib/site";
 import { AdSenseHead } from "@/components/AdSenseHead";
 import { EzoicBoot } from "@/components/EzoicBoot";
 import { EzoicHead } from "@/components/EzoicHead";
+import { GA4Head } from "@/components/GA4Head";
+import { AnalyticsTracker } from "@/components/AnalyticsTracker";
 
 const sans = Inter({
   subsets: ["latin"],
@@ -39,10 +41,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <script dangerouslySetInnerHTML={{ __html: themeBoot }} />
         <AdSenseHead />
         <EzoicHead />
+        <GA4Head />
       </head>
       <body className="font-sans antialiased">
         <ThemeProvider>
           <AppProvider>
+            <AnalyticsTracker />
             <EzoicBoot />
             <a href="#main" className="skip-link">
               Skip to content
