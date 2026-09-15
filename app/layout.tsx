@@ -11,6 +11,7 @@ import { EzoicBoot } from "@/components/EzoicBoot";
 import { EzoicHead } from "@/components/EzoicHead";
 import { GA4Head } from "@/components/GA4Head";
 import { AnalyticsTracker } from "@/components/AnalyticsTracker";
+import { Analytics } from "@vercel/analytics/next";
 
 const sans = Inter({
   subsets: ["latin"],
@@ -47,6 +48,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <ThemeProvider>
           <AppProvider>
             <AnalyticsTracker />
+            <Analytics />
             <EzoicBoot />
             <a href="#main" className="skip-link">
               Skip to content
