@@ -8,9 +8,11 @@ import { EZOIC_PLACEHOLDERS, ezoicAdsEnabled, runEzoic } from "@/lib/ezoic";
 export function AdSlot({
   label = "Advertisement",
   placeholderId = EZOIC_PLACEHOLDERS.inQuizSecret,
+  refreshIntervalSec = 30,
 }: {
   label?: string;
   placeholderId?: number;
+  refreshIntervalSec?: number;
 }) {
   const { user } = useApp();
   const [ready, setReady] = useState(false);
@@ -37,6 +39,25 @@ export function AdSlot({
     setReady(true);
     return whenAdSenseReady(() => requestAdSense());
   }, [adsense, slot, user?.premium]);
+
+  // Auto Ad Refresh every X seconds (e.g. 30s) when tab is active
+  useEffect(() => {
+    if (user?.premium || refreshIntervalSec <= 0 || (!ezoic && !adsense)) return;
+
+    const interval = setInterval(() => {
+      if (typeof window === "undefined" || document.visibilityState !== "visible") return;
+
+      if (ezoic) {
+        runEzoic(() => {
+          window.ezstandalone?.refresh?.(placeholderId);
+        });
+      } else if (adsense) {
+        whenAdSenseReady(() => requestAdSense());
+      }
+    }, refreshIntervalSec * 1000);
+
+    return () => clearInterval(interval);
+  }, [user?.premium, refreshIntervalSec, ezoic, adsense, placeholderId]);
 
   if (user?.premium) return null;
 

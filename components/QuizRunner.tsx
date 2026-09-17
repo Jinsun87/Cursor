@@ -5,6 +5,7 @@ import Link from "next/link";
 import type { Question, Quiz } from "@/lib/types";
 import { useApp } from "@/lib/store";
 import { AdSlot } from "./AdSlot";
+import { StickyMobileAd } from "./StickyMobileAd";
 import { EZOIC_PLACEHOLDERS } from "@/lib/ezoic";
 import { QuizHud } from "./QuizHud";
 import {
@@ -551,6 +552,7 @@ export function QuizRunner({ quiz }: { quiz: Quiz }) {
           </div>
         </div>
       ) : null}
+      <StickyMobileAd />
     </div>,
   );
 }

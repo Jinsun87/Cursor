@@ -5,6 +5,7 @@ declare global {
       cmd?: Array<() => void>;
       showAds?: (...ids: number[]) => void;
       destroyPlaceholders?: (...ids: number[]) => void;
+      refresh?: (...ids: number[]) => void;
       setIsSinglePageApplication?: (value: boolean) => void;
     };
   }
