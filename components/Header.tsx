@@ -9,6 +9,7 @@ import { useTheme } from "@/lib/theme";
 const links = [
   { href: "/quizzes", label: "Quizzes" },
   { href: "/daily", label: "Daily" },
+  { href: "/ebooks", label: "eBooks" },
   { href: "/secret", label: "Secret" },
   { href: "/leaderboard", label: "Board" },
   { href: "/how-it-works", label: "How to play" },

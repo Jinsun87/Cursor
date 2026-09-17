@@ -30,6 +30,7 @@ import {
 import { CourseMedals } from "./CourseMedals";
 import { ChapterProgress } from "./ChapterProgress";
 import { ChapterTransitionCard } from "./ChapterTransitionCard";
+import { EbookRewardCard } from "./EbookRewardCard";
 import {
   getChapterForIndex,
   getChapterNumber,
@@ -391,6 +392,7 @@ export function QuizRunner({ quiz }: { quiz: Quiz }) {
             </Link>
           </p>
         ) : null}
+        <EbookRewardCard quizTitle={quiz.title} />
         <div className="mt-6 flex flex-wrap gap-3">
           <button type="button" className="btn btn-primary" data-testid="share-score" onClick={shareScore}>
             Share score
