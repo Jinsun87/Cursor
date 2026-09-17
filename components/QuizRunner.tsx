@@ -70,6 +70,7 @@ export function QuizRunner({ quiz }: { quiz: Quiz }) {
   const questionStartTime = useRef(Date.now());
   const quizStartTime = useRef(Date.now());
   const answerFeedbackRef = useRef<HTMLDivElement | null>(null);
+  const quizContainerRef = useRef<HTMLDivElement | null>(null);
 
   const questions = deck ?? quiz.questions;
   const question = questions[index];
@@ -213,6 +214,9 @@ export function QuizRunner({ quiz }: { quiz: Quiz }) {
     trackLifelineUse({ lifeline: "skip_ad", quizSlug: quiz.slug, questionIndex: index });
     trackAdBreak({ quizSlug: quiz.slug, courseIndex: course, skipped: true, skipReason: "coins" });
     setPageBreak(false);
+    setTimeout(() => {
+      quizContainerRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 50);
   }
 
   async function shareScore() {
@@ -258,7 +262,7 @@ export function QuizRunner({ quiz }: { quiz: Quiz }) {
 
   function frame(body: ReactNode) {
     return (
-      <div>
+      <div ref={quizContainerRef}>
         {hud}
         {medals}
         {body}
@@ -268,6 +272,9 @@ export function QuizRunner({ quiz }: { quiz: Quiz }) {
 
   function advance() {
     questionStartTime.current = Date.now();
+    setTimeout(() => {
+      quizContainerRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 50);
     if (index + 1 >= quiz.questions.length) {
       const totalScore = correctCount;
       const result = recordAttempt(quiz.slug, totalScore, quiz.questions.length);
