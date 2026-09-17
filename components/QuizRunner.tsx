@@ -21,7 +21,6 @@ import {
   saveSitting,
   sittingIsResumable,
 } from "@/lib/sitting";
-import { ChapterProgress } from "./ChapterProgress";
 import { ChapterTransitionCard } from "./ChapterTransitionCard";
 import { EbookRewardCard } from "./EbookRewardCard";
 import {
@@ -61,13 +60,10 @@ export function QuizRunner({ quiz }: { quiz: Quiz }) {
   const quizStartTime = useRef(Date.now());
   const answerFeedbackRef = useRef<HTMLDivElement | null>(null);
   const quizContainerRef = useRef<HTMLDivElement | null>(null);
+  const questionPromptRef = useRef<HTMLHeadingElement | null>(null);
 
   const questions = deck ?? quiz.questions;
   const question = questions[index];
-  const progress = useMemo(
-    () => Math.round((index / questions.length) * 100),
-    [index, questions.length],
-  );
 
   function freshDeal() {
     clearSitting(quiz.slug, browserStorage());
@@ -230,6 +226,8 @@ export function QuizRunner({ quiz }: { quiz: Quiz }) {
       answered={answered}
       streak={streak}
       onRestart={restart}
+      chapters={quiz.chapters}
+      currentIndex={index}
     />
   );
 
@@ -245,7 +243,7 @@ export function QuizRunner({ quiz }: { quiz: Quiz }) {
   function advance() {
     questionStartTime.current = Date.now();
     setTimeout(() => {
-      quizContainerRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+      questionPromptRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
     }, 50);
 
     if (index + 1 >= quiz.questions.length) {
@@ -390,34 +388,25 @@ export function QuizRunner({ quiz }: { quiz: Quiz }) {
 
   return frame(
     <div className="rounded-2xl border p-6 md:p-8" style={{ borderColor: "var(--line)", background: "var(--canvas-2)" }}>
+      {/* 1. Question Prompt */}
+      <h2
+        ref={questionPromptRef}
+        className="font-display text-2xl md:text-3xl scroll-mt-24"
+      >
+        {question.prompt}
+      </h2>
+
+      {/* 2. Top Ad Slot (Renders AFTER the question prompt, BEFORE the options!) */}
       {quiz.isSecret || quiz.isLongform ? (
-        <AdSlot
-          label={quiz.isLongform ? "In-quiz ad" : "Advertisement"}
-          placeholderId={EZOIC_PLACEHOLDERS.inQuizSecret}
-        />
+        <div className="my-4">
+          <AdSlot
+            label={quiz.isLongform ? "In-quiz ad" : "Advertisement"}
+            placeholderId={EZOIC_PLACEHOLDERS.inQuizSecret}
+          />
+        </div>
       ) : null}
 
-      {quiz.chapters ? (
-        <ChapterProgress
-          chapters={quiz.chapters}
-          currentIndex={index}
-          totalQuestions={quiz.questions.length}
-        />
-      ) : (
-        <div
-          className="mb-6 h-2 overflow-hidden rounded-full"
-          style={{ background: "var(--pine-800)" }}
-          role="progressbar"
-          aria-valuemin={0}
-          aria-valuemax={100}
-          aria-valuenow={progress}
-          aria-label="Quiz progress"
-        >
-          <div className="h-full" style={{ width: `${progress}%`, background: "var(--gold)" }} />
-        </div>
-      )}
-
-      <h2 className="mt-2 font-display text-2xl md:text-3xl">{question.prompt}</h2>
+      {/* 3. Lifeline 50/50 Button */}
       <div className="mt-4 flex flex-wrap gap-2">
         {user ? (
           <button
@@ -435,7 +424,9 @@ export function QuizRunner({ quiz }: { quiz: Quiz }) {
           </Link>
         )}
       </div>
-      <div className="mt-6 grid gap-3">
+
+      {/* 4. Answer Choices (Rendered AFTER the Ad!) */}
+      <div className="mt-4 grid gap-3">
         {visibleChoices.map(({ choice, i }) => {
           const show = picked !== null;
           const correct = i === question.answerIndex;
@@ -466,6 +457,8 @@ export function QuizRunner({ quiz }: { quiz: Quiz }) {
           );
         })}
       </div>
+
+      {/* 5. Answer Feedback, Continue Button, Explanation & Post-Answer Ad */}
       {picked !== null ? (
         <div
           ref={answerFeedbackRef}
@@ -478,7 +471,7 @@ export function QuizRunner({ quiz }: { quiz: Quiz }) {
             background: "var(--canvas)",
           }}
         >
-          {/* 1. Answer Status Banner */}
+          {/* Answer Status Banner */}
           <div
             className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 rounded-xl p-4 border"
             style={{
@@ -499,7 +492,7 @@ export function QuizRunner({ quiz }: { quiz: Quiz }) {
             </div>
           </div>
 
-          {/* 2. Primary Continue Button (Placed ABOVE the Ad Slot) */}
+          {/* Primary Continue Button (Placed ABOVE the Ad Slot) */}
           <div className="mt-6 flex flex-col items-center justify-center text-center">
             <button
               type="button"
@@ -514,7 +507,7 @@ export function QuizRunner({ quiz }: { quiz: Quiz }) {
             </p>
           </div>
 
-          {/* 3. In-Quiz Ad Slot (Between Continue button & Explanation) */}
+          {/* In-Quiz Ad Slot (Between Continue button & Explanation) */}
           <div className="my-6">
             <AdSlot
               label="In-Quiz Advertisement"
@@ -522,7 +515,7 @@ export function QuizRunner({ quiz }: { quiz: Quiz }) {
             />
           </div>
 
-          {/* 4. Detailed Storytelling Explanation / Fact Box (Placed BELOW the Ad Slot) */}
+          {/* Detailed Storytelling Explanation / Fact Box (Placed BELOW the Ad Slot) */}
           <div
             className="rounded-xl border p-5 shadow-inner"
             style={{ borderColor: "var(--line)", background: "var(--canvas-2)" }}
