@@ -19,17 +19,15 @@ export default function HowItWorksPage() {
         <li>
           <strong className="text-parchment">Learn as a guest or with an account.</strong>{" "}
           You can play without signing up. Progress, coins, and certificates
-          require registration. Coins buy a 50/50 or skip one mid-course pause.
-          A streak of five correct answers skips the next longform ad for free.
+          require registration. Coins buy 50/50 lifelines or unlock study eBooks.
         </li>
         <li>
           <strong className="text-parchment">Master the topic.</strong> Finish every
           pack quiz and score at least 70% on the review.
         </li>
         <li>
-          <strong className="text-parchment">Earn coins.</strong> Completions and
-          correct answers pay out. Spend them on 50/50 and ad skips. Premium
-          grants 5,000 coins.
+          <strong className="text-parchment">Earn coins & rewards.</strong> Completions and
+          correct answers pay out coins. Score 70%+ to claim the $29 Bible Foundations eBook free.
         </li>
         <li>
           <strong className="text-parchment">Keep the lamps lit.</strong> Ads on
