@@ -1,7 +1,9 @@
 import Link from "next/link";
 import type { Quiz } from "@/lib/types";
+import { EbookRewardBanner } from "./EbookRewardBanner";
 
 export function QuizCard({ quiz, featured = false }: { quiz: Quiz; featured?: boolean }) {
+  const isEbookEligible = quiz.slug === "open-the-book" || featured;
   return (
     <Link
       href={`/quizzes/${quiz.slug}`}
@@ -10,9 +12,12 @@ export function QuizCard({ quiz, featured = false }: { quiz: Quiz; featured?: bo
       }`}
       style={{ borderColor: "var(--line)" }}
     >
-      <p className="text-xs uppercase tracking-widest" style={{ color: "var(--muted)" }}>
-        {quiz.isSecret ? "Secret" : quiz.isReview ? "Review" : quiz.isDaily ? "Daily" : quiz.category}
-      </p>
+      <div className="flex items-center justify-between gap-2 flex-wrap">
+        <p className="text-xs uppercase tracking-widest" style={{ color: "var(--muted)" }}>
+          {quiz.isSecret ? "Secret" : quiz.isReview ? "Review" : quiz.isDaily ? "Daily" : quiz.category}
+        </p>
+        {isEbookEligible && <EbookRewardBanner compact />}
+      </div>
       <h3 className={`mt-2 font-display ${featured ? "text-3xl" : "text-xl"}`}>{quiz.title}</h3>
       <p className="mt-2 flex-1 text-sm" style={{ color: "var(--muted)" }}>
         {quiz.blurb}

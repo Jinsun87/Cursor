@@ -78,9 +78,9 @@ function q(
 export const QUIZZES: Quiz[] = [
   {
     slug: "open-the-book",
-    title: "Open the Book: People, Places, and the Text",
+    title: "Open the Book: Show You Have Solomon's Wisdom on Scripture",
     blurb:
-      "Fifty-four original questions on Scripture — patriarchs, prophets, Gospels, and letters. A long sitting with a fact after every answer. Not a sermon.",
+      "Fifty-four original questions on the text — patriarchs, prophets, Gospels, and letters. Score 70%+ to prove your mastery and claim the $29 Bible Foundations eBook free.",
     category: "bible",
     isLongform: true,
     coinsOnComplete: 250,
