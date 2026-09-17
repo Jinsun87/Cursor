@@ -16,6 +16,7 @@ export function AdSlot({
 }) {
   const { user } = useApp();
   const [ready, setReady] = useState(false);
+  const [refreshKey, setRefreshKey] = useState(0);
   const ezoic = ezoicAdsEnabled();
   const adsense = adsenseEnabled();
   const client = adsenseClient();
@@ -38,7 +39,7 @@ export function AdSlot({
     if (user?.premium || !adsense) return;
     setReady(true);
     return whenAdSenseReady(() => requestAdSense());
-  }, [adsense, slot, user?.premium]);
+  }, [adsense, slot, user?.premium, refreshKey]);
 
   // Auto Ad Refresh every X seconds (e.g. 30s) when tab is active
   useEffect(() => {
@@ -52,7 +53,7 @@ export function AdSlot({
           window.ezstandalone?.refresh?.(placeholderId);
         });
       } else if (adsense) {
-        whenAdSenseReady(() => requestAdSense());
+        setRefreshKey((prev) => prev + 1);
       }
     }, refreshIntervalSec * 1000);
 
@@ -75,6 +76,7 @@ export function AdSlot({
       ) : adsense && ready ? (
         <div className="mx-auto min-h-24 overflow-hidden">
           <ins
+            key={refreshKey}
             className="adsbygoogle"
             style={{ display: "block" }}
             data-ad-client={client}

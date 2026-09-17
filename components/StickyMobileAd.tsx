@@ -15,6 +15,7 @@ export function StickyMobileAd({
   const { user } = useApp();
   const [dismissed, setDismissed] = useState(false);
   const [ready, setReady] = useState(false);
+  const [refreshKey, setRefreshKey] = useState(0);
   const ezoic = ezoicAdsEnabled();
   const adsense = adsenseEnabled();
   const client = adsenseClient();
@@ -24,6 +25,11 @@ export function StickyMobileAd({
     if (user?.premium || (!ezoic && !adsense)) return;
     setReady(true);
   }, [user?.premium, ezoic, adsense]);
+
+  useEffect(() => {
+    if (user?.premium || !adsense || !ready) return;
+    return whenAdSenseReady(() => requestAdSense());
+  }, [adsense, slot, user?.premium, ready, refreshKey]);
 
   // Handle ad refresh every X seconds when tab is visible
   useEffect(() => {
@@ -37,7 +43,7 @@ export function StickyMobileAd({
           window.ezstandalone?.refresh?.(placeholderId);
         });
       } else if (adsense) {
-        whenAdSenseReady(() => requestAdSense());
+        setRefreshKey((prev) => prev + 1);
       }
     }, refreshIntervalSec * 1000);
 
@@ -71,6 +77,7 @@ export function StickyMobileAd({
           <div id={`ezoic-pub-ad-placeholder-${placeholderId}`} />
         ) : adsense && ready ? (
           <ins
+            key={refreshKey}
             className="adsbygoogle"
             style={{ display: "block", width: "100%", height: "50px" }}
             data-ad-client={client}

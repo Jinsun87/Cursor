@@ -402,14 +402,14 @@ export function QuizRunner({ quiz }: { quiz: Quiz }) {
       </h2>
 
       {/* 2. Top Ad Slot (Renders AFTER the question prompt, BEFORE the options!) */}
-      {quiz.isSecret || quiz.isLongform ? (
-        <div className="my-4">
-          <AdSlot
-            label={quiz.isLongform ? "In-quiz ad" : "Advertisement"}
-            placeholderId={EZOIC_PLACEHOLDERS.inQuizSecret}
-          />
-        </div>
-      ) : null}
+      <div className="my-4">
+        <AdSlot
+          key={`top-ad-${index}`}
+          label="In-Quiz Advertisement"
+          placeholderId={EZOIC_PLACEHOLDERS.inQuizSecret}
+          refreshIntervalSec={30}
+        />
+      </div>
 
       {/* 3. Lifeline 50/50 Button */}
       <div className="mt-4 flex flex-wrap gap-2">
@@ -515,8 +515,10 @@ export function QuizRunner({ quiz }: { quiz: Quiz }) {
           {/* In-Quiz Ad Slot (Between Continue button & Explanation) */}
           <div className="my-6">
             <AdSlot
+              key={`bottom-ad-${index}`}
               label="In-Quiz Advertisement"
               placeholderId={EZOIC_PLACEHOLDERS.inQuizSecret}
+              refreshIntervalSec={30}
             />
           </div>
 
