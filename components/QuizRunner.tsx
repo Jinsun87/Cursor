@@ -115,7 +115,11 @@ export function QuizRunner({ quiz }: { quiz: Quiz }) {
     booted.current = false;
     const saved = loadSitting(quiz.slug, browserStorage());
     if (sittingIsResumable(saved, quiz.slug, quiz.questions.length)) {
-      setDeck(saved.deck);
+      const updatedDeck = saved.deck.map((savedQ) => {
+        const latestQ = quiz.questions.find((q) => q.prompt === savedQ.prompt);
+        return latestQ ? { ...savedQ, explanation: latestQ.explanation } : savedQ;
+      });
+      setDeck(updatedDeck);
       setIndex(saved.index);
       setPicked(saved.picked);
       setCorrectCount(saved.correctCount);
