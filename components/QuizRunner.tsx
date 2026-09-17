@@ -620,22 +620,27 @@ export function QuizRunner({ quiz }: { quiz: Quiz }) {
             />
           </div>
 
-          {/* 4. Detailed Explanation / Fact Box (Placed BELOW the Ad Slot) */}
+          {/* 4. Detailed Storytelling Explanation / Fact Box (Placed BELOW the Ad Slot) */}
           <div
-            className="rounded-xl border p-4 shadow-inner"
+            className="rounded-xl border p-5 shadow-inner"
             style={{ borderColor: "var(--line)", background: "var(--canvas-2)" }}
           >
             <p className="text-sm font-bold text-emerald-400 flex items-center gap-1.5">
-              <span>📖</span> Explanation & Scripture Context:
+              <span>📖</span> Story & Scripture Commentary:
             </p>
-            <p className="mt-2 text-sm leading-relaxed" style={{ color: "var(--muted)" }}>
-              <span className="font-semibold" style={{ color: "var(--fg-main)" }}>
-                Fact:{" "}
-              </span>
-              {question.explanation}
-            </p>
+            <div className="mt-3 space-y-3 text-sm leading-relaxed" style={{ color: "var(--muted)" }}>
+              {question.explanation.split("\n\n").map((paragraph, pIdx) => (
+                <p key={pIdx} className="leading-relaxed">
+                  {pIdx === 0 && (
+                    <span className="font-semibold text-[var(--fg-main)]">Fact: </span>
+                  )}
+                  {paragraph}
+                </p>
+              ))}
+            </div>
 
-            <div className="mt-4 flex justify-end">
+            <div className="mt-5 pt-3 border-t border-[var(--line)] flex items-center justify-between">
+              <span className="text-xs text-[var(--muted)]">Enjoyed this story? Keep going!</span>
               <button
                 type="button"
                 onClick={advance}
