@@ -69,6 +69,7 @@ export function QuizRunner({ quiz }: { quiz: Quiz }) {
   const fiftyLock = useRef(false);
   const questionStartTime = useRef(Date.now());
   const quizStartTime = useRef(Date.now());
+  const answerFeedbackRef = useRef<HTMLDivElement | null>(null);
 
   const questions = deck ?? quiz.questions;
   const question = questions[index];
@@ -189,6 +190,10 @@ export function QuizRunner({ quiz }: { quiz: Quiz }) {
     } else {
       setStreak(0);
     }
+
+    setTimeout(() => {
+      answerFeedbackRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+    }, 80);
   }
 
   function restart() {
@@ -561,31 +566,85 @@ export function QuizRunner({ quiz }: { quiz: Quiz }) {
       </div>
       {picked !== null ? (
         <div
-          className="mt-6 rounded-2xl border p-4"
+          ref={answerFeedbackRef}
+          className="mt-8 rounded-2xl border p-5 md:p-6 shadow-xl"
           data-testid="answer-fact"
           role="status"
           aria-live="polite"
           style={{
-            borderColor: picked === question.answerIndex ? "var(--gold)" : "#c45c5c",
+            borderColor: picked === question.answerIndex ? "var(--pine-400)" : "#c45c5c",
             background: "var(--canvas)",
           }}
         >
-          <p className="text-sm font-semibold">
-            {picked === question.answerIndex ? "That's right." : "Not this time."}
-          </p>
-          <p className="mt-1 text-sm">
-            Correct answer:{" "}
-            <strong>{question.choices[question.answerIndex]}</strong>
-          </p>
-          <p className="mt-3 text-sm" style={{ color: "var(--muted)" }}>
-            <span className="font-semibold" style={{ color: "var(--ink)" }}>
-              Fact:{" "}
-            </span>
-            {question.explanation}
-          </p>
-          <button type="button" data-testid="quiz-next" onClick={advance} className="btn btn-primary mt-4">
-            {index + 1 >= quiz.questions.length ? "See results" : "Next question"}
-          </button>
+          {/* 1. Answer Status Banner */}
+          <div
+            className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 rounded-xl p-4 border"
+            style={{
+              borderColor: picked === question.answerIndex ? "var(--pine-400)" : "#c45c5c",
+              background:
+                picked === question.answerIndex
+                  ? "var(--pine-800)"
+                  : "color-mix(in srgb, #c45c5c 16%, transparent)",
+            }}
+          >
+            <div>
+              <p className="text-base font-bold">
+                {picked === question.answerIndex ? "That's right! 🎉" : "Not this time."}
+              </p>
+              <p className="mt-1 text-sm">
+                Correct answer: <strong>{question.choices[question.answerIndex]}</strong>
+              </p>
+            </div>
+          </div>
+
+          {/* 2. Primary Continue Button (Placed ABOVE the Ad Slot) */}
+          <div className="mt-6 flex flex-col items-center justify-center text-center">
+            <button
+              type="button"
+              data-testid="quiz-next"
+              onClick={advance}
+              className="btn btn-primary text-base font-extrabold px-8 py-3.5 w-full sm:w-auto shadow-lg hover:scale-105 transition-transform"
+            >
+              {index + 1 >= quiz.questions.length ? "See results ➔" : "Continue ➔"}
+            </button>
+            <p className="mt-2.5 text-xs font-bold text-amber-400 animate-bounce tracking-wide">
+              👇 Scroll Down for Explanation
+            </p>
+          </div>
+
+          {/* 3. In-Quiz Ad Slot (Between Continue button & Explanation) */}
+          <div className="my-6">
+            <AdSlot
+              label="In-Quiz Advertisement"
+              placeholderId={EZOIC_PLACEHOLDERS.inQuizSecret}
+            />
+          </div>
+
+          {/* 4. Detailed Explanation / Fact Box (Placed BELOW the Ad Slot) */}
+          <div
+            className="rounded-xl border p-4 shadow-inner"
+            style={{ borderColor: "var(--line)", background: "var(--canvas-2)" }}
+          >
+            <p className="text-sm font-bold text-emerald-400 flex items-center gap-1.5">
+              <span>📖</span> Explanation & Scripture Context:
+            </p>
+            <p className="mt-2 text-sm leading-relaxed" style={{ color: "var(--muted)" }}>
+              <span className="font-semibold" style={{ color: "var(--fg-main)" }}>
+                Fact:{" "}
+              </span>
+              {question.explanation}
+            </p>
+
+            <div className="mt-4 flex justify-end">
+              <button
+                type="button"
+                onClick={advance}
+                className="btn btn-ghost text-xs font-bold text-emerald-400 hover:underline"
+              >
+                {index + 1 >= quiz.questions.length ? "See results ➔" : "Next Question ➔"}
+              </button>
+            </div>
+          </div>
         </div>
       ) : null}
     </div>,
