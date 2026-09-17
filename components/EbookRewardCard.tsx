@@ -13,6 +13,10 @@ export function EbookRewardCard({ quizTitle }: { quizTitle: string }) {
     e.preventDefault();
     if (!email.trim() || !email.includes("@")) return;
 
+    if (typeof window !== "undefined") {
+      localStorage.setItem("lampstand_unlocked_bible-foundations", "true");
+    }
+
     trackEvent("ebook_claim", {
       ebook_slug: "bible-foundations",
       quiz_title: quizTitle,

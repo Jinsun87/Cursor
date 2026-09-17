@@ -1,15 +1,35 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import type { EBook, EBookChapter } from "@/lib/ebooks/types";
+import { trackEvent } from "@/lib/analytics";
 
-export function EbookReader({ ebook }: { ebook: EBook }) {
+export function EbookReader({
+  ebook,
+  initialUnlocked = false,
+}: {
+  ebook: EBook;
+  initialUnlocked?: boolean;
+}) {
   const [activeChapterIndex, setActiveChapterIndex] = useState(0);
   const [searchQuery, setSearchQuery] = useState("");
   const [savedFactIds, setSavedFactIds] = useState<number[]>([]);
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [isUnlocked, setIsUnlocked] = useState(initialUnlocked);
+  const [unlockEmail, setUnlockEmail] = useState("");
+  const [showUnlockModal, setShowUnlockModal] = useState(false);
+
+  // Check localStorage for unlock status on client mount
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const stored = localStorage.getItem(`lampstand_unlocked_${ebook.slug}`);
+      if (stored === "true" || initialUnlocked) {
+        setIsUnlocked(true);
+      }
+    }
+  }, [ebook.slug, initialUnlocked]);
 
   const activeChapter: EBookChapter = ebook.chapters[activeChapterIndex] || ebook.chapters[0];
 
@@ -25,6 +45,11 @@ export function EbookReader({ ebook }: { ebook: EBook }) {
     );
   }, [activeChapter, searchQuery]);
 
+  const visibleFacts = useMemo(() => {
+    if (isUnlocked) return filteredFacts;
+    return filteredFacts.slice(0, 5);
+  }, [filteredFacts, isUnlocked]);
+
   const totalFactsCount = useMemo(() => {
     return ebook.chapters.reduce((acc, ch) => acc + ch.facts.length, 0);
   }, [ebook]);
@@ -35,10 +60,41 @@ export function EbookReader({ ebook }: { ebook: EBook }) {
     );
   }
 
+  function handleUnlockSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    if (!unlockEmail.trim() || !unlockEmail.includes("@")) return;
+
+    if (typeof window !== "undefined") {
+      localStorage.setItem(`lampstand_unlocked_${ebook.slug}`, "true");
+    }
+    setIsUnlocked(true);
+    setShowUnlockModal(false);
+
+    trackEvent("ebook_claim", {
+      ebook_slug: ebook.slug,
+      source: "reader_preview",
+      email: unlockEmail,
+    });
+  }
+
   function handlePrint() {
+    if (!isUnlocked) {
+      setShowUnlockModal(true);
+      return;
+    }
     if (typeof window !== "undefined") {
       window.print();
     }
+  }
+
+  function handleChapterClick(idx: number) {
+    if (idx > 0 && !isUnlocked) {
+      setShowUnlockModal(true);
+      return;
+    }
+    setActiveChapterIndex(idx);
+    setSidebarOpen(false);
+    window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
   return (
@@ -57,22 +113,33 @@ export function EbookReader({ ebook }: { ebook: EBook }) {
               <h1 className="text-sm font-bold truncate max-w-xs md:max-w-md">{ebook.title}</h1>
               <p className="text-xs text-emerald-500 font-medium">
                 Chapter {activeChapter.number} of {ebook.chapters.length}: {activeChapter.title}
+                {!isUnlocked && " (5-Fact Teaser Preview)"}
               </p>
             </div>
           </div>
 
           <div className="flex items-center gap-2">
+            {!isUnlocked ? (
+              <button
+                onClick={() => setShowUnlockModal(true)}
+                className="rounded-lg bg-amber-500 px-3.5 py-1.5 text-xs font-extrabold text-slate-950 shadow-sm hover:bg-amber-400 transition-colors animate-pulse"
+              >
+                🔓 Unlock 100 Facts & PDF Free
+              </button>
+            ) : (
+              <button
+                onClick={handlePrint}
+                className="rounded-lg bg-emerald-600 px-3.5 py-1.5 text-xs font-bold text-white shadow-sm hover:bg-emerald-500 transition-colors"
+              >
+                🖨️ Print / Save PDF
+              </button>
+            )}
+
             <button
               onClick={() => setSidebarOpen(!sidebarOpen)}
               className="rounded-lg border border-[var(--border-subtle)] px-3 py-1.5 text-xs font-semibold hover:bg-[var(--bg-hover)] md:hidden"
             >
               📖 Contents
-            </button>
-            <button
-              onClick={handlePrint}
-              className="rounded-lg bg-emerald-600 px-3.5 py-1.5 text-xs font-bold text-white shadow-sm hover:bg-emerald-500 transition-colors"
-            >
-              🖨️ Print / Save PDF
             </button>
           </div>
         </div>
@@ -82,7 +149,9 @@ export function EbookReader({ ebook }: { ebook: EBook }) {
           <div
             className="h-full bg-emerald-500 transition-all duration-300"
             style={{
-              width: `${((activeChapterIndex + 1) / ebook.chapters.length) * 100}%`,
+              width: isUnlocked
+                ? `${((activeChapterIndex + 1) / ebook.chapters.length) * 100}%`
+                : "5%",
             }}
           />
         </div>
@@ -108,9 +177,16 @@ export function EbookReader({ ebook }: { ebook: EBook }) {
 
           <div className="sticky top-24 space-y-6 pt-4 md:pt-0">
             <div>
-              <span className="text-[10px] uppercase tracking-wider font-bold text-emerald-500">
-                Digital Edition • {totalFactsCount} Facts
-              </span>
+              <div className="flex items-center justify-between">
+                <span className="text-[10px] uppercase tracking-wider font-bold text-emerald-500">
+                  Digital Edition • {totalFactsCount} Facts
+                </span>
+                {!isUnlocked && (
+                  <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-amber-500/20 text-amber-400 border border-amber-500/30">
+                    Preview
+                  </span>
+                )}
+              </div>
               <h3 className="text-lg font-extrabold mt-1">{ebook.title}</h3>
               <p className="text-xs text-slate-500 mt-1">{ebook.subtitle}</p>
             </div>
@@ -118,34 +194,50 @@ export function EbookReader({ ebook }: { ebook: EBook }) {
             <nav className="space-y-1">
               {ebook.chapters.map((ch, idx) => {
                 const isActive = idx === activeChapterIndex;
+                const isLocked = idx > 0 && !isUnlocked;
                 return (
                   <button
                     key={ch.id}
-                    onClick={() => {
-                      setActiveChapterIndex(idx);
-                      setSidebarOpen(false);
-                      window.scrollTo({ top: 0, behavior: "smooth" });
-                    }}
-                    className={`w-text-left w-full text-left p-2.5 rounded-lg text-xs font-semibold transition-all flex items-center justify-between ${
+                    onClick={() => handleChapterClick(idx)}
+                    className={`w-full text-left p-2.5 rounded-lg text-xs font-semibold transition-all flex items-center justify-between ${
                       isActive
                         ? "bg-emerald-600 text-white shadow"
+                        : isLocked
+                        ? "opacity-60 hover:opacity-100 hover:bg-[var(--bg-hover)] text-slate-400"
                         : "hover:bg-[var(--bg-hover)] text-slate-700 dark:text-slate-300"
                     }`}
                   >
-                    <span>
-                      {ch.number}. {ch.title}
+                    <span className="flex items-center gap-1.5 truncate">
+                      {isLocked ? "🔒" : `${ch.number}.`} {ch.title}
                     </span>
                     <span
-                      className={`text-[10px] px-1.5 py-0.5 rounded ${
+                      className={`text-[10px] px-1.5 py-0.5 rounded shrink-0 ${
                         isActive ? "bg-emerald-700 text-white" : "bg-slate-200 dark:bg-slate-800"
                       }`}
                     >
-                      {ch.facts.length}
+                      {!isUnlocked && idx === 0 ? "5/20" : ch.facts.length}
                     </span>
                   </button>
                 );
               })}
             </nav>
+
+            {!isUnlocked && (
+              <div className="p-3.5 bg-amber-500/10 border border-amber-500/30 rounded-xl text-xs space-y-2">
+                <p className="font-extrabold text-amber-400">
+                  🔒 5-Fact Teaser Preview
+                </p>
+                <p className="text-[11px] text-slate-300 leading-relaxed">
+                  Enter your email or score 70%+ on any quiz to unlock all 100 Facts & PDF Export ($29 value)!
+                </p>
+                <button
+                  onClick={() => setShowUnlockModal(true)}
+                  className="w-full rounded-lg bg-amber-500 py-1.5 font-bold text-slate-950 text-[11px] hover:bg-amber-400 transition-colors"
+                >
+                  Unlock All 100 Facts Free →
+                </button>
+              </div>
+            )}
 
             {savedFactIds.length > 0 && (
               <div className="p-3 bg-amber-500/10 border border-amber-500/20 rounded-lg text-xs">
@@ -167,6 +259,7 @@ export function EbookReader({ ebook }: { ebook: EBook }) {
             <div className="relative z-10">
               <span className="inline-block rounded-full bg-emerald-500/10 border border-emerald-500/30 px-3 py-1 text-xs font-bold text-emerald-600 dark:text-emerald-400">
                 Chapter {activeChapter.number} of {ebook.chapters.length}
+                {!isUnlocked && " • 5-Fact Teaser Preview"}
               </span>
               <h2 className="text-2xl md:text-3xl font-extrabold tracking-tight mt-3">
                 {activeChapter.title}
@@ -202,13 +295,13 @@ export function EbookReader({ ebook }: { ebook: EBook }) {
               className="w-full sm:w-72 rounded-lg border border-[var(--border-subtle)] bg-[var(--bg-card)] px-3.5 py-2 text-xs font-medium focus:outline-none focus:ring-2 focus:ring-emerald-500"
             />
             <span className="text-xs text-slate-500 font-medium self-end sm:self-center">
-              Showing {filteredFacts.length} of {activeChapter.facts.length} facts
+              Showing {visibleFacts.length} of {activeChapter.facts.length} facts {!isUnlocked && "(Preview)"}
             </span>
           </div>
 
           {/* Facts List */}
           <div className="space-y-6">
-            {filteredFacts.map((fact) => {
+            {visibleFacts.map((fact) => {
               const isSaved = savedFactIds.includes(fact.id);
               return (
                 <article
@@ -255,14 +348,54 @@ export function EbookReader({ ebook }: { ebook: EBook }) {
             })}
           </div>
 
+          {/* Locked End-of-Preview Card */}
+          {!isUnlocked && (
+            <div className="mt-8 rounded-2xl border border-amber-500/40 bg-gradient-to-br from-amber-500/10 via-slate-900 to-slate-950 p-6 md:p-8 text-white shadow-2xl text-center relative overflow-hidden">
+              <div className="absolute top-0 right-0 transform translate-x-8 -translate-y-8 w-40 h-40 bg-amber-500/20 rounded-full blur-2xl pointer-events-none" />
+              <div className="relative z-10 max-w-lg mx-auto">
+                <div className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-amber-500/20 text-2xl mb-3 border border-amber-500/30">
+                  🔒
+                </div>
+                <h3 className="text-xl md:text-2xl font-black text-amber-200">
+                  End of Free 5-Fact Teaser Preview
+                </h3>
+                <p className="mt-2 text-xs md:text-sm text-slate-300 leading-relaxed">
+                  You have reached the end of the 5-fact teaser preview. Unlock all 5 chapters ({totalFactsCount} illustrated facts) and printable PDF export ($29 value) completely <strong>FREE</strong>!
+                </p>
+
+                <form onSubmit={handleUnlockSubmit} className="mt-5 flex flex-col sm:flex-row gap-2">
+                  <input
+                    type="email"
+                    placeholder="Enter email to unlock all 100 facts & PDF..."
+                    value={unlockEmail}
+                    onChange={(e) => setUnlockEmail(e.target.value)}
+                    required
+                    className="flex-1 rounded-xl border border-amber-400/30 bg-slate-950 px-4 py-2.5 text-xs text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-amber-400"
+                  />
+                  <button
+                    type="submit"
+                    className="rounded-xl bg-amber-500 px-5 py-2.5 text-xs font-extrabold text-slate-950 shadow-lg hover:bg-amber-400 transition-colors whitespace-nowrap"
+                  >
+                    Unlock All 100 Facts Free →
+                  </button>
+                </form>
+
+                <div className="mt-4 pt-4 border-t border-slate-800 text-xs text-slate-400 flex items-center justify-center gap-2">
+                  <span>Or score 70%+ on any quiz</span>
+                  <span>•</span>
+                  <Link href="/quizzes/open-the-book" className="text-amber-400 hover:underline font-bold">
+                    Take Flagship Quiz →
+                  </Link>
+                </div>
+              </div>
+            </div>
+          )}
+
           {/* Chapter Bottom Pagination */}
           <div className="mt-10 pt-6 border-t border-[var(--border-subtle)] flex items-center justify-between">
             {activeChapterIndex > 0 ? (
               <button
-                onClick={() => {
-                  setActiveChapterIndex((prev) => prev - 1);
-                  window.scrollTo({ top: 0, behavior: "smooth" });
-                }}
+                onClick={() => handleChapterClick(activeChapterIndex - 1)}
                 className="rounded-lg border border-[var(--border-subtle)] px-4 py-2 text-xs font-bold hover:bg-[var(--bg-hover)]"
               >
                 ← Previous Chapter
@@ -273,13 +406,10 @@ export function EbookReader({ ebook }: { ebook: EBook }) {
 
             {activeChapterIndex < ebook.chapters.length - 1 ? (
               <button
-                onClick={() => {
-                  setActiveChapterIndex((prev) => prev + 1);
-                  window.scrollTo({ top: 0, behavior: "smooth" });
-                }}
-                className="rounded-lg bg-emerald-600 px-5 py-2 text-xs font-bold text-white hover:bg-emerald-500 shadow"
+                onClick={() => handleChapterClick(activeChapterIndex + 1)}
+                className="rounded-lg bg-emerald-600 px-5 py-2 text-xs font-bold text-white hover:bg-emerald-500 shadow flex items-center gap-1"
               >
-                Next Chapter →
+                {!isUnlocked && activeChapterIndex === 0 ? "🔒 Unlock Next Chapter →" : "Next Chapter →"}
               </button>
             ) : (
               <div className="text-xs font-bold text-emerald-500">
@@ -289,6 +419,51 @@ export function EbookReader({ ebook }: { ebook: EBook }) {
           </div>
         </main>
       </div>
+
+      {/* Unlock Modal */}
+      {showUnlockModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 backdrop-blur-sm p-4">
+          <div className="w-full max-w-md rounded-2xl border border-amber-500/40 bg-slate-900 p-6 md:p-8 text-white shadow-2xl relative">
+            <button
+              onClick={() => setShowUnlockModal(false)}
+              className="absolute top-4 right-4 text-slate-400 hover:text-white text-sm"
+            >
+              ✕
+            </button>
+
+            <div className="text-center">
+              <span className="text-4xl">🎁</span>
+              <h3 className="text-xl md:text-2xl font-black text-amber-200 mt-2">
+                Unlock Full eBook ($29 Value) FREE!
+              </h3>
+              <p className="mt-2 text-xs text-slate-300 leading-relaxed">
+                Get full access to all 5 chapters, 100 illustrated facts, and printable PDF export.
+              </p>
+
+              <form onSubmit={handleUnlockSubmit} className="mt-5 space-y-3">
+                <input
+                  type="email"
+                  placeholder="Enter your email address..."
+                  value={unlockEmail}
+                  onChange={(e) => setUnlockEmail(e.target.value)}
+                  required
+                  className="w-full rounded-xl border border-amber-400/30 bg-slate-950 px-4 py-3 text-xs text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-amber-400"
+                />
+                <button
+                  type="submit"
+                  className="w-full rounded-xl bg-amber-500 py-3 text-xs font-bold text-slate-950 shadow-lg hover:bg-amber-400 transition-colors"
+                >
+                  Unlock 100 Facts & PDF Export →
+                </button>
+              </form>
+
+              <p className="mt-4 text-[11px] text-slate-400">
+                Or <Link href="/quizzes/open-the-book" onClick={() => setShowUnlockModal(false)} className="text-amber-400 underline font-bold">score 70%+ on Open the Book</Link> to unlock in-game!
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

@@ -125,6 +125,10 @@ export function QuizRunner({ quiz }: { quiz: Quiz }) {
     const storage = browserStorage();
     if (done) {
       clearSitting(quiz.slug, storage);
+      const pctScore = Math.round((correctCount / quiz.questions.length) * 100);
+      if (pctScore >= 70 && typeof window !== "undefined") {
+        localStorage.setItem("lampstand_unlocked_bible-foundations", "true");
+      }
       return;
     }
     saveSitting(
