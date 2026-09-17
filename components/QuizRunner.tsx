@@ -176,7 +176,7 @@ export function QuizRunner({ quiz }: { quiz: Quiz }) {
     }
 
     setTimeout(() => {
-      answerFeedbackRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+      answerFeedbackRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
     }, 80);
   }
 
@@ -462,7 +462,7 @@ export function QuizRunner({ quiz }: { quiz: Quiz }) {
       {picked !== null ? (
         <div
           ref={answerFeedbackRef}
-          className="mt-8 rounded-2xl border p-5 md:p-6 shadow-xl"
+          className="mt-8 rounded-2xl border p-5 md:p-6 shadow-xl scroll-mt-20"
           data-testid="answer-fact"
           role="status"
           aria-live="polite"
