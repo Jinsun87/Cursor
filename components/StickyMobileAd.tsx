@@ -22,9 +22,9 @@ export function StickyMobileAd({
   const slot = adsenseSlot();
 
   useEffect(() => {
-    if (user?.premium || (!ezoic && !adsense)) return;
+    if (user?.premium) return;
     setReady(true);
-  }, [user?.premium, ezoic, adsense]);
+  }, [user?.premium]);
 
   useEffect(() => {
     if (user?.premium || !adsense || !ready) return;
