@@ -7,6 +7,7 @@ import {
   PROPHETS_AND_WRITINGS,
 } from "./quizzes/bible-foundations";
 import { OPEN_THE_BOOK_CHAPTERS, OPEN_THE_BOOK_QUESTIONS } from "./quizzes/open-the-book";
+import { IMAGE_BIBLE_CHAPTERS, IMAGE_BIBLE_QUESTIONS } from "./quizzes/image-bible-quiz";
 import { RESTAURANT_FILL_QUESTIONS } from "./quizzes/restaurant-fill";
 import { DAILY_LENGTH } from "./economy";
 
@@ -76,6 +77,17 @@ function q(
 }
 
 export const QUIZZES: Quiz[] = [
+  {
+    slug: "look-at-the-picture-bible",
+    title: "Look at the Picture: Can You Name These Famous Bible Events?",
+    blurb:
+      "Look at the artwork and identify the biblical figure, miraculous event, or holy site. Fast visual recognition quiz designed for high engagement.",
+    category: "bible",
+    isLongform: true,
+    coinsOnComplete: 250,
+    chapters: IMAGE_BIBLE_CHAPTERS,
+    questions: IMAGE_BIBLE_QUESTIONS,
+  },
   {
     slug: "open-the-book",
     title: "Open the Book: Show You Have Solomon's Wisdom on Scripture",
