@@ -10,6 +10,7 @@ export type Question = {
   choices: string[];
   answerIndex: number;
   explanation: string;
+  image?: string;
 };
 
 export type QuizChapter = {

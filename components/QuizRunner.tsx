@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import type { Question, Quiz } from "@/lib/types";
 import { useApp } from "@/lib/store";
@@ -410,6 +411,18 @@ export function QuizRunner({ quiz }: { quiz: Quiz }) {
           refreshIntervalSec={30}
         />
       </div>
+
+      {/* 2b. Question Image (Image-based Identification Quiz Support) */}
+      {question.image ? (
+        <div className="my-4 overflow-hidden rounded-2xl border border-[var(--line)] relative h-64 md:h-80 w-full shadow-md">
+          <Image
+            src={question.image}
+            alt={question.prompt}
+            fill
+            className="object-cover"
+          />
+        </div>
+      ) : null}
 
       {/* 3. Lifeline 50/50 Button */}
       <div className="mt-4 flex flex-wrap gap-2">
