@@ -392,6 +392,13 @@ export function QuizRunner({ quiz }: { quiz: Quiz }) {
     return !hiddenChoices.includes(i);
   });
 
+  const [imgError, setImgError] = useState(false);
+  const questionImage = question.image || `/images/quizzes/${quiz.slug}/q${index + 1}.png`;
+
+  useEffect(() => {
+    setImgError(false);
+  }, [index]);
+
   return frame(
     <div className="rounded-2xl border p-6 md:p-8" style={{ borderColor: "var(--line)", background: "var(--canvas-2)" }}>
       {/* 1. Question Prompt */}
@@ -412,14 +419,15 @@ export function QuizRunner({ quiz }: { quiz: Quiz }) {
         />
       </div>
 
-      {/* 2b. Question Image (Image-based Identification Quiz Support) */}
-      {question.image ? (
+      {/* 2b. Question Image (Image-based Identification & Conventional Asset Support) */}
+      {!imgError && questionImage ? (
         <div className="my-4 overflow-hidden rounded-2xl border border-[var(--line)] relative h-64 md:h-80 w-full shadow-md">
           <Image
-            src={question.image}
+            src={questionImage}
             alt={question.prompt}
             fill
             className="object-cover"
+            onError={() => setImgError(true)}
           />
         </div>
       ) : null}
