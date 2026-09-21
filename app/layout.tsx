@@ -48,6 +48,8 @@ export const viewport = {
 
 const themeBoot = `(function(){try{var t=localStorage.getItem('lampstand-theme')||localStorage.getItem('quizforge-theme');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t);else document.documentElement.setAttribute('data-theme',matchMedia('(prefers-color-scheme: light)').matches?'light':'dark');}catch(e){document.documentElement.setAttribute('data-theme','dark');}})();`;
 
+import { BottomTabBar } from "@/components/navigation/BottomTabBar";
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${sans.variable} ${display.variable}`} suppressHydrationWarning>
@@ -67,10 +69,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               Skip to content
             </a>
             <Header />
-            <main id="main" className="mx-auto min-h-[70vh] max-w-6xl px-4 py-8">
+            <main id="main" className="mx-auto min-h-[70vh] max-w-6xl px-4 py-8 pb-24 md:pb-8">
               {children}
             </main>
             <Footer />
+            <BottomTabBar />
           </AppProvider>
         </ThemeProvider>
       </body>

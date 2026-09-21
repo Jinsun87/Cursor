@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { CATEGORIES, FEATURED_EXPERTS, QUIZZES, SERIES } from "@/lib/catalog";
 import { QuizCard } from "@/components/QuizCard";
+import { TodayHabitHub } from "@/components/home/TodayHabitHub";
 
 export default function HomePage() {
   const flagship = QUIZZES.find((q) => q.slug === "open-the-book");
@@ -19,7 +20,11 @@ export default function HomePage() {
   ].slice(0, 6);
 
   return (
-    <div>
+    <div className="space-y-12">
+      {/* 1. Glorify-style Today Activity Hub & Sacred Rhythm */}
+      <TodayHabitHub />
+
+      {/* 2. Scripture Sittings & Quiz Packs */}
       <section
         className="overflow-hidden rounded-3xl border px-6 py-16 md:px-12"
         style={{
