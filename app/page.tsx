@@ -1,160 +1,284 @@
 import Link from "next/link";
-import { CATEGORIES, FEATURED_EXPERTS, QUIZZES, SERIES } from "@/lib/catalog";
+import Image from "next/image";
+import { VISIBLE_QUIZZES, SERIES } from "@/lib/catalog";
+import { BOOKS } from "@/lib/bible/catalog";
 import { QuizCard } from "@/components/QuizCard";
 import { TodayHabitHub } from "@/components/home/TodayHabitHub";
 
 export default function HomePage() {
-  const flagship = QUIZZES.find((q) => q.slug === "open-the-book");
-  const featured = [
-    ...(flagship ? [flagship] : []),
-    ...QUIZZES.filter(
-      (q) =>
-        q.category === "bible" &&
-        q.slug !== flagship?.slug &&
-        !q.isSecret &&
-        !q.isReview,
-    ),
-    ...QUIZZES.filter(
-      (q) => q.category !== "bible" && !q.isSecret && !q.isReview,
-    ),
-  ].slice(0, 6);
+  const bibleQuizzes = VISIBLE_QUIZZES;
+  const flagship = bibleQuizzes.find((q) => q.slug === "open-the-book");
+  const pictureQuiz = bibleQuizzes.find((q) => q.slug === "look-at-the-picture-bible");
+
+  const otherQuizzes = bibleQuizzes.filter(
+    (q) => q.slug !== "open-the-book" && q.slug !== "look-at-the-picture-bible",
+  );
 
   return (
-    <div className="space-y-12">
-      {/* 1. Glorify-style Today Activity Hub & Sacred Rhythm */}
+    <div className="space-y-16">
+      {/* 1. Glorify-Style Today Sacred Rhythm & Habit Hub */}
       <TodayHabitHub />
 
-      {/* 2. Scripture Sittings & Quiz Packs */}
-      <section
-        className="overflow-hidden rounded-3xl border px-6 py-16 md:px-12"
-        style={{
-          borderColor: "var(--line)",
-          background: "linear-gradient(160deg, var(--canvas-2), var(--canvas))",
-        }}
-      >
-        <p className="text-sm uppercase tracking-[0.22em]" style={{ color: "var(--gold)" }}>
-          Lampstand · Scripture sittings
-        </p>
-        <h1 className="mt-4 max-w-3xl font-display leading-[1.08]" style={{ fontSize: "clamp(2.1rem, 5vw, 4.25rem)" }}>
-          Know the text.
-        </h1>
-        <p className="mt-5 max-w-2xl text-lg" style={{ color: "var(--muted)" }}>
-          Lampstand is a Christian quiz desk: original questions on people,
-          places, and lines in Scripture. Finish a pack, pass the review, hang
-          a Certificate of Mastery. Not a church. Not pastoral care.
-        </p>
-        <div className="mt-8 flex flex-wrap gap-3">
-          <Link href="/quizzes/open-the-book" className="btn btn-primary">
-            Take your first quiz
-          </Link>
-          <Link href="/how-it-works" className="btn btn-ghost">
-            How packs work
+      {/* 2. Illuminated Bible Reader Showcase */}
+      <section className="rounded-3xl border border-[var(--line)] bg-gradient-to-b from-[#14110d] via-[#0d0f12] to-[#0a0a0a] p-6 sm:p-10 shadow-2xl">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
+          <div className="max-w-2xl">
+            <span className="text-xs font-bold uppercase tracking-widest text-[var(--gold)]">
+              The Living Word · Two Reading Modes
+            </span>
+            <h2 className="mt-2 font-display text-3xl sm:text-4xl font-bold text-white">
+              The Illuminated Scripture Reader
+            </h2>
+            <p className="mt-3 text-parchment/80 leading-relaxed text-sm sm:text-base">
+              Experience the Bible in two complementary ways: **WhatsApp-style visual Story Mode** with museum-grade classical paintings and Greek/Hebrew WordSparks, or **Editorial Scroll Mode** for quiet, uninterrupted personal meditation.
+            </p>
+          </div>
+
+          <Link href="/read" className="btn btn-primary shrink-0 text-sm">
+            📖 Open Bible Index
           </Link>
         </div>
-        <p className="mt-4 text-sm" style={{ color: "var(--muted)" }}>
-          Flagship sitting: Open the Book — 54 questions. History, geography,
-          and other packs stay in the library.
-        </p>
-      </section>
 
-      <section className="mt-14">
-        <h2 className="font-display text-3xl">Written to the text, then the map</h2>
-        <div className="bento mt-6">
-          {FEATURED_EXPERTS.map((e, i) => (
+        {/* Featured Chapter Cards Grid */}
+        <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {[
+            {
+              book: "Genesis",
+              chapter: 1,
+              title: "The Birth of the Cosmos",
+              subtitle: "The Spirit hovers over the deep waters and God speaks light into the void.",
+              art: "/images/stories/genesis-1/s1.jpg",
+              slug: "genesis",
+            },
+            {
+              book: "Psalms",
+              chapter: 23,
+              title: "The Shepherd Psalm",
+              subtitle: "David's timeless meditation on quiet waters, dark valleys, and overflowing grace.",
+              art: "/images/stories/psalms-23/s1.jpg",
+              slug: "psalms",
+            },
+            {
+              book: "John",
+              chapter: 1,
+              title: "The Word Made Flesh",
+              subtitle: "The cosmic Logos that shone before time enters human dust and tabernacles among us.",
+              art: "/images/stories/john-1/s1.jpg",
+              slug: "john",
+            },
+            {
+              book: "Exodus",
+              chapter: 3,
+              title: "The Burning Bush",
+              subtitle: "At Mount Horeb, God speaks from an unconsumed flame and declares: 'I AM WHO I AM.'",
+              art: "/images/stories/exodus-3/s1.jpg",
+              slug: "exodus",
+            },
+            {
+              book: "Matthew",
+              chapter: 5,
+              title: "The Sermon on the Mount",
+              subtitle: "Jesus delivers the manifesto of the Kingdom: the Beatitudes and the city on a hill.",
+              art: "/images/stories/matthew-5/s1.jpg",
+              slug: "matthew",
+            },
+            {
+              book: "Genesis",
+              chapter: 12,
+              title: "The Call of Abram",
+              subtitle: "Leaving comfort into the unknown, trusting the promise of a starry sky.",
+              art: "/images/stories/genesis-12/s1.jpg",
+              slug: "genesis",
+            },
+          ].map((item) => (
             <Link
-              key={e.category}
-              href={`/category/${e.category}`}
-              className={`lift rounded-2xl border bg-[var(--canvas-2)] p-6 ${i === 0 ? "md:col-span-6" : "md:col-span-3"}`}
-              style={{ borderColor: "var(--line)" }}
+              key={`${item.slug}-${item.chapter}`}
+              href={`/read/${item.slug}/${item.chapter}`}
+              className="group relative flex overflow-hidden rounded-2xl border border-[var(--line)] bg-[var(--canvas-2)] hover:border-[var(--gold)]/50 transition-all shadow-md"
             >
-              <p className="text-xs uppercase tracking-widest" style={{ color: "var(--muted)" }}>
-                {e.category}
-              </p>
-              <h3 className="mt-2 font-display text-2xl capitalize">{e.category}</h3>
-              <p className="mt-2 text-sm" style={{ color: "var(--muted)" }}>
-                Featuring quizzes written with {e.name}. {e.line}
-              </p>
+              <div className="relative h-32 w-24 shrink-0 overflow-hidden bg-black">
+                <Image
+                  src={item.art}
+                  alt={item.title}
+                  fill
+                  className="object-cover transition-transform duration-500 group-hover:scale-105"
+                />
+              </div>
+
+              <div className="flex flex-1 flex-col justify-between p-3.5">
+                <div>
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-[var(--gold)]">
+                    {item.book} {item.chapter}
+                  </span>
+                  <h3 className="font-display text-base font-bold text-white leading-tight group-hover:text-[var(--gold)] transition-colors">
+                    {item.title}
+                  </h3>
+                  <p className="mt-1 line-clamp-2 text-xs text-parchment/70">
+                    {item.subtitle}
+                  </p>
+                </div>
+
+                <div className="mt-2 flex items-center gap-1.5 text-[11px] font-semibold text-[var(--gold)]">
+                  <span>✨ Read Story</span>
+                  <span className="transition-transform group-hover:translate-x-1">→</span>
+                </div>
+              </div>
             </Link>
           ))}
         </div>
       </section>
 
-      <section className="mt-14">
-        <div className="flex items-end justify-between gap-4">
-          <h2 className="font-display text-3xl">Start a pack</h2>
-          <Link href="/quizzes" className="text-sm" style={{ color: "var(--gold)" }}>
-            Browse all
+      {/* 3. Scripture Sittings & Quiz Desk (Flagships) */}
+      <section>
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+          <div>
+            <span className="text-xs font-bold uppercase tracking-widest text-[var(--gold)]">
+              Active Recall · Daily Retention
+            </span>
+            <h2 className="mt-1 font-display text-3xl sm:text-4xl text-white">
+              Scripture Sittings & Master Quizzes
+            </h2>
+            <p className="mt-2 text-sm text-parchment/70 max-w-2xl">
+              Original questions on the text—patriarchs, prophets, Gospels, and epistles. Score 70%+ to master each sitting, earn coins, and claim Certificates of Mastery.
+            </p>
+          </div>
+
+          <Link href="/quizzes" className="text-sm font-semibold text-[var(--gold)] hover:underline shrink-0">
+            View All Scripture Sittings →
           </Link>
         </div>
-        <div className="bento mt-6">
-          {SERIES.map((s, i) => (
+
+        {/* 2 Flagship Hero Cards */}
+        <div className="mt-6 grid gap-6 md:grid-cols-2">
+          {pictureQuiz ? (
+            <div className="overflow-hidden rounded-3xl border border-[var(--gold)]/40 bg-gradient-to-br from-[#1c170d] via-[#120f0a] to-[#0a0a0a] p-6 sm:p-8 shadow-xl flex flex-col justify-between">
+              <div>
+                <span className="rounded-full bg-[var(--gold)]/20 px-3 py-1 text-xs font-semibold text-[var(--gold)] uppercase tracking-wider">
+                  🎨 Visual Recognition Quiz
+                </span>
+                <h3 className="mt-3 font-display text-2xl sm:text-3xl font-bold text-white">
+                  {pictureQuiz.title}
+                </h3>
+                <p className="mt-3 text-sm text-parchment/80 leading-relaxed">
+                  Identify holy events, prophets, and biblical milestones through 30 museum-grade classical paintings. High engagement visual recall.
+                </p>
+              </div>
+
+              <div className="mt-6 flex items-center justify-between border-t border-white/10 pt-4">
+                <span className="text-xs text-[var(--gold)] font-medium">
+                  🪙 +{pictureQuiz.coinsOnComplete} Coins Reward
+                </span>
+                <Link href={`/quizzes/${pictureQuiz.slug}`} className="btn btn-primary text-xs py-2 px-5">
+                  Start Picture Quiz
+                </Link>
+              </div>
+            </div>
+          ) : null}
+
+          {flagship ? (
+            <div className="overflow-hidden rounded-3xl border border-[var(--line)] bg-gradient-to-br from-[var(--canvas-2)] to-[#0c0a09] p-6 sm:p-8 shadow-xl flex flex-col justify-between">
+              <div>
+                <span className="rounded-full bg-white/10 px-3 py-1 text-xs font-semibold text-white/80 uppercase tracking-wider">
+                  📜 54-Question Flagship Sitting
+                </span>
+                <h3 className="mt-3 font-display text-2xl sm:text-3xl font-bold text-white">
+                  {flagship.title}
+                </h3>
+                <p className="mt-3 text-sm text-parchment/80 leading-relaxed">
+                  Fifty-four original questions across four epochs: patriarchs, prophets, Gospels, and letters. Score 70%+ to claim the $29 Bible Foundations eBook free.
+                </p>
+              </div>
+
+              <div className="mt-6 flex items-center justify-between border-t border-white/10 pt-4">
+                <span className="text-xs text-[var(--gold)] font-medium">
+                  🪙 +{flagship.coinsOnComplete} Coins · Certificate
+                </span>
+                <Link href={`/quizzes/${flagship.slug}`} className="btn btn-primary text-xs py-2 px-5">
+                  Begin Flagship Sitting
+                </Link>
+              </div>
+            </div>
+          ) : null}
+        </div>
+
+        {/* Other Scripture Sittings Grid */}
+        <div className="mt-6 grid gap-4 sm:grid-cols-2 md:grid-cols-3">
+          {otherQuizzes.slice(0, 6).map((q) => (
+            <QuizCard key={q.slug} quiz={q} />
+          ))}
+        </div>
+      </section>
+
+      {/* 4. Bible Foundations Series Track */}
+      <section className="mt-14">
+        <div className="flex items-end justify-between gap-4">
+          <div>
+            <span className="text-xs font-bold uppercase tracking-widest text-[var(--gold)]">
+              Curated Curriculum
+            </span>
+            <h2 className="mt-1 font-display text-3xl text-white">Structured Study Tracks</h2>
+          </div>
+          <Link href="/series/bible-foundations" className="text-sm text-[var(--gold)] hover:underline">
+            View Track →
+          </Link>
+        </div>
+
+        <div className="mt-6 grid gap-4 sm:grid-cols-2">
+          {SERIES.filter((s) => s.category === "bible").map((s) => (
             <Link
               key={s.slug}
               href={`/series/${s.slug}`}
-              className={`lift rounded-2xl border bg-[var(--canvas-2)] p-6 ${i === 0 ? "md:col-span-4 md:row-span-2" : "md:col-span-2"}`}
-              style={{ borderColor: "var(--line)" }}
+              className="group rounded-2xl border border-[var(--gold)]/30 bg-[var(--canvas-2)] p-6 sm:p-8 hover:border-[var(--gold)] transition-all shadow-lg flex flex-col justify-between"
             >
-              <h3 className={`font-display ${i === 0 ? "text-3xl" : "text-2xl"}`}>{s.title}</h3>
-              <p className="mt-2 text-sm" style={{ color: "var(--muted)" }}>
-                {s.description}
-              </p>
-              <p className="mt-3 text-xs" style={{ color: "var(--muted)" }}>
-                {s.quizSlugs.length} quizzes + review · 70% to master
-              </p>
+              <div>
+                <span className="text-xs uppercase tracking-wider text-[var(--gold)] font-bold">
+                  Certified Mastery Track
+                </span>
+                <h3 className="mt-2 font-display text-2xl sm:text-3xl font-bold text-white group-hover:text-[var(--gold)] transition-colors">
+                  {s.title}
+                </h3>
+                <p className="mt-3 text-sm text-parchment/75 leading-relaxed">
+                  {s.description}
+                </p>
+              </div>
+
+              <div className="mt-6 flex items-center justify-between border-t border-white/10 pt-4 text-xs">
+                <span className="text-[var(--muted)]">
+                  {s.quizSlugs.length} sittings + Comprehensive Review
+                </span>
+                <span className="font-semibold text-[var(--gold)] group-hover:translate-x-1 transition-transform">
+                  Enter Track →
+                </span>
+              </div>
             </Link>
           ))}
         </div>
       </section>
 
-      <section className="bento mt-14">
-        {featured.map((q, i) => (
-          <QuizCard key={q.slug} quiz={q} featured={i === 0} />
-        ))}
-      </section>
+      {/* 5. Sanctuary Mission & Purpose Statement */}
+      <section className="rounded-3xl border border-[var(--line)] bg-[var(--canvas-2)] p-8 md:p-12 shadow-xl">
+        <div className="max-w-3xl">
+          <span className="text-xs font-bold uppercase tracking-widest text-[var(--gold)]">
+            Our Purpose
+          </span>
+          <h2 className="mt-2 font-display text-3xl sm:text-4xl text-white font-bold">
+            Stay with Scripture long enough to remember it.
+          </h2>
+          <p className="mt-4 text-base text-parchment/80 leading-relaxed">
+            In an era of fleeting feeds and superficial skimming, Lampstand builds a quiet, sacred harbor for God&apos;s Word. Through visual story illumination, original Greek & Hebrew root discoveries, active recall questions, and structured mastery tracks, we help you internalize the text deeply.
+          </p>
 
-      <section
-        className="mt-16 rounded-3xl border p-8 md:p-12"
-        style={{ borderColor: "var(--line)", background: "var(--canvas-2)" }}
-      >
-        <h2 className="font-display text-3xl">Our mission</h2>
-        <p className="mt-4 max-w-3xl" style={{ color: "var(--muted)" }}>
-          Help readers stay with Scripture long enough to remember it. Long
-          sittings, facts after every answer, and packs that earn a certificate
-          when you actually learn the material. Other topics remain for variety.
-        </p>
-        <p className="mt-4" style={{ color: "var(--muted)" }}>
-          Premium quiets ads on secret quizzes. Gifts keep research going. We
-          are not a congregation and we do not offer pastoral care.
-        </p>
-        <div className="mt-6 flex flex-wrap gap-3">
-          <Link href="/premium" className="btn btn-primary">
-            Go Premium
-          </Link>
-          <Link href="/donate" className="btn btn-ghost">
-            Donate
-          </Link>
-        </div>
-        <ul className="mt-8 grid gap-2 text-sm md:grid-cols-2" style={{ color: "var(--muted)" }}>
-          <li>5,000 extra coins when you upgrade</li>
-          <li>Ad-free Quiet room</li>
-          <li>First notice when new series drop</li>
-          <li>Premium badge on your profile</li>
-        </ul>
-      </section>
-
-      <section className="mt-14">
-        <h2 className="font-display text-2xl">Categories</h2>
-        <div className="mt-4 flex flex-wrap gap-2">
-          {CATEGORIES.map((c) => (
-            <Link
-              key={c.slug}
-              href={`/category/${c.slug}`}
-              className="inline-flex min-h-11 items-center rounded-full border px-4 text-sm"
-              style={{ borderColor: "var(--line)" }}
-            >
-              {c.name}
+          <div className="mt-8 flex flex-wrap gap-3">
+            <Link href="/pricing" className="btn btn-primary text-xs py-2.5 px-6">
+              👑 Join Lampstand Plus
             </Link>
-          ))}
+            <Link href="/ebooks" className="btn btn-ghost text-xs py-2.5 px-6">
+              📚 Browse Study E-Books
+            </Link>
+            <Link href="/how-it-works" className="btn btn-ghost text-xs py-2.5 px-6">
+              How Mastery Works
+            </Link>
+          </div>
         </div>
       </section>
     </div>

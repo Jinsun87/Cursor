@@ -826,8 +826,13 @@ export function getSeriesForQuiz(quiz: Quiz) {
 }
 
 export const SECRET_QUIZZES = QUIZZES.filter((q) => q.isSecret);
+
+// Publicly visible Scripture quizzes (Excludes non-Bible topics from public UI)
+export const BIBLE_QUIZZES = QUIZZES.filter((q) => q.category === "bible");
+export const VISIBLE_QUIZZES = QUIZZES.filter((q) => q.category === "bible" && !q.isSecret);
+export const VISIBLE_CATEGORIES = CATEGORIES.filter((c) => c.slug === "bible");
+
 export const FEATURED_EXPERTS = [
   { category: "bible", name: "Scripture readers", line: "The text, not a sermon." },
-  { category: "history", name: "Working historians", line: "Sources over slogans." },
-  { category: "geography", name: "Map teachers", line: "Places the narratives name." },
 ];
+
