@@ -7,6 +7,7 @@ import { useApp } from "@/lib/store";
 import { useTheme } from "@/lib/theme";
 
 const links = [
+  { href: "/read", label: "Read" },
   { href: "/quizzes", label: "Quizzes" },
   { href: "/daily", label: "Daily" },
   { href: "/ebooks", label: "eBooks" },
