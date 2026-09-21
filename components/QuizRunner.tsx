@@ -55,6 +55,7 @@ export function QuizRunner({ quiz }: { quiz: Quiz }) {
   const [reward, setReward] = useState<{ coinsEarned: number; mastered?: string } | null>(
     null,
   );
+  const [imgError, setImgError] = useState(false);
 
   const booted = useRef(false);
   const fiftyLock = useRef(false);
@@ -159,6 +160,10 @@ export function QuizRunner({ quiz }: { quiz: Quiz }) {
     done,
     deck,
   ]);
+
+  useEffect(() => {
+    setImgError(false);
+  }, [index]);
 
   function choose(i: number) {
     if (picked !== null) return;
@@ -392,12 +397,7 @@ export function QuizRunner({ quiz }: { quiz: Quiz }) {
     return !hiddenChoices.includes(i);
   });
 
-  const [imgError, setImgError] = useState(false);
   const questionImage = question.image || `/images/quizzes/${quiz.slug}/q${index + 1}.png`;
-
-  useEffect(() => {
-    setImgError(false);
-  }, [index]);
 
   return frame(
     <div className="rounded-2xl border p-6 md:p-8" style={{ borderColor: "var(--line)", background: "var(--canvas-2)" }}>
