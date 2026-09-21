@@ -143,14 +143,14 @@ export function ScrollReader({
         <button
           type="button"
           onClick={handleToggleVerseNumbers}
-          className="rounded-full border border-[var(--line)] px-3 py-1 text-xs font-medium text-[var(--muted)] hover:text-white transition-all tactile-tap"
+          className="rounded-full border border-[var(--line)] px-3 py-1 text-xs font-medium text-[var(--muted)] hover:text-[var(--ink)] transition-all tactile-tap"
         >
           {showVerseNumbers ? "Numbers: On" : "Numbers: Off"}
         </button>
       </div>
 
       {/* Scripture Verses Text */}
-      <article className={`rounded-3xl border border-[var(--line)] bg-[var(--canvas-2)] p-6 sm:p-10 font-display text-parchment/90 shadow-sm ${fontClasses}`}>
+      <article className={`rounded-3xl border border-[var(--line)] bg-[var(--canvas-2)] p-6 sm:p-10 font-display text-[var(--ink)] shadow-sm ${fontClasses}`}>
         {chapter.verses.map((v) => (
           <p key={v.number} className="mb-4">
             {showVerseNumbers ? (
@@ -178,13 +178,13 @@ export function ScrollReader({
       </article>
 
       {/* End-of-Chapter Active Recall Check-In Card */}
-      <section className="mt-12 rounded-3xl border border-[var(--gold)]/40 bg-[var(--canvas-2)] p-6 sm:p-8 shadow-xl">
+      <section className="mt-12 rounded-3xl border border-[var(--gold)]/40 bg-[var(--canvas-2)] p-6 sm:p-8 shadow-xl glass-sanctuary">
         <div className="flex items-center justify-between border-b border-[var(--line)] pb-4">
           <div>
             <span className="text-xs font-semibold uppercase tracking-wider text-[var(--gold)]">
               Active Recall Check-In
             </span>
-            <h2 className="font-display text-2xl font-bold text-white mt-0.5">
+            <h2 className="font-display text-2xl font-bold text-[var(--ink)] mt-0.5">
               Verify Your Understanding
             </h2>
           </div>
@@ -200,19 +200,19 @@ export function ScrollReader({
 
             return (
               <div key={q.prompt} className="py-6 first:pt-0 last:pb-0">
-                <p className="font-display text-lg font-medium text-white/95">
+                <p className="font-display text-lg font-medium text-[var(--ink)]">
                   <span className="text-[var(--gold)] font-sans mr-2">{qIdx + 1}.</span>
                   {q.prompt}
                 </p>
 
                 <div className="mt-4 grid gap-2.5 sm:grid-cols-2">
                   {q.choices.map((choice, cIdx) => {
-                    let btnStyle = "border-[var(--line)] bg-[var(--canvas-1)] text-parchment/80 hover:border-white/30";
+                    let btnStyle = "border-[var(--line)] bg-[var(--canvas-1)] text-[var(--ink)] hover:border-[var(--gold)]/40";
                     if (isAnswered) {
                       if (cIdx === q.correctIndex) {
-                        btnStyle = "border-emerald-500 bg-emerald-500/20 text-emerald-300 font-semibold";
+                        btnStyle = "border-emerald-500 bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 font-semibold";
                       } else if (cIdx === chosen) {
-                        btnStyle = "border-rose-500 bg-rose-500/20 text-rose-300";
+                        btnStyle = "border-rose-500 bg-rose-500/20 text-rose-700 dark:text-rose-300";
                       } else {
                         btnStyle = "opacity-40 border-[var(--line)]";
                       }

@@ -15,23 +15,23 @@ export default function ReadSanctuaryPage() {
   return (
     <div className="mx-auto max-w-5xl">
       {/* Hero / Daily Story Spotlight */}
-      <div className="relative mb-12 overflow-hidden rounded-3xl border border-[var(--gold)]/30 bg-gradient-to-br from-black via-[var(--canvas-2)] to-black p-8 sm:p-12 shadow-2xl">
+      <div className="relative mb-12 overflow-hidden rounded-3xl border border-[var(--gold)]/30 bg-[var(--canvas-2)] p-8 sm:p-12 shadow-2xl glass-sanctuary">
         <div className="relative z-10 max-w-2xl">
           <div className="flex flex-wrap items-center gap-3">
             <span className="rounded-full border border-[var(--gold)]/40 bg-[var(--gold)]/15 px-3.5 py-1 text-xs font-semibold uppercase tracking-wider text-[var(--gold)]">
               Daily Illuminated Scripture
             </span>
             {progress.streakDays > 0 ? (
-              <span className="rounded-full bg-orange-500/20 px-3 py-1 text-xs font-medium text-orange-400">
+              <span className="rounded-full bg-orange-500/20 px-3 py-1 text-xs font-medium text-orange-600 dark:text-orange-400">
                 🔥 {progress.streakDays} Day Reading Streak
               </span>
             ) : null}
           </div>
 
-          <h1 className="mt-4 font-display text-4xl sm:text-5xl font-bold tracking-tight text-white">
+          <h1 className="mt-4 font-display text-4xl sm:text-5xl font-bold tracking-tight text-[var(--ink)]">
             The Illuminated Sanctuary
           </h1>
-          <p className="mt-3 text-base sm:text-lg text-parchment/80 leading-relaxed">
+          <p className="mt-3 text-base sm:text-lg text-[var(--muted)] leading-relaxed">
             Experience Scripture through museum-grade classical art, Hebrew and Greek linguistic insights, WhatsApp-style story reels, and active recall check-ins.
           </p>
 
@@ -68,7 +68,7 @@ export default function ReadSanctuaryPage() {
       <section className="mb-12">
         <div className="mb-6 flex items-center justify-between">
           <div>
-            <h2 className="font-display text-2xl sm:text-3xl font-bold text-white">
+            <h2 className="font-display text-2xl sm:text-3xl font-bold text-[var(--ink)]">
               Guided Reading Journeys
             </h2>
             <p className="text-xs sm:text-sm text-[var(--muted)]">
@@ -81,19 +81,19 @@ export default function ReadSanctuaryPage() {
           {READING_PLANS.map((plan) => (
             <div
               key={plan.slug}
-              className="group relative flex flex-col justify-between rounded-3xl border border-[var(--line)] bg-[var(--canvas-2)] p-6 sm:p-8 transition-all hover:border-[var(--gold)]/50 hover:shadow-xl"
+              className="group relative flex flex-col justify-between rounded-3xl border border-[var(--line)] bg-[var(--canvas-2)] p-6 sm:p-8 transition-all hover:border-[var(--gold)]/50 hover:shadow-xl glass-sanctuary"
             >
               <div>
                 <span className="rounded-full bg-[var(--gold)]/10 px-3 py-1 text-xs font-semibold text-[var(--gold)]">
                   {plan.badge} · {plan.days} Days
                 </span>
-                <h3 className="mt-3 font-display text-2xl font-bold text-white group-hover:text-[var(--gold)] transition-colors">
+                <h3 className="mt-3 font-display text-2xl font-bold text-[var(--ink)] group-hover:text-[var(--gold)] transition-colors">
                   {plan.title}
                 </h3>
                 <p className="mt-1 text-xs sm:text-sm text-[var(--gold)]/80 font-medium">
                   {plan.subtitle}
                 </p>
-                <p className="mt-2 text-sm text-parchment/75 leading-relaxed">
+                <p className="mt-2 text-sm text-[var(--muted)] leading-relaxed">
                   {plan.description}
                 </p>
               </div>
@@ -117,7 +117,7 @@ export default function ReadSanctuaryPage() {
       {/* Landmark Chapters Directory */}
       <section>
         <div className="mb-6">
-          <h2 className="font-display text-2xl sm:text-3xl font-bold text-white">
+          <h2 className="font-display text-2xl sm:text-3xl font-bold text-[var(--ink)]">
             Landmark Illuminated Chapters
           </h2>
           <p className="text-xs sm:text-sm text-[var(--muted)]">
@@ -167,10 +167,10 @@ export default function ReadSanctuaryPage() {
                 {/* Content */}
                 <div className="p-5 flex flex-col justify-between flex-1">
                   <div>
-                    <h3 className="font-display text-xl font-bold text-white">
+                    <h3 className="font-display text-xl font-bold text-[var(--ink)]">
                       {ch.title}
                     </h3>
-                    <p className="mt-1 text-xs text-parchment/70 line-clamp-2">
+                    <p className="mt-1 text-xs text-[var(--muted)] line-clamp-2">
                       {ch.subtitle}
                     </p>
                   </div>
@@ -184,7 +184,7 @@ export default function ReadSanctuaryPage() {
                     </Link>
                     <Link
                       href={`/read/${ch.bookSlug}/${ch.chapterNumber}?mode=scroll`}
-                      className="text-[var(--muted)] hover:text-white"
+                      className="text-[var(--muted)] hover:text-[var(--ink)]"
                     >
                       📜 Full Text →
                     </Link>

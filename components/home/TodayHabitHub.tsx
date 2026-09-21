@@ -208,7 +208,7 @@ export function TodayHabitHub() {
   return (
     <div className="w-full">
       {/* 1. Glorify-style Top Banner: Streak, Day Tracker & Lamp Flame with Circadian Mood */}
-      <div className="rounded-3xl border border-[var(--line)] bg-gradient-to-b from-[#14120e] via-[#0d0f12] to-[#0a0a0a] p-5 sm:p-7 shadow-2xl glass-specular">
+      <div className="rounded-3xl border border-[var(--line)] bg-[var(--canvas-2)] p-5 sm:p-7 shadow-2xl glass-specular">
         <div className="flex flex-wrap items-center justify-between gap-4">
           <div className="flex items-center gap-3.5">
             <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-[var(--gold)]/40 bg-[var(--gold)]/10 text-xl font-bold text-[var(--gold)] shadow-inner">
@@ -220,14 +220,14 @@ export function TodayHabitHub() {
                   <span className="animate-pulse">🔥</span> {streakCount} Day Streak
                 </span>
                 <span className="text-[var(--muted)] text-xs">·</span>
-                <span className="rounded-full bg-white/10 px-2 py-0.5 text-[10px] font-semibold text-[var(--gold)]">
+                <span className="rounded-full bg-[var(--gold)]/10 px-2 py-0.5 text-[10px] font-semibold text-[var(--gold)]">
                   {circadian.badge}
                 </span>
               </div>
-              <h1 className="font-display text-xl sm:text-2xl font-bold text-white tracking-tight mt-0.5">
+              <h1 className="font-display text-xl sm:text-2xl font-bold text-[var(--ink)] tracking-tight mt-0.5">
                 {user?.username ? `${circadian.salutation}, ${user.username}` : `${circadian.salutation} · Sacred Rhythm`}
               </h1>
-              <p className="text-xs text-parchment/70 mt-0.5">
+              <p className="text-xs text-[var(--muted)] mt-0.5">
                 {circadian.subtitle}
               </p>
             </div>
@@ -243,7 +243,7 @@ export function TodayHabitHub() {
         </div>
 
         {/* Weekly Day Circles (M T W T F S S) */}
-        <div className="mt-6 flex items-center justify-between gap-1 border-t border-white/5 pt-4">
+        <div className="mt-6 flex items-center justify-between gap-1 border-t border-[var(--line)] pt-4">
           {DAYS_OF_WEEK.map((day, idx) => {
             const isToday = idx === currentDayIndex;
             const isPast = idx < currentDayIndex;
@@ -253,7 +253,7 @@ export function TodayHabitHub() {
               <div key={idx} className="flex flex-1 flex-col items-center gap-1.5">
                 <span
                   className={`text-[11px] font-bold uppercase ${
-                    isToday ? "text-[var(--gold)]" : "text-white/40"
+                    isToday ? "text-[var(--gold)]" : "text-[var(--muted)]"
                   }`}
                 >
                   {day}
@@ -261,10 +261,10 @@ export function TodayHabitHub() {
                 <div
                   className={`flex h-8 w-8 items-center justify-center rounded-full text-xs font-semibold transition-all ${
                     isToday
-                      ? "border-2 border-[var(--gold)] bg-[var(--gold)]/20 text-white shadow-[0_0_12px_var(--gold)]"
+                      ? "border-2 border-[var(--gold)] bg-[var(--gold)]/20 text-[var(--gold)] shadow-[0_0_12px_var(--gold)] font-bold"
                       : isDone
-                      ? "bg-white/15 text-parchment"
-                      : "bg-white/5 text-white/30"
+                      ? "bg-[var(--gold)]/15 text-[var(--gold)] font-bold border border-[var(--gold)]/30"
+                      : "bg-black/5 dark:bg-white/5 text-[var(--muted)]"
                   }`}
                 >
                   {isDone ? "✓" : ""}
@@ -276,9 +276,9 @@ export function TodayHabitHub() {
 
         {/* Progress Bar & Status */}
         <div className="mt-5 flex items-center justify-between gap-4">
-          <div className="h-2 flex-1 overflow-hidden rounded-full bg-white/10">
+          <div className="h-2 flex-1 overflow-hidden rounded-full bg-black/10 dark:bg-white/10">
             <div
-              className="h-full bg-gradient-to-r from-amber-500 to-yellow-300 transition-all duration-500"
+              className="h-full bg-gradient-to-r from-amber-500 to-yellow-400 transition-all duration-500"
               style={{ width: `${(completedItems.length / DAILY_ACTIVITIES.length) * 100}%` }}
             />
           </div>
@@ -288,7 +288,7 @@ export function TodayHabitHub() {
         </div>
 
         {isAllComplete ? (
-          <div className="mt-4 flex items-center justify-between rounded-2xl border border-emerald-500/40 bg-emerald-950/40 px-4 py-2.5 text-xs text-emerald-300 animate-fade-in">
+          <div className="mt-4 flex items-center justify-between rounded-2xl border border-emerald-500/40 bg-emerald-950/20 px-4 py-2.5 text-xs text-emerald-600 dark:text-emerald-300 animate-fade-in">
             <span className="font-semibold">✨ All Lamps Lit! Daily Liturgy Complete (+50 Coins)</span>
             <span className="text-base">🏆</span>
           </div>
@@ -316,24 +316,24 @@ export function TodayHabitHub() {
               }}
               className={`group flex cursor-pointer items-center justify-between gap-4 rounded-2xl border p-4 transition-all tactile-tap ${
                 isDone
-                  ? "border-emerald-500/30 bg-[#0d1511]/80 hover:border-emerald-500/50"
-                  : "border-[var(--line)] bg-[var(--canvas-2)] hover:border-white/20 hover:bg-white/[0.03]"
+                  ? "border-emerald-500/40 bg-emerald-500/10 hover:border-emerald-500/60"
+                  : "border-[var(--line)] bg-[var(--canvas-2)] hover:border-[var(--gold)]/40 hover:bg-black/[0.02] dark:hover:bg-white/[0.03]"
               }`}
             >
               <div className="flex items-center gap-3.5 min-w-0">
-                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white/5 text-lg">
+                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-black/5 dark:bg-white/5 text-lg">
                   {activity.icon}
                 </span>
                 <div className="min-w-0">
                   <div className="flex items-center gap-2">
-                    <h3 className="font-display text-base font-semibold text-white tracking-tight truncate">
+                    <h3 className="font-display text-base font-semibold text-[var(--ink)] tracking-tight truncate">
                       {activity.title}
                     </h3>
-                    <span className="rounded-full bg-white/10 px-2 py-0.2 text-[10px] text-parchment/70 shrink-0">
+                    <span className="rounded-full bg-black/5 dark:bg-white/10 px-2 py-0.2 text-[10px] text-[var(--muted)] shrink-0">
                       {activity.tag}
                     </span>
                   </div>
-                  <p className="text-xs text-parchment/70 truncate mt-0.5">
+                  <p className="text-xs text-[var(--muted)] truncate mt-0.5">
                     {activity.subtitle}
                   </p>
                 </div>
@@ -362,7 +362,7 @@ export function TodayHabitHub() {
                     className={`flex h-7 w-7 items-center justify-center rounded-full border transition-all ${
                       isDone
                         ? "border-emerald-500 bg-emerald-500 text-black font-bold"
-                        : "border-white/20 bg-white/5 text-transparent group-hover:border-white/40"
+                        : "border-[var(--line)] bg-black/5 dark:bg-white/5 text-transparent group-hover:border-[var(--gold)]/40"
                     }`}
                   >
                     ✓
@@ -375,16 +375,16 @@ export function TodayHabitHub() {
       </div>
 
       {/* 3. Featured Story Card with Vibrant Art Preview */}
-      <div className="mt-8 overflow-hidden rounded-3xl border border-[var(--line)] bg-gradient-to-r from-[#12100e] to-[#1a150d] p-6 sm:p-8 glass-sanctuary">
+      <div className="mt-8 overflow-hidden rounded-3xl border border-[var(--line)] bg-[var(--canvas-2)] p-6 sm:p-8 glass-sanctuary">
         <div className="flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="max-w-xl">
             <span className="rounded-full bg-[var(--gold)]/20 px-3 py-1 text-xs font-semibold text-[var(--gold)] uppercase tracking-wider">
               Featured Illuminated Story
             </span>
-            <h3 className="mt-3 font-display text-2xl sm:text-3xl font-bold text-white">
+            <h3 className="mt-3 font-display text-2xl sm:text-3xl font-bold text-[var(--ink)]">
               Genesis 1: The First Light
             </h3>
-            <p className="mt-2 text-sm text-parchment/80 leading-relaxed">
+            <p className="mt-2 text-sm text-[var(--muted)] leading-relaxed">
               Before stars burned or seas crashed, the Spirit of God moved upon the deep. Experience the creation narrative in the full-bleed Vibrant Frame story reader with swipe physics.
             </p>
             <div className="mt-5 flex flex-wrap items-center gap-3">
@@ -418,11 +418,11 @@ export function TodayHabitHub() {
       {/* MODAL 1: Verse of the Day */}
       {activeModal === "quote" ? (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-md p-4 animate-fade-in"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/75 backdrop-blur-md p-4 animate-fade-in"
           onClick={() => setActiveModal(null)}
         >
           <div
-            className="relative w-full max-w-lg rounded-3xl border border-[var(--gold)]/40 bg-[#0d0f12] p-6 sm:p-8 shadow-2xl glass-specular"
+            className="relative w-full max-w-lg rounded-3xl border border-[var(--gold)]/40 bg-[var(--canvas-2)] p-6 sm:p-8 shadow-2xl glass-specular"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex items-center justify-between">
@@ -438,19 +438,19 @@ export function TodayHabitHub() {
                 <span>Share Card</span>
               </button>
             </div>
-            <blockquote className="mt-4 font-display text-2xl sm:text-3xl leading-snug text-white">
+            <blockquote className="mt-4 font-display text-2xl sm:text-3xl leading-snug text-[var(--ink)]">
               “The light shines in the darkness, and the darkness has not overcome it.”
             </blockquote>
-            <p className="mt-3 text-sm text-parchment/70 leading-relaxed">
+            <p className="mt-3 text-sm text-[var(--muted)] leading-relaxed">
               No matter how dense or intimidating the shadows feel, darkness has no active power to extinguish light. A single candle pierces a cavern of shadows.
             </p>
 
-            <div className="mt-6 flex flex-wrap items-center justify-between gap-3 border-t border-white/10 pt-4">
+            <div className="mt-6 flex flex-wrap items-center justify-between gap-3 border-t border-[var(--line)] pt-4">
               <div className="flex items-center gap-2">
                 <button
                   type="button"
                   onClick={handleCopyQuote}
-                  className="flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-3.5 py-2 text-xs font-semibold text-white hover:bg-white/10 transition-all tactile-tap"
+                  className="flex items-center gap-2 rounded-full border border-[var(--line)] bg-black/5 dark:bg-white/5 px-3.5 py-2 text-xs font-semibold text-[var(--ink)] hover:bg-black/10 dark:hover:bg-white/10 transition-all tactile-tap"
                 >
                   <span>📋</span>
                   <span>{copiedQuote ? "Copied!" : "Copy Verse"}</span>
@@ -458,7 +458,7 @@ export function TodayHabitHub() {
                 <button
                   type="button"
                   onClick={handleWhatsAppShare}
-                  className="flex items-center gap-1.5 rounded-full border border-emerald-500/40 bg-emerald-950/40 px-3.5 py-2 text-xs font-semibold text-emerald-300 hover:bg-emerald-900/40 transition-all tactile-tap"
+                  className="flex items-center gap-1.5 rounded-full border border-emerald-500/40 bg-emerald-500/15 px-3.5 py-2 text-xs font-semibold text-emerald-700 dark:text-emerald-300 hover:bg-emerald-500/25 transition-all tactile-tap"
                 >
                   <span>💬</span>
                   <span>WhatsApp</span>
@@ -558,30 +558,30 @@ export function TodayHabitHub() {
       {/* MODAL 2: WordSpark */}
       {activeModal === "wordspark" ? (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-md p-4 animate-fade-in"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/75 backdrop-blur-md p-4 animate-fade-in"
           onClick={() => setActiveModal(null)}
         >
           <div
-            className="relative w-full max-w-lg rounded-3xl border border-[var(--gold)]/40 bg-[#0d0f12] p-6 sm:p-8 shadow-2xl glass-specular"
+            className="relative w-full max-w-lg rounded-3xl border border-[var(--gold)]/40 bg-[var(--canvas-2)] p-6 sm:p-8 shadow-2xl glass-specular"
             onClick={(e) => e.stopPropagation()}
           >
             <span className="text-xs uppercase tracking-widest text-[var(--gold)] font-bold">
               Hebrew WordSpark · Genesis 1:1
             </span>
             <div className="mt-3 flex items-baseline gap-3">
-              <h3 className="text-3xl font-bold text-white">Bārā&apos;</h3>
+              <h3 className="text-3xl font-bold text-[var(--ink)]">Bārā&apos;</h3>
               <span className="font-serif text-2xl text-[var(--gold)]" dir="rtl">
                 בָּרָא
               </span>
             </div>
-            <p className="mt-2 text-sm font-semibold text-amber-300">
+            <p className="mt-2 text-sm font-semibold text-amber-600 dark:text-amber-300">
               Literal Meaning: To create out of nothing (ex nihilo)
             </p>
-            <p className="mt-3 text-sm text-parchment/80 leading-relaxed">
+            <p className="mt-3 text-sm text-[var(--muted)] leading-relaxed">
               In Hebrew scripture, the verb <em>bara</em> has only one subject: God. Human beings make, form, or craft from existing elements. Only God brings cosmos out of utter nothingness.
             </p>
 
-            <div className="mt-6 flex justify-end gap-3 border-t border-white/10 pt-4">
+            <div className="mt-6 flex justify-end gap-3 border-t border-[var(--line)] pt-4">
               <button
                 type="button"
                 onClick={() => {
@@ -600,17 +600,17 @@ export function TodayHabitHub() {
       {/* MODAL 3: Daily Active Recall Trivia */}
       {activeModal === "trivia" ? (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-md p-4 animate-fade-in"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/75 backdrop-blur-md p-4 animate-fade-in"
           onClick={() => setActiveModal(null)}
         >
           <div
-            className="relative w-full max-w-lg rounded-3xl border border-[var(--gold)]/40 bg-[#0d0f12] p-6 sm:p-8 shadow-2xl glass-specular"
+            className="relative w-full max-w-lg rounded-3xl border border-[var(--gold)]/40 bg-[var(--canvas-2)] p-6 sm:p-8 shadow-2xl glass-specular"
             onClick={(e) => e.stopPropagation()}
           >
             <span className="text-xs uppercase tracking-widest text-[var(--gold)] font-bold">
               Daily Recall Question · +25 Coins
             </span>
-            <h3 className="mt-3 font-display text-xl font-bold text-white leading-snug">
+            <h3 className="mt-3 font-display text-xl font-bold text-[var(--ink)] leading-snug">
               In Genesis 1, what divine distinction was bestowed exclusively upon humanity?
             </h3>
 
@@ -627,9 +627,9 @@ export function TodayHabitHub() {
                   className={`w-full rounded-2xl border p-3.5 text-left text-sm transition-all tactile-tap ${
                     triviaAnswer === i
                       ? i === 1
-                        ? "border-emerald-500 bg-emerald-950/40 text-emerald-200 font-semibold"
-                        : "border-rose-500 bg-rose-950/40 text-rose-200"
-                      : "border-white/10 bg-white/5 text-parchment hover:border-white/30"
+                        ? "border-emerald-500 bg-emerald-500/15 text-emerald-800 dark:text-emerald-200 font-semibold"
+                        : "border-rose-500 bg-rose-500/15 text-rose-800 dark:text-rose-200"
+                      : "border-[var(--line)] bg-[var(--canvas-1)] text-[var(--ink)] hover:border-[var(--gold)]/40"
                   }`}
                 >
                   <span className="mr-2 font-bold">{String.fromCharCode(65 + i)}.</span>
@@ -640,15 +640,15 @@ export function TodayHabitHub() {
 
             {triviaFeedback ? (
               <p
-                className={`mt-3 text-xs leading-relaxed ${
-                  triviaAnswer === 1 ? "text-emerald-300" : "text-amber-300"
+                className={`mt-3 text-xs leading-relaxed font-medium ${
+                  triviaAnswer === 1 ? "text-emerald-700 dark:text-emerald-300" : "text-amber-700 dark:text-amber-300"
                 }`}
               >
                 {triviaFeedback}
               </p>
             ) : null}
 
-            <div className="mt-6 flex justify-end gap-3 border-t border-white/10 pt-4">
+            <div className="mt-6 flex justify-end gap-3 border-t border-[var(--line)] pt-4">
               <button
                 type="button"
                 onClick={() => setActiveModal(null)}
@@ -664,20 +664,20 @@ export function TodayHabitHub() {
       {/* MODAL 4: Guided Daily Prayer (Circadian Adaptive) */}
       {activeModal === "prayer" ? (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-md p-4 animate-fade-in"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/75 backdrop-blur-md p-4 animate-fade-in"
           onClick={() => setActiveModal(null)}
         >
           <div
-            className="relative w-full max-w-lg rounded-3xl border border-[var(--gold)]/40 bg-[#0d0f12] p-6 sm:p-8 shadow-2xl text-center glass-specular"
+            className="relative w-full max-w-lg rounded-3xl border border-[var(--gold)]/40 bg-[var(--canvas-2)] p-6 sm:p-8 shadow-2xl text-center glass-specular"
             onClick={(e) => e.stopPropagation()}
           >
             <span className="text-xs uppercase tracking-widest text-[var(--gold)] font-bold">
               {circadian.badge} · Sanctuary Daily Prayer
             </span>
-            <h3 className="mt-2 font-display text-2xl font-bold text-white">
+            <h3 className="mt-2 font-display text-2xl font-bold text-[var(--ink)]">
               {circadian.prayerTitle}
             </h3>
-            <blockquote className="mt-4 font-display text-lg text-parchment/90 leading-relaxed italic border-y border-white/10 py-4">
+            <blockquote className="mt-4 font-display text-lg text-[var(--ink)] leading-relaxed italic border-y border-[var(--line)] py-4">
               {circadian.prayerText}
             </blockquote>
 
@@ -702,6 +702,5 @@ export function TodayHabitHub() {
         </div>
       ) : null}
     </div>
-
   );
 }

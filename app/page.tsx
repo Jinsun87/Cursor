@@ -20,16 +20,16 @@ export default function HomePage() {
       <TodayHabitHub />
 
       {/* 2. Illuminated Bible Reader Showcase */}
-      <section className="rounded-3xl border border-[var(--line)] bg-gradient-to-b from-[#14110d] via-[#0d0f12] to-[#0a0a0a] p-6 sm:p-10 shadow-2xl">
+      <section className="rounded-3xl border border-[var(--line)] bg-[var(--canvas-2)] p-6 sm:p-10 shadow-2xl glass-sanctuary">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
           <div className="max-w-2xl">
             <span className="text-xs font-bold uppercase tracking-widest text-[var(--gold)]">
               The Living Word · Two Reading Modes
             </span>
-            <h2 className="mt-2 font-display text-3xl sm:text-4xl font-bold text-white">
+            <h2 className="mt-2 font-display text-3xl sm:text-4xl font-bold text-[var(--ink)]">
               The Illuminated Scripture Reader
             </h2>
-            <p className="mt-3 text-parchment/80 leading-relaxed text-sm sm:text-base">
+            <p className="mt-3 text-[var(--muted)] leading-relaxed text-sm sm:text-base">
               Experience the Bible in two complementary ways: **WhatsApp-style visual Story Mode** with museum-grade classical paintings and Greek/Hebrew WordSparks, or **Editorial Scroll Mode** for quiet, uninterrupted personal meditation.
             </p>
           </div>
@@ -94,7 +94,7 @@ export default function HomePage() {
             <Link
               key={`${item.slug}-${item.chapter}`}
               href={`/read/${item.slug}/${item.chapter}`}
-              className="group relative flex overflow-hidden rounded-2xl border border-[var(--line)] bg-[var(--canvas-2)] hover:border-[var(--gold)]/50 transition-all shadow-md"
+              className="group relative flex overflow-hidden rounded-2xl border border-[var(--line)] bg-[var(--canvas)] hover:border-[var(--gold)]/50 transition-all shadow-md"
             >
               <div className="relative h-32 w-24 shrink-0 overflow-hidden bg-black">
                 <Image
@@ -110,10 +110,10 @@ export default function HomePage() {
                   <span className="text-[10px] font-bold uppercase tracking-wider text-[var(--gold)]">
                     {item.book} {item.chapter}
                   </span>
-                  <h3 className="font-display text-base font-bold text-white leading-tight group-hover:text-[var(--gold)] transition-colors">
+                  <h3 className="font-display text-base font-bold text-[var(--ink)] leading-tight group-hover:text-[var(--gold)] transition-colors">
                     {item.title}
                   </h3>
-                  <p className="mt-1 line-clamp-2 text-xs text-parchment/70">
+                  <p className="mt-1 line-clamp-2 text-xs text-[var(--muted)]">
                     {item.subtitle}
                   </p>
                 </div>
@@ -135,10 +135,10 @@ export default function HomePage() {
             <span className="text-xs font-bold uppercase tracking-widest text-[var(--gold)]">
               Active Recall · Daily Retention
             </span>
-            <h2 className="mt-1 font-display text-3xl sm:text-4xl text-white">
+            <h2 className="mt-1 font-display text-3xl sm:text-4xl text-[var(--ink)] font-bold">
               Scripture Sittings & Master Quizzes
             </h2>
-            <p className="mt-2 text-sm text-parchment/70 max-w-2xl">
+            <p className="mt-2 text-sm text-[var(--muted)] max-w-2xl">
               Original questions on the text—patriarchs, prophets, Gospels, and epistles. Score 70%+ to master each sitting, earn coins, and claim Certificates of Mastery.
             </p>
           </div>
@@ -151,20 +151,20 @@ export default function HomePage() {
         {/* 2 Flagship Hero Cards */}
         <div className="mt-6 grid gap-6 md:grid-cols-2">
           {pictureQuiz ? (
-            <div className="overflow-hidden rounded-3xl border border-[var(--gold)]/40 bg-gradient-to-br from-[#1c170d] via-[#120f0a] to-[#0a0a0a] p-6 sm:p-8 shadow-xl flex flex-col justify-between">
+            <div className="overflow-hidden rounded-3xl border border-[var(--gold)]/40 bg-[var(--canvas-2)] p-6 sm:p-8 shadow-xl flex flex-col justify-between glass-sanctuary">
               <div>
-                <span className="rounded-full bg-[var(--gold)]/20 px-3 py-1 text-xs font-semibold text-[var(--gold)] uppercase tracking-wider">
+                <span className="rounded-full bg-[var(--gold)]/15 px-3 py-1 text-xs font-semibold text-[var(--gold)] uppercase tracking-wider">
                   🎨 Visual Recognition Quiz
                 </span>
-                <h3 className="mt-3 font-display text-2xl sm:text-3xl font-bold text-white">
+                <h3 className="mt-3 font-display text-2xl sm:text-3xl font-bold text-[var(--ink)]">
                   {pictureQuiz.title}
                 </h3>
-                <p className="mt-3 text-sm text-parchment/80 leading-relaxed">
+                <p className="mt-3 text-sm text-[var(--muted)] leading-relaxed">
                   Identify holy events, prophets, and biblical milestones through 30 museum-grade classical paintings. High engagement visual recall.
                 </p>
               </div>
 
-              <div className="mt-6 flex items-center justify-between border-t border-white/10 pt-4">
+              <div className="mt-6 flex items-center justify-between border-t border-[var(--line)] pt-4">
                 <span className="text-xs text-[var(--gold)] font-medium">
                   🪙 +{pictureQuiz.coinsOnComplete} Coins Reward
                 </span>
@@ -176,20 +176,20 @@ export default function HomePage() {
           ) : null}
 
           {flagship ? (
-            <div className="overflow-hidden rounded-3xl border border-[var(--line)] bg-gradient-to-br from-[var(--canvas-2)] to-[#0c0a09] p-6 sm:p-8 shadow-xl flex flex-col justify-between">
+            <div className="overflow-hidden rounded-3xl border border-[var(--line)] bg-[var(--canvas-2)] p-6 sm:p-8 shadow-xl flex flex-col justify-between glass-sanctuary">
               <div>
-                <span className="rounded-full bg-white/10 px-3 py-1 text-xs font-semibold text-white/80 uppercase tracking-wider">
+                <span className="rounded-full bg-black/5 dark:bg-white/10 px-3 py-1 text-xs font-semibold text-[var(--muted)] uppercase tracking-wider">
                   📜 54-Question Flagship Sitting
                 </span>
-                <h3 className="mt-3 font-display text-2xl sm:text-3xl font-bold text-white">
+                <h3 className="mt-3 font-display text-2xl sm:text-3xl font-bold text-[var(--ink)]">
                   {flagship.title}
                 </h3>
-                <p className="mt-3 text-sm text-parchment/80 leading-relaxed">
+                <p className="mt-3 text-sm text-[var(--muted)] leading-relaxed">
                   Fifty-four original questions across four epochs: patriarchs, prophets, Gospels, and letters. Score 70%+ to claim the $29 Bible Foundations eBook free.
                 </p>
               </div>
 
-              <div className="mt-6 flex items-center justify-between border-t border-white/10 pt-4">
+              <div className="mt-6 flex items-center justify-between border-t border-[var(--line)] pt-4">
                 <span className="text-xs text-[var(--gold)] font-medium">
                   🪙 +{flagship.coinsOnComplete} Coins · Certificate
                 </span>
@@ -216,7 +216,7 @@ export default function HomePage() {
             <span className="text-xs font-bold uppercase tracking-widest text-[var(--gold)]">
               Curated Curriculum
             </span>
-            <h2 className="mt-1 font-display text-3xl text-white">Structured Study Tracks</h2>
+            <h2 className="mt-1 font-display text-3xl text-[var(--ink)] font-bold">Structured Study Tracks</h2>
           </div>
           <Link href="/series/bible-foundations" className="text-sm text-[var(--gold)] hover:underline">
             View Track →
@@ -228,21 +228,21 @@ export default function HomePage() {
             <Link
               key={s.slug}
               href={`/series/${s.slug}`}
-              className="group rounded-2xl border border-[var(--gold)]/30 bg-[var(--canvas-2)] p-6 sm:p-8 hover:border-[var(--gold)] transition-all shadow-lg flex flex-col justify-between"
+              className="group rounded-2xl border border-[var(--gold)]/30 bg-[var(--canvas-2)] p-6 sm:p-8 hover:border-[var(--gold)] transition-all shadow-lg flex flex-col justify-between glass-sanctuary"
             >
               <div>
                 <span className="text-xs uppercase tracking-wider text-[var(--gold)] font-bold">
                   Certified Mastery Track
                 </span>
-                <h3 className="mt-2 font-display text-2xl sm:text-3xl font-bold text-white group-hover:text-[var(--gold)] transition-colors">
+                <h3 className="mt-2 font-display text-2xl sm:text-3xl font-bold text-[var(--ink)] group-hover:text-[var(--gold)] transition-colors">
                   {s.title}
                 </h3>
-                <p className="mt-3 text-sm text-parchment/75 leading-relaxed">
+                <p className="mt-3 text-sm text-[var(--muted)] leading-relaxed">
                   {s.description}
                 </p>
               </div>
 
-              <div className="mt-6 flex items-center justify-between border-t border-white/10 pt-4 text-xs">
+              <div className="mt-6 flex items-center justify-between border-t border-[var(--line)] pt-4 text-xs">
                 <span className="text-[var(--muted)]">
                   {s.quizSlugs.length} sittings + Comprehensive Review
                 </span>
@@ -256,15 +256,15 @@ export default function HomePage() {
       </section>
 
       {/* 5. Sanctuary Mission & Purpose Statement */}
-      <section className="rounded-3xl border border-[var(--line)] bg-[var(--canvas-2)] p-8 md:p-12 shadow-xl">
+      <section className="rounded-3xl border border-[var(--line)] bg-[var(--canvas-2)] p-8 md:p-12 shadow-xl glass-sanctuary">
         <div className="max-w-3xl">
           <span className="text-xs font-bold uppercase tracking-widest text-[var(--gold)]">
             Our Purpose
           </span>
-          <h2 className="mt-2 font-display text-3xl sm:text-4xl text-white font-bold">
+          <h2 className="mt-2 font-display text-3xl sm:text-4xl text-[var(--ink)] font-bold">
             Stay with Scripture long enough to remember it.
           </h2>
-          <p className="mt-4 text-base text-parchment/80 leading-relaxed">
+          <p className="mt-4 text-base text-[var(--muted)] leading-relaxed">
             In an era of fleeting feeds and superficial skimming, Lampstand builds a quiet, sacred harbor for God&apos;s Word. Through visual story illumination, original Greek & Hebrew root discoveries, active recall questions, and structured mastery tracks, we help you internalize the text deeply.
           </p>
 

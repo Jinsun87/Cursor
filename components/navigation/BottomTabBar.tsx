@@ -116,7 +116,7 @@ export function BottomTabBar() {
   return (
     <nav
       aria-label="Mobile Navigation"
-      className="fixed inset-x-0 bottom-0 z-50 block md:hidden border-t border-[var(--line)] bg-[#0c0a09]/95 backdrop-blur-xl shadow-2xl transition-all pb-[max(env(safe-area-inset-bottom),0.6rem)] pt-1.5"
+      className="fixed inset-x-0 bottom-0 z-50 block md:hidden border-t border-[var(--line)] bg-[var(--canvas-2)]/92 backdrop-blur-xl shadow-2xl transition-all pb-[max(env(safe-area-inset-bottom),0.6rem)] pt-1.5 glass-specular"
     >
       <div className="mx-auto flex max-w-md items-center justify-around px-2">
         {TABS.map((tab) => {
@@ -130,7 +130,7 @@ export function BottomTabBar() {
               className={`relative flex flex-1 flex-col items-center justify-center py-1 text-center transition-all ${
                 isActive
                   ? "text-[var(--gold)] font-semibold"
-                  : "text-parchment/60 hover:text-parchment"
+                  : "text-[var(--muted)] hover:text-[var(--ink)]"
               }`}
             >
               {/* Tab Icon */}

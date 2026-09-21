@@ -18,7 +18,9 @@ const config: Config = {
           400: "#e8c547",
           500: "#d4af37",
         },
-        parchment: "#f6f1e6",
+        parchment: "rgb(var(--parchment-rgb) / <alpha-value>)",
+        ink: "rgb(var(--ink-rgb) / <alpha-value>)",
+        muted: "rgb(var(--muted-rgb) / <alpha-value>)",
       },
       fontFamily: {
         display: ["var(--font-display)", "Georgia", "serif"],

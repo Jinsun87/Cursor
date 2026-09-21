@@ -30,21 +30,21 @@ export function ReaderSettingsDrawer({ prefs, onUpdatePrefs }: Props) {
           onClick={() => setIsOpen(false)}
         >
           <div
-            className="w-full sm:max-w-md rounded-t-3xl sm:rounded-3xl border border-[var(--line)] bg-[#141814] p-6 shadow-2xl glass-sanctuary animate-slide-up"
+            className="w-full sm:max-w-md rounded-t-3xl sm:rounded-3xl border border-[var(--line)] bg-[var(--canvas-2)] p-6 shadow-2xl glass-sanctuary animate-slide-up"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Header */}
-            <div className="flex items-center justify-between border-b border-white/10 pb-4">
+            <div className="flex items-center justify-between border-b border-[var(--line)] pb-4">
               <div className="flex items-center gap-2">
                 <span className="text-base font-bold text-[var(--gold)]">Aa</span>
-                <h3 className="font-display text-lg font-bold text-white tracking-tight">
+                <h3 className="font-display text-lg font-bold text-[var(--ink)] tracking-tight">
                   Typography & Reading Sanctuary
                 </h3>
               </div>
               <button
                 type="button"
                 onClick={() => setIsOpen(false)}
-                className="h-8 w-8 rounded-full bg-white/5 text-sm text-parchment/60 hover:text-white"
+                className="h-8 w-8 rounded-full bg-black/5 dark:bg-white/5 text-sm text-[var(--muted)] hover:text-[var(--ink)]"
               >
                 ✕
               </button>
@@ -55,7 +55,7 @@ export function ReaderSettingsDrawer({ prefs, onUpdatePrefs }: Props) {
               <label className="text-xs font-semibold uppercase tracking-wider text-[var(--muted)]">
                 Font Scale
               </label>
-              <div className="grid grid-cols-3 gap-2 rounded-2xl border border-white/10 bg-black/30 p-1.5">
+              <div className="grid grid-cols-3 gap-2 rounded-2xl border border-[var(--line)] bg-black/5 dark:bg-black/30 p-1.5">
                 {(
                   [
                     { id: "normal", label: "Compact", sizeText: "A" },
@@ -72,7 +72,7 @@ export function ReaderSettingsDrawer({ prefs, onUpdatePrefs }: Props) {
                       className={`flex flex-col items-center justify-center rounded-xl py-2.5 transition-all tactile-tap ${
                         isSelected
                           ? "bg-[var(--gold)] text-black font-bold shadow-md"
-                          : "text-parchment/70 hover:text-white hover:bg-white/5"
+                          : "text-[var(--muted)] hover:text-[var(--ink)] hover:bg-black/5 dark:hover:bg-white/5"
                       }`}
                     >
                       <span className="text-base leading-none font-serif">{opt.sizeText}</span>
@@ -84,9 +84,9 @@ export function ReaderSettingsDrawer({ prefs, onUpdatePrefs }: Props) {
             </div>
 
             {/* Verse Numbers Toggle */}
-            <div className="mt-5 flex items-center justify-between rounded-2xl border border-white/10 bg-black/20 p-4">
+            <div className="mt-5 flex items-center justify-between rounded-2xl border border-[var(--line)] bg-black/5 dark:bg-black/20 p-4">
               <div>
-                <p className="text-sm font-semibold text-white">Verse Number Markers</p>
+                <p className="text-sm font-semibold text-[var(--ink)]">Verse Number Markers</p>
                 <p className="text-xs text-[var(--muted)] mt-0.5">
                   Show or hide superscripts for distraction-free immersion
                 </p>
@@ -97,7 +97,7 @@ export function ReaderSettingsDrawer({ prefs, onUpdatePrefs }: Props) {
                 aria-checked={prefs.showVerseNumbers}
                 onClick={() => onUpdatePrefs({ showVerseNumbers: !prefs.showVerseNumbers })}
                 className={`relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none ${
-                  prefs.showVerseNumbers ? "bg-[var(--gold)]" : "bg-white/20"
+                  prefs.showVerseNumbers ? "bg-[var(--gold)]" : "bg-black/20 dark:bg-white/20"
                 }`}
               >
                 <span

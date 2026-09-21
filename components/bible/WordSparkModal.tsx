@@ -46,13 +46,13 @@ export function WordSparkModal({ spark, onClose }: Props) {
         </div>
 
         <div className="mt-4 rounded-2xl border border-[var(--line)] bg-[var(--canvas-1)] p-4 text-sm">
-          <p className="font-semibold text-parchment/90">Root Meaning</p>
-          <p className="mt-1 text-parchment/75">{spark.rootMeaning}</p>
+          <p className="font-semibold text-[var(--ink)]">Root Meaning</p>
+          <p className="mt-1 text-[var(--muted)]">{spark.rootMeaning}</p>
         </div>
 
-        <div className="mt-4 text-sm text-parchment/80">
+        <div className="mt-4 text-sm text-[var(--ink)]">
           <p className="font-semibold text-[var(--gold)]">Cultural & Theological Context</p>
-          <p className="mt-1 leading-relaxed">{spark.culturalInsight}</p>
+          <p className="mt-1 leading-relaxed text-[var(--muted)]">{spark.culturalInsight}</p>
         </div>
 
         <button

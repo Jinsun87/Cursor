@@ -8,7 +8,9 @@
   --canvas: #141814;
   --canvas-2: #1c241e;
   --ink: #f3efe4;
+  --ink-rgb: 243, 239, 228;
   --muted: #c6c0b0;
+  --muted-rgb: 198, 192, 176;
   --line: rgba(232, 224, 200, 0.16);
   --gold: #e4c04a;
   --gold-ink: #1a1c14;
@@ -23,6 +25,7 @@
   --gold-400: #e4c04a;
   --gold-500: #c9a42e;
   --parchment: #f3efe4;
+  --parchment-rgb: 243, 239, 228;
   --glow: radial-gradient(ellipse at top, rgba(79, 138, 104, 0.22), transparent 52%),
     radial-gradient(ellipse at bottom, rgba(228, 192, 74, 0.08), transparent 48%);
 }
@@ -32,7 +35,9 @@
   --canvas: #f4efe4;
   --canvas-2: #fffdf8;
   --ink: #1a221c;
+  --ink-rgb: 26, 34, 28;
   --muted: #3f4f46;
+  --muted-rgb: 63, 79, 70;
   --line: rgba(26, 34, 28, 0.12);
   --gold: #7a5a12;
   --gold-ink: #fffdf8;
@@ -47,6 +52,7 @@
   --gold-400: #7a5a12;
   --gold-500: #5c430c;
   --parchment: #1a221c;
+  --parchment-rgb: 26, 34, 28;
   --glow: radial-gradient(ellipse at top, rgba(47, 106, 76, 0.12), transparent 50%),
     radial-gradient(ellipse at bottom, rgba(122, 90, 18, 0.08), transparent 46%);
 }
