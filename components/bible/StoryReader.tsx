@@ -35,6 +35,11 @@ export function StoryReader({
   const progressStartTime = useRef<number>(Date.now());
   const [progressPercent, setProgressPercent] = useState(0);
 
+  // Touch Swipe Gesture State
+  const touchStartX = useRef<number | null>(null);
+  const touchStartY = useRef<number | null>(null);
+  const swipeOccurred = useRef<boolean>(false);
+
   const currentSlide = slides[currentIndex];
   const isQuestionSlide = currentSlide?.type === "question";
 
@@ -98,8 +103,13 @@ export function StoryReader({
   }, [currentIndex, isPaused, activeSpark, isQuestionSlide, completed, advance]);
 
   function handleCardClick(e: React.MouseEvent<HTMLDivElement>) {
+    if (swipeOccurred.current) {
+      swipeOccurred.current = false;
+      return;
+    }
+
     const target = e.target as HTMLElement;
-    if (target.closest("button") || target.closest("a")) return;
+    if (target.closest("button") || target.closest("a") || target.closest("input")) return;
 
     const rect = e.currentTarget.getBoundingClientRect();
     const clickX = e.clientX - rect.left;
@@ -110,6 +120,38 @@ export function StoryReader({
     } else {
       advance();
     }
+  }
+
+  function handleTouchStart(e: React.TouchEvent) {
+    setIsPaused(true);
+    swipeOccurred.current = false;
+    touchStartX.current = e.touches[0].clientX;
+    touchStartY.current = e.touches[0].clientY;
+  }
+
+  function handleTouchEnd(e: React.TouchEvent) {
+    setIsPaused(false);
+    if (touchStartX.current === null || touchStartY.current === null) return;
+
+    const endX = e.changedTouches[0].clientX;
+    const endY = e.changedTouches[0].clientY;
+    const deltaX = endX - touchStartX.current;
+    const deltaY = endY - touchStartY.current;
+
+    // Minimum swipe threshold: 45px horizontal, dominating vertical scroll
+    if (Math.abs(deltaX) > 45 && Math.abs(deltaX) > Math.abs(deltaY) * 1.3) {
+      swipeOccurred.current = true;
+      if (deltaX < 0) {
+        // Swiped left -> advance
+        advance();
+      } else {
+        // Swiped right -> go back
+        goBack();
+      }
+    }
+
+    touchStartX.current = null;
+    touchStartY.current = null;
   }
 
   function handleAnswer(index: number) {
@@ -134,14 +176,14 @@ export function StoryReader({
         />
       </div>
 
-      {/* Mobile/Desktop Story Card Container with Vibrant Frame Layout */}
+      {/* Mobile/Desktop Story Card Container with Vibrant Frame Layout & Specular Sanctuary Depth */}
       <div
-        className="relative flex h-[820px] max-h-[92vh] w-full max-w-md flex-col justify-between overflow-hidden rounded-3xl border border-[var(--line)] bg-[#0d0f12] shadow-2xl select-none"
+        className="relative flex h-[820px] max-h-[92vh] w-full max-w-md flex-col justify-between overflow-hidden rounded-3xl border border-[var(--line)] bg-[#0d0f12] shadow-2xl select-none glass-specular touch-pan-y"
         onClick={handleCardClick}
         onMouseDown={() => setIsPaused(true)}
         onMouseUp={() => setIsPaused(false)}
-        onTouchStart={() => setIsPaused(true)}
-        onTouchEnd={() => setIsPaused(false)}
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
       >
         {/* Top Header & Segmented Progress Bars */}
         <div className="relative z-20 px-4 pt-3 pb-2">

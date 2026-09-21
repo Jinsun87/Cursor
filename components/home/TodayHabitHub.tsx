@@ -60,12 +60,54 @@ const DAILY_ACTIVITIES: DailyActivity[] = [
 
 const DAYS_OF_WEEK = ["M", "T", "W", "T", "F", "S", "S"];
 
+type CircadianPhase = "morning" | "afternoon" | "evening";
+
+interface CircadianData {
+  phase: CircadianPhase;
+  badge: string;
+  salutation: string;
+  subtitle: string;
+  prayerTitle: string;
+  prayerText: string;
+}
+
+const CIRCADIAN_CONFIG: Record<CircadianPhase, CircadianData> = {
+  morning: {
+    phase: "morning",
+    badge: "🌅 Morning Awakening",
+    salutation: "Good Morning",
+    subtitle: "Begin your day in clarity and unshakeable light.",
+    prayerTitle: "Morning Invocation of Light",
+    prayerText:
+      "“Lord of the Dawn, You spoke and light shattered the void. Shine into every quiet shadow of my day ahead. Where there is anxiety, grant purpose; where there is confusion, give holy wisdom. Guide my footsteps in peace. Amen.”",
+  },
+  afternoon: {
+    phase: "afternoon",
+    badge: "☀️ Midday Restoration",
+    salutation: "Good Afternoon",
+    subtitle: "Pause the rush. Step into the sanctuary of His presence.",
+    prayerTitle: "Midday Renewal of Strength",
+    prayerText:
+      "“Lord of All Grace, in the heat and momentum of the day, I pause to remember Your steadfast presence. Reset my weary thoughts. Let patience replace hurry, and gentle courage crown my actions. Amen.”",
+  },
+  evening: {
+    phase: "evening",
+    badge: "🌙 Evening Surrender",
+    salutation: "Good Evening",
+    subtitle: "Release the burdens of today into capable hands.",
+    prayerTitle: "Evening Compline of Trust",
+    prayerText:
+      "“Keeper of the Stars, as night descends and labor ceases, I release every care into Your hands. You neither slumber nor sleep. Watch over my rest, hush all fearful striving, and grant sacred stillness to my soul. Amen.”",
+  },
+};
+
 export function TodayHabitHub() {
   const { user } = useApp();
   const { progress } = useReadingTracker();
 
+  const [circadian, setCircadian] = useState<CircadianData>(CIRCADIAN_CONFIG.morning);
   const [completedItems, setCompletedItems] = useState<string[]>([]);
-  const [activeModal, setActiveModal] = useState<"quote" | "wordspark" | "trivia" | "prayer" | null>(null);
+  const [activeModal, setActiveModal] = useState<"quote" | "wordspark" | "trivia" | "prayer" | "shareCard" | null>(null);
 
   // Trivia state
   const [triviaAnswer, setTriviaAnswer] = useState<number | null>(null);
@@ -75,11 +117,24 @@ export function TodayHabitHub() {
   const [prayerAmens, setPrayerAmens] = useState(3842);
   const [hasPrayed, setHasPrayed] = useState(false);
 
-  // Quote copy state
+  // Quote / Share state
   const [copiedQuote, setCopiedQuote] = useState(false);
+  const [copiedShareText, setCopiedShareText] = useState(false);
 
   const todayStr = getTodayDateString();
   const storageKey = `lampstand_daily_ritual_${todayStr}`;
+
+  // Circadian phase calculation on mount
+  useEffect(() => {
+    const hour = new Date().getHours();
+    if (hour >= 5 && hour < 12) {
+      setCircadian(CIRCADIAN_CONFIG.morning);
+    } else if (hour >= 12 && hour < 17) {
+      setCircadian(CIRCADIAN_CONFIG.afternoon);
+    } else {
+      setCircadian(CIRCADIAN_CONFIG.evening);
+    }
+  }, []);
 
   // Load daily progress
   useEffect(() => {
@@ -131,7 +186,7 @@ export function TodayHabitHub() {
   }
 
   function handleCopyQuote() {
-    const text = `“The light shines in the darkness, and the darkness has not overcome it.” — John 1:5 (via Lampstand)`;
+    const text = `“The light shines in the darkness, and the darkness has not overcome it.” — John 1:5\n\nDaily verse via Lampstand: https://lampstandbible.com`;
     if (typeof navigator !== "undefined" && navigator.clipboard) {
       navigator.clipboard.writeText(text);
       setCopiedQuote(true);
@@ -140,32 +195,47 @@ export function TodayHabitHub() {
     }
   }
 
+  function handleWhatsAppShare() {
+    const text = `“The light shines in the darkness, and the darkness has not overcome it.” — John 1:5 ✨\n\nRead more on Lampstand: https://lampstandbible.com`;
+    const url = `https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`;
+    if (typeof window !== "undefined") {
+      window.open(url, "_blank", "noopener,noreferrer");
+      markCompleted("quote");
+    }
+  }
+
+
   return (
     <div className="w-full">
-      {/* 1. Glorify-style Top Banner: Streak, Day Tracker & Lamp Flame */}
-      <div className="rounded-3xl border border-[var(--line)] bg-gradient-to-b from-[#14120e] via-[#0d0f12] to-[#0a0a0a] p-5 sm:p-7 shadow-2xl">
+      {/* 1. Glorify-style Top Banner: Streak, Day Tracker & Lamp Flame with Circadian Mood */}
+      <div className="rounded-3xl border border-[var(--line)] bg-gradient-to-b from-[#14120e] via-[#0d0f12] to-[#0a0a0a] p-5 sm:p-7 shadow-2xl glass-specular">
         <div className="flex flex-wrap items-center justify-between gap-4">
           <div className="flex items-center gap-3.5">
             <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-[var(--gold)]/40 bg-[var(--gold)]/10 text-xl font-bold text-[var(--gold)] shadow-inner">
               {user?.username ? user.username.charAt(0).toUpperCase() : "L"}
             </div>
             <div>
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 flex-wrap">
                 <span className="inline-flex items-center gap-1 text-xs font-semibold uppercase tracking-wider text-[var(--gold)]">
                   <span className="animate-pulse">🔥</span> {streakCount} Day Streak
                 </span>
                 <span className="text-[var(--muted)] text-xs">·</span>
-                <span className="text-xs text-parchment/70 font-medium">Keep the Lamp Burning</span>
+                <span className="rounded-full bg-white/10 px-2 py-0.5 text-[10px] font-semibold text-[var(--gold)]">
+                  {circadian.badge}
+                </span>
               </div>
-              <h1 className="font-display text-xl sm:text-2xl font-bold text-white tracking-tight">
-                Today&apos;s Sacred Rhythm
+              <h1 className="font-display text-xl sm:text-2xl font-bold text-white tracking-tight mt-0.5">
+                {user?.username ? `${circadian.salutation}, ${user.username}` : `${circadian.salutation} · Sacred Rhythm`}
               </h1>
+              <p className="text-xs text-parchment/70 mt-0.5">
+                {circadian.subtitle}
+              </p>
             </div>
           </div>
 
           <Link
             href="/pricing"
-            className="flex items-center gap-1.5 rounded-full border border-[var(--gold)]/30 bg-[var(--gold)]/10 px-3.5 py-1.5 text-xs font-semibold text-[var(--gold)] hover:bg-[var(--gold)]/20 transition-all"
+            className="flex items-center gap-1.5 rounded-full border border-[var(--gold)]/30 bg-[var(--gold)]/10 px-3.5 py-1.5 text-xs font-semibold text-[var(--gold)] hover:bg-[var(--gold)]/20 transition-all tactile-tap"
           >
             <span>👑</span>
             <span>Lampstand Plus</span>
@@ -244,7 +314,7 @@ export function TodayHabitHub() {
                   setActiveModal(activity.id as any);
                 }
               }}
-              className={`group flex cursor-pointer items-center justify-between gap-4 rounded-2xl border p-4 transition-all ${
+              className={`group flex cursor-pointer items-center justify-between gap-4 rounded-2xl border p-4 transition-all tactile-tap ${
                 isDone
                   ? "border-emerald-500/30 bg-[#0d1511]/80 hover:border-emerald-500/50"
                   : "border-[var(--line)] bg-[var(--canvas-2)] hover:border-white/20 hover:bg-white/[0.03]"
@@ -281,7 +351,7 @@ export function TodayHabitHub() {
                       e.stopPropagation();
                       markCompleted("passage");
                     }}
-                    className="rounded-full bg-[var(--gold)]/20 px-3 py-1 text-xs font-semibold text-[var(--gold)] hover:bg-[var(--gold)]/30 transition-all"
+                    className="rounded-full bg-[var(--gold)]/20 px-3 py-1 text-xs font-semibold text-[var(--gold)] hover:bg-[var(--gold)]/30 transition-all tactile-tap"
                   >
                     Open Story
                   </Link>
@@ -305,7 +375,7 @@ export function TodayHabitHub() {
       </div>
 
       {/* 3. Featured Story Card with Vibrant Art Preview */}
-      <div className="mt-8 overflow-hidden rounded-3xl border border-[var(--line)] bg-gradient-to-r from-[#12100e] to-[#1a150d] p-6 sm:p-8">
+      <div className="mt-8 overflow-hidden rounded-3xl border border-[var(--line)] bg-gradient-to-r from-[#12100e] to-[#1a150d] p-6 sm:p-8 glass-sanctuary">
         <div className="flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="max-w-xl">
             <span className="rounded-full bg-[var(--gold)]/20 px-3 py-1 text-xs font-semibold text-[var(--gold)] uppercase tracking-wider">
@@ -315,17 +385,17 @@ export function TodayHabitHub() {
               Genesis 1: The First Light
             </h3>
             <p className="mt-2 text-sm text-parchment/80 leading-relaxed">
-              Before stars burned or seas crashed, the Spirit of God moved upon the deep. Experience the creation narrative in the full-bleed Vibrant Frame story reader.
+              Before stars burned or seas crashed, the Spirit of God moved upon the deep. Experience the creation narrative in the full-bleed Vibrant Frame story reader with swipe physics.
             </p>
             <div className="mt-5 flex flex-wrap items-center gap-3">
               <Link
                 href="/read/genesis/1"
-                className="btn btn-primary"
+                className="btn btn-primary btn-gold-glow tactile-tap"
                 onClick={() => markCompleted("passage")}
               >
                 ✨ Read Visual Story (2 min)
               </Link>
-              <Link href="/read" className="btn btn-ghost">
+              <Link href="/read" className="btn btn-ghost tactile-tap">
                 Browse All Books
               </Link>
             </div>
@@ -352,12 +422,22 @@ export function TodayHabitHub() {
           onClick={() => setActiveModal(null)}
         >
           <div
-            className="relative w-full max-w-lg rounded-3xl border border-[var(--gold)]/40 bg-[#0d0f12] p-6 sm:p-8 shadow-2xl"
+            className="relative w-full max-w-lg rounded-3xl border border-[var(--gold)]/40 bg-[#0d0f12] p-6 sm:p-8 shadow-2xl glass-specular"
             onClick={(e) => e.stopPropagation()}
           >
-            <span className="text-xs uppercase tracking-widest text-[var(--gold)] font-bold">
-              Verse of the Day · John 1:5
-            </span>
+            <div className="flex items-center justify-between">
+              <span className="text-xs uppercase tracking-widest text-[var(--gold)] font-bold">
+                Verse of the Day · John 1:5
+              </span>
+              <button
+                type="button"
+                onClick={() => setActiveModal("shareCard")}
+                className="inline-flex items-center gap-1 rounded-full border border-[var(--gold)]/30 bg-[var(--gold)]/10 px-2.5 py-1 text-[11px] font-semibold text-[var(--gold)] hover:bg-[var(--gold)]/20 transition-all tactile-tap"
+              >
+                <span>📱</span>
+                <span>Share Card</span>
+              </button>
+            </div>
             <blockquote className="mt-4 font-display text-2xl sm:text-3xl leading-snug text-white">
               “The light shines in the darkness, and the darkness has not overcome it.”
             </blockquote>
@@ -365,24 +445,110 @@ export function TodayHabitHub() {
               No matter how dense or intimidating the shadows feel, darkness has no active power to extinguish light. A single candle pierces a cavern of shadows.
             </p>
 
-            <div className="mt-6 flex items-center justify-between gap-3 border-t border-white/10 pt-4">
-              <button
-                type="button"
-                onClick={handleCopyQuote}
-                className="flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-4 py-2 text-xs font-semibold text-white hover:bg-white/10 transition-all"
-              >
-                <span>📋</span>
-                <span>{copiedQuote ? "Copied to Clipboard!" : "Copy & Share Verse"}</span>
-              </button>
+            <div className="mt-6 flex flex-wrap items-center justify-between gap-3 border-t border-white/10 pt-4">
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={handleCopyQuote}
+                  className="flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-3.5 py-2 text-xs font-semibold text-white hover:bg-white/10 transition-all tactile-tap"
+                >
+                  <span>📋</span>
+                  <span>{copiedQuote ? "Copied!" : "Copy Verse"}</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={handleWhatsAppShare}
+                  className="flex items-center gap-1.5 rounded-full border border-emerald-500/40 bg-emerald-950/40 px-3.5 py-2 text-xs font-semibold text-emerald-300 hover:bg-emerald-900/40 transition-all tactile-tap"
+                >
+                  <span>💬</span>
+                  <span>WhatsApp</span>
+                </button>
+              </div>
               <button
                 type="button"
                 onClick={() => {
                   markCompleted("quote");
                   setActiveModal(null);
                 }}
-                className="btn btn-primary text-xs py-2 px-5"
+                className="btn btn-primary text-xs py-2 px-5 tactile-tap"
               >
                 Mark Complete ✓
+              </button>
+            </div>
+          </div>
+        </div>
+      ) : null}
+
+      {/* MODAL: 9:16 WhatsApp / Instagram Story Card Preview */}
+      {activeModal === "shareCard" ? (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/85 backdrop-blur-md p-4 animate-fade-in"
+          onClick={() => setActiveModal(null)}
+        >
+          <div
+            className="relative flex flex-col items-center max-w-sm w-full"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Visual 9:16 Card Container */}
+            <div className="w-full aspect-[9/16] rounded-3xl border border-[var(--gold)]/40 bg-gradient-to-b from-[#141814] via-[#1c241e] to-[#0a0d0a] p-6 sm:p-7 flex flex-col justify-between shadow-2xl relative overflow-hidden glass-specular">
+              {/* Subtle radiant orb */}
+              <div className="pointer-events-none absolute -top-16 -right-16 h-48 w-48 rounded-full bg-[var(--gold)]/10 blur-3xl" />
+              <div className="pointer-events-none absolute -bottom-16 -left-16 h-48 w-48 rounded-full bg-emerald-600/10 blur-3xl" />
+
+              {/* Card Top Brand */}
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-[var(--gold)]/20 text-xs text-[var(--gold)] font-bold">
+                    🕯️
+                  </span>
+                  <span className="font-display text-xs font-bold uppercase tracking-widest text-[var(--gold)]">
+                    Lampstand
+                  </span>
+                </div>
+                <span className="text-[10px] uppercase tracking-wider text-parchment/60 font-medium">
+                  Verse of the Day
+                </span>
+              </div>
+
+              {/* Card Center Scripture */}
+              <div className="my-auto py-6">
+                <blockquote className="font-serif text-2xl sm:text-3xl text-white leading-relaxed font-normal tracking-wide">
+                  “The light shines in the darkness, and the darkness has not overcome it.”
+                </blockquote>
+                <div className="mt-4 flex items-center gap-2">
+                  <span className="h-0.5 w-6 bg-[var(--gold)]" />
+                  <span className="font-display text-sm font-semibold tracking-wider text-[var(--gold)]">
+                    John 1:5
+                  </span>
+                </div>
+              </div>
+
+              {/* Card Bottom Watermark */}
+              <div className="border-t border-white/10 pt-3 flex items-center justify-between text-[11px] text-parchment/60">
+                <span>lampstandbible.com</span>
+                <span className="text-[var(--gold)]">Read & Reflect</span>
+              </div>
+            </div>
+
+            {/* Action Bar Under Card */}
+            <div className="mt-4 flex items-center gap-3 w-full justify-center">
+              <button
+                type="button"
+                onClick={handleWhatsAppShare}
+                className="flex-1 flex items-center justify-center gap-2 rounded-full bg-emerald-600 px-4 py-2.5 text-xs font-bold text-white shadow-lg hover:bg-emerald-500 transition-all tactile-tap"
+              >
+                <span>💬</span>
+                <span>Share to WhatsApp Status</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  handleCopyQuote();
+                  setActiveModal(null);
+                }}
+                className="rounded-full border border-white/20 bg-white/10 px-4 py-2.5 text-xs font-semibold text-white hover:bg-white/20 transition-all tactile-tap"
+              >
+                Done
               </button>
             </div>
           </div>
@@ -396,7 +562,7 @@ export function TodayHabitHub() {
           onClick={() => setActiveModal(null)}
         >
           <div
-            className="relative w-full max-w-lg rounded-3xl border border-[var(--gold)]/40 bg-[#0d0f12] p-6 sm:p-8 shadow-2xl"
+            className="relative w-full max-w-lg rounded-3xl border border-[var(--gold)]/40 bg-[#0d0f12] p-6 sm:p-8 shadow-2xl glass-specular"
             onClick={(e) => e.stopPropagation()}
           >
             <span className="text-xs uppercase tracking-widest text-[var(--gold)] font-bold">
@@ -422,7 +588,7 @@ export function TodayHabitHub() {
                   markCompleted("wordspark");
                   setActiveModal(null);
                 }}
-                className="btn btn-primary text-xs py-2 px-5"
+                className="btn btn-primary text-xs py-2 px-5 tactile-tap"
               >
                 Understood & Done ✓
               </button>
@@ -438,7 +604,7 @@ export function TodayHabitHub() {
           onClick={() => setActiveModal(null)}
         >
           <div
-            className="relative w-full max-w-lg rounded-3xl border border-[var(--gold)]/40 bg-[#0d0f12] p-6 sm:p-8 shadow-2xl"
+            className="relative w-full max-w-lg rounded-3xl border border-[var(--gold)]/40 bg-[#0d0f12] p-6 sm:p-8 shadow-2xl glass-specular"
             onClick={(e) => e.stopPropagation()}
           >
             <span className="text-xs uppercase tracking-widest text-[var(--gold)] font-bold">
@@ -458,7 +624,7 @@ export function TodayHabitHub() {
                   key={choice}
                   type="button"
                   onClick={() => handleTriviaChoice(i)}
-                  className={`w-full rounded-2xl border p-3.5 text-left text-sm transition-all ${
+                  className={`w-full rounded-2xl border p-3.5 text-left text-sm transition-all tactile-tap ${
                     triviaAnswer === i
                       ? i === 1
                         ? "border-emerald-500 bg-emerald-950/40 text-emerald-200 font-semibold"
@@ -486,7 +652,7 @@ export function TodayHabitHub() {
               <button
                 type="button"
                 onClick={() => setActiveModal(null)}
-                className="btn btn-ghost text-xs"
+                className="btn btn-ghost text-xs tactile-tap"
               >
                 Close
               </button>
@@ -495,24 +661,24 @@ export function TodayHabitHub() {
         </div>
       ) : null}
 
-      {/* MODAL 4: Guided Daily Prayer */}
+      {/* MODAL 4: Guided Daily Prayer (Circadian Adaptive) */}
       {activeModal === "prayer" ? (
         <div
           className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-md p-4 animate-fade-in"
           onClick={() => setActiveModal(null)}
         >
           <div
-            className="relative w-full max-w-lg rounded-3xl border border-[var(--gold)]/40 bg-[#0d0f12] p-6 sm:p-8 shadow-2xl text-center"
+            className="relative w-full max-w-lg rounded-3xl border border-[var(--gold)]/40 bg-[#0d0f12] p-6 sm:p-8 shadow-2xl text-center glass-specular"
             onClick={(e) => e.stopPropagation()}
           >
             <span className="text-xs uppercase tracking-widest text-[var(--gold)] font-bold">
-              Sanctuary Daily Prayer
+              {circadian.badge} · Sanctuary Daily Prayer
             </span>
             <h3 className="mt-2 font-display text-2xl font-bold text-white">
-              Prayer for Radiant Trust
+              {circadian.prayerTitle}
             </h3>
             <blockquote className="mt-4 font-display text-lg text-parchment/90 leading-relaxed italic border-y border-white/10 py-4">
-              “Lord of the Dawn, You spoke and light shattered the void. Shine into every quiet shadow of my heart today. Where there is anxiety, grant peace; where there is weary routine, restore sacred wonder. Keep my lamp burning. Amen.”
+              {circadian.prayerText}
             </blockquote>
 
             <p className="mt-4 text-xs text-[var(--muted)]">
@@ -523,10 +689,10 @@ export function TodayHabitHub() {
               <button
                 type="button"
                 onClick={handlePrayAmen}
-                className={`rounded-full px-6 py-2.5 text-sm font-bold transition-all shadow-lg ${
+                className={`rounded-full px-6 py-2.5 text-sm font-bold transition-all shadow-lg tactile-tap ${
                   hasPrayed
                     ? "bg-emerald-600 text-white"
-                    : "bg-[var(--gold)] text-black hover:brightness-110 active:scale-95"
+                    : "bg-[var(--gold)] text-black hover:brightness-110 btn-gold-glow"
                 }`}
               >
                 {hasPrayed ? "Amen Recorded ✓" : "Lift Prayer · Tap Amen"}
@@ -536,5 +702,6 @@ export function TodayHabitHub() {
         </div>
       ) : null}
     </div>
+
   );
 }

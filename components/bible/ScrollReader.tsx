@@ -4,7 +4,9 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import type { Chapter, WordSpark } from "@/lib/bible/types";
+import type { ReaderPreferences } from "@/lib/bible/reading-store";
 import { WordSparkModal } from "./WordSparkModal";
+import { ReaderSettingsDrawer } from "./ReaderSettingsDrawer";
 
 interface Props {
   chapter: Chapter;
@@ -12,6 +14,8 @@ interface Props {
   onChapterComplete: (chapterKey: string) => { earned: number; streak: number };
   prevChapterUrl?: string;
   nextChapterUrl?: string;
+  prefs?: ReaderPreferences;
+  onUpdatePrefs?: (next: Partial<ReaderPreferences>) => void;
 }
 
 export function ScrollReader({
@@ -20,10 +24,26 @@ export function ScrollReader({
   onChapterComplete,
   prevChapterUrl,
   nextChapterUrl,
+  prefs,
+  onUpdatePrefs,
 }: Props) {
-  const [fontSize, setFontSize] = useState<"normal" | "large" | "xlarge">("large");
-  const [showVerseNumbers, setShowVerseNumbers] = useState(true);
+  const [localFontSize, setLocalFontSize] = useState<"normal" | "large" | "xlarge">("large");
+  const [localShowVerseNumbers, setLocalShowVerseNumbers] = useState(true);
   const [activeSpark, setActiveSpark] = useState<WordSpark | null>(null);
+
+  const fontSize = prefs?.fontSize ?? localFontSize;
+  const showVerseNumbers = prefs?.showVerseNumbers ?? localShowVerseNumbers;
+
+  function handleSetFontSize(val: "normal" | "large" | "xlarge") {
+    setLocalFontSize(val);
+    onUpdatePrefs?.({ fontSize: val });
+  }
+
+  function handleToggleVerseNumbers() {
+    const nextVal = !showVerseNumbers;
+    setLocalShowVerseNumbers(nextVal);
+    onUpdatePrefs?.({ showVerseNumbers: nextVal });
+  }
 
   // Check-In State
   const [answers, setAnswers] = useState<Record<number, number>>({});
@@ -88,32 +108,32 @@ export function ScrollReader({
       </div>
 
       {/* Reader Controls Toolbar */}
-      <div className="sticky top-16 z-30 mb-8 flex items-center justify-between rounded-2xl border border-[var(--line)] bg-[var(--canvas-2)]/90 p-3 shadow-md backdrop-blur-md">
+      <div className="sticky top-16 z-30 mb-8 flex items-center justify-between rounded-2xl border border-[var(--line)] bg-[var(--canvas-2)]/90 p-3 shadow-md backdrop-blur-md glass-specular">
         <div className="flex items-center gap-1">
           <span className="text-xs text-[var(--muted)] mr-1">Text size:</span>
           <button
             type="button"
-            onClick={() => setFontSize("normal")}
-            className={`h-8 w-8 rounded-lg text-xs font-semibold ${
-              fontSize === "normal" ? "bg-[var(--canvas-3)] text-[var(--gold)]" : "text-[var(--muted)]"
+            onClick={() => handleSetFontSize("normal")}
+            className={`h-8 w-8 rounded-lg text-xs font-semibold transition-all tactile-tap ${
+              fontSize === "normal" ? "bg-[var(--canvas-3)] text-[var(--gold)] border border-[var(--gold)]/40" : "text-[var(--muted)]"
             }`}
           >
             A
           </button>
           <button
             type="button"
-            onClick={() => setFontSize("large")}
-            className={`h-8 w-8 rounded-lg text-sm font-semibold ${
-              fontSize === "large" ? "bg-[var(--canvas-3)] text-[var(--gold)]" : "text-[var(--muted)]"
+            onClick={() => handleSetFontSize("large")}
+            className={`h-8 w-8 rounded-lg text-sm font-semibold transition-all tactile-tap ${
+              fontSize === "large" ? "bg-[var(--canvas-3)] text-[var(--gold)] border border-[var(--gold)]/40" : "text-[var(--muted)]"
             }`}
           >
             A+
           </button>
           <button
             type="button"
-            onClick={() => setFontSize("xlarge")}
-            className={`h-8 w-8 rounded-lg text-base font-semibold ${
-              fontSize === "xlarge" ? "bg-[var(--canvas-3)] text-[var(--gold)]" : "text-[var(--muted)]"
+            onClick={() => handleSetFontSize("xlarge")}
+            className={`h-8 w-8 rounded-lg text-base font-semibold transition-all tactile-tap ${
+              fontSize === "xlarge" ? "bg-[var(--canvas-3)] text-[var(--gold)] border border-[var(--gold)]/40" : "text-[var(--muted)]"
             }`}
           >
             A++
@@ -122,8 +142,8 @@ export function ScrollReader({
 
         <button
           type="button"
-          onClick={() => setShowVerseNumbers((v) => !v)}
-          className="rounded-full border border-[var(--line)] px-3 py-1 text-xs font-medium text-[var(--muted)] hover:text-white transition-all"
+          onClick={handleToggleVerseNumbers}
+          className="rounded-full border border-[var(--line)] px-3 py-1 text-xs font-medium text-[var(--muted)] hover:text-white transition-all tactile-tap"
         >
           {showVerseNumbers ? "Numbers: On" : "Numbers: Off"}
         </button>
@@ -257,6 +277,18 @@ export function ScrollReader({
 
       {/* WordSpark Insight Drawer */}
       <WordSparkModal spark={activeSpark} onClose={() => setActiveSpark(null)} />
+
+      {/* Floating Reader Settings & Typography Drawer */}
+      <ReaderSettingsDrawer
+        prefs={prefs || { fontSize, showVerseNumbers, preferredMode: "scroll" }}
+        onUpdatePrefs={(next) => {
+          if (next.fontSize) handleSetFontSize(next.fontSize);
+          if (next.showVerseNumbers !== undefined) {
+            setLocalShowVerseNumbers(next.showVerseNumbers);
+            onUpdatePrefs?.({ showVerseNumbers: next.showVerseNumbers });
+          }
+        }}
+      />
     </div>
   );
 }

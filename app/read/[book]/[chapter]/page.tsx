@@ -96,6 +96,8 @@ export default function BibleChapterPage({ params }: PageProps) {
           onChapterComplete={handleChapterComplete}
           prevChapterUrl={prevUrl ? `${prevUrl}?mode=scroll` : undefined}
           nextChapterUrl={nextUrl ? `${nextUrl}?mode=scroll` : undefined}
+          prefs={prefs}
+          onUpdatePrefs={updatePrefs}
         />
       )}
     </div>
