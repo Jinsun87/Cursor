@@ -267,7 +267,7 @@ export const CHAPTERS: Chapter[] = [
       {
         id: "gen1-s1",
         type: "hook",
-        artworkUrl: "/images/quizzes/look-at-the-picture-bible/q6.png",
+        artworkUrl: "/images/stories/genesis-1/s1.jpg",
         badge: "Genesis 1 · The Beginning",
         title: "The Birth of the Cosmos",
         text: "Before stars burned or seas crashed, the earth lay formless and void. But darkness was not alone: the Spirit of God hovered upon the deep.",
@@ -275,7 +275,7 @@ export const CHAPTERS: Chapter[] = [
       {
         id: "gen1-s2",
         type: "verse",
-        artworkUrl: "/images/quizzes/look-at-the-picture-bible/q6.png",
+        artworkUrl: "/images/stories/genesis-1/s2.jpg",
         scriptureRef: "Genesis 1:1–3",
         text: "“In the beginning God created the heavens and the earth... And God said, 'Let there be light,' and there was light.”",
         spark: SPARKS_GENESIS_1.bara,
@@ -283,21 +283,21 @@ export const CHAPTERS: Chapter[] = [
       {
         id: "gen1-s3",
         type: "verse",
-        artworkUrl: "/images/quizzes/look-at-the-picture-bible/q6.png",
+        artworkUrl: "/images/stories/genesis-1/s3.jpg",
         scriptureRef: "Genesis 1:26–27",
         text: "“Then God said, 'Let Us make man in Our image, after Our likeness.' So God created man in His own image; male and female He created them.”",
       },
       {
         id: "gen1-s4",
         type: "insight",
-        artworkUrl: "/images/quizzes/look-at-the-picture-bible/q6.png",
+        artworkUrl: "/images/stories/genesis-1/s4.jpg",
         title: "The Divine Pronouncement",
         text: "After each stage, God saw that it was 'good.' But when humanity was formed to walk in relationship with Him, the Creator looked upon everything and called it: 'Very Good.'",
       },
       {
         id: "gen1-s5",
         type: "question",
-        artworkUrl: "/images/quizzes/look-at-the-picture-bible/q6.png",
+        artworkUrl: "/images/stories/genesis-1/s1.jpg",
         title: "Quick Recall Check",
         text: "Test your retention from this chapter:",
         question: {
@@ -362,7 +362,7 @@ export const CHAPTERS: Chapter[] = [
       {
         id: "gen12-s1",
         type: "hook",
-        artworkUrl: "/images/quizzes/look-at-the-picture-bible/q8.png",
+        artworkUrl: "/images/stories/genesis-12/s1.jpg",
         badge: "Genesis 12 · Covenant",
         title: "The Leap of Faith",
         text: "Abram was comfortable, settled, and seventy-five years old. Then came a voice that shattered his quiet life: 'Go forth into the unknown.'",
@@ -370,7 +370,7 @@ export const CHAPTERS: Chapter[] = [
       {
         id: "gen12-s2",
         type: "verse",
-        artworkUrl: "/images/quizzes/look-at-the-picture-bible/q8.png",
+        artworkUrl: "/images/stories/genesis-12/s2.jpg",
         scriptureRef: "Genesis 12:1–2",
         text: "“Leave your country, your people and your father's household... I will make you into a great nation, and I will bless you.”",
         spark: SPARKS_GENESIS_12.lech_lecha,
@@ -378,7 +378,7 @@ export const CHAPTERS: Chapter[] = [
       {
         id: "gen12-s3",
         type: "verse",
-        artworkUrl: "/images/quizzes/look-at-the-picture-bible/q8.png",
+        artworkUrl: "/images/stories/genesis-12/s3.jpg",
         scriptureRef: "Genesis 12:3",
         text: "“I will bless those who bless you, and whoever curses you I will curse; and all peoples on earth will be blessed through you.”",
         spark: SPARKS_GENESIS_12.berakah,
@@ -386,14 +386,14 @@ export const CHAPTERS: Chapter[] = [
       {
         id: "gen12-s4",
         type: "insight",
-        artworkUrl: "/images/quizzes/look-at-the-picture-bible/q8.png",
+        artworkUrl: "/images/stories/genesis-12/s4.jpg",
         title: "The Nomad's Altar",
         text: "Abram possessed not an inch of Canaan when he arrived. Yet between Bethel and Ai, he built an altar of rough stone, staking God's claim on the land.",
       },
       {
         id: "gen12-s5",
         type: "question",
-        artworkUrl: "/images/quizzes/look-at-the-picture-bible/q8.png",
+        artworkUrl: "/images/stories/genesis-12/s1.jpg",
         title: "Active Recall",
         text: "Test your memory:",
         question: {
@@ -455,7 +455,7 @@ export const CHAPTERS: Chapter[] = [
       {
         id: "ex3-s1",
         type: "hook",
-        artworkUrl: "/images/quizzes/look-at-the-picture-bible/q3.png",
+        artworkUrl: "/images/stories/exodus-3/s1.jpg",
         badge: "Exodus 3 · The Encounter",
         title: "The Unconsumed Flame",
         text: "Forty years in exile as an obscure shepherd. Then, on the backside of the desert, an ordinary bush blazed with holy fire and was not consumed.",
@@ -463,7 +463,7 @@ export const CHAPTERS: Chapter[] = [
       {
         id: "ex3-s2",
         type: "verse",
-        artworkUrl: "/images/quizzes/look-at-the-picture-bible/q3.png",
+        artworkUrl: "/images/stories/exodus-3/s2.jpg",
         scriptureRef: "Exodus 3:5",
         text: "“'Do not come any closer,' God said. 'Take off your sandals, for the place where you are standing is holy ground.'”",
         spark: SPARKS_EXODUS_3.qodesh,
@@ -471,7 +471,7 @@ export const CHAPTERS: Chapter[] = [
       {
         id: "ex3-s3",
         type: "verse",
-        artworkUrl: "/images/quizzes/look-at-the-picture-bible/q3.png",
+        artworkUrl: "/images/stories/exodus-3/s3.jpg",
         scriptureRef: "Exodus 3:14",
         text: "“God said to Moses, 'I AM WHO I AM. This is what you are to say to the Israelites: I AM has sent me to you.'”",
         spark: SPARKS_EXODUS_3.ehyeh,
@@ -479,14 +479,14 @@ export const CHAPTERS: Chapter[] = [
       {
         id: "ex3-s4",
         type: "insight",
-        artworkUrl: "/images/quizzes/look-at-the-picture-bible/q3.png",
+        artworkUrl: "/images/stories/exodus-3/s4.jpg",
         title: "I Have Heard Their Cry",
         text: "God did not commission Moses because Moses was eloquent or confident. God acted because He heard the groaning of His enslaved people in Egypt.",
       },
       {
         id: "ex3-s5",
         type: "question",
-        artworkUrl: "/images/quizzes/look-at-the-picture-bible/q3.png",
+        artworkUrl: "/images/stories/exodus-3/s1.jpg",
         title: "Quick Check",
         text: "What name did God reveal at the bush?",
         question: {
@@ -545,7 +545,7 @@ export const CHAPTERS: Chapter[] = [
       {
         id: "ps23-s1",
         type: "hook",
-        artworkUrl: "/images/quizzes/look-at-the-picture-bible/q15.png",
+        artworkUrl: "/images/stories/psalms-23/s1.jpg",
         badge: "Psalm 23 · Sanctuary",
         title: "I Shall Not Want",
         text: "The shepherd boy who became king never forgot the hillside: sheep do not worry about tomorrow's grass because the shepherd is already there.",
@@ -553,7 +553,7 @@ export const CHAPTERS: Chapter[] = [
       {
         id: "ps23-s2",
         type: "verse",
-        artworkUrl: "/images/quizzes/look-at-the-picture-bible/q15.png",
+        artworkUrl: "/images/stories/psalms-23/s2.jpg",
         scriptureRef: "Psalm 23:1–3",
         text: "“The LORD is my shepherd; I shall not want. He makes me lie down in green pastures; He leads me beside quiet waters. He restores my soul.”",
         spark: SPARKS_PSALM_23.rohi,
@@ -561,7 +561,7 @@ export const CHAPTERS: Chapter[] = [
       {
         id: "ps23-s3",
         type: "verse",
-        artworkUrl: "/images/quizzes/look-at-the-picture-bible/q15.png",
+        artworkUrl: "/images/stories/psalms-23/s3.jpg",
         scriptureRef: "Psalm 23:4",
         text: "“Even though I walk through the valley of the shadow of death, I will fear no evil, for You are with me; Your rod and Your staff, they comfort me.”",
         spark: SPARKS_PSALM_23.tsalmaveth,
@@ -569,14 +569,14 @@ export const CHAPTERS: Chapter[] = [
       {
         id: "ps23-s4",
         type: "insight",
-        artworkUrl: "/images/quizzes/look-at-the-picture-bible/q15.png",
+        artworkUrl: "/images/stories/psalms-23/s4.jpg",
         title: "From Path to Presence",
         text: "Notice the shift: in the pastures David talks *about* God ('He leads me'). In the valley of deep shadow, he speaks *directly* to God: 'For You are with me.'",
       },
       {
         id: "ps23-s5",
         type: "question",
-        artworkUrl: "/images/quizzes/look-at-the-picture-bible/q15.png",
+        artworkUrl: "/images/stories/psalms-23/s1.jpg",
         title: "Active Recall",
         text: "Test your understanding:",
         question: {
@@ -637,7 +637,7 @@ export const CHAPTERS: Chapter[] = [
       {
         id: "mat5-s1",
         type: "hook",
-        artworkUrl: "/images/quizzes/look-at-the-picture-bible/q24.png",
+        artworkUrl: "/images/stories/matthew-5/s1.jpg",
         badge: "Matthew 5 · The Manifesto",
         title: "The Upside-Down Kingdom",
         text: "Rome rewarded cruelty, power, and wealth. Then a teacher sat on a grassy hillside above the Sea of Galilee and blessed the broken-hearted.",
@@ -645,7 +645,7 @@ export const CHAPTERS: Chapter[] = [
       {
         id: "mat5-s2",
         type: "verse",
-        artworkUrl: "/images/quizzes/look-at-the-picture-bible/q24.png",
+        artworkUrl: "/images/stories/matthew-5/s2.jpg",
         scriptureRef: "Matthew 5:3, 9",
         text: "“Blessed are the poor in spirit, for theirs is the kingdom of heaven... Blessed are the peacemakers, for they will be called children of God.”",
         spark: SPARKS_MATTHEW_5.makarioi,
@@ -653,7 +653,7 @@ export const CHAPTERS: Chapter[] = [
       {
         id: "mat5-s3",
         type: "verse",
-        artworkUrl: "/images/quizzes/look-at-the-picture-bible/q24.png",
+        artworkUrl: "/images/stories/matthew-5/s3.jpg",
         scriptureRef: "Matthew 5:14–16",
         text: "“You are the light of the world. A town built on a hill cannot be hidden... Let your light shine before others.”",
         spark: SPARKS_MATTHEW_5.phos,
@@ -661,14 +661,14 @@ export const CHAPTERS: Chapter[] = [
       {
         id: "mat5-s4",
         type: "insight",
-        artworkUrl: "/images/quizzes/look-at-the-picture-bible/q24.png",
+        artworkUrl: "/images/stories/matthew-5/s4.jpg",
         title: "Upon the Lampstand",
         text: "No one lights an oil lamp to hide it under a clay bowl. Truth is given to be set on the lampstand—to light the path of every wanderer in the home.",
       },
       {
         id: "mat5-s5",
         type: "question",
-        artworkUrl: "/images/quizzes/look-at-the-picture-bible/q24.png",
+        artworkUrl: "/images/stories/matthew-5/s1.jpg",
         title: "Kingdom Recall",
         text: "Check your retention:",
         question: {
@@ -743,7 +743,7 @@ export const CHAPTERS: Chapter[] = [
       {
         id: "jn1-s1",
         type: "hook",
-        artworkUrl: "/images/quizzes/look-at-the-picture-bible/q21.png",
+        artworkUrl: "/images/stories/john-1/s1.jpg",
         badge: "John 1 · The Prologue",
         title: "The Uncreated Word",
         text: "John echoes the very opening words of Genesis. But where Moses spoke of the universe's creation, John speaks of the Person through whom all things came to be.",
@@ -751,7 +751,7 @@ export const CHAPTERS: Chapter[] = [
       {
         id: "jn1-s2",
         type: "verse",
-        artworkUrl: "/images/quizzes/look-at-the-picture-bible/q21.png",
+        artworkUrl: "/images/stories/john-1/s2.jpg",
         scriptureRef: "John 1:1–4",
         text: "“In the beginning was the Word, and the Word was with God, and the Word was God... In Him was life, and that life was the light of all mankind.”",
         spark: SPARKS_JOHN_1.logos,
@@ -759,7 +759,7 @@ export const CHAPTERS: Chapter[] = [
       {
         id: "jn1-s3",
         type: "verse",
-        artworkUrl: "/images/quizzes/look-at-the-picture-bible/q21.png",
+        artworkUrl: "/images/stories/john-1/s3.jpg",
         scriptureRef: "John 1:14",
         text: "“The Word became flesh and made His dwelling among us. We have seen His glory, full of grace and truth.”",
         spark: SPARKS_JOHN_1.skenoo,
@@ -767,14 +767,14 @@ export const CHAPTERS: Chapter[] = [
       {
         id: "jn1-s4",
         type: "insight",
-        artworkUrl: "/images/quizzes/look-at-the-picture-bible/q21.png",
+        artworkUrl: "/images/stories/john-1/s4.jpg",
         title: "Grace Upon Grace",
         text: "The law was delivered through Moses carved in stone. But in Christ, God's heartbeat—grace coupled with unwavering truth—walked in the dust of our world.",
       },
       {
         id: "jn1-s5",
         type: "question",
-        artworkUrl: "/images/quizzes/look-at-the-picture-bible/q21.png",
+        artworkUrl: "/images/stories/john-1/s1.jpg",
         title: "Memory Check",
         text: "Test your understanding:",
         question: {
