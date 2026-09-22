@@ -18,49 +18,66 @@ export function ReaderSettingsDrawer({ prefs, onUpdatePrefs }: Props) {
         type="button"
         onClick={() => setIsOpen(true)}
         aria-label="Reader Typography & Display Settings"
-        className="fixed bottom-20 right-5 z-40 flex h-12 w-12 items-center justify-center rounded-full border border-[var(--gold)]/40 bg-[#18201b]/90 text-[var(--gold)] shadow-2xl backdrop-blur-md transition-all hover:scale-105 active:scale-95 glass-specular"
+        className="fixed bottom-24 right-5 z-40 flex h-14 w-14 items-center justify-center rounded-full border-2 border-[var(--gold)]/60 bg-[#141b17] text-[var(--gold)] shadow-2xl backdrop-blur-md transition-all hover:scale-105 active:scale-95 glass-specular"
       >
-        <span className="font-serif text-lg font-bold tracking-tight">Aa</span>
+        <span className="font-serif text-xl font-bold tracking-tight">Aa</span>
       </button>
 
       {/* Drawer Overlay & Sheet */}
       {isOpen ? (
         <div
-          className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/70 backdrop-blur-sm animate-fade-in p-0 sm:p-4"
+          className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/75 backdrop-blur-sm animate-fade-in p-0 sm:p-4"
           onClick={() => setIsOpen(false)}
         >
           <div
-            className="w-full sm:max-w-md rounded-t-3xl sm:rounded-3xl border border-[var(--line)] bg-[var(--canvas-2)] p-6 shadow-2xl glass-sanctuary animate-slide-up"
+            className="w-full sm:max-w-md rounded-t-3xl sm:rounded-3xl border border-[var(--line)] bg-[var(--canvas-2)] p-6 sm:p-7 shadow-2xl glass-sanctuary animate-slide-up"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Header */}
             <div className="flex items-center justify-between border-b border-[var(--line)] pb-4">
-              <div className="flex items-center gap-2">
-                <span className="text-base font-bold text-[var(--gold)]">Aa</span>
-                <h3 className="font-display text-lg font-bold text-[var(--ink)] tracking-tight">
-                  Typography & Reading Sanctuary
-                </h3>
+              <div className="flex items-center gap-2.5">
+                <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-[var(--gold)]/15 text-lg font-bold text-[var(--gold)]">
+                  Aa
+                </span>
+                <div>
+                  <h3 className="font-display text-lg sm:text-xl font-bold text-[var(--ink)] tracking-tight">
+                    Readability & Text Size
+                  </h3>
+                  <p className="text-xs text-[var(--muted)]">Senior-friendly comfort settings</p>
+                </div>
               </div>
               <button
                 type="button"
                 onClick={() => setIsOpen(false)}
-                className="h-8 w-8 rounded-full bg-black/5 dark:bg-white/5 text-sm text-[var(--muted)] hover:text-[var(--ink)]"
+                className="flex h-9 w-9 items-center justify-center rounded-full bg-black/10 dark:bg-white/10 text-base text-[var(--muted)] hover:text-[var(--ink)]"
               >
                 ✕
               </button>
             </div>
 
             {/* Font Size Selector */}
-            <div className="mt-5 space-y-2">
-              <label className="text-xs font-semibold uppercase tracking-wider text-[var(--muted)]">
-                Font Scale
-              </label>
-              <div className="grid grid-cols-3 gap-2 rounded-2xl border border-[var(--line)] bg-black/5 dark:bg-black/30 p-1.5">
+            <div className="mt-6 space-y-2.5">
+              <div className="flex items-center justify-between">
+                <label className="text-xs font-bold uppercase tracking-wider text-[var(--muted)]">
+                  Scripture Font Scale
+                </label>
+                <span className="text-xs font-semibold text-[var(--gold)]">
+                  {prefs.fontSize === "jumbo"
+                    ? "Senior Magnified (32px)"
+                    : prefs.fontSize === "xlarge"
+                    ? "Extra Large (26px)"
+                    : prefs.fontSize === "large"
+                    ? "Comfortable (22px)"
+                    : "Standard (18px)"}
+                </span>
+              </div>
+              <div className="grid grid-cols-4 gap-2 rounded-2xl border border-[var(--line)] bg-black/5 dark:bg-black/30 p-2">
                 {(
                   [
-                    { id: "normal", label: "Compact", sizeText: "A" },
-                    { id: "large", label: "Comfortable", sizeText: "A+" },
-                    { id: "xlarge", label: "Expanded", sizeText: "A++" },
+                    { id: "normal", label: "Std", sizeText: "A" },
+                    { id: "large", label: "Large", sizeText: "A+" },
+                    { id: "xlarge", label: "XL", sizeText: "A++" },
+                    { id: "jumbo", label: "Senior", sizeText: "A+++" },
                   ] as const
                 ).map((opt) => {
                   const isSelected = prefs.fontSize === opt.id;
@@ -69,14 +86,14 @@ export function ReaderSettingsDrawer({ prefs, onUpdatePrefs }: Props) {
                       key={opt.id}
                       type="button"
                       onClick={() => onUpdatePrefs({ fontSize: opt.id })}
-                      className={`flex flex-col items-center justify-center rounded-xl py-2.5 transition-all tactile-tap ${
+                      className={`flex flex-col items-center justify-center rounded-xl py-3 transition-all tactile-tap min-h-[60px] ${
                         isSelected
-                          ? "bg-[var(--gold)] text-black font-bold shadow-md"
+                          ? "bg-[var(--gold)] text-black font-bold shadow-lg"
                           : "text-[var(--muted)] hover:text-[var(--ink)] hover:bg-black/5 dark:hover:bg-white/5"
                       }`}
                     >
-                      <span className="text-base leading-none font-serif">{opt.sizeText}</span>
-                      <span className="text-[10px] mt-1 font-sans">{opt.label}</span>
+                      <span className="text-lg leading-none font-serif font-bold">{opt.sizeText}</span>
+                      <span className="text-[11px] mt-1 font-sans font-medium">{opt.label}</span>
                     </button>
                   );
                 })}

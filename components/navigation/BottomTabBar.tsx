@@ -116,7 +116,7 @@ export function BottomTabBar() {
   return (
     <nav
       aria-label="Mobile Navigation"
-      className="fixed inset-x-0 bottom-0 z-50 block md:hidden border-t border-[var(--line)] bg-[var(--canvas-2)]/92 backdrop-blur-xl shadow-2xl transition-all pb-[max(env(safe-area-inset-bottom),0.6rem)] pt-1.5 glass-specular"
+      className="fixed inset-x-0 bottom-0 z-50 block md:hidden border-t border-[var(--line)] bg-[var(--canvas-2)]/95 backdrop-blur-xl shadow-2xl transition-all pb-[max(env(safe-area-inset-bottom),0.75rem)] pt-2.5 glass-specular"
     >
       <div className="mx-auto flex max-w-md items-center justify-around px-2">
         {TABS.map((tab) => {
@@ -127,9 +127,9 @@ export function BottomTabBar() {
             <Link
               key={tab.label}
               href={tab.href}
-              className={`relative flex flex-1 flex-col items-center justify-center py-1 text-center transition-all ${
+              className={`relative flex flex-1 flex-col items-center justify-center py-2 text-center transition-all min-h-[56px] tactile-tap ${
                 isActive
-                  ? "text-[var(--gold)] font-semibold"
+                  ? "text-[var(--gold)] font-bold"
                   : "text-[var(--muted)] hover:text-[var(--ink)]"
               }`}
             >
@@ -139,18 +139,18 @@ export function BottomTabBar() {
 
                 {/* Badge if any */}
                 {tab.badge ? (
-                  <span className="absolute -top-1.5 -right-3 rounded-full bg-gradient-to-r from-amber-500 to-yellow-400 px-1.5 py-0.2 text-[9px] font-bold text-black uppercase tracking-wider shadow-sm">
+                  <span className="absolute -top-1.5 -right-3.5 rounded-full bg-gradient-to-r from-amber-500 to-yellow-400 px-1.5 py-0.2 text-[10px] font-black text-black uppercase tracking-wider shadow-sm">
                     {tab.badge}
                   </span>
                 ) : null}
               </div>
 
               {/* Label */}
-              <span className="mt-1 text-[11px] tracking-tight">{tab.label}</span>
+              <span className="mt-1 text-xs tracking-tight font-medium">{tab.label}</span>
 
               {/* Active Indicator Bar */}
               {isActive ? (
-                <span className="absolute -bottom-1 h-0.5 w-6 rounded-full bg-[var(--gold)] shadow-[0_0_8px_var(--gold)]" />
+                <span className="absolute -bottom-1 h-0.5 w-7 rounded-full bg-[var(--gold)] shadow-[0_0_8px_var(--gold)]" />
               ) : null}
             </Link>
           );

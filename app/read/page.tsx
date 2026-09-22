@@ -65,17 +65,17 @@ export default function ReadSanctuaryPage() {
             </p>
           </div>
 
-          <div className="mt-6 flex flex-wrap items-center gap-4">
+          <div className="mt-6 flex flex-wrap items-center gap-3.5">
             <Link
               href={`/read/${featuredChapter.bookSlug}/${featuredChapter.chapterNumber}?mode=story`}
-              className="btn btn-primary inline-flex items-center gap-2 text-sm shadow-lg shadow-[var(--gold)]/20"
+              className="w-full sm:w-auto min-h-[52px] px-6 py-3.5 rounded-2xl bg-[var(--gold)] text-black text-base font-bold hover:brightness-110 shadow-lg shadow-[var(--gold)]/20 transition-all flex items-center justify-center gap-2"
             >
               <span>⚡ Watch Today&apos;s Story</span>
-              <span className="text-xs opacity-75">(Day {featuredChapter.dayNumber})</span>
+              <span className="text-xs font-semibold bg-black/15 px-2 py-0.5 rounded-full">Day {featuredChapter.dayNumber}</span>
             </Link>
             <Link
               href={`/read/${featuredChapter.bookSlug}/${featuredChapter.chapterNumber}?mode=scroll`}
-              className="btn btn-secondary inline-flex items-center gap-2 text-sm"
+              className="w-full sm:w-auto min-h-[52px] px-6 py-3.5 rounded-2xl border border-[var(--line)] bg-[var(--canvas)] text-base font-semibold text-[var(--ink)] hover:border-[var(--gold)]/50 transition-all flex items-center justify-center gap-2"
             >
               <span>📜 Read Full Chapter</span>
             </Link>
@@ -101,19 +101,19 @@ export default function ReadSanctuaryPage() {
             <h2 className="font-display text-2xl sm:text-3xl font-bold text-[var(--ink)]">
               The 30-Day Course Roadmap
             </h2>
-            <p className="text-xs sm:text-sm text-[var(--muted)]">
+            <p className="text-sm text-[var(--muted)] mt-0.5">
               Four progressive narrative arcs bridging Creation to the New Jerusalem.
             </p>
           </div>
 
           {/* Arc Tabs */}
-          <div className="flex flex-wrap items-center gap-1.5 rounded-2xl border border-[var(--line)] bg-[var(--canvas-2)] p-1 text-xs">
+          <div className="flex flex-wrap items-center gap-2 rounded-2xl border border-[var(--line)] bg-[var(--canvas-2)] p-1.5 text-sm">
             <button
               type="button"
               onClick={() => setSelectedArc("all")}
-              className={`rounded-xl px-3 py-1.5 font-medium transition-all ${
+              className={`rounded-xl px-4 py-2 text-sm font-semibold transition-all min-h-[42px] ${
                 selectedArc === "all"
-                  ? "bg-[var(--gold)] text-[var(--gold-ink)] font-bold shadow-sm"
+                  ? "bg-[var(--gold)] text-black font-bold shadow-md"
                   : "text-[var(--muted)] hover:text-[var(--ink)]"
               }`}
             >
@@ -122,9 +122,9 @@ export default function ReadSanctuaryPage() {
             <button
               type="button"
               onClick={() => setSelectedArc("Week 1")}
-              className={`rounded-xl px-3 py-1.5 font-medium transition-all ${
+              className={`rounded-xl px-4 py-2 text-sm font-semibold transition-all min-h-[42px] ${
                 selectedArc === "Week 1"
-                  ? "bg-[var(--gold)] text-[var(--gold-ink)] font-bold shadow-sm"
+                  ? "bg-[var(--gold)] text-black font-bold shadow-md"
                   : "text-[var(--muted)] hover:text-[var(--ink)]"
               }`}
             >
@@ -133,9 +133,9 @@ export default function ReadSanctuaryPage() {
             <button
               type="button"
               onClick={() => setSelectedArc("Week 2")}
-              className={`rounded-xl px-3 py-1.5 font-medium transition-all ${
+              className={`rounded-xl px-4 py-2 text-sm font-semibold transition-all min-h-[42px] ${
                 selectedArc === "Week 2"
-                  ? "bg-[var(--gold)] text-[var(--gold-ink)] font-bold shadow-sm"
+                  ? "bg-[var(--gold)] text-black font-bold shadow-md"
                   : "text-[var(--muted)] hover:text-[var(--ink)]"
               }`}
             >
@@ -144,9 +144,9 @@ export default function ReadSanctuaryPage() {
             <button
               type="button"
               onClick={() => setSelectedArc("Week 3")}
-              className={`rounded-xl px-3 py-1.5 font-medium transition-all ${
+              className={`rounded-xl px-4 py-2 text-sm font-semibold transition-all min-h-[42px] ${
                 selectedArc === "Week 3"
-                  ? "bg-[var(--gold)] text-[var(--gold-ink)] font-bold shadow-sm"
+                  ? "bg-[var(--gold)] text-black font-bold shadow-md"
                   : "text-[var(--muted)] hover:text-[var(--ink)]"
               }`}
             >
@@ -155,13 +155,13 @@ export default function ReadSanctuaryPage() {
             <button
               type="button"
               onClick={() => setSelectedArc("Week 4")}
-              className={`rounded-xl px-3 py-1.5 font-medium transition-all ${
+              className={`rounded-xl px-4 py-2 text-sm font-semibold transition-all min-h-[42px] ${
                 selectedArc === "Week 4"
-                  ? "bg-[var(--gold)] text-[var(--gold-ink)] font-bold shadow-sm"
+                  ? "bg-[var(--gold)] text-black font-bold shadow-md"
                   : "text-[var(--muted)] hover:text-[var(--ink)]"
               }`}
             >
-              Wk 4: Church
+              Wk 4: Church & Glory
             </button>
           </div>
         </div>
@@ -238,32 +238,32 @@ export default function ReadSanctuaryPage() {
                 </div>
 
                 {/* Content */}
-                <div className="p-5 flex flex-col justify-between flex-1">
+                <div className="p-6 flex flex-col justify-between flex-1">
                   <div>
-                    <span className="text-[10px] font-semibold uppercase tracking-wider text-[var(--gold)]/80">
+                    <span className="text-xs font-bold uppercase tracking-wider text-[var(--gold)]">
                       {ch.arcName?.split(":")[0]}
                     </span>
-                    <h3 className="font-display text-lg font-bold text-[var(--ink)] leading-snug">
+                    <h3 className="font-display text-xl font-bold text-[var(--ink)] leading-snug mt-1">
                       {ch.title}
                     </h3>
-                    <p className="mt-1 text-xs text-[var(--muted)] line-clamp-2 leading-relaxed">
+                    <p className="mt-1.5 text-sm text-[var(--muted)] line-clamp-2 leading-relaxed">
                       {ch.subtitle}
                     </p>
                   </div>
 
-                  {/* Actions */}
-                  <div className="mt-4 flex items-center justify-between border-t border-[var(--line)] pt-3 text-xs">
+                  {/* Actions: Chunky Touch Targets */}
+                  <div className="mt-5 grid grid-cols-2 gap-2.5 border-t border-[var(--line)] pt-4">
                     <Link
                       href={`/read/${ch.bookSlug}/${ch.chapterNumber}?mode=story`}
-                      className="inline-flex items-center gap-1 font-semibold text-[var(--gold)] hover:brightness-125"
+                      className="min-h-[46px] rounded-xl bg-[var(--gold)] px-3 py-2 text-xs sm:text-sm font-bold text-black hover:brightness-110 shadow-sm transition-all flex items-center justify-center gap-1.5 text-center tactile-tap"
                     >
                       <span>⚡ Watch Story</span>
                     </Link>
                     <Link
                       href={`/read/${ch.bookSlug}/${ch.chapterNumber}?mode=scroll`}
-                      className="text-[var(--muted)] hover:text-[var(--ink)]"
+                      className="min-h-[46px] rounded-xl border border-[var(--line)] bg-[var(--canvas-1)] px-3 py-2 text-xs sm:text-sm font-semibold text-[var(--ink)] hover:border-[var(--gold)]/50 hover:bg-black/5 dark:hover:bg-white/5 transition-all flex items-center justify-center gap-1.5 text-center tactile-tap"
                     >
-                      📜 Read Chapter →
+                      <span>📜 Read Chapter</span>
                     </Link>
                   </div>
                 </div>

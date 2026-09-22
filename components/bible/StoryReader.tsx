@@ -259,57 +259,57 @@ export function StoryReader({
         </div>
 
         {/* 2. THE DEVOTIONAL TEXT CARD (Bottom 50% - High contrast, readable luxury parchment) */}
-        <div className="relative z-10 flex flex-1 flex-col justify-between p-4 sm:p-5 text-white animate-fade-in overflow-y-auto">
+        <div className="relative z-10 flex flex-1 flex-col justify-between p-5 sm:p-7 text-white animate-fade-in overflow-y-auto">
           <div>
             {currentSlide.title ? (
-              <h2 className="font-display text-xl sm:text-2xl font-bold tracking-tight text-[var(--gold)]">
+              <h2 className="font-display text-2xl sm:text-3xl font-bold tracking-tight text-[var(--gold)]">
                 {currentSlide.title}
               </h2>
             ) : null}
 
             {/* Verse / Hook Text */}
             {currentSlide.type !== "question" ? (
-              <blockquote className="mt-2 font-display text-base sm:text-lg leading-relaxed text-parchment/95 drop-shadow-sm">
+              <blockquote className="mt-3 font-display text-lg sm:text-2xl leading-relaxed text-white drop-shadow-md">
                 {currentSlide.text}
               </blockquote>
             ) : null}
 
             {/* Interactive WordSpark Pill */}
             {currentSlide.spark ? (
-              <div className="mt-3">
+              <div className="mt-4">
                 <button
                   type="button"
                   onClick={(e) => {
                     e.stopPropagation();
                     setActiveSpark(currentSlide.spark || null);
                   }}
-                  className="inline-flex items-center gap-1.5 rounded-full border border-[var(--gold)]/50 bg-[var(--gold)]/15 px-3 py-1 text-xs font-semibold text-[var(--gold)] hover:bg-[var(--gold)]/25 transition-all shadow-md"
+                  className="inline-flex items-center gap-2 rounded-full border border-[var(--gold)]/60 bg-[var(--gold)]/20 px-4 py-1.5 text-xs sm:text-sm font-bold text-[var(--gold)] hover:bg-[var(--gold)]/30 transition-all shadow-lg"
                 >
                   <span>✨ WordSpark:</span>
                   <span className="italic">{currentSlide.spark.term}</span>
-                  <span className="text-[var(--gold)]/70">({currentSlide.spark.language})</span>
+                  <span className="text-[var(--gold)]/80">({currentSlide.spark.language})</span>
                 </button>
               </div>
             ) : null}
 
             {/* Interactive Recall Question on Question Slide */}
             {currentSlide.type === "question" && currentSlide.question ? (
-              <div className="mt-1 rounded-2xl border border-[var(--line)] bg-[var(--canvas-2)] p-4 shadow-inner">
-                <p className="text-[11px] font-semibold uppercase tracking-wider text-[var(--gold)]">
+              <div className="mt-2 rounded-2xl border-2 border-[var(--gold)]/40 bg-[var(--canvas-2)] p-5 shadow-inner">
+                <p className="text-xs font-bold uppercase tracking-wider text-[var(--gold)]">
                   Active Recall Check-In
                 </p>
-                <p className="mt-1.5 font-display text-base sm:text-lg font-medium leading-snug text-white">
+                <p className="mt-2 font-display text-lg sm:text-xl font-bold leading-snug text-white">
                   {currentSlide.question.prompt}
                 </p>
 
-                <div className="mt-3 flex flex-col gap-2">
+                <div className="mt-4 flex flex-col gap-2.5">
                   {currentSlide.question.choices.map((choice, i) => {
-                    let btnStyle = "border-[var(--line)] bg-[var(--canvas-1)] text-parchment/90 hover:border-white/30";
+                    let btnStyle = "border-[var(--line)] bg-[var(--canvas-1)] text-white hover:border-[var(--gold)]/50";
                     if (pickedChoice !== null) {
                       if (i === currentSlide.question?.correctIndex) {
-                        btnStyle = "border-emerald-500 bg-emerald-500/20 text-emerald-300 font-semibold";
+                        btnStyle = "border-2 border-emerald-500 bg-emerald-500/25 text-emerald-300 font-bold shadow-md";
                       } else if (i === pickedChoice) {
-                        btnStyle = "border-rose-500 bg-rose-500/20 text-rose-300";
+                        btnStyle = "border-2 border-rose-500 bg-rose-500/25 text-rose-300";
                       } else {
                         btnStyle = "opacity-40 border-[var(--line)]";
                       }
@@ -324,7 +324,7 @@ export function StoryReader({
                           e.stopPropagation();
                           handleAnswer(i);
                         }}
-                        className={`w-full rounded-xl border p-2.5 text-left text-xs sm:text-sm transition-all ${btnStyle}`}
+                        className={`w-full min-h-[52px] rounded-xl border p-3.5 text-left text-sm sm:text-base font-semibold transition-all tactile-tap ${btnStyle}`}
                       >
                         {choice}
                       </button>
@@ -333,12 +333,12 @@ export function StoryReader({
                 </div>
 
                 {showExplanation ? (
-                  <div className="mt-3 rounded-xl border border-[var(--gold)]/30 bg-[var(--gold)]/10 p-2.5 text-xs text-parchment/90 animate-fade-in">
-                    <p className="font-semibold text-[var(--gold)]">Context:</p>
-                    <p className="mt-0.5">{currentSlide.question.explanation}</p>
+                  <div className="mt-4 rounded-xl border border-[var(--gold)]/40 bg-[var(--gold)]/15 p-3.5 text-sm text-white/95 animate-fade-in leading-relaxed">
+                    <p className="font-bold text-[var(--gold)]">Context:</p>
+                    <p className="mt-1">{currentSlide.question.explanation}</p>
                     {rewardInfo ? (
-                      <div className="mt-2 flex items-center justify-between border-t border-[var(--gold)]/20 pt-1.5 text-xs">
-                        <span className="text-emerald-400 font-medium">
+                      <div className="mt-3 flex items-center justify-between border-t border-[var(--gold)]/30 pt-2 text-sm font-semibold">
+                        <span className="text-emerald-400">
                           +{rewardInfo.earned} coins added!
                         </span>
                         <span className="text-[var(--gold)]">
@@ -353,7 +353,7 @@ export function StoryReader({
           </div>
 
           {/* Bottom Bar: Action buttons */}
-          <div className="mt-4 flex items-center justify-between border-t border-white/10 pt-3 text-xs">
+          <div className="mt-5 flex items-center justify-between border-t border-white/15 pt-4">
             <button
               type="button"
               onClick={(e) => {
@@ -361,7 +361,7 @@ export function StoryReader({
                 goBack();
               }}
               disabled={currentIndex === 0}
-              className="rounded-full px-2.5 py-1 text-parchment/60 hover:text-white disabled:opacity-30"
+              className="min-h-[46px] rounded-full px-4 py-2 text-sm font-semibold text-white/70 hover:text-white disabled:opacity-30 flex items-center gap-1"
             >
               ← Back
             </button>
@@ -373,15 +373,15 @@ export function StoryReader({
                   e.stopPropagation();
                   advance();
                 }}
-                className="rounded-full bg-[var(--gold)] px-4 py-1.5 font-semibold text-[var(--gold-ink)] hover:brightness-110 shadow-md transition-all"
+                className="min-h-[48px] rounded-full bg-[var(--gold)] px-6 py-2.5 text-sm sm:text-base font-bold text-black hover:brightness-110 shadow-lg shadow-[var(--gold)]/20 transition-all flex items-center gap-1.5"
               >
-                Next →
+                Next Slide →
               </button>
             ) : nextChapterUrl ? (
               <Link
                 href={nextChapterUrl}
                 onClick={(e) => e.stopPropagation()}
-                className="rounded-full bg-[var(--gold)] px-4 py-1.5 font-semibold text-[var(--gold-ink)] hover:brightness-110 shadow-md transition-all"
+                className="min-h-[48px] rounded-full bg-[var(--gold)] px-6 py-2.5 text-sm sm:text-base font-bold text-black hover:brightness-110 shadow-lg shadow-[var(--gold)]/20 transition-all flex items-center gap-1.5"
               >
                 Next Chapter →
               </Link>
@@ -392,7 +392,7 @@ export function StoryReader({
                   e.stopPropagation();
                   onSwitchToScroll();
                 }}
-                className="rounded-full bg-[var(--gold)] px-4 py-1.5 font-semibold text-[var(--gold-ink)] hover:brightness-110 shadow-md transition-all"
+                className="min-h-[48px] rounded-full bg-[var(--gold)] px-6 py-2.5 text-sm sm:text-base font-bold text-black hover:brightness-110 shadow-lg shadow-[var(--gold)]/20 transition-all flex items-center gap-1.5"
               >
                 Read Full Text →
               </button>

@@ -7,7 +7,7 @@ const STORAGE_KEY = "lampstand-reading-progress-v1";
 const PREFS_KEY = "lampstand-reader-prefs-v1";
 
 export interface ReaderPreferences {
-  fontSize: "normal" | "large" | "xlarge";
+  fontSize: "normal" | "large" | "xlarge" | "jumbo";
   showVerseNumbers: boolean;
   preferredMode: "story" | "scroll";
 }
@@ -23,7 +23,7 @@ const DEFAULT_PROGRESS: ReadingProgress = {
 };
 
 const DEFAULT_PREFS: ReaderPreferences = {
-  fontSize: "normal",
+  fontSize: "large",
   showVerseNumbers: true,
   preferredMode: "story",
 };

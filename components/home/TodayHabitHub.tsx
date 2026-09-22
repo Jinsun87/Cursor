@@ -314,33 +314,33 @@ export function TodayHabitHub() {
                   setActiveModal(activity.id as any);
                 }
               }}
-              className={`group flex cursor-pointer items-center justify-between gap-4 rounded-2xl border p-4 transition-all tactile-tap ${
+              className={`group flex cursor-pointer items-center justify-between gap-4 rounded-3xl border p-5 sm:p-6 min-h-[82px] transition-all tactile-tap ${
                 isDone
-                  ? "border-emerald-500/40 bg-emerald-500/10 hover:border-emerald-500/60"
-                  : "border-[var(--line)] bg-[var(--canvas-2)] hover:border-[var(--gold)]/40 hover:bg-black/[0.02] dark:hover:bg-white/[0.03]"
+                  ? "border-emerald-500/50 bg-emerald-500/15 hover:border-emerald-500/70"
+                  : "border-[var(--line)] bg-[var(--canvas-2)] hover:border-[var(--gold)]/50 hover:bg-black/[0.02] dark:hover:bg-white/[0.03]"
               }`}
             >
-              <div className="flex items-center gap-3.5 min-w-0">
-                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-black/5 dark:bg-white/5 text-lg">
+              <div className="flex items-center gap-4 min-w-0">
+                <span className="flex h-12 w-12 sm:h-14 sm:w-14 shrink-0 items-center justify-center rounded-2xl bg-black/5 dark:bg-white/5 text-2xl shadow-inner">
                   {activity.icon}
                 </span>
                 <div className="min-w-0">
-                  <div className="flex items-center gap-2">
-                    <h3 className="font-display text-base font-semibold text-[var(--ink)] tracking-tight truncate">
+                  <div className="flex items-center gap-2.5 flex-wrap">
+                    <h3 className="font-display text-lg sm:text-xl font-bold text-[var(--ink)] tracking-tight">
                       {activity.title}
                     </h3>
-                    <span className="rounded-full bg-black/5 dark:bg-white/10 px-2 py-0.2 text-[10px] text-[var(--muted)] shrink-0">
+                    <span className="rounded-full bg-black/5 dark:bg-white/10 px-2.5 py-0.5 text-xs font-semibold text-[var(--muted)] shrink-0">
                       {activity.tag}
                     </span>
                   </div>
-                  <p className="text-xs text-[var(--muted)] truncate mt-0.5">
+                  <p className="text-sm text-[var(--muted)] line-clamp-1 mt-1 leading-relaxed">
                     {activity.subtitle}
                   </p>
                 </div>
               </div>
 
               <div className="flex items-center gap-3 shrink-0">
-                <span className="text-[11px] text-[var(--muted)] hidden sm:inline">
+                <span className="text-xs font-semibold text-[var(--muted)] hidden sm:inline">
                   {activity.timeEstimate}
                 </span>
 
@@ -351,7 +351,7 @@ export function TodayHabitHub() {
                       e.stopPropagation();
                       markCompleted("passage");
                     }}
-                    className="rounded-full bg-[var(--gold)]/20 px-3 py-1 text-xs font-semibold text-[var(--gold)] hover:bg-[var(--gold)]/30 transition-all tactile-tap"
+                    className="min-h-[44px] rounded-xl bg-[var(--gold)] px-4 py-2 text-sm font-bold text-black hover:brightness-110 shadow-md transition-all flex items-center gap-1.5"
                   >
                     Open Story
                   </Link>
@@ -359,10 +359,10 @@ export function TodayHabitHub() {
                   <button
                     type="button"
                     aria-label={`Complete ${activity.title}`}
-                    className={`flex h-7 w-7 items-center justify-center rounded-full border transition-all ${
+                    className={`flex h-10 w-10 sm:h-11 sm:w-11 items-center justify-center rounded-full border-2 text-base transition-all shadow-sm ${
                       isDone
-                        ? "border-emerald-500 bg-emerald-500 text-black font-bold"
-                        : "border-[var(--line)] bg-black/5 dark:bg-white/5 text-transparent group-hover:border-[var(--gold)]/40"
+                        ? "border-emerald-500 bg-emerald-500 text-white font-black shadow-emerald-500/20"
+                        : "border-[var(--line)] bg-black/5 dark:bg-white/5 text-transparent group-hover:border-[var(--gold)]/60"
                     }`}
                   >
                     ✓
