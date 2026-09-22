@@ -15,6 +15,8 @@ export interface ReaderPreferences {
 const DEFAULT_PROGRESS: ReadingProgress = {
   completedChapters: [],
   completedStories: [],
+  currentCourseDay: 1,
+  completedCourseDays: [],
   streakDays: 0,
   lastReadDate: null,
   totalCoinsEarned: 0,
@@ -56,7 +58,13 @@ export function useReadingTracker() {
     try {
       const savedProg = localStorage.getItem(STORAGE_KEY);
       if (savedProg) {
-        setProgress(JSON.parse(savedProg));
+        const parsed = JSON.parse(savedProg);
+        setProgress({
+          ...DEFAULT_PROGRESS,
+          ...parsed,
+          completedCourseDays: parsed.completedCourseDays || [],
+          currentCourseDay: parsed.currentCourseDay || 1,
+        });
       }
       const savedPrefs = localStorage.getItem(PREFS_KEY);
       if (savedPrefs) {
@@ -86,18 +94,26 @@ export function useReadingTracker() {
   }, []);
 
   const recordChapterCompletion = useCallback(
-    (chapterKey: string, coins = 50) => {
+    (chapterKey: string, coins = 50, dayNumber?: number) => {
       const today = getTodayDateString();
       const alreadyCompleted = progress.completedChapters.includes(chapterKey);
       const newCompleted = alreadyCompleted
         ? progress.completedChapters
         : [...progress.completedChapters, chapterKey];
 
+      const currentDays = progress.completedCourseDays || [];
+      const newDays =
+        dayNumber && !currentDays.includes(dayNumber)
+          ? [...currentDays, dayNumber].sort((a, b) => a - b)
+          : currentDays;
+
       const newStreak = calculateStreak(progress.lastReadDate, progress.streakDays);
 
       const nextState: ReadingProgress = {
         completedChapters: newCompleted,
         completedStories: progress.completedStories,
+        completedCourseDays: newDays,
+        currentCourseDay: dayNumber ? Math.min(30, Math.max(progress.currentCourseDay || 1, dayNumber + 1)) : progress.currentCourseDay || 1,
         streakDays: newStreak,
         lastReadDate: today,
         totalCoinsEarned: progress.totalCoinsEarned + (alreadyCompleted ? 10 : coins),
@@ -110,18 +126,26 @@ export function useReadingTracker() {
   );
 
   const recordStoryCompletion = useCallback(
-    (chapterKey: string, coins = 25) => {
+    (chapterKey: string, coins = 25, dayNumber?: number) => {
       const today = getTodayDateString();
       const alreadyCompleted = progress.completedStories.includes(chapterKey);
       const newStories = alreadyCompleted
         ? progress.completedStories
         : [...progress.completedStories, chapterKey];
 
+      const currentDays = progress.completedCourseDays || [];
+      const newDays =
+        dayNumber && !currentDays.includes(dayNumber)
+          ? [...currentDays, dayNumber].sort((a, b) => a - b)
+          : currentDays;
+
       const newStreak = calculateStreak(progress.lastReadDate, progress.streakDays);
 
       const nextState: ReadingProgress = {
         completedChapters: progress.completedChapters,
         completedStories: newStories,
+        completedCourseDays: newDays,
+        currentCourseDay: dayNumber ? Math.min(30, Math.max(progress.currentCourseDay || 1, dayNumber + 1)) : progress.currentCourseDay || 1,
         streakDays: newStreak,
         lastReadDate: today,
         totalCoinsEarned: progress.totalCoinsEarned + (alreadyCompleted ? 5 : coins),

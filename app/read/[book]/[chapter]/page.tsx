@@ -57,23 +57,31 @@ export default function BibleChapterPage({ params }: PageProps) {
   }
 
   function handleStoryComplete(chapterKey: string) {
-    return recordStoryCompletion(chapterKey, 25);
+    return recordStoryCompletion(chapterKey, 25, chapter?.dayNumber);
   }
 
   function handleChapterComplete(chapterKey: string) {
-    return recordChapterCompletion(chapterKey, 50);
+    return recordChapterCompletion(chapterKey, 50, chapter?.dayNumber);
   }
 
   return (
-    <div className="mx-auto max-w-5xl">
+    <div className="mx-auto max-w-5xl px-4 py-6">
       {/* Top Header Navigation Bar */}
       <div className="mb-6 flex flex-wrap items-center justify-between gap-3 border-b border-[var(--line)] pb-4">
-        <div className="flex items-center gap-2 text-sm text-[var(--muted)]">
-          <Link href="/read" className="hover:text-white transition-colors">
-            Sanctuary
+        <div className="flex flex-wrap items-center gap-2 text-sm text-[var(--muted)]">
+          <Link href="/read" className="hover:text-[var(--gold)] transition-colors">
+            Course Hub
           </Link>
           <span>/</span>
-          <span className="font-semibold text-white">
+          {chapter.dayNumber ? (
+            <>
+              <span className="rounded-md bg-[var(--gold)]/10 px-2 py-0.5 text-xs font-bold text-[var(--gold)] border border-[var(--gold)]/20">
+                Day {chapter.dayNumber} of 30
+              </span>
+              <span>·</span>
+            </>
+          ) : null}
+          <span className="font-semibold text-[var(--ink)]">
             {chapter.bookTitle} {chapter.chapterNumber}
           </span>
         </div>

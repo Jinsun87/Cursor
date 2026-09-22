@@ -39,6 +39,8 @@ export interface Chapter {
   bookSlug: string;
   bookTitle: string;
   chapterNumber: number;
+  dayNumber?: number; // 1 to 30 in the Anchors Course
+  arcName?: string; // Narrative Arc (e.g. "Week 1: Covenants & Deliverance")
   title: string;
   subtitle: string;
   thematicHook: string;
@@ -59,6 +61,22 @@ export interface Book {
   featuredChapterNumbers: number[];
 }
 
+export interface ReadingPlanChapter {
+  bookSlug: string;
+  chapterNumber: number;
+  day: number;
+  title?: string;
+  arcName?: string;
+}
+
+export interface ReadingPlanArc {
+  name: string;
+  description: string;
+  startDay: number;
+  endDay: number;
+  badge?: string;
+}
+
 export interface ReadingPlan {
   slug: string;
   title: string;
@@ -66,12 +84,15 @@ export interface ReadingPlan {
   days: number;
   description: string;
   badge: string;
-  chapters: { bookSlug: string; chapterNumber: number; day: number }[];
+  arcs?: ReadingPlanArc[];
+  chapters: ReadingPlanChapter[];
 }
 
 export interface ReadingProgress {
   completedChapters: string[]; // "genesis-1", etc.
   completedStories: string[];
+  currentCourseDay?: number;
+  completedCourseDays?: number[];
   streakDays: number;
   lastReadDate: string | null;
   totalCoinsEarned: number;

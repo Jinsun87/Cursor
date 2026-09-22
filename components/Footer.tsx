@@ -38,6 +38,11 @@ export function Footer() {
               </Link>
             </li>
             <li>
+              <Link href="/pricing" className="inline-flex min-h-11 items-center font-medium" style={{ color: "var(--gold)" }}>
+                Pricing &amp; Plans
+              </Link>
+            </li>
+            <li>
               <Link href="/premium" className="inline-flex min-h-11 items-center">
                 Go Premium
               </Link>

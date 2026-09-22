@@ -65,11 +65,11 @@ describe("Bible Catalog & Chapters", () => {
     const gen1Nav = getAdjacentChapters("genesis", 1);
     expect(gen1Nav.prev).toBeUndefined();
     expect(gen1Nav.next).toBeDefined();
-    expect(gen1Nav.next?.chapterNumber).toBe(12);
+    expect(gen1Nav.next?.chapterNumber).toBe(3); // Day 2: Genesis 3
 
     const gen12Nav = getAdjacentChapters("genesis", 12);
-    expect(gen12Nav.prev?.chapterNumber).toBe(1);
-    expect(gen12Nav.next?.bookSlug).toBe("exodus");
+    expect(gen12Nav.prev?.chapterNumber).toBe(3); // Day 2: Genesis 3
+    expect(gen12Nav.next?.chapterNumber).toBe(22); // Day 4: Genesis 22
   });
 
   it("retrieves books via getBook", () => {
@@ -79,12 +79,17 @@ describe("Bible Catalog & Chapters", () => {
     expect(book?.testament).toBe("NT");
   });
 
-  it("has valid reading plans", () => {
+  it("has valid reading plans including 30-day Anchors course", () => {
     expect(READING_PLANS.length).toBeGreaterThan(0);
-    for (const plan of READING_PLANS) {
-      expect(plan.days).toBeGreaterThan(0);
-      expect(plan.chapters.length).toBe(plan.days);
-    }
+    const anchors = READING_PLANS.find((p) => p.slug === "anchors-of-scripture");
+    expect(anchors).toBeDefined();
+    expect(anchors?.days).toBe(30);
+    expect(anchors?.chapters.length).toBe(30);
+    expect(CHAPTERS.length).toBe(30);
+
+    // Verify all 30 days are sequential from 1 to 30
+    const dayNumbers = CHAPTERS.map((c) => c.dayNumber);
+    expect(dayNumbers).toEqual(Array.from({ length: 30 }, (_, i) => i + 1));
   });
 });
 
