@@ -158,7 +158,7 @@ export function useReadingTracker() {
   );
 
   const recordRitualStep = useCallback(
-    (step: "quote" | "passage" | "devotional" | "prayer", dayNumber?: number) => {
+    (step: "quote" | "passage" | "wordspark" | "devotional" | "prayer", dayNumber?: number) => {
       const today = getTodayDateString();
       const currentRitual =
         progress.todayRitual && progress.todayRitual.date === today
@@ -167,6 +167,7 @@ export function useReadingTracker() {
               date: today,
               quoteCompleted: false,
               passageCompleted: false,
+              wordsparkCompleted: false,
               devotionalCompleted: false,
               prayerCompleted: false,
             };

@@ -129,6 +129,7 @@ export interface RitualDayState {
   date: string;
   quoteCompleted: boolean;
   passageCompleted: boolean;
+  wordsparkCompleted?: boolean;
   devotionalCompleted: boolean;
   prayerCompleted: boolean;
 }

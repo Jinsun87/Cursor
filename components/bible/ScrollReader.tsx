@@ -270,6 +270,28 @@ export function ScrollReader({
         ) : null}
       </section>
 
+      {/* Daily Course Completion & Anti-Bingeing Banner */}
+      {chapter.dayNumber ? (
+        <div className="mt-8 rounded-2xl border border-emerald-500/30 bg-emerald-500/10 p-5 text-sm">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div>
+              <p className="font-bold text-[var(--ink)]">
+                🌿 Today&apos;s Scripture Reading Complete
+              </p>
+              <p className="text-xs text-[var(--muted)] mt-1">
+                Rest in today&apos;s Word. Day {Math.min(30, (chapter.dayNumber || 1) + 1)} unlocks tomorrow to sustain your daily walking habit. If you wish to read further today, explore the full Bible Canon.
+              </p>
+            </div>
+            <Link
+              href="/read#bible-canon"
+              className="shrink-0 rounded-xl bg-[var(--gold)] px-4 py-2.5 text-xs font-bold text-black hover:brightness-110 transition-all text-center"
+            >
+              Explore Bible Canon →
+            </Link>
+          </div>
+        </div>
+      ) : null}
+
       {/* Chapter Navigation Footer */}
       <div className="mt-10 flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-[var(--line)] pt-8">
         {prevChapterUrl ? (
@@ -281,7 +303,15 @@ export function ScrollReader({
           </Link>
         ) : <div />}
 
-        {nextChapterUrl ? (
+        {chapter.dayNumber ? (
+          <Link
+            href="/read#bible-canon"
+            className="w-full sm:w-auto min-h-[52px] px-7 py-3.5 rounded-2xl bg-[var(--gold)] text-black text-base font-bold hover:brightness-110 shadow-lg shadow-[var(--gold)]/20 transition-all text-center flex items-center justify-center gap-2"
+          >
+            <span>📖 Explore Bible Canon</span>
+            <span>→</span>
+          </Link>
+        ) : nextChapterUrl ? (
           <Link
             href={nextChapterUrl}
             className="w-full sm:w-auto min-h-[52px] px-7 py-3.5 rounded-2xl bg-[var(--gold)] text-black text-base font-bold hover:brightness-110 shadow-lg shadow-[var(--gold)]/20 transition-all text-center flex items-center justify-center gap-2"
@@ -290,10 +320,10 @@ export function ScrollReader({
           </Link>
         ) : (
           <Link
-            href="/read"
+            href="/read#bible-canon"
             className="w-full sm:w-auto min-h-[52px] px-7 py-3.5 rounded-2xl bg-[var(--gold)] text-black text-base font-bold hover:brightness-110 shadow-lg shadow-[var(--gold)]/20 transition-all text-center flex items-center justify-center gap-2"
           >
-            Back to Reading Sanctuary
+            Explore Bible Canon →
           </Link>
         )}
       </div>

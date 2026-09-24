@@ -377,6 +377,15 @@ export function StoryReader({
               >
                 Next Slide →
               </button>
+            ) : chapter.dayNumber ? (
+              <Link
+                href="/read#bible-canon"
+                onClick={(e) => e.stopPropagation()}
+                className="min-h-[48px] rounded-full bg-[var(--gold)] px-6 py-2.5 text-sm sm:text-base font-bold text-black hover:brightness-110 shadow-lg shadow-[var(--gold)]/20 transition-all flex items-center gap-1.5"
+              >
+                <span>📖 Explore Bible Canon</span>
+                <span>→</span>
+              </Link>
             ) : nextChapterUrl ? (
               <Link
                 href={nextChapterUrl}

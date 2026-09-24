@@ -788,24 +788,27 @@ export function GlorifyDailyReader({
                   <span className="text-xs text-white/40">{item.time}</span>
                 </div>
               ))}
+            {/* Next Day Lockout Message & Bible Canon Guidance */}
+            <div className="mt-4 rounded-xl border border-white/10 bg-white/5 p-3 text-xs text-white/70">
+              <span className="font-semibold text-[var(--gold)]">🌿 Rest in Today&apos;s Word:</span>{" "}
+              Your daily sitting is complete. Day {(chapter.dayNumber || 1) + 1} unlocks tomorrow to preserve your daily sacred rhythm. If you wish to read further today, explore the full Bible Canon below.
             </div>
           </div>
+        </div>
 
-          <div className="space-y-3 pt-4">
-            {nextChapterUrl ? (
-              <Link
-                href={nextChapterUrl}
-                className="w-full min-h-[52px] rounded-2xl bg-[var(--gold)] text-black font-bold text-base hover:brightness-110 shadow-lg shadow-[var(--gold)]/20 transition-all flex items-center justify-center gap-2"
-              >
-                <span>Continue to Next Day</span>
-                <span>→</span>
-              </Link>
-            ) : null}
+        <div className="space-y-3 pt-4">
             <Link
-              href="/read"
+              href="/read#bible-canon"
+              className="w-full min-h-[52px] rounded-2xl bg-[var(--gold)] text-black font-bold text-base hover:brightness-110 shadow-lg shadow-[var(--gold)]/20 transition-all flex items-center justify-center gap-2"
+            >
+              <span>📖 Explore Bible Canon</span>
+              <span>→</span>
+            </Link>
+            <Link
+              href="/"
               className="w-full min-h-[48px] rounded-2xl border border-white/20 bg-white/5 text-white font-semibold text-sm hover:bg-white/10 transition-colors flex items-center justify-center"
             >
-              Return to Sanctuary Hub
+              Return to Home Hub
             </Link>
           </div>
         </div>

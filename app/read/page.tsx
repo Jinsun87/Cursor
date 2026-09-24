@@ -4,8 +4,9 @@ import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { BOOKS, CHAPTERS, READING_PLANS } from "@/lib/bible/catalog";
-import { useReadingTracker, getTodayDateString } from "@/lib/bible/reading-store";
+import { useReadingTracker } from "@/lib/bible/reading-store";
 import { useApp } from "@/lib/store";
+import { TodayHabitHub } from "@/components/home/TodayHabitHub";
 
 export default function ReadSanctuaryPage() {
   const { user } = useApp();
@@ -19,22 +20,6 @@ export default function ReadSanctuaryPage() {
   const [bibleSearchQuery, setBibleSearchQuery] = useState<string>("");
 
   const currentDay = progress.currentCourseDay || 1;
-  const featuredChapter = CHAPTERS.find((c) => c.dayNumber === currentDay) || CHAPTERS[0];
-
-  const completedDaysCount = progress.completedCourseDays?.length || 0;
-  const completionPercent = Math.round((completedDaysCount / 30) * 100);
-
-  // Today's ritual completion status
-  const todayStr = getTodayDateString();
-  const ritual =
-    progress.todayRitual && progress.todayRitual.date === todayStr
-      ? progress.todayRitual
-      : {
-          quoteCompleted: false,
-          passageCompleted: false,
-          devotionalCompleted: false,
-          prayerCompleted: false,
-        };
 
   const filteredChapters =
     selectedArc === "all"
@@ -53,167 +38,11 @@ export default function ReadSanctuaryPage() {
   return (
     <div className="mx-auto max-w-6xl px-4 py-8">
       {/* ========================================================= */}
-      {/* 1. DAILY WORSHIP RITUAL HERO (Glorify Today Flow)         */}
+      {/* 1. DAILY WORSHIP RITUAL HUB (Unified with Home Page)       */}
       {/* ========================================================= */}
-      <div className="relative mb-12 overflow-hidden rounded-3xl border border-[var(--gold)]/30 bg-[#0d0f12] p-6 sm:p-10 shadow-2xl text-white">
-        {/* Subtle Ambient Background */}
-        <div className="absolute inset-0 -z-10 opacity-30">
-          <Image
-            src={featuredChapter.artworkUrl}
-            alt={featuredChapter.title}
-            fill
-            className="object-cover scale-105"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#0d0f12] via-[#0d0f12]/80 to-transparent" />
-        </div>
-
-        <div className="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-8">
-          <div className="max-w-xl">
-            <div className="flex flex-wrap items-center gap-2.5">
-              <span className="rounded-full border border-[var(--gold)]/40 bg-[var(--gold)]/15 px-3 py-1 text-xs font-bold uppercase tracking-wider text-[var(--gold)]">
-                Daily Devotional · Day {featuredChapter.dayNumber} of 30
-              </span>
-              {progress.streakDays > 0 ? (
-                <span className="rounded-full bg-orange-500/20 px-3 py-1 text-xs font-semibold text-orange-400 border border-orange-500/30">
-                  🔥 {progress.streakDays} Day Streak
-                </span>
-              ) : null}
-              <span className="rounded-full bg-emerald-500/15 border border-emerald-500/30 px-3 py-1 text-xs font-semibold text-emerald-400">
-                {completedDaysCount}/30 Completed ({completionPercent}%)
-              </span>
-            </div>
-
-            <h1 className="mt-4 font-display text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-white">
-              {featuredChapter.title}
-            </h1>
-            <p className="mt-2 text-sm sm:text-base text-white/70 leading-relaxed">
-              {featuredChapter.subtitle}
-            </p>
-
-            {/* Social Engagement Metrics Bar */}
-            <div className="mt-5 flex items-center gap-6 text-xs text-white/60 border-y border-white/10 py-3">
-              <div className="flex items-center gap-1.5 hover:text-white transition-colors cursor-pointer">
-                <span>💬</span>
-                <span className="font-semibold text-white">1,137</span>
-                <span>Reflections</span>
-              </div>
-              <div className="flex items-center gap-1.5 hover:text-white transition-colors cursor-pointer">
-                <span>🙏</span>
-                <span className="font-semibold text-white">339</span>
-                <span>Prayers Lifted</span>
-              </div>
-              <div className="flex items-center gap-1.5 hover:text-white transition-colors cursor-pointer">
-                <span>📤</span>
-                <span className="font-semibold text-white">1,276</span>
-                <span>Shared</span>
-              </div>
-            </div>
-
-            <div className="mt-6 flex flex-wrap items-center gap-3">
-              <Link
-                href={`/read/${featuredChapter.bookSlug}/${featuredChapter.chapterNumber}?mode=daily`}
-                className="w-full sm:w-auto min-h-[52px] px-8 py-3.5 rounded-2xl bg-[var(--gold)] text-black text-base font-bold hover:brightness-110 shadow-lg shadow-[var(--gold)]/20 transition-all flex items-center justify-center gap-2"
-              >
-                <span>🕊️ Start Today&apos;s Worship</span>
-                <span className="text-xs font-semibold bg-black/15 px-2 py-0.5 rounded-full">
-                  Day {featuredChapter.dayNumber}
-                </span>
-              </Link>
-              <Link
-                href={`/read/${featuredChapter.bookSlug}/${featuredChapter.chapterNumber}?mode=scroll`}
-                className="w-full sm:w-auto min-h-[52px] px-6 py-3.5 rounded-2xl border border-white/20 bg-white/5 text-sm sm:text-base font-semibold text-white hover:bg-white/10 transition-all flex items-center justify-center gap-2"
-              >
-                <span>📜 Full Text & Study</span>
-              </Link>
-            </div>
-          </div>
-
-          {/* Today's 4-Pillar Daily Ritual Checklist (Glorify Style) */}
-          <div className="w-full lg:w-80 rounded-2xl border border-white/15 bg-black/50 p-5 backdrop-blur-md">
-            <div className="flex items-center justify-between pb-3 border-b border-white/10">
-              <span className="text-xs uppercase font-bold tracking-wider text-[var(--gold)]">
-                Today&apos;s Ritual
-              </span>
-              <span className="text-xs text-white/50">
-                {[
-                  ritual.quoteCompleted,
-                  ritual.passageCompleted,
-                  ritual.devotionalCompleted,
-                  ritual.prayerCompleted,
-                ].filter(Boolean).length}
-                /4 Completed
-              </span>
-            </div>
-
-            <div className="mt-3 space-y-2.5">
-              {[
-                {
-                  id: "quote",
-                  label: "Quote",
-                  desc: "Daily inspiration",
-                  time: "1 MIN",
-                  icon: "🕊️",
-                  done: ritual.quoteCompleted,
-                },
-                {
-                  id: "passage",
-                  label: "Passage",
-                  desc: `${featuredChapter.bookTitle} ${featuredChapter.chapterNumber}`,
-                  time: "3 MIN",
-                  icon: "⚡",
-                  done: ritual.passageCompleted,
-                },
-                {
-                  id: "devotional",
-                  label: "Devotional",
-                  desc: "Practical application",
-                  time: "4 MIN",
-                  icon: "💬",
-                  done: ritual.devotionalCompleted,
-                },
-                {
-                  id: "prayer",
-                  label: "Prayer",
-                  desc: "Atmospheric meditation",
-                  time: "1 MIN",
-                  icon: "🙏",
-                  done: ritual.prayerCompleted,
-                },
-              ].map((step) => (
-                <Link
-                  key={step.id}
-                  href={`/read/${featuredChapter.bookSlug}/${featuredChapter.chapterNumber}?mode=daily&stage=${step.id}`}
-                  className={`flex items-center justify-between p-3 rounded-xl border transition-all ${
-                    step.done
-                      ? "border-emerald-500/40 bg-emerald-500/10 text-white"
-                      : "border-white/10 bg-white/5 text-white/90 hover:bg-white/10 hover:border-white/20"
-                  }`}
-                >
-                  <div className="flex items-center gap-3">
-                    <span
-                      className={`flex h-6 w-6 items-center justify-center rounded-full text-xs font-bold ${
-                        step.done
-                          ? "bg-emerald-500 text-black"
-                          : "border border-white/30 text-white/40"
-                      }`}
-                    >
-                      {step.done ? "✓" : ""}
-                    </span>
-                    <div>
-                      <p className="text-sm font-semibold text-white flex items-center gap-1.5">
-                        <span>{step.icon}</span>
-                        <span>{step.label}</span>
-                      </p>
-                      <p className="text-[11px] text-white/50">{step.desc}</p>
-                    </div>
-                  </div>
-                  <span className="text-xs font-medium text-white/40">{step.time}</span>
-                </Link>
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
+      <section className="mb-12">
+        <TodayHabitHub showNavigationToRead={false} />
+      </section>
 
       {/* ========================================================= */}
       {/* 2. FAITH ESSENTIALS TRACKS (Glorify Essentials)           */}
@@ -283,7 +112,7 @@ export default function ReadSanctuaryPage() {
       {/* ========================================================= */}
       {/* 3. BIBLE SECTION (Glorify OT / NT / Discuss Explorer)     */}
       {/* ========================================================= */}
-      <section className="mb-14 rounded-3xl border border-[var(--line)] bg-[var(--canvas-2)] p-6 sm:p-8">
+      <section id="bible-canon" className="mb-14 rounded-3xl border border-[var(--line)] bg-[var(--canvas-2)] p-6 sm:p-8 scroll-mt-8">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[var(--line)] pb-5">
           <div className="flex items-center gap-3">
             <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[var(--gold)] font-bold text-black text-sm">
@@ -518,7 +347,7 @@ export default function ReadSanctuaryPage() {
                       </span>
                     ) : isCurrent ? (
                       <span className="rounded-md bg-[var(--gold)] px-2 py-0.5 text-[var(--gold-ink)] font-bold animate-pulse">
-                        Next Up
+                        Today&apos;s Walk
                       </span>
                     ) : null}
                   </div>
