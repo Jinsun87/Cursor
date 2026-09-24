@@ -148,6 +148,43 @@ export const BOOKS: Book[] = [
     totalChapters: 5,
     summary: "Faith with sleeves rolled up: enduring trials with joy, taming the tongue, asking for wisdom, and being doers of the Word.",
     featuredChapterNumbers: [1],
+    discussionCount: 310,
+  },
+  {
+    slug: "1-john",
+    title: "1 John",
+    testament: "NT",
+    totalChapters: 5,
+    summary: "God is light and God is love: fellowship with the Father, testing the spirits, and assurance of eternal life.",
+    featuredChapterNumbers: [1, 4],
+    discussionCount: 930,
+  },
+  {
+    slug: "2-john",
+    title: "2 John",
+    testament: "NT",
+    totalChapters: 1,
+    summary: "Walking in truth and love: hospitality with discernment and abiding in the teaching of Christ.",
+    featuredChapterNumbers: [1],
+    discussionCount: 22,
+  },
+  {
+    slug: "3-john",
+    title: "3 John",
+    testament: "NT",
+    totalChapters: 1,
+    summary: "Faithful partnership in the truth: commendable hospitality of Gaius and the warning against Diotrephes.",
+    featuredChapterNumbers: [1],
+    discussionCount: 15,
+  },
+  {
+    slug: "jude",
+    title: "Jude",
+    testament: "NT",
+    totalChapters: 1,
+    summary: "Contending earnestly for the faith: guarding against apostasy and the glorious doxology of Him who keeps us from stumbling.",
+    featuredChapterNumbers: [1],
+    discussionCount: 40,
   },
   {
     slug: "revelation",
@@ -156,6 +193,7 @@ export const BOOKS: Book[] = [
     totalChapters: 22,
     summary: "The Apocalypse of Jesus Christ: the triumph over evil, all tears wiped away, and the celestial New Jerusalem.",
     featuredChapterNumbers: [21],
+    discussionCount: 642,
   },
 ];
 
@@ -267,3 +305,11 @@ export function getAdjacentChapters(bookSlug: string, chapterNumber: number) {
     next: currentIdx < CHAPTERS.length - 1 ? CHAPTERS[currentIdx + 1] : undefined,
   };
 }
+
+export {
+  getChapterQuote,
+  getChapterContext,
+  getChapterDevotional,
+  getChapterPrayer,
+} from "./devotionals";
+

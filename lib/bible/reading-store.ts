@@ -157,6 +157,67 @@ export function useReadingTracker() {
     [progress, saveProgress],
   );
 
+  const recordRitualStep = useCallback(
+    (step: "quote" | "passage" | "devotional" | "prayer", dayNumber?: number) => {
+      const today = getTodayDateString();
+      const currentRitual =
+        progress.todayRitual && progress.todayRitual.date === today
+          ? progress.todayRitual
+          : {
+              date: today,
+              quoteCompleted: false,
+              passageCompleted: false,
+              devotionalCompleted: false,
+              prayerCompleted: false,
+            };
+
+      const updatedRitual = {
+        ...currentRitual,
+        [`${step}Completed`]: true,
+      };
+
+      const allCompleted =
+        updatedRitual.quoteCompleted &&
+        updatedRitual.passageCompleted &&
+        updatedRitual.devotionalCompleted &&
+        updatedRitual.prayerCompleted;
+
+      let newCoins = progress.totalCoinsEarned + 10;
+      let newStreak = progress.streakDays;
+      let newDays = progress.completedCourseDays || [];
+
+      if (allCompleted) {
+        newCoins += 40; // bonus for finishing full 4-stage ritual!
+        newStreak = calculateStreak(progress.lastReadDate, progress.streakDays);
+        if (dayNumber && !newDays.includes(dayNumber)) {
+          newDays = [...newDays, dayNumber].sort((a, b) => a - b);
+        }
+      }
+
+      const nextState: ReadingProgress = {
+        ...progress,
+        todayRitual: updatedRitual,
+        completedCourseDays: newDays,
+        currentCourseDay:
+          allCompleted && dayNumber
+            ? Math.min(30, Math.max(progress.currentCourseDay || 1, dayNumber + 1))
+            : progress.currentCourseDay || 1,
+        streakDays: newStreak,
+        lastReadDate: today,
+        totalCoinsEarned: newCoins,
+      };
+
+      saveProgress(nextState);
+      return {
+        allCompleted,
+        earnedCoins: allCompleted ? 50 : 10,
+        streak: newStreak,
+        ritual: updatedRitual,
+      };
+    },
+    [progress, saveProgress],
+  );
+
   return {
     progress,
     prefs,
@@ -164,5 +225,6 @@ export function useReadingTracker() {
     updatePrefs,
     recordChapterCompletion,
     recordStoryCompletion,
+    recordRitualStep,
   };
 }

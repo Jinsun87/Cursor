@@ -35,6 +35,38 @@ export interface StorySlide {
   question?: CheckInQuestion;
 }
 
+export interface DailyQuote {
+  quote: string;
+  author: string;
+  reference?: string;
+  bgImageUrl?: string;
+  likesCount?: number;
+}
+
+export interface PassageContext {
+  themeTitle: string;
+  historicalContext: string;
+  weeklyTheme?: string;
+  keyQuestion?: string;
+}
+
+export interface DevotionalReflection {
+  title: string;
+  readingMinutes: number;
+  paragraphs: string[];
+  takeaway: string;
+  reflectionQuestion?: string;
+}
+
+export interface DailyPrayer {
+  title: string;
+  durationMinutes: number;
+  scriptureInspiration?: string;
+  prayerText: string;
+  ambientTheme?: "desert-dawn" | "tranquil-waters" | "golden-dusk" | "starry-sanctuary";
+  audioNarrationUrl?: string;
+}
+
 export interface Chapter {
   bookSlug: string;
   bookTitle: string;
@@ -50,6 +82,10 @@ export interface Chapter {
   checkInQuestions: CheckInQuestion[];
   storySlides: StorySlide[];
   coinsReward: number;
+  dailyQuote?: DailyQuote;
+  passageContext?: PassageContext;
+  devotional?: DevotionalReflection;
+  prayer?: DailyPrayer;
 }
 
 export interface Book {
@@ -59,6 +95,7 @@ export interface Book {
   totalChapters: number;
   summary: string;
   featuredChapterNumbers: number[];
+  discussionCount?: number;
 }
 
 export interface ReadingPlanChapter {
@@ -88,6 +125,14 @@ export interface ReadingPlan {
   chapters: ReadingPlanChapter[];
 }
 
+export interface RitualDayState {
+  date: string;
+  quoteCompleted: boolean;
+  passageCompleted: boolean;
+  devotionalCompleted: boolean;
+  prayerCompleted: boolean;
+}
+
 export interface ReadingProgress {
   completedChapters: string[]; // "genesis-1", etc.
   completedStories: string[];
@@ -96,4 +141,6 @@ export interface ReadingProgress {
   streakDays: number;
   lastReadDate: string | null;
   totalCoinsEarned: number;
+  todayRitual?: RitualDayState;
 }
+

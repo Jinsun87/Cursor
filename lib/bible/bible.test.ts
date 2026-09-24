@@ -8,6 +8,13 @@ import {
   getBook,
 } from "./catalog";
 import { calculateStreak } from "./reading-store";
+import {
+  getChapterQuote,
+  getChapterContext,
+  getChapterDevotional,
+  getChapterPrayer,
+} from "./devotionals";
+
 
 describe("Bible Catalog & Chapters", () => {
   it("contains books with valid metadata", () => {
@@ -113,3 +120,48 @@ describe("Reading Streak Calculation", () => {
     expect(calculateStreak(threeDaysAgo, 10)).toBe(1);
   });
 });
+
+describe("Glorify Daily Worship Devotionals & Rituals", () => {
+  it("resolves rich quotes with author attribution and likes", () => {
+    const gen1 = getChapter("genesis", 1)!;
+    const quote = getChapterQuote(gen1);
+    expect(quote.quote).toBeTruthy();
+    expect(quote.author).toBeTruthy();
+    expect(quote.likesCount).toBeGreaterThan(0);
+  });
+
+  it("resolves historical and weekly context for chapters", () => {
+    const ps23 = getChapter("psalms", 23)!;
+    const ctx = getChapterContext(ps23);
+    expect(ctx.themeTitle).toBeTruthy();
+    expect(ctx.historicalContext).toBeTruthy();
+    expect(ctx.weeklyTheme).toBeTruthy();
+  });
+
+  it("resolves pastoral devotional reflections with paragraphs and takeaways", () => {
+    const gen1 = getChapter("genesis", 1)!;
+    const devotional = getChapterDevotional(gen1);
+    expect(devotional.title).toBeTruthy();
+    expect(devotional.readingMinutes).toBeGreaterThan(0);
+    expect(devotional.paragraphs.length).toBeGreaterThanOrEqual(3);
+    expect(devotional.takeaway).toBeTruthy();
+  });
+
+  it("resolves atmospheric prayers with scripture inspiration and themes", () => {
+    const ps23 = getChapter("psalms", 23)!;
+    const prayer = getChapterPrayer(ps23);
+    expect(prayer.title).toBeTruthy();
+    expect(prayer.prayerText).toContain("Amen");
+    expect(prayer.ambientTheme).toBeTruthy();
+  });
+
+  it("includes canonical Johannine epistles and Jude in Bible catalog with discussion counts", () => {
+    const john1 = BOOKS.find((b) => b.slug === "1-john");
+    const jude = BOOKS.find((b) => b.slug === "jude");
+    expect(john1).toBeDefined();
+    expect(john1?.discussionCount).toBe(930);
+    expect(jude).toBeDefined();
+    expect(jude?.discussionCount).toBe(40);
+  });
+});
+

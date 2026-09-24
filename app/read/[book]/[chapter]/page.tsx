@@ -6,7 +6,8 @@ import Link from "next/link";
 import { getChapter, getAdjacentChapters } from "@/lib/bible/catalog";
 import { StoryReader } from "@/components/bible/StoryReader";
 import { ScrollReader } from "@/components/bible/ScrollReader";
-import { ModeToggle } from "@/components/bible/ModeToggle";
+import { GlorifyDailyReader, type DailyStage } from "@/components/bible/GlorifyDailyReader";
+import { ModeToggle, type ReaderDisplayMode } from "@/components/bible/ModeToggle";
 import { useReadingTracker } from "@/lib/bible/reading-store";
 import { useApp } from "@/lib/store";
 
@@ -33,27 +34,36 @@ export default function BibleChapterPage({ params }: PageProps) {
   const prevUrl = prev ? `/read/${prev.bookSlug}/${prev.chapterNumber}` : undefined;
   const nextUrl = next ? `/read/${next.bookSlug}/${next.chapterNumber}` : undefined;
 
-  const { recordChapterCompletion, recordStoryCompletion, prefs, updatePrefs } =
-    useReadingTracker();
+  const {
+    recordChapterCompletion,
+    recordStoryCompletion,
+    recordRitualStep,
+    prefs,
+    updatePrefs,
+  } = useReadingTracker();
   const { user } = useApp();
 
-  // Mode defaults to URL search param ?mode=story | scroll, or user pref
-  const modeQuery = searchParams.get("mode");
-  const [mode, setMode] = useState<"story" | "scroll">(
-    modeQuery === "scroll" || modeQuery === "story"
+  // Mode defaults to URL search param ?mode=daily | story | scroll
+  const modeQuery = searchParams.get("mode") as ReaderDisplayMode | null;
+  const stageQuery = searchParams.get("stage") as DailyStage | null;
+
+  const [mode, setMode] = useState<ReaderDisplayMode>(
+    modeQuery === "scroll" || modeQuery === "story" || modeQuery === "daily"
       ? modeQuery
-      : prefs.preferredMode || "story",
+      : "daily",
   );
 
   useEffect(() => {
-    if (modeQuery === "scroll" || modeQuery === "story") {
+    if (modeQuery === "scroll" || modeQuery === "story" || modeQuery === "daily") {
       setMode(modeQuery);
     }
   }, [modeQuery]);
 
-  function handleModeChange(newMode: "story" | "scroll") {
+  function handleModeChange(newMode: ReaderDisplayMode) {
     setMode(newMode);
-    updatePrefs({ preferredMode: newMode });
+    if (newMode === "story" || newMode === "scroll") {
+      updatePrefs({ preferredMode: newMode });
+    }
   }
 
   function handleStoryComplete(chapterKey: string) {
@@ -62,6 +72,10 @@ export default function BibleChapterPage({ params }: PageProps) {
 
   function handleChapterComplete(chapterKey: string) {
     return recordChapterCompletion(chapterKey, 50, chapter?.dayNumber);
+  }
+
+  function handleStageComplete(stage: "quote" | "passage" | "devotional" | "prayer") {
+    recordRitualStep(stage, chapter?.dayNumber);
   }
 
   return (
@@ -90,7 +104,16 @@ export default function BibleChapterPage({ params }: PageProps) {
       </div>
 
       {/* Reader Body based on active mode */}
-      {mode === "story" ? (
+      {mode === "daily" ? (
+        <GlorifyDailyReader
+          chapter={chapter}
+          initialStage={stageQuery || "quote"}
+          onStageComplete={handleStageComplete}
+          onFinishAll={handleChapterComplete}
+          onSwitchToScroll={() => handleModeChange("scroll")}
+          nextChapterUrl={nextUrl ? `${nextUrl}?mode=daily` : undefined}
+        />
+      ) : mode === "story" ? (
         <StoryReader
           chapter={chapter}
           onSwitchToScroll={() => handleModeChange("scroll")}
@@ -111,3 +134,4 @@ export default function BibleChapterPage({ params }: PageProps) {
     </div>
   );
 }
+
