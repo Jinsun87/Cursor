@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { triggerHaptic } from "@/lib/haptics";
 
 interface TabItem {
   label: string;
@@ -127,7 +128,8 @@ export function BottomTabBar() {
             <Link
               key={tab.label}
               href={tab.href}
-              className={`relative flex flex-1 flex-col items-center justify-center py-2 text-center transition-all min-h-[56px] tactile-tap ${
+              onClick={() => triggerHaptic("selection")}
+              className={`pressable relative flex flex-1 flex-col items-center justify-center py-2 text-center transition-all min-h-[56px] ${
                 isActive
                   ? "text-[var(--gold)] font-bold"
                   : "text-[var(--muted)] hover:text-[var(--ink)]"

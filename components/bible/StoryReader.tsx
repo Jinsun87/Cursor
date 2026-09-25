@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import type { Chapter, WordSpark } from "@/lib/bible/types";
 import { WordSparkModal } from "./WordSparkModal";
+import { triggerHaptic } from "@/lib/haptics";
 
 interface Props {
   chapter: Chapter;
@@ -35,9 +36,13 @@ export function StoryReader({
   const progressStartTime = useRef<number>(Date.now());
   const [progressPercent, setProgressPercent] = useState(0);
 
-  // Touch Swipe Gesture State
+  // Glorify-grade 1:1 Real-time Touch Physics State
+  const [dragX, setDragX] = useState(0);
+  const [isDragging, setIsDragging] = useState(false);
   const touchStartX = useRef<number | null>(null);
   const touchStartY = useRef<number | null>(null);
+  const touchStartTime = useRef<number>(0);
+  const isHorizontalSwipe = useRef<boolean | null>(null);
   const swipeOccurred = useRef<boolean>(false);
 
   const currentSlide = slides[currentIndex];
@@ -48,11 +53,13 @@ export function StoryReader({
       setCurrentIndex((i) => i + 1);
       setProgressPercent(0);
       progressStartTime.current = Date.now();
+      triggerHaptic("light");
     } else {
       if (!completed) {
         setCompleted(true);
         const result = onStoryComplete(`${chapter.bookSlug}-${chapter.chapterNumber}`);
         setRewardInfo(result);
+        triggerHaptic("success");
       }
     }
   }, [currentIndex, slides.length, completed, onStoryComplete, chapter]);
@@ -62,6 +69,7 @@ export function StoryReader({
       setCurrentIndex((i) => i - 1);
       setProgressPercent(0);
       progressStartTime.current = Date.now();
+      triggerHaptic("light");
     }
   }, [currentIndex]);
 
@@ -103,7 +111,7 @@ export function StoryReader({
   }, [currentIndex, isPaused, activeSpark, isQuestionSlide, completed, advance]);
 
   function handleCardClick(e: React.MouseEvent<HTMLDivElement>) {
-    if (swipeOccurred.current) {
+    if (swipeOccurred.current || Math.abs(dragX) > 8) {
       swipeOccurred.current = false;
       return;
     }
@@ -115,6 +123,7 @@ export function StoryReader({
     const clickX = e.clientX - rect.left;
     const width = rect.width;
 
+    triggerHaptic("selection");
     if (clickX < width * 0.35) {
       goBack();
     } else {
@@ -122,41 +131,80 @@ export function StoryReader({
     }
   }
 
+  // Touch Handlers with 1:1 finger tracking, rubber-banding & velocity flick
   function handleTouchStart(e: React.TouchEvent) {
     setIsPaused(true);
     swipeOccurred.current = false;
     touchStartX.current = e.touches[0].clientX;
     touchStartY.current = e.touches[0].clientY;
+    touchStartTime.current = Date.now();
+    isHorizontalSwipe.current = null;
+    setIsDragging(true);
   }
 
-  function handleTouchEnd(e: React.TouchEvent) {
-    setIsPaused(false);
+  function handleTouchMove(e: React.TouchEvent) {
     if (touchStartX.current === null || touchStartY.current === null) return;
 
-    const endX = e.changedTouches[0].clientX;
-    const endY = e.changedTouches[0].clientY;
-    const deltaX = endX - touchStartX.current;
-    const deltaY = endY - touchStartY.current;
+    const currentX = e.touches[0].clientX;
+    const currentY = e.touches[0].clientY;
+    const deltaX = currentX - touchStartX.current;
+    const deltaY = currentY - touchStartY.current;
 
-    // Minimum swipe threshold: 45px horizontal, dominating vertical scroll
-    if (Math.abs(deltaX) > 45 && Math.abs(deltaX) > Math.abs(deltaY) * 1.3) {
-      swipeOccurred.current = true;
-      if (deltaX < 0) {
-        // Swiped left -> advance
-        advance();
-      } else {
-        // Swiped right -> go back
-        goBack();
-      }
+    // Detect gesture direction after initial 6px movement
+    if (isHorizontalSwipe.current === null && (Math.abs(deltaX) > 6 || Math.abs(deltaY) > 6)) {
+      isHorizontalSwipe.current = Math.abs(deltaX) > Math.abs(deltaY) * 1.1;
     }
 
+    if (isHorizontalSwipe.current) {
+      // Apply rubber-band damping at boundaries (like iOS home screen)
+      let effectiveX = deltaX;
+      if (
+        (currentIndex === 0 && deltaX > 0) ||
+        (currentIndex === slides.length - 1 && deltaX < 0)
+      ) {
+        effectiveX = deltaX * 0.28;
+      }
+      setDragX(effectiveX);
+    }
+  }
+
+  function handleTouchEnd() {
+    setIsPaused(false);
+    setIsDragging(false);
+
+    if (touchStartX.current === null) {
+      setDragX(0);
+      return;
+    }
+
+    const duration = Math.max(1, Date.now() - touchStartTime.current);
+    const velocity = Math.abs(dragX) / duration; // px per ms
+
+    // Thresholds: either sustained drag (> 55px) or swift flick (> 25px with velocity > 0.32)
+    const isSwipeLeft = dragX < -55 || (dragX < -25 && velocity > 0.32);
+    const isSwipeRight = dragX > 55 || (dragX > 25 && velocity > 0.32);
+
+    if (isSwipeLeft) {
+      swipeOccurred.current = true;
+      advance();
+    } else if (isSwipeRight && currentIndex > 0) {
+      swipeOccurred.current = true;
+      goBack();
+    }
+
+    // Spring back smoothly
+    setDragX(0);
     touchStartX.current = null;
     touchStartY.current = null;
+    isHorizontalSwipe.current = null;
   }
 
   function handleAnswer(index: number) {
     setPickedChoice(index);
     setShowExplanation(true);
+    const isCorrect = index === currentSlide.question?.correctIndex;
+    triggerHaptic(isCorrect ? "success" : "warning");
+
     if (!completed) {
       setCompleted(true);
       const res = onStoryComplete(`${chapter.bookSlug}-${chapter.chapterNumber}`);
@@ -176,14 +224,23 @@ export function StoryReader({
         />
       </div>
 
-      {/* Mobile/Desktop Story Card Container with Vibrant Frame Layout & Specular Sanctuary Depth */}
+      {/* Mobile/Desktop Story Card Container with Glorify-grade 1:1 Touch Physics & Sanctuary Depth */}
       <div
         className="relative flex h-[820px] max-h-[92vh] w-full max-w-md flex-col justify-between overflow-hidden rounded-3xl border border-[var(--line)] bg-[#0d0f12] shadow-2xl select-none glass-specular touch-pan-y"
         onClick={handleCardClick}
         onMouseDown={() => setIsPaused(true)}
         onMouseUp={() => setIsPaused(false)}
         onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
+        onTouchCancel={handleTouchEnd}
+        style={{
+          transform: `translate3d(${dragX}px, 0, 0) scale(${1 - Math.min(0.035, Math.abs(dragX) / 3600)})`,
+          transition: isDragging
+            ? "none"
+            : "transform 360ms cubic-bezier(0.22, 1, 0.36, 1), opacity 200ms ease",
+          willChange: "transform",
+        }}
       >
         {/* Top Header & Segmented Progress Bars */}
         <div className="relative z-20 px-4 pt-3 pb-2">
@@ -281,9 +338,10 @@ export function StoryReader({
                   type="button"
                   onClick={(e) => {
                     e.stopPropagation();
+                    triggerHaptic("medium");
                     setActiveSpark(currentSlide.spark || null);
                   }}
-                  className="inline-flex items-center gap-2 rounded-full border border-[var(--gold)]/60 bg-[var(--gold)]/20 px-4 py-1.5 text-xs sm:text-sm font-bold text-[var(--gold)] hover:bg-[var(--gold)]/30 transition-all shadow-lg"
+                  className="pressable inline-flex items-center gap-2 rounded-full border border-[var(--gold)]/60 bg-[var(--gold)]/20 px-4 py-1.5 text-xs sm:text-sm font-bold text-[var(--gold)] hover:bg-[var(--gold)]/30 transition-all shadow-lg active:scale-95"
                 >
                   <span>✨ WordSpark:</span>
                   <span className="italic">{currentSlide.spark.term}</span>
@@ -324,7 +382,7 @@ export function StoryReader({
                           e.stopPropagation();
                           handleAnswer(i);
                         }}
-                        className={`w-full min-h-[52px] rounded-xl border p-3.5 text-left text-sm sm:text-base font-semibold transition-all tactile-tap ${btnStyle}`}
+                        className={`pressable w-full min-h-[52px] rounded-xl border p-3.5 text-left text-sm sm:text-base font-semibold transition-all ${btnStyle}`}
                       >
                         {choice}
                       </button>
@@ -361,7 +419,7 @@ export function StoryReader({
                 goBack();
               }}
               disabled={currentIndex === 0}
-              className="min-h-[46px] rounded-full px-4 py-2 text-sm font-semibold text-white/70 hover:text-white disabled:opacity-30 flex items-center gap-1"
+              className="pressable min-h-[46px] rounded-full px-4 py-2 text-sm font-semibold text-white/70 hover:text-white disabled:opacity-30 flex items-center gap-1 active:scale-95"
             >
               ← Back
             </button>
@@ -373,7 +431,7 @@ export function StoryReader({
                   e.stopPropagation();
                   advance();
                 }}
-                className="min-h-[48px] rounded-full bg-[var(--gold)] px-6 py-2.5 text-sm sm:text-base font-bold text-black hover:brightness-110 shadow-lg shadow-[var(--gold)]/20 transition-all flex items-center gap-1.5"
+                className="pressable min-h-[48px] rounded-full bg-[var(--gold)] px-6 py-2.5 text-sm sm:text-base font-bold text-black hover:brightness-110 shadow-lg shadow-[var(--gold)]/20 transition-all flex items-center gap-1.5 active:scale-95"
               >
                 Next Slide →
               </button>
@@ -381,7 +439,7 @@ export function StoryReader({
               <Link
                 href="/read#bible-canon"
                 onClick={(e) => e.stopPropagation()}
-                className="min-h-[48px] rounded-full bg-[var(--gold)] px-6 py-2.5 text-sm sm:text-base font-bold text-black hover:brightness-110 shadow-lg shadow-[var(--gold)]/20 transition-all flex items-center gap-1.5"
+                className="pressable min-h-[48px] rounded-full bg-[var(--gold)] px-6 py-2.5 text-sm sm:text-base font-bold text-black hover:brightness-110 shadow-lg shadow-[var(--gold)]/20 transition-all flex items-center gap-1.5 active:scale-95"
               >
                 <span>📖 Explore Bible Canon</span>
                 <span>→</span>
@@ -390,7 +448,7 @@ export function StoryReader({
               <Link
                 href={nextChapterUrl}
                 onClick={(e) => e.stopPropagation()}
-                className="min-h-[48px] rounded-full bg-[var(--gold)] px-6 py-2.5 text-sm sm:text-base font-bold text-black hover:brightness-110 shadow-lg shadow-[var(--gold)]/20 transition-all flex items-center gap-1.5"
+                className="pressable min-h-[48px] rounded-full bg-[var(--gold)] px-6 py-2.5 text-sm sm:text-base font-bold text-black hover:brightness-110 shadow-lg shadow-[var(--gold)]/20 transition-all flex items-center gap-1.5 active:scale-95"
               >
                 Next Chapter →
               </Link>
@@ -401,7 +459,7 @@ export function StoryReader({
                   e.stopPropagation();
                   onSwitchToScroll();
                 }}
-                className="min-h-[48px] rounded-full bg-[var(--gold)] px-6 py-2.5 text-sm sm:text-base font-bold text-black hover:brightness-110 shadow-lg shadow-[var(--gold)]/20 transition-all flex items-center gap-1.5"
+                className="pressable min-h-[48px] rounded-full bg-[var(--gold)] px-6 py-2.5 text-sm sm:text-base font-bold text-black hover:brightness-110 shadow-lg shadow-[var(--gold)]/20 transition-all flex items-center gap-1.5 active:scale-95"
               >
                 Read Full Text →
               </button>

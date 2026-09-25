@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import type { ReaderPreferences } from "@/lib/bible/reading-store";
+import { triggerHaptic } from "@/lib/haptics";
 
 interface Props {
   prefs: ReaderPreferences;
@@ -10,15 +11,60 @@ interface Props {
 
 export function ReaderSettingsDrawer({ prefs, onUpdatePrefs }: Props) {
   const [isOpen, setIsOpen] = useState(false);
+  const [dragY, setDragY] = useState(0);
+  const [isDragging, setIsDragging] = useState(false);
+  const touchStartY = useRef<number | null>(null);
+  const touchStartTime = useRef<number>(0);
+
+  function handleTouchStart(e: React.TouchEvent) {
+    touchStartY.current = e.touches[0].clientY;
+    touchStartTime.current = Date.now();
+    setIsDragging(true);
+  }
+
+  function handleTouchMove(e: React.TouchEvent) {
+    if (touchStartY.current === null) return;
+    const currentY = e.touches[0].clientY;
+    const deltaY = currentY - touchStartY.current;
+
+    // Allow downward drag with natural damping when pulling up
+    if (deltaY > 0) {
+      setDragY(deltaY);
+    } else {
+      setDragY(deltaY * 0.2);
+    }
+  }
+
+  function handleTouchEnd() {
+    setIsDragging(false);
+    if (touchStartY.current === null) return;
+
+    const duration = Math.max(1, Date.now() - touchStartTime.current);
+    const velocity = dragY / duration; // px per ms
+
+    // Dismiss if pulled down > 70px or flicked down
+    if (dragY > 70 || (dragY > 30 && velocity > 0.35)) {
+      triggerHaptic("light");
+      setIsOpen(false);
+    }
+
+    setDragY(0);
+    touchStartY.current = null;
+  }
+
+  const backdropOpacity = Math.max(0.15, 1 - Math.min(1, dragY / 280));
 
   return (
     <>
       {/* Floating "Aa" Accessibility Trigger Button */}
       <button
         type="button"
-        onClick={() => setIsOpen(true)}
+        onClick={() => {
+          triggerHaptic("light");
+          setIsOpen(true);
+        }}
         aria-label="Reader Typography & Display Settings"
-        className="fixed bottom-24 right-5 z-40 flex h-14 w-14 items-center justify-center rounded-full border-2 border-[var(--gold)]/60 bg-[#141b17] text-[var(--gold)] shadow-2xl backdrop-blur-md transition-all hover:scale-105 active:scale-95 glass-specular"
+        className="pressable fixed bottom-24 right-5 z-40 flex h-14 w-14 items-center justify-center rounded-full border-2 border-[var(--gold)]/60 bg-[#141b17] text-[var(--gold)] shadow-2xl backdrop-blur-md glass-specular"
       >
         <span className="font-serif text-xl font-bold tracking-tight">Aa</span>
       </button>
@@ -26,13 +72,35 @@ export function ReaderSettingsDrawer({ prefs, onUpdatePrefs }: Props) {
       {/* Drawer Overlay & Sheet */}
       {isOpen ? (
         <div
-          className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/75 backdrop-blur-sm animate-fade-in p-0 sm:p-4"
-          onClick={() => setIsOpen(false)}
+          className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 backdrop-blur-sm transition-opacity duration-150"
+          style={{
+            backgroundColor: `rgba(0, 0, 0, ${0.75 * backdropOpacity})`,
+          }}
+          onClick={() => {
+            triggerHaptic("light");
+            setIsOpen(false);
+          }}
         >
           <div
-            className="w-full sm:max-w-md rounded-t-3xl sm:rounded-3xl border border-[var(--line)] bg-[var(--canvas-2)] p-6 sm:p-7 shadow-2xl glass-sanctuary animate-slide-up"
+            className="w-full sm:max-w-md rounded-t-3xl sm:rounded-3xl border border-[var(--line)] bg-[var(--canvas-2)] p-6 sm:p-7 shadow-2xl glass-sanctuary touch-pan-y"
             onClick={(e) => e.stopPropagation()}
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={handleTouchEnd}
+            onTouchCancel={handleTouchEnd}
+            style={{
+              transform: `translate3d(0, ${Math.max(0, dragY)}px, 0)`,
+              transition: isDragging
+                ? "none"
+                : "transform 280ms cubic-bezier(0.2, 0.9, 0.3, 1)",
+              willChange: "transform",
+            }}
           >
+            {/* iOS Drag Handle Pill */}
+            <div className="flex justify-center pb-3 -mt-1 sm:hidden">
+              <div className="h-1.5 w-12 rounded-full bg-white/25 active:bg-white/40" />
+            </div>
+
             {/* Header */}
             <div className="flex items-center justify-between border-b border-[var(--line)] pb-4">
               <div className="flex items-center gap-2.5">
@@ -48,8 +116,11 @@ export function ReaderSettingsDrawer({ prefs, onUpdatePrefs }: Props) {
               </div>
               <button
                 type="button"
-                onClick={() => setIsOpen(false)}
-                className="flex h-9 w-9 items-center justify-center rounded-full bg-black/10 dark:bg-white/10 text-base text-[var(--muted)] hover:text-[var(--ink)]"
+                onClick={() => {
+                  triggerHaptic("light");
+                  setIsOpen(false);
+                }}
+                className="pressable flex h-9 w-9 items-center justify-center rounded-full bg-black/10 dark:bg-white/10 text-base text-[var(--muted)] hover:text-[var(--ink)]"
               >
                 ✕
               </button>
@@ -85,8 +156,11 @@ export function ReaderSettingsDrawer({ prefs, onUpdatePrefs }: Props) {
                     <button
                       key={opt.id}
                       type="button"
-                      onClick={() => onUpdatePrefs({ fontSize: opt.id })}
-                      className={`flex flex-col items-center justify-center rounded-xl py-3 transition-all tactile-tap min-h-[60px] ${
+                      onClick={() => {
+                        triggerHaptic("selection");
+                        onUpdatePrefs({ fontSize: opt.id });
+                      }}
+                      className={`pressable flex flex-col items-center justify-center rounded-xl py-3 transition-all min-h-[60px] ${
                         isSelected
                           ? "bg-[var(--gold)] text-black font-bold shadow-lg"
                           : "text-[var(--muted)] hover:text-[var(--ink)] hover:bg-black/5 dark:hover:bg-white/5"
@@ -112,8 +186,11 @@ export function ReaderSettingsDrawer({ prefs, onUpdatePrefs }: Props) {
                 type="button"
                 role="switch"
                 aria-checked={prefs.showVerseNumbers}
-                onClick={() => onUpdatePrefs({ showVerseNumbers: !prefs.showVerseNumbers })}
-                className={`relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none ${
+                onClick={() => {
+                  triggerHaptic("light");
+                  onUpdatePrefs({ showVerseNumbers: !prefs.showVerseNumbers });
+                }}
+                className={`pressable relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none ${
                   prefs.showVerseNumbers ? "bg-[var(--gold)]" : "bg-black/20 dark:bg-white/20"
                 }`}
               >
@@ -129,8 +206,11 @@ export function ReaderSettingsDrawer({ prefs, onUpdatePrefs }: Props) {
             <div className="mt-6 flex justify-end">
               <button
                 type="button"
-                onClick={() => setIsOpen(false)}
-                className="btn btn-primary text-xs py-2 px-6 tactile-tap"
+                onClick={() => {
+                  triggerHaptic("light");
+                  setIsOpen(false);
+                }}
+                className="pressable btn btn-primary text-xs py-2 px-6"
               >
                 Done
               </button>
@@ -141,3 +221,4 @@ export function ReaderSettingsDrawer({ prefs, onUpdatePrefs }: Props) {
     </>
   );
 }
+

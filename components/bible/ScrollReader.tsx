@@ -7,6 +7,7 @@ import type { Chapter, WordSpark } from "@/lib/bible/types";
 import type { ReaderPreferences } from "@/lib/bible/reading-store";
 import { WordSparkModal } from "./WordSparkModal";
 import { ReaderSettingsDrawer } from "./ReaderSettingsDrawer";
+import { triggerHaptic } from "@/lib/haptics";
 
 interface Props {
   chapter: Chapter;
@@ -58,10 +59,14 @@ export function ScrollReader({
     const nextAnswers = { ...answers, [qIdx]: choiceIdx };
     setAnswers(nextAnswers);
 
+    const isCorrect = choiceIdx === questions[qIdx]?.correctIndex;
+    triggerHaptic(isCorrect ? "success" : "warning");
+
     if (questions.every((_, idx) => nextAnswers[idx] !== undefined) && !completed) {
       setCompleted(true);
       const res = onChapterComplete(`${chapter.bookSlug}-${chapter.chapterNumber}`);
       setRewardInfo(res);
+      triggerHaptic("success");
     }
   }
 
@@ -180,8 +185,11 @@ export function ScrollReader({
                 <button
                   key={sparkId}
                   type="button"
-                  onClick={() => setActiveSpark(spark)}
-                  className="ml-2.5 inline-flex items-center gap-1.5 rounded-full border border-[var(--gold)]/50 bg-[var(--gold)]/15 px-3 py-1 font-sans text-xs sm:text-sm font-bold text-[var(--gold)] hover:bg-[var(--gold)]/25 transition-all align-middle shadow-sm"
+                  onClick={() => {
+                    triggerHaptic("medium");
+                    setActiveSpark(spark);
+                  }}
+                  className="pressable ml-2.5 inline-flex items-center gap-1.5 rounded-full border border-[var(--gold)]/50 bg-[var(--gold)]/15 px-3 py-1 font-sans text-xs sm:text-sm font-bold text-[var(--gold)] hover:bg-[var(--gold)]/25 transition-all align-middle shadow-sm active:scale-95"
                 >
                   ✨ {spark.term}
                 </button>

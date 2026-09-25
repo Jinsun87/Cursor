@@ -181,6 +181,36 @@ body {
   transform: scale(0.97);
 }
 
+/* Mobile & Touch Physics Enhancements */
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button,
+a,
+input,
+select,
+.interactive-touch {
+  touch-action: manipulation;
+}
+
+.pressable {
+  transition: transform 90ms cubic-bezier(0.2, 0.8, 0.4, 1), opacity 90ms ease, background-color 150ms ease;
+  touch-action: manipulation;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.pressable:active {
+  transform: scale(0.96);
+  opacity: 0.88;
+}
+
+.ios-momentum-scroll {
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-y: contain;
+}
+
 .pb-safe-bottom {
   padding-bottom: calc(5.25rem + env(safe-area-inset-bottom, 0px));
 }
