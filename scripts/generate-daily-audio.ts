@@ -2,12 +2,30 @@ import fs from "fs";
 import path from "path";
 import { DAILY_LISTEN_TRACKS } from "../components/home/DailyListens";
 
+// Load .env.local manually for tsx CLI
+function loadEnv() {
+  const envPath = path.join(process.cwd(), ".env.local");
+  if (!fs.existsSync(envPath)) return;
+  const content = fs.readFileSync(envPath, "utf-8");
+  for (const line of content.split("\n")) {
+    const trimmed = line.trim();
+    if (!trimmed || trimmed.startsWith("#")) continue;
+    const [key, ...rest] = trimmed.split("=");
+    if (key && rest.length > 0) {
+      const val = rest.join("=").trim().replace(/^["']|["']$/g, "");
+      process.env[key.trim()] = val;
+    }
+  }
+}
+
+loadEnv();
+
 // Voice configurations
 const OPENAI_VOICE = "onyx"; // Deep, warm studio baritone podcast tone
 const ELEVENLABS_VOICE_ID = "pNInz6obpgDQGcFmaJgB"; // Adam - deep, warm, conversational American host
 
 async function generateOpenAIAudio(text: string, apiKey: string): Promise<Buffer> {
-  const response = await fetch("https://api.openai.com/v1/audio/speech", {
+  let response = await fetch("https://api.openai.com/v1/audio/speech", {
     method: "POST",
     headers: {
       Authorization: `Bearer ${apiKey}`,
@@ -21,6 +39,24 @@ async function generateOpenAIAudio(text: string, apiKey: string): Promise<Buffer
       speed: 0.95,
     }),
   });
+
+  if (!response.ok && (response.status === 403 || response.status === 404)) {
+    console.log("ℹ️ Trying standard tts-1 model for OpenAI...");
+    response = await fetch("https://api.openai.com/v1/audio/speech", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${apiKey}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        model: "tts-1",
+        voice: OPENAI_VOICE,
+        input: text,
+        response_format: "mp3",
+        speed: 0.95,
+      }),
+    });
+  }
 
   if (!response.ok) {
     const err = await response.text();

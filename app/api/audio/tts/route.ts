@@ -36,7 +36,7 @@ export async function GET(req: NextRequest) {
     }
 
     try {
-      const response = await fetch("https://api.openai.com/v1/audio/speech", {
+      let response = await fetch("https://api.openai.com/v1/audio/speech", {
         method: "POST",
         headers: {
           Authorization: `Bearer ${apiKey}`,
@@ -50,6 +50,23 @@ export async function GET(req: NextRequest) {
           speed: 0.95,
         }),
       });
+
+      if (!response.ok && (response.status === 403 || response.status === 404)) {
+        response = await fetch("https://api.openai.com/v1/audio/speech", {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${apiKey}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            model: "tts-1",
+            voice: voice || "onyx",
+            input: text,
+            response_format: "mp3",
+            speed: 0.95,
+          }),
+        });
+      }
 
       if (!response.ok) {
         const errorText = await response.text();
