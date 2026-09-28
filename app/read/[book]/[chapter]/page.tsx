@@ -67,10 +67,12 @@ export default function BibleChapterPage({ params }: PageProps) {
   }
 
   function handleStoryComplete(chapterKey: string) {
+    recordRitualStep("passage", chapter?.dayNumber);
     return recordStoryCompletion(chapterKey, 25, chapter?.dayNumber);
   }
 
   function handleChapterComplete(chapterKey: string) {
+    recordRitualStep("passage", chapter?.dayNumber);
     return recordChapterCompletion(chapterKey, 50, chapter?.dayNumber);
   }
 

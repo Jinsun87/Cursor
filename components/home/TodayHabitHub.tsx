@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useApp } from "@/lib/store";
 import { useReadingTracker, getTodayDateString } from "@/lib/bible/reading-store";
 import { CHAPTERS } from "@/lib/bible/catalog";
@@ -11,6 +12,7 @@ import {
   getChapterDevotional,
   getChapterPrayer,
 } from "@/lib/bible/devotionals";
+import { triggerHaptic } from "@/lib/haptics";
 
 const DAYS_OF_WEEK = ["M", "T", "W", "T", "F", "S", "S"];
 
@@ -49,6 +51,7 @@ interface Props {
 }
 
 export function TodayHabitHub({ showNavigationToRead = true }: Props) {
+  const router = useRouter();
   const { user } = useApp();
   const { progress, recordRitualStep } = useReadingTracker();
 
@@ -169,8 +172,13 @@ export function TodayHabitHub({ showNavigationToRead = true }: Props) {
     },
   ];
 
-  function toggleStep(id: "quote" | "passage" | "wordspark" | "devotional" | "prayer") {
-    recordRitualStep(id, featuredChapter.dayNumber);
+  function handleOpenActivity(id: "quote" | "passage" | "wordspark" | "devotional" | "prayer") {
+    triggerHaptic("light");
+    if (id === "passage") {
+      router.push(`/read/${featuredChapter.bookSlug}/${featuredChapter.chapterNumber}?mode=daily`);
+    } else {
+      setActiveModal(id);
+    }
   }
 
   function handlePrayAmen() {
@@ -347,13 +355,7 @@ export function TodayHabitHub({ showNavigationToRead = true }: Props) {
         {activities.map((activity) => (
           <div
             key={activity.id}
-            onClick={() => {
-              if (activity.id === "passage") {
-                // Open chapter reader in daily mode
-              } else {
-                setActiveModal(activity.id as any);
-              }
-            }}
+            onClick={() => handleOpenActivity(activity.id as any)}
             className={`group flex items-center justify-between gap-4 rounded-3xl border p-5 sm:p-6 min-h-[82px] transition-all cursor-pointer ${
               activity.isDone
                 ? "border-emerald-500/50 bg-emerald-500/10 hover:border-emerald-500/70"
@@ -384,16 +386,23 @@ export function TodayHabitHub({ showNavigationToRead = true }: Props) {
                 {activity.timeEstimate}
               </span>
 
-              {activity.id === "passage" ? (
+              {activity.isDone ? (
+                <div
+                  className="flex h-10 w-10 sm:h-11 sm:w-11 items-center justify-center rounded-full border-2 border-emerald-500 bg-emerald-500 text-white font-black shadow-sm shadow-emerald-500/20"
+                  title="Completed"
+                >
+                  ✓
+                </div>
+              ) : activity.id === "passage" ? (
                 <Link
                   href={`/read/${featuredChapter.bookSlug}/${featuredChapter.chapterNumber}?mode=daily`}
                   onClick={(e) => {
                     e.stopPropagation();
-                    toggleStep("passage");
+                    triggerHaptic("light");
                   }}
-                  className="min-h-[46px] rounded-xl bg-[var(--gold)] px-4 py-2.5 text-sm font-bold text-black hover:brightness-110 shadow-md transition-all flex items-center gap-1.5"
+                  className="pressable min-h-[42px] rounded-xl bg-[var(--gold)] px-4 py-2 text-xs sm:text-sm font-bold text-black hover:brightness-110 shadow-md transition-all flex items-center gap-1.5 active:scale-95"
                 >
-                  <span>{activity.isDone ? "Revisit Walk" : "Start Walk"}</span>
+                  <span>Start Walk</span>
                   <span>⚡</span>
                 </Link>
               ) : (
@@ -401,16 +410,13 @@ export function TodayHabitHub({ showNavigationToRead = true }: Props) {
                   type="button"
                   onClick={(e) => {
                     e.stopPropagation();
-                    toggleStep(activity.id as any);
+                    handleOpenActivity(activity.id as any);
                   }}
-                  aria-label={`Mark ${activity.title} complete`}
-                  className={`flex h-11 w-11 items-center justify-center rounded-full border-2 text-base transition-all shadow-sm ${
-                    activity.isDone
-                      ? "border-emerald-500 bg-emerald-500 text-white font-black shadow-emerald-500/20"
-                      : "border-[var(--line)] bg-black/5 dark:bg-white/5 text-transparent hover:border-[var(--gold)]/60"
-                  }`}
+                  aria-label={`Open ${activity.title}`}
+                  className="pressable flex items-center gap-1.5 rounded-xl border border-[var(--line)] bg-black/5 dark:bg-white/5 px-3.5 py-2 text-xs font-semibold text-[var(--gold)] hover:border-[var(--gold)]/60 hover:bg-[var(--gold)]/10 transition-all active:scale-95"
                 >
-                  ✓
+                  <span>Open</span>
+                  <span className="text-xs">→</span>
                 </button>
               )}
             </div>
@@ -435,7 +441,6 @@ export function TodayHabitHub({ showNavigationToRead = true }: Props) {
               <Link
                 href={`/read/${featuredChapter.bookSlug}/${featuredChapter.chapterNumber}?mode=daily`}
                 className="btn btn-primary btn-gold-glow tactile-tap"
-                onClick={() => toggleStep("passage")}
               >
                 🕊️ Open Daily Walk (3 min)
               </Link>
@@ -504,12 +509,13 @@ export function TodayHabitHub({ showNavigationToRead = true }: Props) {
               <button
                 type="button"
                 onClick={() => {
-                  toggleStep("quote");
+                  triggerHaptic("success");
+                  recordRitualStep("quote", featuredChapter.dayNumber);
                   setActiveModal(null);
                 }}
-                className="rounded-xl bg-[var(--gold)] px-5 py-2 text-xs font-bold text-black hover:brightness-110"
+                className="pressable rounded-xl bg-[var(--gold)] px-5 py-2 text-xs font-bold text-black hover:brightness-110 active:scale-95"
               >
-                Mark Complete ✓
+                Reflect & Complete ✓
               </button>
             </div>
           </div>
@@ -562,10 +568,11 @@ export function TodayHabitHub({ showNavigationToRead = true }: Props) {
               <button
                 type="button"
                 onClick={() => {
-                  toggleStep("devotional");
+                  triggerHaptic("success");
+                  recordRitualStep("devotional", featuredChapter.dayNumber);
                   setActiveModal(null);
                 }}
-                className="rounded-xl bg-[var(--gold)] px-5 py-2.5 text-xs sm:text-sm font-bold text-black hover:brightness-110"
+                className="pressable rounded-xl bg-[var(--gold)] px-5 py-2.5 text-xs sm:text-sm font-bold text-black hover:brightness-110 active:scale-95"
               >
                 Mark Devotional Read ✓
               </button>
@@ -635,10 +642,11 @@ export function TodayHabitHub({ showNavigationToRead = true }: Props) {
               <button
                 type="button"
                 onClick={() => {
+                  triggerHaptic("success");
                   handlePrayAmen();
                   setActiveModal(null);
                 }}
-                className="rounded-xl bg-[var(--gold)] px-6 py-2.5 text-xs sm:text-sm font-bold text-black hover:brightness-110 shadow-md"
+                className="pressable rounded-xl bg-[var(--gold)] px-6 py-2.5 text-xs sm:text-sm font-bold text-black hover:brightness-110 shadow-md active:scale-95"
               >
                 {hasPrayed ? "Amen ✓" : "Amen 🙏"}
               </button>
@@ -692,10 +700,11 @@ export function TodayHabitHub({ showNavigationToRead = true }: Props) {
               <button
                 type="button"
                 onClick={() => {
-                  toggleStep("wordspark");
+                  triggerHaptic("success");
+                  recordRitualStep("wordspark", featuredChapter.dayNumber);
                   setActiveModal(null);
                 }}
-                className="rounded-xl bg-[var(--gold)] px-5 py-2 text-xs font-bold text-black hover:brightness-110"
+                className="pressable rounded-xl bg-[var(--gold)] px-5 py-2 text-xs font-bold text-black hover:brightness-110 active:scale-95"
               >
                 Mark Discovered ✓
               </button>
