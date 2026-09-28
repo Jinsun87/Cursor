@@ -8,6 +8,8 @@ export interface DailyListenTrack {
   durationLabel: string;
   durationSeconds: number;
   category: string;
+  provider: "openai" | "elevenlabs";
+  engineLabel: string;
   title: string;
   tagline: string;
   theme: string;
@@ -24,6 +26,8 @@ export const DAILY_LISTEN_TRACKS: DailyListenTrack[] = [
     durationLabel: "1 MIN",
     durationSeconds: 60,
     category: "1 MIN SPARK",
+    provider: "openai",
+    engineLabel: "OpenAI TTS-1-HD · Onyx Baritone",
     title: "The Morning Ember",
     tagline: "The 60-second pivot from early morning dread to unshakeable peace.",
     theme: "Surrendering Morning Rush",
@@ -41,6 +45,8 @@ export const DAILY_LISTEN_TRACKS: DailyListenTrack[] = [
     durationLabel: "2 MIN",
     durationSeconds: 120,
     category: "2 MIN PRAYER",
+    provider: "openai",
+    engineLabel: "OpenAI TTS-1-HD · Onyx Baritone",
     title: "Unclenched Hands",
     tagline: "An honest living-room prayer when life feels heavy and over-scheduled.",
     theme: "Releasing Control & Tension",
@@ -58,6 +64,8 @@ export const DAILY_LISTEN_TRACKS: DailyListenTrack[] = [
     durationLabel: "4 MIN",
     durationSeconds: 240,
     category: "4 MIN WISDOM",
+    provider: "elevenlabs",
+    engineLabel: "ElevenLabs v2 · Adam Studio",
     title: "Street-Level Grace",
     tagline: "Front-porch counsel for when people are difficult and patience runs thin.",
     theme: "Practical Everyday Discipleship",
@@ -77,11 +85,18 @@ export function DailyListens() {
   const [playingId, setPlayingId] = useState<string | null>(null);
   const [secondsElapsed, setSecondsElapsed] = useState(0);
   const [showDrawer, setShowDrawer] = useState(false);
+  const [audioSourceType, setAudioSourceType] = useState<"stream" | "synth" | "static">("static");
 
+  const audioElementRef = useRef<HTMLAudioElement | null>(null);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
   const utteranceRef = useRef<SpeechSynthesisUtterance | null>(null);
 
   function stopAudio() {
+    if (audioElementRef.current) {
+      audioElementRef.current.pause();
+      audioElementRef.current.src = "";
+      audioElementRef.current = null;
+    }
     if (typeof window !== "undefined" && "speechSynthesis" in window) {
       window.speechSynthesis.cancel();
     }
@@ -106,47 +121,103 @@ export function DailyListens() {
     setPlayingId(track.id);
     setSecondsElapsed(0);
 
-    if (typeof window !== "undefined" && "speechSynthesis" in window) {
-      const utterance = new SpeechSynthesisUtterance(track.conversationalTalk);
-      // Warm, conversational, grounded tempo
-      utterance.rate = 0.9;
-      utterance.pitch = 0.95;
+    // 1. Try static pre-rendered file or dynamic server endpoint
+    const staticUrl = `/audio/daily-listens/${track.id}.mp3`;
+    const dynamicStreamUrl = `/api/audio/tts?provider=${track.provider}&trackId=${track.id}`;
 
-      const voices = window.speechSynthesis.getVoices();
-      const friendlyVoice =
-        voices.find(
-          (v) =>
-            v.lang.startsWith("en") &&
-            (v.name.includes("Natural") ||
-              v.name.includes("Daniel") ||
-              v.name.includes("George") ||
-              v.name.includes("Arthur") ||
-              v.name.includes("Guy") ||
-              v.name.includes("Male") ||
-              v.name.includes("David")),
-        ) ||
-        voices.find((v) => v.lang.startsWith("en")) ||
-        null;
+    const audio = new Audio();
+    audioElementRef.current = audio;
 
-      if (friendlyVoice) {
-        utterance.voice = friendlyVoice;
+    // First try static pre-rendered file
+    audio.src = staticUrl;
+
+    audio.onloadedmetadata = () => {
+      setAudioSourceType("static");
+      audio.play().catch(() => playViaBrowserSynth(track));
+    };
+
+    audio.ontimeupdate = () => {
+      setSecondsElapsed(Math.floor(audio.currentTime));
+    };
+
+    audio.onended = () => {
+      stopAudio();
+    };
+
+    audio.onerror = () => {
+      // If static file isn't present, try dynamic route
+      if (audio.src.includes(staticUrl)) {
+        audio.src = dynamicStreamUrl;
+        audio.load();
+        audio
+          .play()
+          .then(() => {
+            setAudioSourceType("stream");
+          })
+          .catch(() => {
+            // If API key is missing or server route fails, fall back to browser synthesis
+            playViaBrowserSynth(track);
+          });
+      } else {
+        playViaBrowserSynth(track);
       }
+    };
 
-      utterance.onend = () => {
-        setPlayingId(null);
-        if (timerRef.current) clearInterval(timerRef.current);
-      };
+    // Start attempting playback
+    audio.play().catch(() => {
+      // Browser autoplay policy or missing static file
+      audio.src = dynamicStreamUrl;
+      audio
+        .play()
+        .then(() => setAudioSourceType("stream"))
+        .catch(() => playViaBrowserSynth(track));
+    });
+  }
 
-      utterance.onerror = () => {
-        setPlayingId(null);
-        if (timerRef.current) clearInterval(timerRef.current);
-      };
-
-      utteranceRef.current = utterance;
-      window.speechSynthesis.speak(utterance);
+  function playViaBrowserSynth(track: DailyListenTrack) {
+    setAudioSourceType("synth");
+    if (typeof window === "undefined" || !("speechSynthesis" in window)) {
+      setPlayingId(null);
+      return;
     }
 
-    // Interval to simulate or follow progress
+    const utterance = new SpeechSynthesisUtterance(track.conversationalTalk);
+    utterance.rate = 0.9;
+    utterance.pitch = 0.95;
+
+    const voices = window.speechSynthesis.getVoices();
+    const friendlyVoice =
+      voices.find(
+        (v) =>
+          v.lang.startsWith("en") &&
+          (v.name.includes("Natural") ||
+            v.name.includes("Daniel") ||
+            v.name.includes("George") ||
+            v.name.includes("Arthur") ||
+            v.name.includes("Guy") ||
+            v.name.includes("Male") ||
+            v.name.includes("David")),
+      ) ||
+      voices.find((v) => v.lang.startsWith("en")) ||
+      null;
+
+    if (friendlyVoice) {
+      utterance.voice = friendlyVoice;
+    }
+
+    utterance.onend = () => {
+      setPlayingId(null);
+      if (timerRef.current) clearInterval(timerRef.current);
+    };
+
+    utterance.onerror = () => {
+      setPlayingId(null);
+      if (timerRef.current) clearInterval(timerRef.current);
+    };
+
+    utteranceRef.current = utterance;
+    window.speechSynthesis.speak(utterance);
+
     timerRef.current = setInterval(() => {
       setSecondsElapsed((prev) => {
         if (prev + 1 >= track.durationSeconds) {
@@ -183,7 +254,7 @@ export function DailyListens() {
         <div>
           <div className="inline-flex items-center gap-2 rounded-full bg-[var(--gold)]/15 px-3 py-1 text-xs font-bold text-[var(--gold)] uppercase tracking-wider mb-2">
             <span>🎧</span>
-            <span>Audio Companions</span>
+            <span>Audio Companions · Studio Podcaster Edition</span>
           </div>
           <h2 className="font-display text-2xl sm:text-3xl font-bold text-[var(--ink)]">
             Daily Listens
@@ -193,9 +264,14 @@ export function DailyListens() {
           </p>
         </div>
 
-        <div className="text-xs font-semibold text-[var(--gold)] flex items-center gap-1.5 shrink-0">
-          <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
-          <span>Fresh for Today</span>
+        <div className="flex flex-col items-start sm:items-end gap-1 shrink-0 text-xs">
+          <div className="font-semibold text-[var(--gold)] flex items-center gap-1.5">
+            <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
+            <span>Fresh for Today</span>
+          </div>
+          <span className="text-[11px] text-[var(--muted)]">
+            1 &amp; 2 Min: OpenAI TTS-HD · 4 Min: ElevenLabs
+          </span>
         </div>
       </div>
 
@@ -249,8 +325,14 @@ export function DailyListens() {
                   </div>
                 </div>
 
+                {/* Voice Engine Tag */}
+                <div className="mt-3 inline-flex items-center gap-1.5 rounded-lg bg-[var(--canvas-2)] px-2.5 py-1 text-[10px] font-semibold text-[var(--muted)] border border-[var(--line)]">
+                  <span>{track.provider === "openai" ? "🎙️" : "✨"}</span>
+                  <span>{track.engineLabel}</span>
+                </div>
+
                 {/* Biblical Anchor Quote snippet */}
-                <div className="mt-4 rounded-xl bg-[var(--canvas-2)] p-3 border border-[var(--line)]/60 text-xs">
+                <div className="mt-3 rounded-xl bg-[var(--canvas-2)] p-3 border border-[var(--line)]/60 text-xs">
                   <div className="text-[10px] font-bold uppercase tracking-wider text-[var(--gold)]">
                     Scripture Anchor · {track.scriptureRef}
                   </div>
@@ -311,6 +393,9 @@ export function DailyListens() {
                 <h3 className="font-display text-2xl font-bold text-[var(--ink)] mt-1">
                   {activeTrack.title}
                 </h3>
+                <span className="text-xs text-[var(--muted)] font-mono">
+                  Engine: {activeTrack.engineLabel}
+                </span>
               </div>
             </div>
 
@@ -328,7 +413,7 @@ export function DailyListens() {
             <div className="mt-5 rounded-2xl border border-[var(--line)] bg-[var(--canvas)] p-4">
               <div className="flex items-center justify-between mb-3">
                 <span className="text-xs font-semibold text-[var(--muted)]">
-                  Conversational Audio Talk
+                  Audio Talk · {activeTrack.engineLabel}
                 </span>
                 <span className="font-mono text-xs text-[var(--gold)] font-bold">
                   {activeTrack.durationLabel}
