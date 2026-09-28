@@ -8,6 +8,8 @@ import { StoryReader } from "@/components/bible/StoryReader";
 import { ScrollReader } from "@/components/bible/ScrollReader";
 import { GlorifyDailyReader, type DailyStage } from "@/components/bible/GlorifyDailyReader";
 import { ModeToggle, type ReaderDisplayMode } from "@/components/bible/ModeToggle";
+import { PastoralAudioBanner } from "@/components/bible/PastoralAudioBanner";
+import { getHomilyForChapter } from "@/lib/bible/topics";
 import { useReadingTracker } from "@/lib/bible/reading-store";
 import { useApp } from "@/lib/store";
 
@@ -43,15 +45,21 @@ export default function BibleChapterPage({ params }: PageProps) {
   } = useReadingTracker();
   const { user } = useApp();
 
-  // Mode defaults to URL search param ?mode=daily | story | scroll
+  // Mode defaults to "story" (interactive shorts format) or "scroll" (text) for reading section
+  // Only shows "daily" when explicitly passed (?mode=daily from home page checklist)
   const modeQuery = searchParams.get("mode") as ReaderDisplayMode | null;
   const stageQuery = searchParams.get("stage") as DailyStage | null;
+  const topicQuery = searchParams.get("topic");
 
   const [mode, setMode] = useState<ReaderDisplayMode>(
-    modeQuery === "scroll" || modeQuery === "story" || modeQuery === "daily"
+    modeQuery === "daily"
+      ? "daily"
+      : modeQuery === "scroll" || modeQuery === "story"
       ? modeQuery
-      : "daily",
+      : (prefs?.preferredMode === "scroll" ? "scroll" : "story"),
   );
+
+  const { homily, scriptureReference } = getHomilyForChapter(bookSlug, chapterNumber, topicQuery);
 
   useEffect(() => {
     if (modeQuery === "scroll" || modeQuery === "story" || modeQuery === "daily") {
@@ -104,6 +112,9 @@ export default function BibleChapterPage({ params }: PageProps) {
 
         <ModeToggle mode={mode} onChange={handleModeChange} />
       </div>
+
+      {/* 2-Minute Pastoral Counsel / Words from a Church Father Audio Clip */}
+      <PastoralAudioBanner homily={homily} scriptureReference={scriptureReference} />
 
       {/* Reader Body based on active mode */}
       {mode === "daily" ? (

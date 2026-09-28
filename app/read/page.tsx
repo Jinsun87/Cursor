@@ -7,15 +7,19 @@ import { BOOKS, CHAPTERS, READING_PLANS } from "@/lib/bible/catalog";
 import { useReadingTracker } from "@/lib/bible/reading-store";
 import { useApp } from "@/lib/store";
 import { TodayHabitHub } from "@/components/home/TodayHabitHub";
+import { TopicExplorer } from "@/components/bible/TopicExplorer";
 
 export default function ReadSanctuaryPage() {
   const { user } = useApp();
   const { progress } = useReadingTracker();
 
+  // Browsing Mode: "topic" (Filter by Topic - default) vs "book" (Canonical OT/NT)
+  const [browseMode, setBrowseMode] = useState<"topic" | "book">("topic");
+
   // Tab states
   const [selectedArc, setSelectedArc] = useState<string>("all");
   const [bibleTestament, setBibleTestament] = useState<"OT" | "NT" | "DISCUSS">("OT");
-  const [selectedTranslation, setSelectedTranslation] = useState<string>("NIV");
+  const [selectedTranslation, setSelectedTranslation] = useState<string>("BSB");
   const [publicNotesEnabled, setPublicNotesEnabled] = useState<boolean>(true);
   const [bibleSearchQuery, setBibleSearchQuery] = useState<string>("");
 
@@ -110,7 +114,7 @@ export default function ReadSanctuaryPage() {
       </section>
 
       {/* ========================================================= */}
-      {/* 3. BIBLE SECTION (Glorify OT / NT / Discuss Explorer)     */}
+      {/* 3. BIBLE SECTION (Filter by Topic or By Book & Canon)     */}
       {/* ========================================================= */}
       <section id="bible-canon" className="mb-14 rounded-3xl border border-[var(--line)] bg-[var(--canvas-2)] p-6 sm:p-8 scroll-mt-8">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[var(--line)] pb-5">
@@ -120,134 +124,174 @@ export default function ReadSanctuaryPage() {
             </div>
             <div>
               <h2 className="font-display text-2xl font-bold text-[var(--ink)]">
-                Scripture Canon
+                Scripture & Counsel
               </h2>
-              <p className="text-xs text-[var(--muted)]">Explore the books of the Old and New Testament</p>
+              <p className="text-xs text-[var(--muted)]">Filter by life situations or explore canonical books</p>
             </div>
           </div>
 
-          {/* Translation selector & Public Notes toggle */}
-          <div className="flex items-center gap-3">
-            <select
-              value={selectedTranslation}
-              onChange={(e) => setSelectedTranslation(e.target.value)}
-              className="rounded-xl border border-[var(--line)] bg-[var(--canvas)] px-3 py-1.5 text-xs font-semibold text-[var(--ink)] focus:outline-none focus:border-[var(--gold)]"
-            >
-              <option value="NIV">NIV (New International)</option>
-              <option value="ESV">ESV (English Standard)</option>
-              <option value="KJV">KJV (King James)</option>
-            </select>
-
+          {/* Mode Switcher: Filter by Topic vs By Book */}
+          <div className="inline-flex rounded-2xl border border-[var(--line)] bg-[var(--canvas)] p-1 text-xs font-bold">
             <button
-              onClick={() => setPublicNotesEnabled((p) => !p)}
-              className="flex items-center gap-2 rounded-xl border border-[var(--line)] bg-[var(--canvas)] px-3 py-1.5 text-xs font-medium text-[var(--ink)]"
+              onClick={() => setBrowseMode("topic")}
+              className={`flex items-center gap-1.5 rounded-xl px-4 py-2 transition-all ${
+                browseMode === "topic"
+                  ? "bg-[var(--gold)] text-black shadow-md"
+                  : "text-[var(--muted)] hover:text-[var(--ink)]"
+              }`}
             >
-              <span>Public Notes</span>
-              <span
-                className={`inline-block h-3.5 w-7 rounded-full transition-colors relative ${
-                  publicNotesEnabled ? "bg-[var(--gold)]" : "bg-neutral-600"
-                }`}
-              >
-                <span
-                  className={`absolute top-0.5 h-2.5 w-2.5 rounded-full bg-white transition-transform ${
-                    publicNotesEnabled ? "left-4" : "left-0.5"
-                  }`}
-                />
-              </span>
+              <span>🏷️</span>
+              <span>Filter by Topic</span>
+            </button>
+            <button
+              onClick={() => setBrowseMode("book")}
+              className={`flex items-center gap-1.5 rounded-xl px-4 py-2 transition-all ${
+                browseMode === "book"
+                  ? "bg-[var(--gold)] text-black shadow-md"
+                  : "text-[var(--muted)] hover:text-[var(--ink)]"
+              }`}
+            >
+              <span>📖</span>
+              <span>By Book & Canon</span>
             </button>
           </div>
         </div>
 
-        {/* OT / NT / DISCUSS Segmented Switcher & Search Bar */}
-        <div className="mt-6 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
-          <div className="inline-flex rounded-2xl border border-[var(--line)] bg-[var(--canvas)] p-1 text-xs font-bold">
-            {(["OT", "NT", "DISCUSS"] as const).map((tab) => (
-              <button
-                key={tab}
-                onClick={() => setBibleTestament(tab)}
-                className={`rounded-xl px-5 py-2 transition-all ${
-                  bibleTestament === tab
-                    ? "bg-[var(--gold)] text-black shadow-md"
-                    : "text-[var(--muted)] hover:text-[var(--ink)]"
-                }`}
-              >
-                {tab === "OT" ? "Old Testament" : tab === "NT" ? "New Testament" : "💬 Discussions"}
-              </button>
-            ))}
+        {/* TOPIC EXPLORER MODE (Similar to reference video) */}
+        {browseMode === "topic" ? (
+          <div className="mt-6">
+            <TopicExplorer />
           </div>
+        ) : (
+          /* CANONICAL BOOKS MODE */
+          <div>
+            {/* Top Toolbar: Translation & Public Notes */}
+            <div className="mt-5 flex flex-wrap items-center justify-between gap-3 pb-2">
+              <div className="text-xs text-[var(--muted)]">
+                Select testament or search canonical books:
+              </div>
+              <div className="flex items-center gap-3">
+                <select
+                  value={selectedTranslation}
+                  onChange={(e) => setSelectedTranslation(e.target.value)}
+                  className="rounded-xl border border-[var(--line)] bg-[var(--canvas)] px-3 py-1.5 text-xs font-semibold text-[var(--ink)] focus:outline-none focus:border-[var(--gold)]"
+                >
+                  <option value="BSB">BSB (Berean Standard Bible)</option>
+                  <option value="KJV">KJV (King James Version)</option>
+                  <option value="WEB">WEB (World English Bible)</option>
+                </select>
 
-          <div className="relative flex-1 max-w-xs">
-            <input
-              type="text"
-              placeholder="Search bible books..."
-              value={bibleSearchQuery}
-              onChange={(e) => setBibleSearchQuery(e.target.value)}
-              className="w-full rounded-2xl border border-[var(--line)] bg-[var(--canvas)] px-4 py-2 text-xs text-[var(--ink)] placeholder-[var(--muted)] focus:outline-none focus:border-[var(--gold)]"
-            />
-            {bibleSearchQuery ? (
-              <button
-                onClick={() => setBibleSearchQuery("")}
-                className="absolute right-3 top-2 text-xs text-[var(--muted)] hover:text-[var(--ink)]"
-              >
-                ✕
-              </button>
-            ) : null}
-          </div>
-        </div>
+                <button
+                  onClick={() => setPublicNotesEnabled((p) => !p)}
+                  className="flex items-center gap-2 rounded-xl border border-[var(--line)] bg-[var(--canvas)] px-3 py-1.5 text-xs font-medium text-[var(--ink)]"
+                >
+                  <span>Public Notes</span>
+                  <span
+                    className={`inline-block h-3.5 w-7 rounded-full transition-colors relative ${
+                      publicNotesEnabled ? "bg-[var(--gold)]" : "bg-neutral-600"
+                    }`}
+                  >
+                    <span
+                      className={`absolute top-0.5 h-2.5 w-2.5 rounded-full bg-white transition-transform ${
+                        publicNotesEnabled ? "left-4" : "left-0.5"
+                      }`}
+                    />
+                  </span>
+                </button>
+              </div>
+            </div>
 
-        {/* Books List Grid with Avatars and Discussion Counters */}
-        <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-          {filteredBooks.map((book) => {
-            // Find if any chapters of this book are in our catalog
-            const bookChapters = CHAPTERS.filter((c) => c.bookSlug === book.slug);
-            const firstChapter = bookChapters[0] || { chapterNumber: 1 };
-            const discussionTotal = book.discussionCount || (book.totalChapters * 18);
+            {/* OT / NT / DISCUSS Segmented Switcher & Search Bar */}
+            <div className="mt-4 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
+              <div className="inline-flex rounded-2xl border border-[var(--line)] bg-[var(--canvas)] p-1 text-xs font-bold">
+                {(["OT", "NT", "DISCUSS"] as const).map((tab) => (
+                  <button
+                    key={tab}
+                    onClick={() => setBibleTestament(tab)}
+                    className={`rounded-xl px-5 py-2 transition-all ${
+                      bibleTestament === tab
+                        ? "bg-[var(--gold)] text-black shadow-md"
+                        : "text-[var(--muted)] hover:text-[var(--ink)]"
+                    }`}
+                  >
+                    {tab === "OT" ? "Old Testament" : tab === "NT" ? "New Testament" : "💬 Discussions"}
+                  </button>
+                ))}
+              </div>
 
-            return (
-              <Link
-                key={book.slug}
-                href={`/read/${book.slug}/${firstChapter.chapterNumber}?mode=daily`}
-                className="group flex flex-col justify-between rounded-2xl border border-[var(--line)] bg-[var(--canvas)] p-4 hover:border-[var(--gold)] hover:shadow-md transition-all"
-              >
-                <div className="flex items-start justify-between">
-                  <div>
-                    <h4 className="font-display text-lg font-bold text-[var(--ink)] group-hover:text-[var(--gold)] transition-colors">
-                      {book.title}
-                    </h4>
-                    <span className="text-xs text-[var(--muted)]">
-                      {book.totalChapters} {book.totalChapters === 1 ? "Chapter" : "Chapters"} · {book.testament}
-                    </span>
-                  </div>
+              <div className="relative flex-1 max-w-xs">
+                <input
+                  type="text"
+                  placeholder="Search bible books..."
+                  value={bibleSearchQuery}
+                  onChange={(e) => setBibleSearchQuery(e.target.value)}
+                  className="w-full rounded-2xl border border-[var(--line)] bg-[var(--canvas)] px-4 py-2 text-xs text-[var(--ink)] placeholder-[var(--muted)] focus:outline-none focus:border-[var(--gold)]"
+                />
+                {bibleSearchQuery ? (
+                  <button
+                    onClick={() => setBibleSearchQuery("")}
+                    className="absolute right-3 top-2 text-xs text-[var(--muted)] hover:text-[var(--ink)]"
+                  >
+                    ✕
+                  </button>
+                ) : null}
+              </div>
+            </div>
 
-                  {/* Social Avatars & Discussion Count (Glorify Style) */}
-                  <div className="flex items-center gap-1.5 text-xs text-[var(--muted)]">
-                    <div className="flex -space-x-1.5 overflow-hidden">
-                      <span className="inline-flex h-5 w-5 items-center justify-center rounded-full bg-amber-700 text-[9px] font-bold text-white ring-1 ring-black">
-                        {book.title.slice(0, 1)}
-                      </span>
-                      <span className="inline-flex h-5 w-5 items-center justify-center rounded-full bg-sky-700 text-[9px] font-bold text-white ring-1 ring-black">
-                        D
-                      </span>
+            {/* Books List Grid with Avatars and Discussion Counters */}
+            <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+              {filteredBooks.map((book) => {
+                const bookChapters = CHAPTERS.filter((c) => c.bookSlug === book.slug);
+                const firstChapter = bookChapters[0] || { chapterNumber: 1 };
+                const discussionTotal = book.discussionCount || (book.totalChapters * 18);
+
+                return (
+                  <Link
+                    key={book.slug}
+                    href={`/read/${book.slug}/${firstChapter.chapterNumber}?mode=story`}
+                    className="group flex flex-col justify-between rounded-2xl border border-[var(--line)] bg-[var(--canvas)] p-4 hover:border-[var(--gold)] hover:shadow-md transition-all"
+                  >
+                    <div className="flex items-start justify-between">
+                      <div>
+                        <h4 className="font-display text-lg font-bold text-[var(--ink)] group-hover:text-[var(--gold)] transition-colors">
+                          {book.title}
+                        </h4>
+                        <span className="text-xs text-[var(--muted)]">
+                          {book.totalChapters} {book.totalChapters === 1 ? "Chapter" : "Chapters"} · {book.testament}
+                        </span>
+                      </div>
+
+                      {/* Social Avatars & Discussion Count (Glorify Style) */}
+                      <div className="flex items-center gap-1.5 text-xs text-[var(--muted)]">
+                        <div className="flex -space-x-1.5 overflow-hidden">
+                          <span className="inline-flex h-5 w-5 items-center justify-center rounded-full bg-amber-700 text-[9px] font-bold text-white ring-1 ring-black">
+                            {book.title.slice(0, 1)}
+                          </span>
+                          <span className="inline-flex h-5 w-5 items-center justify-center rounded-full bg-sky-700 text-[9px] font-bold text-white ring-1 ring-black">
+                            D
+                          </span>
+                        </div>
+                        <span className="font-semibold text-[var(--ink)] flex items-center gap-1">
+                          <span>💬</span>
+                          <span>{discussionTotal.toLocaleString()}</span>
+                        </span>
+                      </div>
                     </div>
-                    <span className="font-semibold text-[var(--ink)] flex items-center gap-1">
-                      <span>💬</span>
-                      <span>{discussionTotal.toLocaleString()}</span>
-                    </span>
-                  </div>
-                </div>
 
-                <p className="mt-2 text-xs text-[var(--muted)] line-clamp-2 leading-relaxed">
-                  {book.summary}
-                </p>
+                    <p className="mt-2 text-xs text-[var(--muted)] line-clamp-2 leading-relaxed">
+                      {book.summary}
+                    </p>
 
-                <div className="mt-4 pt-3 border-t border-[var(--line)] flex items-center justify-between text-xs font-semibold text-[var(--gold)]">
-                  <span>Open Book</span>
-                  <span>→</span>
-                </div>
-              </Link>
-            );
-          })}
-        </div>
+                    <div className="mt-4 pt-3 border-t border-[var(--line)] flex items-center justify-between text-xs font-semibold text-[var(--gold)]">
+                      <span>Open Book</span>
+                      <span>→</span>
+                    </div>
+                  </Link>
+                );
+              })}
+            </div>
+          </div>
+        )}
       </section>
 
       {/* ========================================================= */}
@@ -370,10 +414,10 @@ export default function ReadSanctuaryPage() {
                   {/* Actions */}
                   <div className="mt-5 grid grid-cols-2 gap-2.5 border-t border-[var(--line)] pt-4">
                     <Link
-                      href={`/read/${ch.bookSlug}/${ch.chapterNumber}?mode=daily`}
+                      href={`/read/${ch.bookSlug}/${ch.chapterNumber}?mode=story`}
                       className="min-h-[46px] rounded-xl bg-[var(--gold)] px-3 py-2 text-xs sm:text-sm font-bold text-black hover:brightness-110 shadow-sm transition-all flex items-center justify-center gap-1.5 text-center"
                     >
-                      <span>🕊️ Daily Walk</span>
+                      <span>⚡ Interactive Story</span>
                     </Link>
                     <Link
                       href={`/read/${ch.bookSlug}/${ch.chapterNumber}?mode=scroll`}
@@ -413,7 +457,7 @@ export default function ReadSanctuaryPage() {
               </div>
               <div className="mt-4 pt-3 border-t border-[var(--line)] flex justify-end">
                 <Link
-                  href={`/read/${plan.chapters[0].bookSlug}/${plan.chapters[0].chapterNumber}?mode=daily`}
+                  href={`/read/${plan.chapters[0].bookSlug}/${plan.chapters[0].chapterNumber}?mode=story`}
                   className="text-xs font-semibold text-[var(--gold)] hover:underline"
                 >
                   Start Plan →
