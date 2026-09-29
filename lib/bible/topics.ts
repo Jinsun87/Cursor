@@ -6,6 +6,7 @@ export interface TopicVerse {
   chapterNumber: number;
   verseSnippet: string;
   thematicTakeaway: string;
+  categoryTag?: "Personal" | "Relational" | "Social" | "Spiritual" | string;
 }
 
 export interface TopicHomily {
@@ -22,6 +23,7 @@ export interface TopicSubSection {
   tag: string;
   verse: TopicVerse;
   homily: TopicHomily;
+  verses?: TopicVerse[];
 }
 
 export type TopicCategoryId =
@@ -63,7 +65,7 @@ export const BIBLE_TOPICS: BibleTopic[] = [
     subSections: [
       {
         id: "anxiety-philippians",
-        title: "Transcendent Peace Over Daily Dread",
+        title: "Anxiety From Panic & Restless Thoughts",
         tag: "Peace in Prayer",
         verse: {
           reference: "Philippians 4:6-7",
@@ -88,7 +90,7 @@ export const BIBLE_TOPICS: BibleTopic[] = [
       },
       {
         id: "anxiety-1peter",
-        title: "Casting Your Heavy Burdens",
+        title: "Anxiety From Carrying Burdens Alone",
         tag: "Surrender & Care",
         verse: {
           reference: "1 Peter 5:7",
@@ -112,7 +114,7 @@ export const BIBLE_TOPICS: BibleTopic[] = [
       },
       {
         id: "anxiety-matthew",
-        title: "The Birds of the Air & Daily Bread",
+        title: "Anxiety From Future Uncertainty & Needs",
         tag: "Provision & Trust",
         verse: {
           reference: "Matthew 6:25-34",
@@ -137,7 +139,7 @@ export const BIBLE_TOPICS: BibleTopic[] = [
       },
       {
         id: "anxiety-psalm94",
-        title: "Consolation Amid Multitudes of Anxieties",
+        title: "Anxiety From Overthinking & Sleepless Nights",
         tag: "Inner Consolation",
         verse: {
           reference: "Psalm 94:19",
@@ -473,103 +475,278 @@ export const BIBLE_TOPICS: BibleTopic[] = [
     summary: "Overcoming reactive fury, workplace indignity, and lingering resentment through Christ's meekness.",
     subSections: [
       {
-        id: "anger-ephesians",
-        title: "Do Not Let the Sun Go Down",
-        tag: "Daily Reconciliation",
+        id: "anger-expectations",
+        title: "Anger From Expectations",
+        tag: "Expectations",
         verse: {
-          reference: "Ephesians 4:26-27",
-          bookSlug: "ephesians",
-          chapterNumber: 4,
-          verseSnippet:
-            "In your anger do not sin: Do not let the sun go down while you are still angry, and do not give the devil a foothold.",
-          thematicTakeaway: "Unresolved anger leaves an open door for bitterness and demonic division.",
-        },
-        homily: {
-          title: "Closing the Door on Outrage",
-          preacher: "Saint John Chrysostom",
-          duration: "2 min",
-          practicalTips: [
-            "Clear grievances before sleep; do not nurse grudges overnight.",
-            "Lower your voice when disagreements heat up.",
-            "Pray for the person who offended you before closing your eyes.",
-          ],
-          audioScript:
-            "Saint Paul warns: do not let the sun set on your wrath. When anger is held through the night, it ferments into malice. Extinguish the spark before it burns down your household peace.",
-        },
-      },
-      {
-        id: "anger-james",
-        title: "Slow to Speak, Slow to Anger",
-        tag: "Self-Restraint",
-        verse: {
-          reference: "James 1:19-20",
-          bookSlug: "james",
-          chapterNumber: 1,
-          verseSnippet:
-            "Everyone should be quick to listen, slow to speak and slow to become angry, because human anger does not produce the righteousness that God desires.",
-          thematicTakeaway: "Human rage never produces the righteous harvest of God; quiet listening diffuses wrath.",
-        },
-        homily: {
-          title: "The Armor of Silence",
-          preacher: "Abba Dorotheus of Gaza",
-          duration: "2 min",
-          practicalTips: [
-            "Count to ten and take three slow breaths before responding to an irritating comment.",
-            "Seek first to understand the other person's perspective before defending your own.",
-            "Remember that silence is often the most eloquent victory.",
-          ],
-          audioScript:
-            "When indignation flares, the tongue wants to strike. But Saint James teaches us the royal discipline: be quick to listen, slow to speak, slow to anger. Righteousness is cultivated in quiet restraint.",
-        },
-      },
-      {
-        id: "anger-proverbs",
-        title: "A Gentle Answer Turns Away Wrath",
-        tag: "Gentle Speech",
-        verse: {
-          reference: "Proverbs 15:1",
+          reference: "Proverbs 19:11",
           bookSlug: "proverbs",
-          chapterNumber: 15,
-          verseSnippet: "A gentle answer turns away wrath, but a harsh word stirs up anger.",
-          thematicTakeaway: "Soft speech has the power to disarm conflict where sharp logic only pours fuel on fire.",
+          chapterNumber: 19,
+          verseSnippet: "A person’s wisdom yields patience; it is to one’s glory to overlook an offense.",
+          thematicTakeaway: "Unspoken expectations create resentments. Wisdom yields patience and the glory of letting offenses go.",
+          categoryTag: "Personal",
         },
         homily: {
-          title: "Softening the Iron of Rage",
+          title: "Overcoming Expectations of Others",
           preacher: "Solomon",
           duration: "2 min",
           practicalTips: [
-            "Match harsh tones with a calm, subdued answer.",
-            "Avoid weaponized sarcasm and defensive retorts.",
-            "Choose reconciliation over the fleeting thrill of winning an argument.",
+            "Acknowledge that people will fall short of your silent standards.",
+            "Choose to overlook small irritations as an act of noble wisdom.",
+            "Clarify your expectations with calm gentleness rather than explosive silence.",
           ],
           audioScript:
-            "Like water on hot coals, a soft answer instantly drains heat from an explosive encounter. If someone approaches you with fury today, surprise them with gentleness. You will disarm wrath with Christ's meekness.",
+            "When we demand that spouses, coworkers, or children meet our unspoken expectations, anger flares the moment they falter. But scripture reminds us: a person's wisdom yields patience. It is to your glory to overlook an offense.",
         },
+        verses: [
+          {
+            reference: "Proverbs 19:11",
+            bookSlug: "proverbs",
+            chapterNumber: 19,
+            verseSnippet: "A person’s wisdom yields patience; it is to one’s glory to overlook an offense.",
+            thematicTakeaway: "Patience dissolves unrealistic expectations before they ferment into bitter rage.",
+            categoryTag: "Personal",
+          },
+          {
+            reference: "James 1:19-20",
+            bookSlug: "james",
+            chapterNumber: 1,
+            verseSnippet: "Everyone should be quick to listen, slow to speak and slow to become angry, because human anger does not produce the righteousness that God desires.",
+            thematicTakeaway: "Quick listening diffuses the friction when expectations clash.",
+            categoryTag: "Relational",
+          },
+          {
+            reference: "Proverbs 15:1",
+            bookSlug: "proverbs",
+            chapterNumber: 15,
+            verseSnippet: "A gentle answer turns away wrath, but a harsh word stirs up anger.",
+            thematicTakeaway: "Gentle speech resets the emotional atmosphere when disappointment strikes.",
+            categoryTag: "Social",
+          },
+        ],
       },
       {
-        id: "anger-colossians",
-        title: "Rid Yourselves of Malice",
-        tag: "Spiritual Cleansing",
+        id: "anger-desires",
+        title: "Anger From Desires",
+        tag: "Internal Desires",
+        verse: {
+          reference: "James 4:1-3",
+          bookSlug: "james",
+          chapterNumber: 4,
+          verseSnippet: "What causes fights and quarrels among you? Don’t they come from your desires that battle within you? You desire but do not have, so you kill. You covet but you cannot get what you want, so you quarrel and fight.",
+          thematicTakeaway: "Outward quarrels originate from inward thwarted desires and covetousness.",
+          categoryTag: "Personal",
+        },
+        homily: {
+          title: "The Root of Quarrels",
+          preacher: "Saint James the Just",
+          duration: "2 min",
+          practicalTips: [
+            "Ask yourself: 'What desire of mine was just blocked to make me this angry?'",
+            "Surrender the demand to have things strictly your way.",
+            "Ask the Father for what you need rather than fighting humans to get it.",
+          ],
+          audioScript:
+            "Saint James diagnoses the exact root of anger: battles within our desires. We crave control, comfort, or recognition, and when denied, we attack the nearest person. Recognize your blocked desire and lay it at Jesus' feet.",
+        },
+        verses: [
+          {
+            reference: "James 4:1-3",
+            bookSlug: "james",
+            chapterNumber: 4,
+            verseSnippet: "What causes fights and quarrels among you? Don’t they come from your desires that battle within you? You desire but do not have, so you kill. You covet but you cannot get what you want, so you quarrel and fight.",
+            thematicTakeaway: "Unchecked cravings and selfish ambitions ignite interpersonal warfare.",
+            categoryTag: "Personal",
+          },
+          {
+            reference: "Proverbs 14:29",
+            bookSlug: "proverbs",
+            chapterNumber: 14,
+            verseSnippet: "Whoever is patient has great understanding, but one who is quick-tempered displays folly.",
+            thematicTakeaway: "Patient understanding restrains the urge to lash out when wants are thwarted.",
+            categoryTag: "Social",
+          },
+        ],
+      },
+      {
+        id: "anger-disrespect",
+        title: "Anger From Feeling Disrespected",
+        tag: "Ego & Respect",
         verse: {
           reference: "Colossians 3:8",
           bookSlug: "colossians",
           chapterNumber: 3,
-          verseSnippet:
-            "But now you must also rid yourselves of all such things as these: anger, rage, malice, slander, and filthy language from your lips.",
-          thematicTakeaway: "Take off the soiled garments of rage and put on the royal robes of compassion.",
+          verseSnippet: "But now you must also rid yourselves of all such things as these: anger, rage, malice, slander, and filthy language from your lips.",
+          thematicTakeaway: "When pride feels slighted, discard rage and clothe yourself in Christ's humility.",
+          categoryTag: "Relational",
         },
         homily: {
-          title: "Discarding the Old Garment",
+          title: "Overcoming Wounded Pride",
           preacher: "Saint Ambrose of Milan",
           duration: "2 min",
           practicalTips: [
-            "Identify recurring anger triggers in your daily routine.",
-            "Replace defensive language with blessings and truth.",
-            "Ask the Holy Spirit to fill the space once occupied by hostility with patient love.",
+            "Recognize when anger is merely pride wounded by someone's lack of respect.",
+            "Remember how Christ absorbed mockery without retaliating with malice.",
+            "Respond with steady dignity rather than angry retaliation.",
           ],
           audioScript:
-            "Saint Paul treats anger like a filthy, ragged coat that no longer fits a child of the King. Throw it off! Clothe yourself instead with kindness, humility, and patience.",
+            "When someone cuts you down or ignores your contribution, ego screams for vindication. But Saint Paul commands us: strip off anger and malice like dirty garments. Your identity is anchored in Christ, not human applause.",
         },
+        verses: [
+          {
+            reference: "Colossians 3:8",
+            bookSlug: "colossians",
+            chapterNumber: 3,
+            verseSnippet: "But now you must also rid yourselves of all such things as these: anger, rage, malice, slander, and filthy language from your lips.",
+            thematicTakeaway: "Strip off reactive rage when treated unfairly.",
+            categoryTag: "Social",
+          },
+          {
+            reference: "Ecclesiastes 7:9",
+            bookSlug: "ecclesiastes",
+            chapterNumber: 7,
+            verseSnippet: "Do not be quickly provoked in your spirit, for anger resides in the lap of fools.",
+            thematicTakeaway: "Refuse to be easily offended; foolishness harbors wounded indignation.",
+            categoryTag: "Personal",
+          },
+          {
+            reference: "Proverbs 16:32",
+            bookSlug: "proverbs",
+            chapterNumber: 16,
+            verseSnippet: "Better a patient person than a warrior, one with self-control than one who takes a city.",
+            thematicTakeaway: "Mastering your own spirit is greater than conquering worldly opposition.",
+            categoryTag: "Personal",
+          },
+        ],
+      },
+      {
+        id: "anger-past-wounds",
+        title: "Anger From Past Wounds & Betrayal",
+        tag: "Reconciliation",
+        verse: {
+          reference: "Ephesians 4:26-27",
+          bookSlug: "ephesians",
+          chapterNumber: 4,
+          verseSnippet: "In your anger do not sin: Do not let the sun go down while you are still angry, and do not give the devil a foothold.",
+          thematicTakeaway: "Nursing past hurts overnight gives demonic bitterness an open entryway into your soul.",
+          categoryTag: "Spiritual",
+        },
+        homily: {
+          title: "Closing the Door on Lingering Resentment",
+          preacher: "Saint John Chrysostom",
+          duration: "2 min",
+          practicalTips: [
+            "Refuse to rehearse the betrayal in your thoughts like an endless movie reel.",
+            "Release vengeance to God: 'Lord, You are the righteous Judge, I entrust this to You.'",
+            "Pray a genuine blessing over the one who wounded you.",
+          ],
+          audioScript:
+            "Do not allow the sun to set upon your grievance. When you hold anger through the night, it ferments into venomous resentment. Extinguish the embers before they consume your joy and your family.",
+        },
+        verses: [
+          {
+            reference: "Ephesians 4:26-27",
+            bookSlug: "ephesians",
+            chapterNumber: 4,
+            verseSnippet: "In your anger do not sin: Do not let the sun go down while you are still angry, and do not give the devil a foothold.",
+            thematicTakeaway: "Clear grievances before sleep; do not nurse grudges overnight.",
+            categoryTag: "Spiritual",
+          },
+          {
+            reference: "Romans 12:19",
+            bookSlug: "romans",
+            chapterNumber: 12,
+            verseSnippet: "Do not take revenge, my dear friends, but leave room for God’s wrath, for it is written: 'It is mine to avenge; I will repay,' says the Lord.",
+            thematicTakeaway: "Transfer the courtroom to God's throne rather than executing vigilante revenge.",
+            categoryTag: "Spiritual",
+          },
+        ],
+      },
+      {
+        id: "anger-unfulfilled-desires",
+        title: "From Unfulfilled Desires",
+        tag: "Disappointment",
+        verse: {
+          reference: "Proverbs 13:12",
+          bookSlug: "proverbs",
+          chapterNumber: 13,
+          verseSnippet: "Hope deferred makes the heart sick, but a longing fulfilled is a tree of life.",
+          thematicTakeaway: "Chronic disappointment turns to simmering frustration unless anchored in divine hope.",
+          categoryTag: "Personal",
+        },
+        homily: {
+          title: "Healing Hope Deferred",
+          preacher: "Solomon",
+          duration: "2 min",
+          practicalTips: [
+            "Acknowledge the heartache of unfulfilled dreams without turning bitter toward God.",
+            "Rest in the truth that God's delays are not His denials.",
+            "Focus on small daily obediences and gratitude.",
+          ],
+          audioScript:
+            "When life delays our deepest desires, the unrenewed heart turns sour and angry with God and the world. But hope in the Lord is never confounded. Yield your timeline to His sovereign wisdom.",
+        },
+        verses: [
+          {
+            reference: "Proverbs 13:12",
+            bookSlug: "proverbs",
+            chapterNumber: 13,
+            verseSnippet: "Hope deferred makes the heart sick, but a longing fulfilled is a tree of life.",
+            thematicTakeaway: "Bring deferred longings to God instead of projecting frustration onto others.",
+            categoryTag: "Personal",
+          },
+          {
+            reference: "Psalm 37:7-8",
+            bookSlug: "psalms",
+            chapterNumber: 37,
+            verseSnippet: "Be still before the Lord and wait patiently for him... Refrain from anger and turn from wrath; do not fret—it leads only to evil.",
+            thematicTakeaway: "Patient stillness in God dissolves the fretful rage of delayed expectations.",
+            categoryTag: "Spiritual",
+          },
+        ],
+      },
+      {
+        id: "anger-hatred",
+        title: "Hatred & Resentment",
+        tag: "Releasing Bitterness",
+        verse: {
+          reference: "1 John 4:20",
+          bookSlug: "1-john",
+          chapterNumber: 4,
+          verseSnippet: "Whoever claims to love God yet hates a brother or sister is a liar. For whoever does not love their brother and sister, whom they have seen, cannot love God, whom they have not seen.",
+          thematicTakeaway: "You cannot hold true communion with God while nursing conscious hatred toward another soul.",
+          categoryTag: "Relational",
+        },
+        homily: {
+          title: "The Poison of Hatred",
+          preacher: "Saint John the Apostle",
+          duration: "2 min",
+          practicalTips: [
+            "Confess any secret hatred or wishing ill on an enemy to God.",
+            "Recognize that hatred destroys the vessel carrying it far more than the target.",
+            "Ask Christ for supernatural love for those you find naturally impossible to love.",
+          ],
+          audioScript:
+            "Saint John speaks with uncompromising clarity: he who says he loves God yet hates his brother is a liar. Hatred blinds the spiritual eyes and closes heaven's door. Open your heart to the cleansing fire of divine love.",
+        },
+        verses: [
+          {
+            reference: "1 John 4:20",
+            bookSlug: "1-john",
+            chapterNumber: 4,
+            verseSnippet: "Whoever claims to love God yet hates a brother or sister is a liar. For whoever does not love their brother and sister, whom they have seen, cannot love God, whom they have not seen.",
+            thematicTakeaway: "Genuine faith purifies the heart from secret hatred.",
+            categoryTag: "Relational",
+          },
+          {
+            reference: "Leviticus 19:17-18",
+            bookSlug: "leviticus",
+            chapterNumber: 19,
+            verseSnippet: "Do not hate a fellow Israelite in your heart... Do not seek revenge or bear a grudge against anyone among your people, but love your neighbor as yourself.",
+            thematicTakeaway: "The ancient covenant forbade silent grudges; love your neighbor as yourself.",
+            categoryTag: "Social",
+          },
+        ],
       },
     ],
   },
