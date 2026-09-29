@@ -4,7 +4,8 @@ Christian Scripture quizzes with the promise **Know the text.** Long sittings, C
 
 Independent — not a church, not pastoral care, not affiliated with any denomination. Questions and branding are original.
 
-Read [BUSINESS_MODEL.md](./BUSINESS_MODEL.md) for the niche, the paid-click + long sitting loop, and what this repo implements.
+Read [PROJECT_OVERVIEW.md](./PROJECT_OVERVIEW.md) for the complete architecture, technical stack, directory map, and feature documentation.
+Read [BUSINESS_MODEL.md](./BUSINESS_MODEL.md) for the niche, monetization models, and business loops.
 
 ## Run locally
 
