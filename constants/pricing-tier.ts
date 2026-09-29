@@ -12,12 +12,13 @@ export interface Tier {
 export const PricingTier: Tier[] = [
   {
     name: "Starter",
-    description: "Ideal for daily Scripture reading and individual trivia practice.",
+    description: "Free forever access to daily Scripture quizzes and personal recall progress.",
     features: [
-      "Access to daily Scripture quizzes",
+      "100% Free forever (no card required)",
+      "Access to all daily Scripture quizzes",
       "Standard reading mode & progress tracking",
       "Earn coins on every correct answer",
-      "Public quiz catalog & leaderboards",
+      "Public quiz catalog & global leaderboard",
     ],
     featured: false,
     priceId: {
@@ -27,14 +28,15 @@ export const PricingTier: Tier[] = [
   },
   {
     name: "Pro",
-    description: "Unrestricted access to all Scripture packs, Quiet room, and certificates.",
+    description: "The complete illuminated Scripture experience: ad-free reading, Quiet room, and certificates.",
     features: [
-      "7-day free trial on all plans",
-      "Ad-free secret quizzes (Quiet room)",
-      "Certificates of Mastery at 70%+ review",
+      "7-day free trial on monthly plan",
+      "$4.99/mo or $39.99/yr (Save 33%)",
+      "Ad-free secret quizzes & Quiet room",
+      "Full access to Daily Audio Companions",
+      "Official Certificates of Mastery at 70%+",
       "5,000 bonus coins on upgrade",
       "Exclusive Lampstand Pro profile badge",
-      "Early access to new series and packs",
     ],
     featured: true,
     priceId: {
@@ -44,12 +46,12 @@ export const PricingTier: Tier[] = [
   },
   {
     name: "Advanced",
-    description: "Designed for study groups, ministries, and devoted patrons.",
+    description: "Designed for study groups, Bible ministries, and dedicated platform benefactors.",
     features: [
       "Everything included in Lampstand Pro",
       "Shared study group progress tracking",
-      "Custom pack assignments for groups",
-      "Patron recognition on the platform",
+      "Custom pack assignments for small groups",
+      "Benefactor patron recognition on platform",
       "Direct priority feature requests & support",
     ],
     featured: false,
@@ -59,3 +61,4 @@ export const PricingTier: Tier[] = [
     },
   },
 ];
+

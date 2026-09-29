@@ -136,7 +136,7 @@ export function PricingPageClient({ detectedCountry }: Props) {
                 frequency === "year" ? "bg-black/20 text-[var(--gold-ink)]" : "bg-[var(--gold)]/20 text-[var(--gold)]"
               }`}
             >
-              2 months free
+              $39.99/yr (Save 33%)
             </span>
           </button>
         </div>
@@ -190,7 +190,7 @@ export function PricingPageClient({ detectedCountry }: Props) {
                   <h3 className="font-display text-2xl font-bold text-[var(--ink)]">{tier.name}</h3>
                   {tier.name === "Pro" && (
                     <span className="rounded-full bg-emerald-500/10 border border-emerald-500/30 px-2.5 py-0.5 text-xs font-medium text-emerald-400">
-                      7-day trial
+                      {frequency === "month" ? "7-day free trial" : "Save 33%"}
                     </span>
                   )}
                 </div>
@@ -204,7 +204,7 @@ export function PricingPageClient({ detectedCountry }: Props) {
                     ) : (
                       <>
                         <span className="font-display text-4xl md:text-5xl font-extrabold text-[var(--ink)] tracking-tight">
-                          {rawPrice || (frequency === "month" ? "$4.99" : "$49.99")}
+                          {rawPrice || (frequency === "month" ? "$4.99" : "$39.99")}
                         </span>
                         <span className="text-sm font-medium text-[var(--muted)]">
                           /{frequency === "month" ? "month" : "year"}
@@ -259,13 +259,15 @@ export function PricingPageClient({ detectedCountry }: Props) {
                     ? "Opening Checkout…"
                     : hasPriceId
                     ? tier.name === "Pro"
-                      ? "Start 7-Day Free Trial"
+                      ? frequency === "month"
+                        ? "Start 7-Day Free Trial"
+                        : "Subscribe Annually ($39.99)"
                       : "Subscribe"
                     : tier.name === "Starter"
                     ? user
                       ? "Current Plan"
                       : "Get Started Free"
-                    : "Contact Ministry Team"}
+                    : "Support as Patron"}
                 </button>
 
                 {hasPriceId && (

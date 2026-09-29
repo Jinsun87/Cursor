@@ -14,7 +14,7 @@ export function Footer() {
             affiliated with any denomination.
           </p>
           <p className="mt-2 text-sm" style={{ color: "var(--muted)" }}>
-            Live host: quiz.mediareferee.com
+            Live host: lampstandbible.com
           </p>
         </div>
         <nav className="text-sm" aria-label="Footer">
@@ -51,17 +51,33 @@ export function Footer() {
         </nav>
         <div className="text-sm">
           <p className="mb-2 font-semibold" style={{ color: "var(--gold)" }}>
-            Mission
+            Legal &amp; Mission
           </p>
           <p style={{ color: "var(--muted)" }}>
             Know the text. Finish a pack. Optional gifts keep the lamps lit.
           </p>
-          <Link href="/donate" className="mt-3 inline-flex min-h-11 items-center" style={{ color: "var(--gold)" }}>
-            Donate →
-          </Link>
-          <Link href="/privacy" className="mt-2 inline-flex min-h-11 items-center">
-            Privacy
-          </Link>
+          <ul className="mt-3 space-y-1 text-xs sm:text-sm">
+            <li>
+              <Link href="/donate" className="inline-flex min-h-8 items-center font-medium" style={{ color: "var(--gold)" }}>
+                Donate →
+              </Link>
+            </li>
+            <li>
+              <Link href="/privacy" className="inline-flex min-h-8 items-center text-[var(--muted)] hover:text-[var(--ink)] transition-colors">
+                Privacy Policy
+              </Link>
+            </li>
+            <li>
+              <Link href="/terms" className="inline-flex min-h-8 items-center text-[var(--muted)] hover:text-[var(--ink)] transition-colors">
+                Terms of Service
+              </Link>
+            </li>
+            <li>
+              <Link href="/refunds" className="inline-flex min-h-8 items-center text-[var(--muted)] hover:text-[var(--ink)] transition-colors">
+                Refund Policy
+              </Link>
+            </li>
+          </ul>
         </div>
       </div>
     </footer>

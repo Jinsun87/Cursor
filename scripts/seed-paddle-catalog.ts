@@ -86,18 +86,18 @@ async function seedCatalog() {
   });
   console.log(`   ✅ Monthly Price created: ${monthly.id}`);
 
-  // 3. Create Annual Price ($49.99 USD / year with 7-day trial and regional overrides)
-  console.log("\n💳 Creating Annual Price: USD 49.99 / year (7-day trial, 2 months free)...");
+  // 3. Create Annual Price ($39.99 USD / year with 7-day trial and regional overrides)
+  console.log("\n💳 Creating Annual Price: USD 39.99 / year (7-day trial, Save 33%)...");
   const annual = await paddle.prices.create({
     productId: product.id,
-    description: "Lampstand Pro Annual (2 months free)",
-    unitPrice: { amount: "4999", currencyCode: "USD" },
+    description: "Lampstand Pro Annual (Save 33%)",
+    unitPrice: { amount: "3999", currencyCode: "USD" },
     billingCycle: { interval: "year", frequency: 1 },
     trialPeriod: { interval: "day", frequency: 7 },
     unitPriceOverrides: [
-      { countryCodes: ["GB"], unitPrice: { amount: "3999", currencyCode: "GBP" } },
-      { countryCodes: ["IE"], unitPrice: { amount: "4499", currencyCode: "EUR" } },
-      { countryCodes: ["AU"], unitPrice: { amount: "6999", currencyCode: "AUD" } },
+      { countryCodes: ["GB"], unitPrice: { amount: "3199", currencyCode: "GBP" } },
+      { countryCodes: ["IE"], unitPrice: { amount: "3599", currencyCode: "EUR" } },
+      { countryCodes: ["AU"], unitPrice: { amount: "5599", currencyCode: "AUD" } },
     ],
   });
   console.log(`   ✅ Annual Price created: ${annual.id}`);
