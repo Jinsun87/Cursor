@@ -75,10 +75,30 @@ export const DAILY_LISTEN_TRACKS: DailyListenTrack[] = [
 export function DailyListens() {
   const [activeTrack, setActiveTrack] = useState<DailyListenTrack | null>(null);
   const [playingId, setPlayingId] = useState<string | null>(null);
+  const [loadingId, setLoadingId] = useState<string | null>(null);
   const [secondsElapsed, setSecondsElapsed] = useState(0);
   const [showDrawer, setShowDrawer] = useState(false);
 
   const audioElementRef = useRef<HTMLAudioElement | null>(null);
+
+  // Preload audio files on mount for zero-latency instant play
+  useEffect(() => {
+    const preloaded: HTMLAudioElement[] = [];
+    if (typeof window !== "undefined") {
+      DAILY_LISTEN_TRACKS.forEach((track) => {
+        const audio = new Audio(`/audio/daily-listens/${track.id}.mp3`);
+        audio.preload = "auto";
+        preloaded.push(audio);
+      });
+    }
+
+    return () => {
+      stopAudio();
+      preloaded.forEach((a) => {
+        a.src = "";
+      });
+    };
+  }, []);
 
   // Unconditionally silence any browser speech synthesis or playing audio
   function stopAudio() {
@@ -92,6 +112,7 @@ export function DailyListens() {
       audioElementRef.current = null;
     }
     setPlayingId(null);
+    setLoadingId(null);
   }
 
   function handlePlayTrack(track: DailyListenTrack) {
@@ -107,18 +128,27 @@ export function DailyListens() {
     // Stop whatever was playing first
     stopAudio();
 
-    // Kill any lingering speech synthesis dead
+    // Kill any lingering speech synthesis
     if (typeof window !== "undefined" && "speechSynthesis" in window) {
       window.speechSynthesis.cancel();
     }
 
     setPlayingId(track.id);
+    setLoadingId(track.id);
     setSecondsElapsed(0);
 
     // Direct pre-rendered high-quality audio file
     const audioUrl = `/audio/daily-listens/${track.id}.mp3`;
     const audio = new Audio(audioUrl);
     audioElementRef.current = audio;
+
+    audio.oncanplay = () => {
+      setLoadingId(null);
+    };
+
+    audio.onplaying = () => {
+      setLoadingId(null);
+    };
 
     audio.ontimeupdate = () => {
       setSecondsElapsed(Math.floor(audio.currentTime));
@@ -140,7 +170,7 @@ export function DailyListens() {
 
     audio.play().catch((err) => {
       console.warn("Audio play prevented:", err);
-      // Do NOT trigger speech synthesis to avoid robotic dual audio
+      setLoadingId(null);
     });
   }
 
@@ -149,12 +179,6 @@ export function DailyListens() {
     setActiveTrack(track);
     setShowDrawer(true);
   }
-
-  useEffect(() => {
-    return () => {
-      stopAudio();
-    };
-  }, []);
 
   function formatTime(secs: number) {
     const m = Math.floor(secs / 60);
@@ -259,14 +283,26 @@ export function DailyListens() {
                 <button
                   type="button"
                   onClick={() => handlePlayTrack(track)}
+                  disabled={loadingId === track.id}
                   className={`flex items-center gap-1.5 rounded-xl px-3.5 py-2 text-xs font-bold transition-all shadow-sm ${
-                    isCurrentPlaying
+                    loadingId === track.id
+                      ? "bg-[var(--gold)]/70 text-black cursor-wait"
+                      : isCurrentPlaying
                       ? "bg-amber-500 text-black animate-pulse"
                       : "bg-[var(--gold)] text-black hover:brightness-110"
                   }`}
                 >
-                  <span>{isCurrentPlaying ? "⏸ Pause" : "▶ Listen"}</span>
-                  <span className="font-mono text-[10px] opacity-80">({track.durationLabel})</span>
+                  {loadingId === track.id ? (
+                    <span className="flex items-center gap-1.5">
+                      <span className="inline-block animate-spin">⏳</span>
+                      <span>Buffering...</span>
+                    </span>
+                  ) : (
+                    <>
+                      <span>{isCurrentPlaying ? "⏸ Pause" : "▶ Listen"}</span>
+                      <span className="font-mono text-[10px] opacity-80">({track.durationLabel})</span>
+                    </>
+                  )}
                 </button>
               </div>
             </div>

@@ -17,22 +17,23 @@ export function PastoralAudioBanner({ homily, scriptureReference }: Props) {
 
   const durationSeconds = 120; // 2 minutes
   const progressTimerRef = useRef<NodeJS.Timeout | null>(null);
-  const utteranceRef = useRef<SpeechSynthesisUtterance | null>(null);
+  const sentenceIndexRef = useRef(0);
+  const isPlayingRef = useRef(false);
 
-  function startAudio() {
-    if (typeof window === "undefined" || !("speechSynthesis" in window)) {
-      return;
+  // Pre-warm SpeechSynthesis voices on mount to avoid initial 10-30s browser voice load freeze
+  useEffect(() => {
+    if (typeof window !== "undefined" && "speechSynthesis" in window) {
+      window.speechSynthesis.getVoices();
+      window.speechSynthesis.onvoiceschanged = () => {
+        window.speechSynthesis.getVoices();
+      };
     }
+  }, []);
 
-    window.speechSynthesis.cancel();
-
-    const utterance = new SpeechSynthesisUtterance(homily.audioScript);
-    utterance.rate = 0.86; // Contemplative, measured church father pace
-    utterance.pitch = 0.88; // Deeper, warm pastoral resonance
-
-    // Select the warmest, deepest natural voice available
+  function getBestVoice(): SpeechSynthesisVoice | null {
+    if (typeof window === "undefined" || !("speechSynthesis" in window)) return null;
     const voices = window.speechSynthesis.getVoices();
-    const churchFatherVoice =
+    return (
       voices.find(
         (v) =>
           v.lang.startsWith("en") &&
@@ -45,34 +46,77 @@ export function PastoralAudioBanner({ homily, scriptureReference }: Props) {
             v.name.includes("David")),
       ) ||
       voices.find((v) => v.lang.startsWith("en")) ||
-      null;
+      null
+    );
+  }
 
-    if (churchFatherVoice) {
-      utterance.voice = churchFatherVoice;
-    }
-
-    utterance.onstart = () => {
-      setIsPlaying(true);
-      triggerHaptic("light");
-    };
-
-    utterance.onend = () => {
+  // Speak sentences in sequential chunks to avoid Chromium SpeechDispatcher 40-sec deadlock
+  function speakSentence(sentences: string[], index: number) {
+    if (!isPlayingRef.current || index >= sentences.length) {
       setIsPlaying(false);
+      isPlayingRef.current = false;
       setProgress(100);
       setSecondsElapsed(durationSeconds);
       if (progressTimerRef.current) clearInterval(progressTimerRef.current);
+      return;
+    }
+
+    sentenceIndexRef.current = index;
+    const text = sentences[index];
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.rate = 0.88;
+    utterance.pitch = 0.90;
+
+    const voice = getBestVoice();
+    if (voice) {
+      utterance.voice = voice;
+    }
+
+    utterance.onend = () => {
+      if (isPlayingRef.current) {
+        speakSentence(sentences, index + 1);
+      }
     };
 
     utterance.onerror = () => {
-      setIsPlaying(false);
-      if (progressTimerRef.current) clearInterval(progressTimerRef.current);
+      // Move to next sentence on minor speech error
+      if (isPlayingRef.current && index + 1 < sentences.length) {
+        speakSentence(sentences, index + 1);
+      } else {
+        setIsPlaying(false);
+        isPlayingRef.current = false;
+        if (progressTimerRef.current) clearInterval(progressTimerRef.current);
+      }
     };
 
-    utteranceRef.current = utterance;
+    window.speechSynthesis.resume();
     window.speechSynthesis.speak(utterance);
-    setIsPlaying(true);
+  }
 
-    // Simulated 2-min audio progress timer
+  function startAudio() {
+    if (typeof window === "undefined" || !("speechSynthesis" in window)) {
+      return;
+    }
+
+    window.speechSynthesis.cancel();
+    window.speechSynthesis.resume();
+
+    // Split text into natural sentence chunks
+    const sentences = homily.audioScript
+      .split(/(?<=[.?!;])\s+/)
+      .map((s) => s.trim())
+      .filter(Boolean);
+
+    if (sentences.length === 0) return;
+
+    isPlayingRef.current = true;
+    setIsPlaying(true);
+    triggerHaptic("light");
+
+    // Start speaking chunk 0 immediately
+    speakSentence(sentences, 0);
+
+    // Progress timer
     if (progressTimerRef.current) clearInterval(progressTimerRef.current);
     progressTimerRef.current = setInterval(() => {
       setSecondsElapsed((prev) => {
@@ -84,10 +128,11 @@ export function PastoralAudioBanner({ homily, scriptureReference }: Props) {
   }
 
   function pauseAudio() {
+    isPlayingRef.current = false;
+    setIsPlaying(false);
     if (typeof window !== "undefined" && "speechSynthesis" in window) {
       window.speechSynthesis.cancel();
     }
-    setIsPlaying(false);
     if (progressTimerRef.current) clearInterval(progressTimerRef.current);
     triggerHaptic("light");
   }
@@ -111,6 +156,7 @@ export function PastoralAudioBanner({ homily, scriptureReference }: Props) {
 
   useEffect(() => {
     return () => {
+      isPlayingRef.current = false;
       if (typeof window !== "undefined" && "speechSynthesis" in window) {
         window.speechSynthesis.cancel();
       }
@@ -139,113 +185,122 @@ export function PastoralAudioBanner({ homily, scriptureReference }: Props) {
               <span className="rounded-full bg-[var(--gold)]/15 border border-[var(--gold)]/30 px-2.5 py-0.5 text-[11px] font-bold uppercase tracking-wider text-[var(--gold)]">
                 {homily.preacher}
               </span>
-              <span className="text-xs text-[var(--muted)]">·</span>
-              <span className="text-xs font-semibold text-[var(--muted)]">
-                {homily.duration} Pastoral Counsel
+              <span className="text-xs text-[var(--muted)] font-medium">·</span>
+              <span className="text-xs text-[var(--gold)] font-semibold">
+                {homily.duration || "2 min"} Pastoral Homily
               </span>
               {scriptureReference ? (
                 <>
-                  <span className="text-xs text-[var(--muted)]">·</span>
-                  <span className="text-xs font-semibold text-emerald-400">
-                    {scriptureReference}
-                  </span>
+                  <span className="text-xs text-[var(--muted)] font-medium">·</span>
+                  <span className="text-xs text-[var(--muted)] font-mono">{scriptureReference}</span>
                 </>
               ) : null}
             </div>
-            <h2 className="font-display text-lg sm:text-xl font-bold text-[var(--ink)] tracking-tight mt-1">
+            <h3 className="font-display text-lg sm:text-xl font-bold text-[var(--ink)] mt-1 tracking-tight">
               {homily.title}
-            </h2>
-            <p className="text-xs text-[var(--muted)] mt-0.5">
-              Practical biblical counsel spoken in a church father&apos;s pastoral tone.
-            </p>
+            </h3>
           </div>
         </div>
 
-        {/* Audio Player Controls */}
-        <div className="flex items-center gap-2.5 shrink-0 self-end md:self-auto">
+        {/* Master Audio Control Buttons */}
+        <div className="flex items-center gap-2.5 self-start md:self-auto shrink-0">
           <button
             type="button"
             onClick={() => handleSkip(-15)}
+            className="pressable rounded-xl border border-[var(--line)] bg-[var(--canvas-1)] p-2.5 text-xs text-[var(--muted)] hover:border-[var(--gold)] hover:text-[var(--gold)] transition-all"
             title="Rewind 15 seconds"
-            className="pressable flex h-9 w-9 items-center justify-center rounded-full border border-[var(--line)] bg-black/5 dark:bg-white/5 text-xs text-[var(--muted)] hover:text-[var(--ink)] transition-all"
           >
-            -15s
+            ↺ 15s
           </button>
 
           <button
             type="button"
             onClick={togglePlay}
-            aria-label={isPlaying ? "Pause homily audio" : "Play homily audio"}
-            className="pressable flex h-12 w-12 items-center justify-center rounded-full bg-[var(--gold)] text-black font-bold text-lg shadow-lg shadow-[var(--gold)]/20 hover:brightness-110 transition-all active:scale-95"
+            className={`pressable flex items-center gap-2 rounded-2xl px-5 py-3 text-sm font-bold shadow-lg transition-all active:scale-95 ${
+              isPlaying
+                ? "bg-amber-500 text-black shadow-amber-500/25 animate-pulse"
+                : "bg-gradient-to-r from-[var(--gold)] to-amber-500 text-black shadow-[var(--gold)]/20 hover:brightness-110"
+            }`}
           >
-            {isPlaying ? "⏸" : "▶"}
+            <span className="text-base">{isPlaying ? "⏸" : "▶"}</span>
+            <span>{isPlaying ? "Pause Reflection" : "Listen (2 Min)"}</span>
           </button>
 
           <button
             type="button"
             onClick={() => handleSkip(15)}
+            className="pressable rounded-xl border border-[var(--line)] bg-[var(--canvas-1)] p-2.5 text-xs text-[var(--muted)] hover:border-[var(--gold)] hover:text-[var(--gold)] transition-all"
             title="Fast forward 15 seconds"
-            className="pressable flex h-9 w-9 items-center justify-center rounded-full border border-[var(--line)] bg-black/5 dark:bg-white/5 text-xs text-[var(--muted)] hover:text-[var(--ink)] transition-all"
           >
-            +15s
-          </button>
-
-          <button
-            type="button"
-            onClick={() => {
-              triggerHaptic("selection");
-              setShowTranscript((p) => !p);
-            }}
-            className="pressable ml-1 rounded-xl border border-[var(--line)] bg-black/5 dark:bg-white/5 px-3 py-2 text-xs font-semibold text-[var(--gold)] hover:bg-[var(--gold)]/10 transition-all"
-          >
-            {showTranscript ? "Hide Transcript" : "Counsel Transcript"}
+            15s ↻
           </button>
         </div>
       </div>
 
-      {/* Progress Bar & Scrub Timeline */}
-      <div className="mt-4 flex items-center gap-3">
-        <span className="text-[11px] font-mono font-medium text-[var(--muted)]">
-          {formatTime(secondsElapsed)}
-        </span>
-        <div className="relative h-2 flex-1 overflow-hidden rounded-full bg-black/10 dark:bg-white/10">
+      {/* Progress Bar & Timestamp */}
+      <div className="mt-4 pt-3 border-t border-[var(--line)]">
+        <div className="flex items-center justify-between text-[11px] font-mono text-[var(--muted)] mb-1.5">
+          <span className="flex items-center gap-1.5 font-sans">
+            <span className="h-1.5 w-1.5 rounded-full bg-[var(--gold)] animate-pulse" />
+            <span>Spoken Counsel &amp; Prayer</span>
+          </span>
+          <span>
+            {formatTime(secondsElapsed)} / {formatTime(durationSeconds)}
+          </span>
+        </div>
+
+        {/* Seek / Progress Track */}
+        <div
+          className="relative h-2 w-full overflow-hidden rounded-full bg-black/10 dark:bg-white/10 cursor-pointer"
+          onClick={(e) => {
+            const rect = e.currentTarget.getBoundingClientRect();
+            const clickX = e.clientX - rect.left;
+            const pct = Math.max(0, Math.min(1, clickX / rect.width));
+            const newSec = Math.floor(pct * durationSeconds);
+            setSecondsElapsed(newSec);
+            setProgress(pct * 100);
+          }}
+        >
           <div
-            className="h-full bg-gradient-to-r from-amber-500 to-yellow-400 transition-all duration-300"
+            className="h-full bg-gradient-to-r from-[var(--gold)] to-amber-500 transition-all duration-300 rounded-full"
             style={{ width: `${progress}%` }}
           />
         </div>
-        <span className="text-[11px] font-mono font-medium text-[var(--muted)]">
-          {homily.duration}
-        </span>
       </div>
 
-      {/* Expandable Practical Tips & Preaching Transcript */}
-      {showTranscript ? (
-        <div className="mt-5 border-t border-[var(--line)] pt-4 animate-fade-in text-sm text-[var(--ink)] space-y-4">
-          <div className="rounded-2xl border border-[var(--gold)]/30 bg-[var(--gold)]/10 p-4">
-            <span className="text-xs font-bold uppercase tracking-wider text-[var(--gold)]">
-              📌 Practical Pastoral Guidance:
-            </span>
-            <ul className="mt-2 space-y-1.5 text-xs sm:text-sm text-[var(--ink)]">
-              {homily.practicalTips.map((tip, idx) => (
-                <li key={idx} className="flex items-start gap-2">
-                  <span className="text-[var(--gold)] font-bold">·</span>
-                  <span>{tip}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div>
-            <span className="text-xs font-bold uppercase tracking-wider text-[var(--muted)]">
-              Full Spoken Homily:
-            </span>
-            <p className="mt-2 font-serif text-sm sm:text-base leading-relaxed text-[var(--muted)] italic bg-black/5 dark:bg-white/5 p-4 rounded-2xl border border-[var(--line)]">
-              &ldquo;{homily.audioScript}&rdquo;
-            </p>
-          </div>
+      {/* Practical Action Steps Accordion / Callout */}
+      <div className="mt-4 rounded-2xl border border-[var(--gold)]/20 bg-[var(--canvas-1)] p-4">
+        <div className="flex items-center justify-between">
+          <span className="text-xs font-bold uppercase tracking-wider text-[var(--gold)] flex items-center gap-1.5">
+            <span>✨</span>
+            <span>Church Father Pastoral Prescriptions for Today:</span>
+          </span>
+          <button
+            type="button"
+            onClick={() => setShowTranscript(!showTranscript)}
+            className="text-xs font-semibold text-[var(--muted)] hover:text-[var(--gold)] transition-colors underline decoration-dotted"
+          >
+            {showTranscript ? "Hide Transcript" : "View Full Spoken Transcript"}
+          </button>
         </div>
-      ) : null}
+
+        {/* 3 Practical Life Takeaway Bullets */}
+        <ul className="mt-2.5 space-y-1.5 text-xs text-[var(--ink)]">
+          {homily.practicalTips.map((tip, idx) => (
+            <li key={idx} className="flex items-start gap-2">
+              <span className="text-[var(--gold)] font-bold mt-0.5">•</span>
+              <span className="leading-relaxed">{tip}</span>
+            </li>
+          ))}
+        </ul>
+
+        {/* Optional Expandable Transcript */}
+        {showTranscript && (
+          <div className="mt-3.5 pt-3 border-t border-[var(--line)] text-xs text-[var(--muted)] leading-relaxed italic animate-fade-in font-serif">
+            &ldquo;{homily.audioScript}&rdquo;
+          </div>
+        )}
+      </div>
     </aside>
   );
 }

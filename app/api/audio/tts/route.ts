@@ -43,7 +43,7 @@ export async function GET(req: NextRequest) {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          model: "tts-1-hd",
+          model: "tts-1",
           voice: voice || "onyx", // onyx is the deep, warm baritone podcast voice
           input: text,
           response_format: "mp3",
