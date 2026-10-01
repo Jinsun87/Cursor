@@ -12,7 +12,8 @@ import { getServerSupabase } from "@/lib/supabase/server";
  * one device and browse on another. Google sign-in returns a `code`.
  */
 export async function GET(request: NextRequest) {
-  const { searchParams, origin } = request.nextUrl;
+  const { searchParams } = request.nextUrl;
+  const origin = requestOrigin(request);
   const next = safeNext(searchParams.get("next"));
   const tokenHash = searchParams.get("token_hash");
   const type = searchParams.get("type") as EmailOtpType | null;
@@ -29,4 +30,14 @@ export async function GET(request: NextRequest) {
     return NextResponse.redirect(`${origin}/login?error=link`);
   }
   return NextResponse.redirect(`${origin}${next}`);
+}
+
+/**
+ * The origin the visitor used. `request.nextUrl.origin` reflects the bind
+ * address in dev (`next dev --hostname 0.0.0.0`), which browsers can't open.
+ */
+function requestOrigin(request: NextRequest): string {
+  const host = request.headers.get("x-forwarded-host") ?? request.headers.get("host");
+  const proto = request.headers.get("x-forwarded-proto") ?? request.nextUrl.protocol.replace(":", "");
+  return host ? `${proto}://${host}` : request.nextUrl.origin;
 }
