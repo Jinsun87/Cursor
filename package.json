@@ -16,11 +16,13 @@
   "dependencies": {
     "@paddle/paddle-js": "^1.6.5",
     "@paddle/paddle-node-sdk": "^3.10.0",
+    "@remotion/player": "4.0.532",
     "@vercel/analytics": "^2.0.1",
     "google-auth-library": "^11.1.0",
     "next": "^15.5.2",
     "react": "^19.1.1",
-    "react-dom": "^19.1.1"
+    "react-dom": "^19.1.1",
+    "remotion": "4.0.532"
   },
   "devDependencies": {
     "@playwright/test": "^1.55.0",
