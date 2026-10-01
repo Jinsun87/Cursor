@@ -21,11 +21,15 @@ function getPriceAmounts(prices: PricePreviewResponse): PaddlePrices {
   }, {});
 }
 
+/**
+ * Localized prices. Paddle.js detects the visitor's country from their IP in
+ * the browser, so the pricing page can stay static and CDN-cached.
+ */
 export function usePaddlePrices(
   paddle: Paddle | undefined | null,
-  country?: string,
-): { prices: PaddlePrices; loading: boolean; error: Error | null } {
+): { prices: PaddlePrices; country: string | null; loading: boolean; error: Error | null } {
   const [prices, setPrices] = useState<PaddlePrices>({});
+  const [country, setCountry] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
 
@@ -38,14 +42,7 @@ export function usePaddlePrices(
       return;
     }
 
-    // If country is absent or an internal sentinel like 'OTHERS'/'UNKNOWN',
-    // do NOT pass address/countryCode — Paddle auto-detects from IP.
-    const isExplicitCountry = country && country !== "OTHERS" && country !== "UNKNOWN" && country.trim().length === 2;
-
-    const params: Partial<PricePreviewParams> = {
-      items: lineItems,
-      ...(isExplicitCountry ? { address: { countryCode: country as any } } : {}),
-    };
+    const params: Partial<PricePreviewParams> = { items: lineItems };
 
     setLoading(true);
     setError(null);
@@ -54,6 +51,7 @@ export function usePaddlePrices(
       .PricePreview(params as PricePreviewParams)
       .then((response) => {
         setPrices((prev) => ({ ...prev, ...getPriceAmounts(response) }));
+        setCountry(response.data.address?.countryCode ?? null);
         setLoading(false);
       })
       .catch((err) => {
@@ -61,7 +59,7 @@ export function usePaddlePrices(
         setError(err instanceof Error ? err : new Error(String(err)));
         setLoading(false);
       });
-  }, [country, paddle]);
+  }, [paddle]);
 
-  return { prices, loading, error };
+  return { prices, country, loading, error };
 }

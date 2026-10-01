@@ -1,8 +1,13 @@
 import { notFound } from "next/navigation";
-import { getQuiz } from "@/lib/catalog";
+import { QUIZZES, getQuiz } from "@/lib/catalog";
 import { QuizRunner } from "@/components/QuizRunner";
 import { EbookRewardBanner } from "@/components/EbookRewardBanner";
 import Link from "next/link";
+
+// Pre-render every quiz at build time so landing pages are served from the CDN.
+export function generateStaticParams() {
+  return QUIZZES.map((quiz) => ({ slug: quiz.slug }));
+}
 
 export default async function QuizPage({
   params,
