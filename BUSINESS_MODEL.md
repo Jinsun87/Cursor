@@ -70,7 +70,7 @@ Same doors as a freemium trivia gym. Conversion still happens on the ad wall and
 - Daily Scripture quiz (UTC rotation)  
 - Quiet room + ad slots that hide for Premium  
 - Local accounts, coins, certificates at 70%  
-- Simulated Premium ($9.99 / $99.99 psychology) and donations  
+- Premium at $4.99/mo or $39.99/yr via Paddle, and donations  
 - Leaderboard and profiles  
 - Original question bank (public-domain biblical and general facts)
 
