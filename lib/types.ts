@@ -86,18 +86,26 @@ export type Attempt = {
   completedAt: string;
 };
 
+/**
+ * The signed-in reader. Identity and Premium come from the server (Supabase +
+ * Paddle webhook); coins, attempts, and certificates are still kept in this
+ * browser per account until progress sync lands.
+ */
 export type User = {
+  id: string;
   email: string;
   username: string;
-  password: string;
-  coins: number;
+  newsletter: boolean;
+  createdAt: string;
   premium: boolean;
   premiumPlan?: "monthly" | "annual";
-  createdAt: string;
+  /** Paddle scheduled change, e.g. "cancel" when Premium ends at the period end. */
+  premiumScheduledChange?: string;
+  premiumPeriodEnd?: string;
+  coins: number;
   attempts: Attempt[];
   masteredSeries: string[];
   donatedCents: number;
-  newsletter: boolean;
 };
 
 export type AppState = {

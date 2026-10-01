@@ -59,6 +59,12 @@ export function PricingPageClient({ detectedCountry }: Props) {
       return;
     }
 
+    // Checkout must be tied to an account so the webhook can grant Premium.
+    if (!user) {
+      window.location.href = "/register?next=/pricing";
+      return;
+    }
+
     if (!paddle) {
       alert("Payment gateway is initializing. Please try again in a moment.");
       return;
@@ -69,19 +75,19 @@ export function PricingPageClient({ detectedCountry }: Props) {
     try {
       paddle.Checkout.open({
         items: [{ priceId, quantity: 1 }],
-        customer: user?.email ? { email: user.email } : undefined,
+        customer: { email: user.email },
         customData: {
           tierName: tier.name,
           frequency,
-          userEmail: user?.email || "",
-          userId: user?.username || "",
+          userId: user.id,
+          userEmail: user.email,
         },
         settings: {
           displayMode: "overlay",
           theme: "dark",
           variant: "one-page",
           successUrl: `${window.location.origin}/welcome`,
-          allowLogout: !user?.email,
+          allowLogout: false,
         },
       });
     } catch (err) {

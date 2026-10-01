@@ -1,0 +1,102 @@
+import type { WalkEpisode } from "./types";
+
+// Script: content/daily-walk/genesis-1.md
+const IMG = "/images/stories/genesis-1";
+
+export const GENESIS_1: WalkEpisode = {
+  slug: "genesis-1",
+  audioDir: "/daily-walk/genesis-1",
+  practice: "Made in God's image",
+  beats: [
+    {
+      kind: "title",
+      id: "b0-open",
+      image: `${IMG}/s1.jpg`,
+      eyebrow: "Daily Walk · Genesis 1",
+      title: "The Creation of the Cosmos",
+      say: "Welcome to today's walk. Find a quiet spot, take a breath… and let's start where the whole story starts. Genesis, chapter one.",
+    },
+    {
+      kind: "verse",
+      id: "b1-v1",
+      image: `${IMG}/s1.jpg`,
+      reference: "Genesis 1:1",
+      text: "In the beginning God created the heavens and the earth.",
+      highlight: "God created",
+      say: "Notice what this first line doesn't do. It doesn't argue that God exists. It doesn't explain where He came from. It just opens with God already at work. And that word, created, is a special one in Hebrew: bara. In the Old Testament, it's only ever used with God as the one doing it. People build and shape. Only God creates like this.",
+    },
+    {
+      kind: "verse",
+      id: "b2-v2",
+      image: `${IMG}/s1.jpg`,
+      reference: "Genesis 1:2",
+      text: "Now the earth was formless and void, and darkness was over the surface of the deep, and the Spirit of God was hovering over the waters.",
+      highlight: "the Spirit of God was hovering",
+      say: "Formless. Empty. Dark. That's the starting point. Not exactly a promising scene. But look who's there. The Spirit of God, hovering. Later in the Bible, the same Hebrew word describes an eagle hovering over its young. It's a picture of closeness and care, not distance. So if some part of your life feels formless right now… this verse says that's exactly the kind of place God likes to begin.",
+    },
+    {
+      kind: "verse",
+      id: "b3-v3",
+      image: `${IMG}/s2.jpg`,
+      reference: "Genesis 1:3",
+      text: "And God said, “Let there be light,” and there was light.",
+      highlight: "Let there be light",
+      say: "No battle. No struggle. God simply speaks… and it is. And here's something easy to miss: the sun doesn't show up until day four. Light comes first, straight from God's word. Before there was anything to see by, there was already light.",
+    },
+    {
+      kind: "verse",
+      id: "b4-v4",
+      image: `${IMG}/s2.jpg`,
+      reference: "Genesis 1:4–5",
+      text: "God saw that the light was good… And there was evening, and there was morning—the first day.",
+      highlight: "there was evening, and there was morning",
+      say: "Did you catch the order? Evening, then morning. In the Hebrew way of counting, a day begins at sundown. You start the day by resting, and the work comes after. It's a small detail, but it's a gentle reminder: the world doesn't depend on you staying awake to hold it together.",
+    },
+    {
+      kind: "verse",
+      id: "b5-v27",
+      image: `${IMG}/s3.jpg`,
+      reference: "Genesis 1:27",
+      text: "So God created man in His own image; in the image of God He created him; male and female He created them.",
+      highlight: "in His own image",
+      say: "In the ancient world, a king would set up statues of himself across his land, his images, to show who was in charge. Genesis takes that idea and hands it to everyone. Not just kings. Every man, every woman. Each person you'll pass today carries the image of God. And yes, that includes you.",
+    },
+    {
+      kind: "verse",
+      id: "b6-v31",
+      image: `${IMG}/s4.jpg`,
+      reference: "Genesis 1:31",
+      text: "And God saw all that He had made, and behold, it was very good.",
+      highlight: "very good",
+      say: "Six times in this chapter, God calls what He's made good. Only now, with people in the picture, does He say very good. Before anything in the story goes wrong, this is God's first word over His world. Very good.",
+    },
+    {
+      kind: "practice",
+      id: "b7-practice",
+      image: `${IMG}/s4.jpg`,
+      label: "Today's practice",
+      card: "Pick one person. Quietly think: made in God's image.",
+      say: "So here's one small thing to try today. Pick one person. Ideally someone who gets under your skin a little. A coworker, a neighbor, maybe someone at home. And when you see them, just think three words, quietly, to yourself: made in God's image. You don't have to say anything or fix anything. Just notice. We'll check in on how it went tomorrow.",
+    },
+    {
+      kind: "prayer",
+      id: "b8-prayer",
+      image: `${IMG}/s4.jpg`,
+      intro: "Let's pray.",
+      lines: [
+        "God of the beginning,",
+        "You spoke light into darkness. Speak into the dark places in me today.",
+        "When I see the person I've chosen, help me see Your image in them,",
+        "and help me believe it's in me too.",
+        "Amen.",
+      ],
+    },
+    {
+      kind: "close",
+      id: "b9-close",
+      image: `${IMG}/s4.jpg`,
+      lines: ["Walk complete ✓", "Today's practice: made in God's image", "Next · Genesis 3 · The Fall & The Ancient Promise"],
+      say: "That's today's walk. Next time, the story takes a turn. See you then.",
+    },
+  ],
+};

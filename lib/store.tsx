@@ -9,36 +9,46 @@ import {
   useState,
   type ReactNode,
 } from "react";
+import type { User as AuthUser } from "@supabase/supabase-js";
 import type { Attempt, User } from "./types";
 import { getQuiz, getSeries } from "./catalog";
 import {
   PREMIUM_COIN_GRANT,
-  SIGNUP_COINS,
   coinsForAttempt,
   coinsForDonation,
   DEFAULT_COMPLETE_COINS,
   masteryFromReview,
 } from "./economy";
+import { hasPremium, planForPrice, primarySubscription, type SubscriptionRow } from "./entitlement";
+import { loadProgress, saveProgress, scrubLegacyPasswords, type LocalProgress } from "./local-progress";
+import { getBrowserSupabase } from "./supabase/client";
 
-const STORAGE_KEY = "lampstand-users-v1";
-const SESSION_KEY = "lampstand-session-v1";
+type SignUpInput = {
+  email: string;
+  username: string;
+  newsletter: boolean;
+  /** Optional: without one, the account signs in by email link only. */
+  password?: string;
+  next?: string;
+};
 
 type Store = {
   user: User | null;
   ready: boolean;
-  register: (input: {
-    email: string;
-    username: string;
-    password: string;
-    newsletter: boolean;
-  }) => string | null;
-  login: (email: string, password: string) => string | null;
-  logout: () => void;
+  /** False when Supabase keys are not configured (local dev / CI). */
+  accountsAvailable: boolean;
+  sendSignInLink: (email: string, next?: string) => Promise<string | null>;
+  signInWithPassword: (email: string, password: string) => Promise<string | null>;
+  signInWithGoogle: (next?: string) => Promise<string | null>;
+  /** Resolves to an error message, or null when the confirmation email was sent / user is signed in. */
+  signUp: (input: SignUpInput) => Promise<{ error: string | null; signedIn: boolean }>;
+  logout: () => Promise<void>;
+  /** Re-read profile and subscription from the server (e.g. after checkout). */
+  refreshAccount: () => Promise<User | null>;
   recordAttempt: (quizSlug: string, score: number, total: number) => {
     coinsEarned: number;
     mastered?: string;
   };
-  upgrade: (plan: "monthly" | "annual") => void;
   donate: (cents: number) => void;
   spendCoins: (amount: number) => boolean;
   bestScore: (quizSlug: string) => Attempt | undefined;
@@ -53,129 +63,176 @@ type Store = {
 
 const Ctx = createContext<Store | null>(null);
 
-function loadUsers(): User[] {
-  if (typeof window === "undefined") return [];
-  try {
-    return JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]") as User[];
-  } catch {
-    return [];
-  }
+const UNAVAILABLE = "Accounts are not available right now. Please try again later.";
+
+const PRICE_IDS = {
+  monthly: [
+    process.env.NEXT_PUBLIC_PADDLE_MONTHLY_PRICE_ID,
+    process.env.NEXT_PUBLIC_PADDLE_STARTER_MONTHLY_PRICE_ID,
+    process.env.NEXT_PUBLIC_PADDLE_ADVANCED_MONTHLY_PRICE_ID,
+  ].filter((id): id is string => Boolean(id)),
+  annual: [
+    process.env.NEXT_PUBLIC_PADDLE_ANNUAL_PRICE_ID,
+    process.env.NEXT_PUBLIC_PADDLE_STARTER_ANNUAL_PRICE_ID,
+    process.env.NEXT_PUBLIC_PADDLE_ADVANCED_ANNUAL_PRICE_ID,
+  ].filter((id): id is string => Boolean(id)),
+};
+
+function confirmUrl(next = "/profile"): string {
+  return `${window.location.origin}/auth/confirm?next=${encodeURIComponent(next)}`;
 }
 
-function saveUsers(users: User[]) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(users));
-}
-
-function seedLeaderboard(): User[] {
-  const existing = loadUsers();
-  if (existing.some((u) => u.email.endsWith("@lampstand.demo"))) return existing;
-  const demos: User[] = [
-    {
-      email: "maple@lampstand.demo",
-      username: "MapleMind",
-      password: "demo",
-      coins: 1840,
-      premium: true,
-      premiumPlan: "annual",
-      createdAt: new Date().toISOString(),
-      attempts: [],
-      masteredSeries: ["bible-foundations"],
-      donatedCents: 2500,
-      newsletter: false,
-    },
-    {
-      email: "ridge@lampstand.demo",
-      username: "RidgeReader",
-      password: "demo",
-      coins: 920,
-      premium: false,
-      createdAt: new Date().toISOString(),
-      attempts: [],
-      masteredSeries: ["survival-essentials"],
-      donatedCents: 0,
-      newsletter: false,
-    },
-    {
-      email: "atlas@lampstand.demo",
-      username: "AtlasText",
-      password: "demo",
-      coins: 610,
-      premium: false,
-      createdAt: new Date().toISOString(),
-      attempts: [],
-      masteredSeries: [],
-      donatedCents: 500,
-      newsletter: false,
-    },
-  ];
-  const merged = [...existing, ...demos];
-  saveUsers(merged);
-  return merged;
+function friendlyAuthError(message: string): string {
+  if (/invalid login credentials/i.test(message)) return "Email or password is incorrect.";
+  if (/email not confirmed/i.test(message)) return "Please open the confirmation link we emailed you first.";
+  if (/rate limit|too many/i.test(message)) return "Too many attempts. Please wait a minute and try again.";
+  if (/signups not allowed|user not found/i.test(message)) return "We couldn't find an account with that email.";
+  return message;
 }
 
 export function AppProvider({ children }: { children: ReactNode }) {
+  const supabase = getBrowserSupabase();
   const [user, setUser] = useState<User | null>(null);
   const [ready, setReady] = useState(false);
 
-  useEffect(() => {
-    const users = seedLeaderboard();
-    const email = localStorage.getItem(SESSION_KEY);
-    if (email) {
-      const found = users.find((u) => u.email === email);
-      if (found) setUser(found);
-    }
-    setReady(true);
-  }, []);
+  const loadAccount = useCallback(
+    async (authUser: AuthUser | null): Promise<User | null> => {
+      if (!supabase || !authUser) {
+        setUser(null);
+        return null;
+      }
 
-  const persist = useCallback((next: User | null) => {
-    setUser(next);
-    const users = loadUsers();
-    if (!next) {
-      localStorage.removeItem(SESSION_KEY);
+      const [{ data: profile }, { data: subs }] = await Promise.all([
+        supabase.from("profiles").select("username, newsletter, created_at").eq("id", authUser.id).maybeSingle(),
+        supabase
+          .from("subscriptions")
+          .select("status, price_id, current_period_end, scheduled_change, paddle_updated_at"),
+      ]);
+      const subscriptions = (subs ?? []) as Pick<
+        SubscriptionRow,
+        "status" | "price_id" | "current_period_end" | "scheduled_change" | "paddle_updated_at"
+      >[];
+      const premium = hasPremium(subscriptions);
+      const primary = primarySubscription(subscriptions);
+      const email = authUser.email ?? "";
+
+      let progress = loadProgress(localStorage, authUser.id, email);
+      if (premium && !progress.premiumGrantClaimed) {
+        progress = { ...progress, coins: progress.coins + PREMIUM_COIN_GRANT, premiumGrantClaimed: true };
+        saveProgress(localStorage, authUser.id, progress);
+      }
+
+      const next: User = {
+        id: authUser.id,
+        email,
+        username: profile?.username ?? email.split("@")[0],
+        newsletter: Boolean(profile?.newsletter),
+        createdAt: profile?.created_at ?? authUser.created_at,
+        premium,
+        premiumPlan: premium ? planForPrice(primary?.price_id, PRICE_IDS) : undefined,
+        premiumScheduledChange: premium ? (primary?.scheduled_change ?? undefined) : undefined,
+        premiumPeriodEnd: premium ? (primary?.current_period_end ?? undefined) : undefined,
+        coins: progress.coins,
+        attempts: progress.attempts,
+        masteredSeries: progress.masteredSeries,
+        donatedCents: progress.donatedCents,
+      };
+      setUser(next);
+      return next;
+    },
+    [supabase],
+  );
+
+  useEffect(() => {
+    scrubLegacyPasswords(localStorage);
+    if (!supabase) {
+      setReady(true);
       return;
     }
-    const idx = users.findIndex((u) => u.email === next.email);
-    if (idx >= 0) users[idx] = next;
-    else users.push(next);
-    saveUsers(users);
-    localStorage.setItem(SESSION_KEY, next.email);
+    // INITIAL_SESSION fires immediately on subscribe. Supabase calls made inside
+    // this callback can deadlock the auth client, so defer the profile load.
+    const { data } = supabase.auth.onAuthStateChange((event, session) => {
+      if (event === "TOKEN_REFRESHED") return;
+      setTimeout(() => {
+        void loadAccount(session?.user ?? null).finally(() => setReady(true));
+      }, 0);
+    });
+    return () => data.subscription.unsubscribe();
+  }, [supabase, loadAccount]);
+
+  /** Write progress fields of the current user to this browser. */
+  const persistProgress = useCallback((next: User) => {
+    setUser(next);
+    const progress: LocalProgress = {
+      coins: next.coins,
+      attempts: next.attempts,
+      masteredSeries: next.masteredSeries,
+      donatedCents: next.donatedCents,
+      // Sticky: the grant is paid once per account even if Premium lapses and returns.
+      premiumGrantClaimed: loadProgress(localStorage, next.id, next.email).premiumGrantClaimed,
+    };
+    saveProgress(localStorage, next.id, progress);
   }, []);
 
-  const register: Store["register"] = (input) => {
-    const users = loadUsers();
-    if (users.some((u) => u.email.toLowerCase() === input.email.toLowerCase())) {
-      return "That email already has an account.";
-    }
-    if (users.some((u) => u.username.toLowerCase() === input.username.toLowerCase())) {
-      return "That username is taken.";
-    }
-    const next: User = {
-      email: input.email.trim(),
-      username: input.username.trim(),
-      password: input.password,
-      coins: SIGNUP_COINS,
-      premium: false,
-      createdAt: new Date().toISOString(),
-      attempts: [],
-      masteredSeries: [],
-      donatedCents: 0,
-      newsletter: input.newsletter,
+  const sendSignInLink: Store["sendSignInLink"] = async (email, next) => {
+    if (!supabase) return UNAVAILABLE;
+    const { error } = await supabase.auth.signInWithOtp({
+      email: email.trim(),
+      options: { shouldCreateUser: false, emailRedirectTo: confirmUrl(next) },
+    });
+    return error ? friendlyAuthError(error.message) : null;
+  };
+
+  const signInWithPassword: Store["signInWithPassword"] = async (email, password) => {
+    if (!supabase) return UNAVAILABLE;
+    const { error } = await supabase.auth.signInWithPassword({ email: email.trim(), password });
+    return error ? friendlyAuthError(error.message) : null;
+  };
+
+  const signInWithGoogle: Store["signInWithGoogle"] = async (next) => {
+    if (!supabase) return UNAVAILABLE;
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider: "google",
+      options: { redirectTo: confirmUrl(next) },
+    });
+    return error ? friendlyAuthError(error.message) : null;
+  };
+
+  const signUp: Store["signUp"] = async (input) => {
+    if (!supabase) return { error: UNAVAILABLE, signedIn: false };
+    const username = input.username.trim();
+    const { data: available, error: checkError } = await supabase.rpc("username_available", {
+      candidate: username,
+    });
+    if (checkError) return { error: "Could not check that username. Please try again.", signedIn: false };
+    if (!available) return { error: "That username is taken.", signedIn: false };
+
+    const options = {
+      emailRedirectTo: confirmUrl(input.next),
+      data: { username, newsletter: input.newsletter },
     };
-    persist(next);
-    return null;
+    if (input.password) {
+      const { data, error } = await supabase.auth.signUp({ email: input.email.trim(), password: input.password, options });
+      if (error) return { error: friendlyAuthError(error.message), signedIn: false };
+      return { error: null, signedIn: Boolean(data.session) };
+    }
+    const { error } = await supabase.auth.signInWithOtp({
+      email: input.email.trim(),
+      options: { ...options, shouldCreateUser: true },
+    });
+    return { error: error ? friendlyAuthError(error.message) : null, signedIn: false };
   };
 
-  const login: Store["login"] = (email, password) => {
-    const users = loadUsers();
-    const found = users.find(
-      (u) => u.email.toLowerCase() === email.toLowerCase() && u.password === password,
-    );
-    if (!found) return "Email or password is incorrect.";
-    persist(found);
-    return null;
+  const logout = async () => {
+    await supabase?.auth.signOut();
+    setUser(null);
   };
 
-  const logout = () => persist(null);
+  const refreshAccount = useCallback(async () => {
+    if (!supabase) return null;
+    const { data } = await supabase.auth.getUser();
+    return loadAccount(data.user);
+  }, [supabase, loadAccount]);
 
   const recordAttempt: Store["recordAttempt"] = (quizSlug, score, total) => {
     if (!user) return { coinsEarned: 0 };
@@ -205,7 +262,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
         mastered = result.masteredTitle;
       }
     }
-    persist({
+    persistProgress({
       ...user,
       coins: user.coins + coinsEarned,
       attempts,
@@ -214,19 +271,9 @@ export function AppProvider({ children }: { children: ReactNode }) {
     return { coinsEarned, mastered };
   };
 
-  const upgrade: Store["upgrade"] = (plan) => {
-    if (!user) return;
-    persist({
-      ...user,
-      premium: true,
-      premiumPlan: plan,
-      coins: user.coins + PREMIUM_COIN_GRANT,
-    });
-  };
-
   const donate: Store["donate"] = (cents) => {
     if (!user) return;
-    persist({
+    persistProgress({
       ...user,
       donatedCents: user.donatedCents + cents,
       coins: user.coins + coinsForDonation(cents),
@@ -235,7 +282,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
 
   const spendCoins: Store["spendCoins"] = (amount) => {
     if (!user || amount <= 0 || user.coins < amount) return false;
-    persist({ ...user, coins: user.coins - amount });
+    persistProgress({ ...user, coins: user.coins - amount });
     return true;
   };
 
@@ -270,17 +317,20 @@ export function AppProvider({ children }: { children: ReactNode }) {
     () => ({
       user,
       ready,
-      register,
-      login,
+      accountsAvailable: Boolean(supabase),
+      sendSignInLink,
+      signInWithPassword,
+      signInWithGoogle,
+      signUp,
       logout,
+      refreshAccount,
       recordAttempt,
-      upgrade,
       donate,
       spendCoins,
       bestScore,
       seriesProgress,
     }),
-    [user, ready],
+    [user, ready, supabase, refreshAccount],
   );
 
   return <Ctx.Provider value={value}>{children}</Ctx.Provider>;
@@ -290,15 +340,4 @@ export function useApp() {
   const ctx = useContext(Ctx);
   if (!ctx) throw new Error("useApp must be used within AppProvider");
   return ctx;
-}
-
-export function listPublicProfiles(): Pick<User, "username" | "coins" | "premium" | "masteredSeries" | "attempts">[] {
-  if (typeof window === "undefined") return [];
-  return loadUsers().map((u) => ({
-    username: u.username,
-    coins: u.coins,
-    premium: u.premium,
-    masteredSeries: u.masteredSeries,
-    attempts: u.attempts,
-  }));
 }

@@ -36,28 +36,23 @@ test("a guest can finish a quiz and see a score", async ({ page }) => {
   await expect(page.getByRole("heading", { name: /capital of california/i })).toBeVisible();
 });
 
-test("register, secret ads, premium grant, then ads drop", async ({ page }) => {
-  const id = `t${Date.now()}`;
-  await page.goto("/register");
-  await page.getByLabel("Email").fill(`${id}@quizforge.test`);
-  await page.getByLabel("Username").fill(id);
-  await page.getByLabel("Password").fill("testpass");
-  await page.getByRole("button", { name: /sign up/i }).click();
-  await expect(page).toHaveURL(/\/profile/);
-  await expect(page.getByTestId("coin-balance")).toHaveText(/^100/);
-
+test("guests see quiet-room ads and need an account before checkout", async ({ page }) => {
   await page.goto("/secret");
   await expect(page.getByTestId("ad-slot")).toBeVisible();
 
   await page.goto("/premium");
-  await page.getByRole("button", { name: /activate simulated premium/i }).click();
-  await expect(page).toHaveURL(/\/profile/);
-  await expect(page.getByTestId("premium-badge")).toBeVisible();
-  await expect(page.getByTestId("coin-balance")).toHaveText(/^5,100|^5100/);
+  await page.getByRole("button", { name: /create a free account to upgrade/i }).click();
+  await expect(page).toHaveURL(/\/register\?next=%2Fpremium|\/register\?next=\/premium/);
+  await expect(page.getByRole("button", { name: /create my account/i })).toBeVisible();
+});
 
-  await page.goto("/secret");
-  await expect(page.getByText(/premium trail is clear/i)).toBeVisible();
-  await expect(page.getByTestId("ad-slot")).toHaveCount(0);
+test("sign-in offers an email link, with a password option", async ({ page }) => {
+  await page.goto("/login");
+  await expect(page.getByRole("button", { name: /email me a sign-in link/i })).toBeVisible();
+  await expect(page.getByLabel("Password")).toHaveCount(0);
+  await page.getByRole("button", { name: /use a password instead/i }).click();
+  await expect(page.getByLabel("Password")).toBeVisible();
+  await expect(page.getByRole("button", { name: /^sign in$/i })).toBeVisible();
 });
 
 test("a guest can resume a sitting after reload", async ({ page }) => {
@@ -94,20 +89,14 @@ test("daily sitting is ten questions", async ({ page }) => {
   await expect(page.getByTestId("choice-0")).toHaveText(/.+/);
 });
 
-test("a signed-in player can buy a 50/50", async ({ page }) => {
-  const id = `t${Date.now()}x`;
-  await page.goto("/register");
-  await page.getByLabel("Email").fill(`${id}@quizforge.test`);
-  await page.getByLabel("Username").fill(id);
-  await page.getByLabel("Password").fill("testpass");
-  await page.getByRole("button", { name: /sign up/i }).click();
-  await expect(page).toHaveURL(/\/profile/);
+test("guests are invited to join before using a 50/50", async ({ page }) => {
   await page.goto("/quizzes/us-capitals");
   await expect(page.getByTestId("choice-0")).toHaveText(/.+/);
-  await expect(page.locator('[data-testid^="choice-"]')).toHaveCount(4);
-  await page.getByTestId("lifeline-5050").click();
-  await expect(page.locator('[data-testid^="choice-"]')).toHaveCount(2);
+  await expect(page.getByTestId("lifeline-5050-locked")).toHaveAttribute("href", "/register");
 });
+
+// Signed-in flows (sign-up, 50/50 purchase, Premium via webhook) need a Supabase
+// test project and Paddle sandbox; see docs/accounts-setup.md.
 
 test("privacy and ads.txt are on the quiz host", async ({ page, request }) => {
   const ads = await request.get("/ads.txt", { maxRedirects: 0 });
