@@ -116,7 +116,7 @@ export default function PremiumPage() {
           }`}
         >
           <p className="text-sm text-pine-400">Monthly</p>
-          <p className="font-display text-3xl">$9.99/mo</p>
+          <p className="font-display text-3xl">$4.99/mo</p>
           <p className="mt-1 text-sm text-parchment/60">Cancel anytime. Full access to all benefits.</p>
         </button>
         <button
@@ -128,9 +128,9 @@ export default function PremiumPage() {
               : "border-pine-700 hover:border-pine-500"
           }`}
         >
-          <p className="text-sm text-pine-400">Annual · two months free</p>
-          <p className="font-display text-3xl">$8.33/mo</p>
-          <p className="mt-1 text-sm text-parchment/60">$99.99 billed annually.</p>
+          <p className="text-sm text-pine-400">Annual · save 33%</p>
+          <p className="font-display text-3xl">$3.33/mo</p>
+          <p className="mt-1 text-sm text-parchment/60">$39.99 billed annually.</p>
         </button>
       </div>
 
@@ -145,7 +145,7 @@ export default function PremiumPage() {
           : user?.premium
             ? "You have Premium ✓"
             : user
-              ? `Subscribe (${plan === "annual" ? "$99.99/yr" : "$9.99/mo"})`
+              ? `Subscribe (${plan === "annual" ? "$39.99/yr" : "$4.99/mo"})`
               : "Create a free account to upgrade"}
       </button>
 
