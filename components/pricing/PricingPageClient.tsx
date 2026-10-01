@@ -8,11 +8,7 @@ import { usePaddlePrices } from "@/hooks/usePaddlePrices";
 import { useApp } from "@/lib/store";
 import { getPaddleEnvironment, getPaddleClientToken } from "@/lib/paddle/client";
 
-interface Props {
-  detectedCountry?: string;
-}
-
-export function PricingPageClient({ detectedCountry }: Props) {
+export function PricingPageClient() {
   const { user } = useApp();
   const [frequency, setFrequency] = useState<"month" | "year">("month");
   const [paddle, setPaddle] = useState<Paddle | null>(null);
@@ -45,7 +41,7 @@ export function PricingPageClient({ detectedCountry }: Props) {
   }, []);
 
   // Fetch localized prices using Paddle.PricePreview
-  const { prices, loading: pricesLoading, error: pricesError } = usePaddlePrices(paddle, detectedCountry);
+  const { prices, country: detectedCountry, loading: pricesLoading, error: pricesError } = usePaddlePrices(paddle);
 
   const handleSubscribe = async (tier: Tier) => {
     const priceId = tier.priceId[frequency];
@@ -147,7 +143,7 @@ export function PricingPageClient({ detectedCountry }: Props) {
           </button>
         </div>
 
-        {detectedCountry && detectedCountry !== "OTHERS" && (
+        {detectedCountry && (
           <p className="mt-3 text-xs text-[var(--muted)]">
             Showing country-localized prices for: <strong className="text-[var(--ink)]">{detectedCountry}</strong>
           </p>
