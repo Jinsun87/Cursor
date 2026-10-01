@@ -1,6 +1,8 @@
 import { NextRequest } from "next/server";
 import { getPaddleInstance } from "@/lib/paddle/get-paddle-instance";
 import { processPaddleWebhookEvent } from "@/lib/paddle/process-webhook";
+import { supabaseSubscriptionStore } from "@/lib/paddle/supabase-subscription-store";
+import { getAdminSupabase } from "@/lib/supabase/server";
 
 export async function POST(request: NextRequest) {
   const signature = request.headers.get("paddle-signature") ?? "";
@@ -30,13 +32,13 @@ export async function POST(request: NextRequest) {
     const eventData = await paddle.webhooks.unmarshal(rawBody, secret, signature);
 
     if (eventData) {
-      await processPaddleWebhookEvent(eventData);
+      const result = await processPaddleWebhookEvent(eventData, supabaseSubscriptionStore(getAdminSupabase()));
+      console.log(`[Paddle Webhook] ${result.eventType} ${result.entityId ?? ""}: ${result.actionTaken}`);
     }
 
-    // Acknowledge fast within Paddle's 5-second delivery SLA
     return Response.json({ received: true });
   } catch (error) {
-    console.error("Paddle webhook signature or unmarshal error:", error);
+    console.error("Paddle webhook error:", error);
     // Non-2xx response tells Paddle to retry on its delivery schedule
     return Response.json({ error: "Webhook processing error" }, { status: 500 });
   }

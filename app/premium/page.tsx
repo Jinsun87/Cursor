@@ -7,7 +7,7 @@ import Link from "next/link";
 import { isPaddleConfigured, openPaddleCheckout } from "@/lib/paddle/client";
 
 export default function PremiumPage() {
-  const { user, upgrade } = useApp();
+  const { user } = useApp();
   const router = useRouter();
   const [plan, setPlan] = useState<"monthly" | "annual">("annual");
   const [isProcessing, setIsProcessing] = useState(false);
@@ -17,7 +17,7 @@ export default function PremiumPage() {
 
   async function checkout() {
     if (!user) {
-      router.push("/register");
+      router.push("/register?next=/premium");
       return;
     }
 
@@ -32,9 +32,10 @@ export default function PremiumPage() {
       const opened = await openPaddleCheckout({
         priceId,
         customerEmail: user.email,
+        // The webhook links the subscription to this account by userId.
         customData: {
+          userId: user.id,
           userEmail: user.email,
-          username: user.username,
           plan,
         },
         onError: (err) => {
@@ -46,17 +47,12 @@ export default function PremiumPage() {
 
       if (!opened) {
         setIsProcessing(false);
-        setErrorMessage("Could not initialize Paddle Checkout. Falling back to local upgrade.");
-        // Fallback to local upgrade if checkout failed to launch
-        upgrade(plan);
-        router.push("/profile");
+        setErrorMessage("Could not open checkout. Please try again in a moment.");
       }
       return;
     }
 
-    // Local / simulated upgrade
-    upgrade(plan);
-    router.push("/profile");
+    setErrorMessage("Payments are not available yet. Please check back soon.");
   }
 
   return (
@@ -68,11 +64,7 @@ export default function PremiumPage() {
             <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
             Paddle Billing Active
           </span>
-        ) : (
-          <span className="inline-flex items-center gap-1.5 rounded-full border border-gold-500/30 bg-gold-500/10 px-3 py-1 text-xs font-medium text-gold-400">
-            Simulated Sandbox Mode
-          </span>
-        )}
+        ) : null}
       </div>
 
       <p className="mt-3 text-parchment/75">
@@ -145,16 +137,16 @@ export default function PremiumPage() {
       <button
         type="button"
         onClick={checkout}
-        disabled={isProcessing}
+        disabled={isProcessing || Boolean(user?.premium)}
         className="btn btn-primary mt-6 w-full md:w-auto"
       >
         {isProcessing
           ? "Opening Checkout…"
-          : user
-            ? paddleActive
-              ? `Subscribe with Paddle (${plan === "annual" ? "$99.99/yr" : "$9.99/mo"})`
-              : "Activate Premium (Demo Mode)"
-            : "Create an account to upgrade"}
+          : user?.premium
+            ? "You have Premium ✓"
+            : user
+              ? `Subscribe (${plan === "annual" ? "$99.99/yr" : "$9.99/mo"})`
+              : "Create a free account to upgrade"}
       </button>
 
       <div className="mt-6 flex items-center gap-2 text-xs text-parchment/50">

@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { ActivationStatus } from "@/components/pricing/ActivationStatus";
 
 export const metadata: Metadata = {
   title: "Welcome to Lampstand Pro — Know the text.",
-  description: "Thank you for subscribing to Lampstand Pro. Your quiet study and mastery benefits are now active.",
+  description: "Thank you for subscribing to Lampstand Pro.",
+  robots: { index: false, follow: false },
 };
 
 export default function WelcomePage() {
@@ -21,18 +23,15 @@ export default function WelcomePage() {
         </svg>
       </div>
 
-      <div className="mt-6 inline-flex items-center gap-1.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3 py-1 text-xs font-semibold text-emerald-400">
-        <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
-        Subscription Confirmed
-      </div>
+      <ActivationStatus />
 
       <h1 className="mt-4 font-display text-4xl sm:text-5xl font-bold text-[var(--ink)] tracking-tight">
         Welcome to Lampstand Pro
       </h1>
 
       <p className="mt-4 text-base sm:text-lg text-[var(--muted)] leading-relaxed">
-        Thank you for supporting the Lampstand Scripture recall mission. Your account has been upgraded with full access to
-        our quiet study room, mastery certificates, and an ad-free experience.
+        Thank you for supporting the Lampstand Scripture recall mission. Premium gives you full access to our quiet
+        study room, mastery certificates, and an ad-free experience.
       </p>
 
       {/* Activated Perks Summary */}

@@ -1,17 +1,32 @@
 "use client";
 
 import Link from "next/link";
+import { useState } from "react";
 import { useApp } from "@/lib/store";
 import { SERIES } from "@/lib/catalog";
 
 export default function ProfilePage() {
   const { user, logout, ready } = useApp();
+  const [portalError, setPortalError] = useState<string | null>(null);
+  const [openingPortal, setOpeningPortal] = useState(false);
+
+  async function manageSubscription() {
+    setOpeningPortal(true);
+    setPortalError(null);
+    const res = await fetch("/api/billing/portal", { method: "POST" });
+    const body = (await res.json().catch(() => ({}))) as { url?: string; error?: string };
+    if (body.url) window.location.href = body.url;
+    else {
+      setPortalError(body.error ?? "Could not open billing. Please try again.");
+      setOpeningPortal(false);
+    }
+  }
 
   if (!ready) return <p>Loading…</p>;
   if (!user) {
     return (
       <p>
-        <Link href="/login" className="text-gold-400">
+        <Link href="/login?next=/profile" className="text-gold-400">
           Log in
         </Link>{" "}
         to see your trail.
@@ -32,6 +47,28 @@ export default function ProfilePage() {
           </span>
         ) : null}
       </div>
+      {user.premium ? (
+        <div data-testid="premium-status" className="mt-6 rounded-2xl border border-gold-500/40 p-4 text-sm">
+          <p className="font-semibold text-gold-400">
+            Premium{user.premiumPlan ? ` · ${user.premiumPlan === "annual" ? "Annual" : "Monthly"}` : ""}
+          </p>
+          {user.premiumPeriodEnd ? (
+            <p className="mt-1 text-parchment/70">
+              {user.premiumScheduledChange === "cancel" ? "Ends" : "Renews"} on{" "}
+              {new Date(user.premiumPeriodEnd).toLocaleDateString(undefined, { dateStyle: "long" })}
+            </p>
+          ) : null}
+          <button
+            type="button"
+            onClick={manageSubscription}
+            disabled={openingPortal}
+            className="mt-3 text-gold-400 underline underline-offset-4"
+          >
+            {openingPortal ? "Opening…" : "Manage subscription (cancel, card, invoices)"}
+          </button>
+          {portalError ? <p className="mt-2 text-red-300">{portalError}</p> : null}
+        </div>
+      ) : null}
       <dl className="mt-8 grid grid-cols-2 gap-4 text-sm">
         <div className="rounded-2xl border border-pine-700 p-4">
           <dt className="text-pine-400">Coins</dt>
@@ -72,7 +109,7 @@ export default function ProfilePage() {
             Upgrade
           </Link>
         ) : null}
-        <button type="button" onClick={logout} className="btn btn-ghost">
+        <button type="button" onClick={() => void logout()} className="btn btn-ghost">
           Log out
         </button>
       </div>

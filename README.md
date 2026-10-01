@@ -21,11 +21,11 @@ CI runs lint, unit tests, Playwright, and production build on every PR (`.github
 
 Open [http://localhost:3000](http://localhost:3000). Use **Light / Dark** in the header to switch theme (defaults to your OS preference).
 
-Demo login after first page load: `maple@lampstand.demo` / `demo`.
+Accounts and Premium need a Supabase project and Paddle keys: see [docs/accounts-setup.md](./docs/accounts-setup.md). Without them the site runs with sign-in disabled.
 
 ## Stack
 
-Next.js 15 (App Router), React 19, Tailwind CSS. Progress lives in `localStorage` so the desk runs without a database.
+Next.js 15 (App Router), React 19, Tailwind CSS. Accounts and Premium status live in Supabase (Premium is written by the Paddle webhook). Coins, quiz history, and reading progress are still kept in `localStorage` per account.
 
 ## Product map
 
