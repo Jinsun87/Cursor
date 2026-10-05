@@ -5,7 +5,7 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { AppProvider } from "@/lib/store";
 import { ThemeProvider } from "@/lib/theme";
-import { siteUrl } from "@/lib/site";
+import { CANONICAL_ORIGIN } from "@/lib/site";
 import { AdSenseHead } from "@/components/AdSenseHead";
 import { EzoicBoot } from "@/components/EzoicBoot";
 import { EzoicHead } from "@/components/EzoicHead";
@@ -26,8 +26,9 @@ const display = Newsreader({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(siteUrl()),
-  title: "Lampstand — Know the text.",
+  // SEO always points at lampstandbible.com, even when served from staging.
+  metadataBase: new URL(CANONICAL_ORIGIN),
+  title: { default: "Lampstand — Know the text.", template: "%s · Lampstand" },
   description:
     "Christian Scripture quizzes and illuminated Bible reading: daily stories, long sittings, coins, and active recall. Not a church and not affiliated with any denomination.",
   manifest: "/manifest.webmanifest",
@@ -36,7 +37,7 @@ export const metadata: Metadata = {
     statusBarStyle: "black-translucent",
     title: "Lampstand",
   },
-  alternates: { canonical: "/" },
+  openGraph: { siteName: "Lampstand", type: "website", locale: "en_US" },
 };
 
 export const viewport = {

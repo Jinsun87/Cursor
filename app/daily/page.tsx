@@ -1,6 +1,14 @@
+import type { Metadata } from "next";
 import { getDailyQuiz } from "@/lib/catalog";
+import { pageMetadata } from "@/lib/seo";
 import { QuizRunner } from "@/components/QuizRunner";
 import Link from "next/link";
+
+export const metadata: Metadata = pageMetadata({
+  title: "Bible Quiz of the Day",
+  description: "Ten new Scripture questions every day, with a short fact after each answer.",
+  path: "/daily",
+});
 
 export default function DailyPage() {
   const quiz = getDailyQuiz();

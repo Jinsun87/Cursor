@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import Link from "next/link";
 
-export const metadata: Metadata = {
-  title: "Refund & Cancellation Policy — Lampstand",
-  description: "Clear refund and cancellation policies for Lampstand Pro subscriptions and gifts.",
-};
+export const metadata: Metadata = pageMetadata({
+  title: "Refund & Cancellation Policy",
+  description: "Lampstand's 14-day money-back guarantee and how to cancel Premium.",
+  path: "/refunds",
+});
 
 export default function RefundPolicyPage() {
   return (
