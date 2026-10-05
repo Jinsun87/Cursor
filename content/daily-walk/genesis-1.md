@@ -41,7 +41,7 @@ The background painting drifts and zooms slowly the whole time.
 
 ## Beat 2 · Genesis 1:2 (≈ 0:45–1:20)
 
-**Screen:** *Now the earth was formless and void, and darkness was over the surface of the deep, and the Spirit of God was hovering over the waters.*
+**Screen:** *Now the earth was formless and void, and darkness was over the surface of the deep. And the Spirit of God was hovering over the surface of the waters.*
 **Gold:** "the Spirit of God was hovering"
 
 **Voice (reads verse, then):**
@@ -67,7 +67,7 @@ The background painting drifts and zooms slowly the whole time.
 
 ## Beat 4 · Genesis 1:4–5 (≈ 1:45–2:15)
 
-**Screen:** *God saw that the light was good… And there was evening, and there was morning—the first day.*
+**Screen:** *And God saw that the light was good… And there was evening, and there was morning—the first day.*
 **Gold:** "there was evening, and there was morning"
 
 **Voice (reads verse, then):**
@@ -93,7 +93,7 @@ The background painting drifts and zooms slowly the whole time.
 
 ## Beat 6 · Genesis 1:31 (≈ 2:55–3:15)
 
-**Screen:** *And God saw all that He had made, and behold, it was very good.*
+**Screen:** *And God looked upon all that He had made, and indeed, it was very good.*
 **Gold:** "very good"
 
 **Voice (reads verse, then):**
@@ -157,5 +157,5 @@ The background painting drifts and zooms slowly the whole time.
   - the age of the earth and how to read the days
   - whether "Let Us" in verse 26 refers to the Trinity (the screen shows only verse 27)
   - creation vs. evolution
-- **Verse text source:** The app's verses read like the Berean Standard Bible, which has been public domain since 2023. Confirm this before publishing, and add a translation credit to the player.
+- **Verse text source:** Berean Standard Bible (public domain), checked word for word against the BSB text of Genesis 1 on 5 October 2026. The app's older chapter text differed in verses 2, 4 and 31 and has been corrected here.
 - **Next walk:** Genesis 3 follows Genesis 1 in the catalog, so the closing line names it.
