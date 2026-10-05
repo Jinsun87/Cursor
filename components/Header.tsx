@@ -5,6 +5,8 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useApp } from "@/lib/store";
 import { useTheme } from "@/lib/theme";
+import { usesNewNav } from "@/lib/nav";
+import { SectionHeader } from "@/components/navigation/SectionHeader";
 
 const links = [
   { href: "/read", label: "Read" },
@@ -16,7 +18,13 @@ const links = [
   { href: "/how-it-works", label: "How to play" },
 ];
 
+/** New four-section header when it is switched on (or on the prototype page); otherwise the current one. */
 export function Header() {
+  const pathname = usePathname();
+  return usesNewNav(pathname) ? <SectionHeader /> : <LegacyHeader />;
+}
+
+function LegacyHeader() {
   const pathname = usePathname();
   const { user } = useApp();
   const { theme, cycle } = useTheme();

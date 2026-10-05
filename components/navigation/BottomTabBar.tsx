@@ -3,6 +3,8 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { triggerHaptic } from "@/lib/haptics";
+import { usesNewNav } from "@/lib/nav";
+import { SectionBottomBar } from "./SectionNav";
 
 interface TabItem {
   label: string;
@@ -77,11 +79,7 @@ const TABS: TabItem[] = [
         stroke="currentColor"
         strokeWidth={active ? "0" : "1.8"}
       >
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25H12"
-        />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25H12" />
       </svg>
     ),
   },
@@ -107,7 +105,13 @@ const TABS: TabItem[] = [
   },
 ];
 
+/** New Today · Walk · Sleep · Breathe · More bar when switched on (or on the prototype page). */
 export function BottomTabBar() {
+  const pathname = usePathname();
+  return usesNewNav(pathname) ? <SectionBottomBar /> : <LegacyBottomTabBar />;
+}
+
+function LegacyBottomTabBar() {
   const pathname = usePathname();
 
   // If in story reader full-screen view (e.g. /read/genesis/1?mode=story or reading),
@@ -121,8 +125,7 @@ export function BottomTabBar() {
     >
       <div className="mx-auto flex max-w-md items-center justify-around px-2">
         {TABS.map((tab) => {
-          const isActive =
-            tab.href === "/" ? isExactRoot : pathname.startsWith(tab.href);
+          const isActive = tab.href === "/" ? isExactRoot : pathname.startsWith(tab.href);
 
           return (
             <Link
@@ -130,9 +133,7 @@ export function BottomTabBar() {
               href={tab.href}
               onClick={() => triggerHaptic("selection")}
               className={`pressable relative flex flex-1 flex-col items-center justify-center py-2 text-center transition-all min-h-[56px] ${
-                isActive
-                  ? "text-[var(--gold)] font-bold"
-                  : "text-[var(--muted)] hover:text-[var(--ink)]"
+                isActive ? "text-[var(--gold)] font-bold" : "text-[var(--muted)] hover:text-[var(--ink)]"
               }`}
             >
               {/* Tab Icon */}
