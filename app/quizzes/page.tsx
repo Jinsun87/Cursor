@@ -1,6 +1,15 @@
+import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import { VISIBLE_QUIZZES } from "@/lib/catalog";
 import { QuizCard } from "@/components/QuizCard";
 import Link from "next/link";
+
+export const metadata: Metadata = pageMetadata({
+  title: "Bible Quizzes",
+  description:
+    "Original Scripture quizzes on people, places and passages of the Bible, with a short fact after every answer. Score 70% or more to earn a Certificate of Mastery.",
+  path: "/quizzes",
+});
 
 export default function QuizzesPage() {
   const bibleQuizzes = VISIBLE_QUIZZES;

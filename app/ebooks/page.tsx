@@ -1,13 +1,15 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import Image from "next/image";
 import Link from "next/link";
 import { EBOOKS } from "@/lib/ebooks/catalog";
 
-export const metadata: Metadata = {
-  title: "Scripture & Study eBooks — Lampstand Library",
+export const metadata: Metadata = pageMetadata({
+  title: "Scripture Study eBooks",
   description:
-    "Free, in-depth illustrated Scripture study guides, 100-fact reference handbooks, and biblical geography companions.",
-};
+    "Free, illustrated Scripture study guides, fact handbooks and biblical geography companions from Lampstand.",
+  path: "/ebooks",
+});
 
 export default function EbooksIndexPage() {
   return (

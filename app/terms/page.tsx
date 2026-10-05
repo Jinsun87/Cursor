@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import Link from "next/link";
 
-export const metadata: Metadata = {
-  title: "Terms of Service — Lampstand",
-  description: "Terms of Service and user agreement for Lampstand (lampstandbible.com).",
-};
+export const metadata: Metadata = pageMetadata({
+  title: "Terms of Service",
+  description: "The terms for using Lampstand (lampstandbible.com) and Lampstand Premium.",
+  path: "/terms",
+});
 
 export default function TermsPage() {
   return (

@@ -1,4 +1,12 @@
+import type { Metadata } from "next";
 import Link from "next/link";
+import { pageMetadata } from "@/lib/seo";
+
+export const metadata: Metadata = pageMetadata({
+  title: "How It Works",
+  description: "How Lampstand quizzes, packs, coins and Certificates of Mastery work.",
+  path: "/how-it-works",
+});
 
 export default function HowItWorksPage() {
   return (

@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import Link from "next/link";
 
-export const metadata: Metadata = {
-  title: "Privacy Policy — Lampstand",
-  description: "Privacy Policy and data practices for Lampstand (lampstandbible.com).",
-};
+export const metadata: Metadata = pageMetadata({
+  title: "Privacy Policy",
+  description: "How Lampstand (lampstandbible.com) collects, uses and protects your information.",
+  path: "/privacy",
+});
 
 export default function PrivacyPage() {
   return (

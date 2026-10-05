@@ -1,11 +1,15 @@
 import type { MetadataRoute } from "next";
-import { siteUrl } from "@/lib/site";
+import { CANONICAL_ORIGIN } from "@/lib/site";
 
+// Staging hosts (quiz.mediareferee.com) also send X-Robots-Tag: noindex via next.config.ts.
 export default function robots(): MetadataRoute.Robots {
-  const base = siteUrl();
   return {
-    rules: { userAgent: "*", allow: "/" },
-    sitemap: `${base}/sitemap.xml`,
-    host: base,
+    rules: {
+      userAgent: "*",
+      allow: "/",
+      disallow: ["/api/", "/auth/", "/profile", "/welcome", "/certificate/", "/walk-preview"],
+    },
+    sitemap: `${CANONICAL_ORIGIN}/sitemap.xml`,
+    host: CANONICAL_ORIGIN,
   };
 }

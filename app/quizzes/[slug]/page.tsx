@@ -1,12 +1,26 @@
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { QUIZZES, getQuiz } from "@/lib/catalog";
 import { QuizRunner } from "@/components/QuizRunner";
 import { EbookRewardBanner } from "@/components/EbookRewardBanner";
 import Link from "next/link";
+import { pageMetadata } from "@/lib/seo";
 
 // Pre-render every quiz at build time so landing pages are served from the CDN.
 export function generateStaticParams() {
   return QUIZZES.map((quiz) => ({ slug: quiz.slug }));
+}
+
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const quiz = getQuiz((await params).slug);
+  if (!quiz) return { title: "Quiz not found", robots: { index: false } };
+  return pageMetadata({
+    title: quiz.title,
+    description: `${quiz.blurb} ${quiz.questions.length} questions, with a short fact after every answer.`,
+    path: `/quizzes/${quiz.slug}`,
+    // Secret quizzes are deliberately off the public catalog.
+    noindex: quiz.isSecret,
+  });
 }
 
 export default async function QuizPage({

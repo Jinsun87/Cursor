@@ -1,7 +1,19 @@
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getCategory, quizzesInCategory, seriesInCategory } from "@/lib/catalog";
 import { QuizCard } from "@/components/QuizCard";
 import Link from "next/link";
+import { pageMetadata } from "@/lib/seo";
+
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const category = getCategory((await params).slug);
+  if (!category) return { title: "Category not found", robots: { index: false } };
+  return pageMetadata({
+    title: `${category.name} Quiz Packs & Quizzes`,
+    description: category.description,
+    path: `/category/${category.slug}`,
+  });
+}
 
 export default async function CategoryPage({
   params,

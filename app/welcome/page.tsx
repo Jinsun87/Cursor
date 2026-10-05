@@ -1,12 +1,14 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import Link from "next/link";
 import { ActivationStatus } from "@/components/pricing/ActivationStatus";
 
-export const metadata: Metadata = {
-  title: "Welcome to Lampstand Pro — Know the text.",
-  description: "Thank you for subscribing to Lampstand Pro.",
-  robots: { index: false, follow: false },
-};
+export const metadata: Metadata = pageMetadata({
+  title: "Welcome to Lampstand Premium",
+  description: "Thank you for subscribing to Lampstand Premium.",
+  path: "/welcome",
+  noindex: true,
+});
 
 export default function WelcomePage() {
   return (
