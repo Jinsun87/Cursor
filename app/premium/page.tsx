@@ -89,10 +89,10 @@ export default function PremiumPage() {
           {[
             ["Access to public packs", "Yes", "Yes"],
             ["Certificates of Mastery", "Yes", "Yes"],
-            ["Ad-free secret quizzes", "No", "Yes"],
-            ["5,000 extra coins", "No", "On upgrade"],
-            ["Premium badge", "No", "Yes"],
-            ["Early series notices", "No", "Yes"],
+            ["Today's walk, Breathe and quizzes", "Yes", "Yes"],
+            ["Every Walk and Sleep chapter as released", "Some", "Yes"],
+            ["No ads anywhere", "No", "Yes"],
+            ["5,000 bonus coins and a Premium badge", "No", "Yes"],
           ].map((row) => (
             <tr key={row[0]} className="border-b border-pine-800">
               {row.map((cell) => (

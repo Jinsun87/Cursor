@@ -53,7 +53,7 @@ export function WalkComposition({ episode, timing }: WalkCompositionProps) {
             durationInFrames={clip.frames}
             layout="none"
           >
-            <Html5Audio src={`${episode.audioDir}/${clip.name}.wav`} />
+            <Html5Audio src={`${episode.audioDir}/${clip.name}.mp3`} />
           </Sequence>
         )),
       )}

@@ -55,7 +55,7 @@ export interface WalkEpisode {
   beats: WalkBeat[];
 }
 
-/** One narration clip: the file stem (without .wav) and what is spoken. */
+/** One narration clip: the file stem (without .mp3) and what is spoken. */
 export interface WalkClip {
   name: string;
   text: string;

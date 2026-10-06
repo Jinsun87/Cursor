@@ -1,5 +1,5 @@
 export interface Tier {
-  name: "Starter" | "Pro" | "Advanced";
+  name: "Starter" | "Pro";
   description: string;
   features: string[];
   featured?: boolean;
@@ -12,13 +12,13 @@ export interface Tier {
 export const PricingTier: Tier[] = [
   {
     name: "Starter",
-    description: "Free forever access to daily Scripture quizzes and personal recall progress.",
+    description: "Free forever: today\'s walk, Breathe, Bible quizzes and Scripture for life\'s struggles.",
     features: [
-      "100% Free forever (no card required)",
-      "Access to all daily Scripture quizzes",
-      "Standard reading mode & progress tracking",
-      "Earn coins on every correct answer",
-      "Public quiz catalog & global leaderboard",
+      "Free forever, no card needed",
+      "Today's guided walk and the free Sleep chapters",
+      "Breathe: guided breathing exercises",
+      "Bible quizzes with a fact after every answer",
+      "Scripture for anxiety, grief, anger and more",
     ],
     featured: false,
     priceId: {
@@ -28,15 +28,14 @@ export const PricingTier: Tier[] = [
   },
   {
     name: "Pro",
-    description: "The complete illuminated Scripture experience: ad-free reading, Quiet room, and certificates.",
+    description: "Everything in Lampstand, with no ads, and every new walk and Sleep chapter as it is released.",
     features: [
-      "7-day free trial on monthly plan",
-      "$4.99/mo or $39.99/yr (Save 33%)",
-      "Ad-free secret quizzes & Quiet room",
-      "Full access to Daily Audio Companions",
-      "Official Certificates of Mastery at 70%+",
-      "5,000 bonus coins on upgrade",
-      "Exclusive Lampstand Pro profile badge",
+      "7-day free trial on the monthly plan",
+      "$4.99/mo or $39.99/yr (save 33%)",
+      "No ads anywhere on Lampstand",
+      "Every Walk and Sleep chapter as new ones are released",
+      "5,000 bonus coins and a Premium badge",
+      "Support independent, Scripture-first work",
     ],
     featured: true,
     priceId: {
@@ -44,21 +43,4 @@ export const PricingTier: Tier[] = [
       year: process.env.NEXT_PUBLIC_PADDLE_ANNUAL_PRICE_ID || "pri_01m3491f04x6epgafayhm6saty",
     },
   },
-  {
-    name: "Advanced",
-    description: "Designed for study groups, Bible ministries, and dedicated platform benefactors.",
-    features: [
-      "Everything included in Lampstand Pro",
-      "Shared study group progress tracking",
-      "Custom pack assignments for small groups",
-      "Benefactor patron recognition on platform",
-      "Direct priority feature requests & support",
-    ],
-    featured: false,
-    priceId: {
-      month: process.env.NEXT_PUBLIC_PADDLE_ADVANCED_MONTHLY_PRICE_ID || "",
-      year: process.env.NEXT_PUBLIC_PADDLE_ADVANCED_ANNUAL_PRICE_ID || "",
-    },
-  },
 ];
-

@@ -9,7 +9,6 @@ import {
   type TopicSubSection,
   type TopicVerse,
 } from "@/lib/bible/topics";
-import { getChapter } from "@/lib/bible/catalog";
 import { triggerHaptic } from "@/lib/haptics";
 
 export function TopicExplorer() {
@@ -194,7 +193,6 @@ export function TopicExplorer() {
               const isExpanded = expandedVerseIdx === idx;
               const isPlayingThisVerse = playingVerseRef === verse.reference;
               const tagLabel = verse.categoryTag || (idx % 2 === 0 ? "Personal" : "Social");
-              const isChapterInCurriculum = Boolean(getChapter(verse.bookSlug, verse.chapterNumber));
 
               return (
                 <div
@@ -254,24 +252,6 @@ export function TopicExplorer() {
 
                       {/* Action Buttons (Matches Video View Shloka & Play Shloka) */}
                       <div className="mt-4 pt-3 border-t border-white/10 flex flex-wrap items-center gap-3">
-                        {isChapterInCurriculum ? (
-                          <Link
-                            href={`/read/${verse.bookSlug}/${verse.chapterNumber}?mode=daily`}
-                            className="pressable rounded-xl border border-pink-500/40 bg-pink-500/15 hover:bg-pink-500/25 text-pink-300 font-bold px-4 py-2.5 text-xs sm:text-sm flex items-center gap-2 shadow-sm transition-all"
-                          >
-                            <span>📖</span>
-                            <span>View Passage</span>
-                          </Link>
-                        ) : (
-                          <Link
-                            href="/read/genesis/1"
-                            className="pressable rounded-xl border border-pink-500/40 bg-pink-500/15 hover:bg-pink-500/25 text-pink-300 font-bold px-4 py-2.5 text-xs sm:text-sm flex items-center gap-2 shadow-sm transition-all"
-                          >
-                            <span>📖</span>
-                            <span>View Full Bible</span>
-                          </Link>
-                        )}
-
                         <button
                           type="button"
                           onClick={() => togglePlayVerse(verse)}
@@ -292,6 +272,7 @@ export function TopicExplorer() {
             })
           )}
         </div>
+        <p className="mt-4 text-xs text-white/50">Scripture quotations are from the Berean Standard Bible (BSB), public domain.</p>
       </div>
     );
   }

@@ -107,6 +107,34 @@
   color: var(--h2-muted);
 }
 
+/* Verse for today */
+.h2-verse {
+  margin: 18px 0 0;
+  padding: 16px 18px;
+  max-width: 520px;
+  border-left: 3px solid var(--h2-gold);
+  border-radius: 0 14px 14px 0;
+  background: var(--h2-gold-soft);
+}
+.h2-verse figcaption {
+  font-size: 13px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--h2-gold);
+  font-weight: 600;
+}
+.h2-verse blockquote {
+  margin: 6px 0 0;
+  font-family: var(--font-display), Georgia, serif;
+  font-size: 21px;
+  line-height: 1.45;
+}
+.h2-verse-ref {
+  margin: 6px 0 0;
+  font-size: 14px;
+  color: var(--h2-muted);
+}
+
 /* ---------- Lamp (the streak) ---------- */
 .lamp-wrap {
   display: flex;

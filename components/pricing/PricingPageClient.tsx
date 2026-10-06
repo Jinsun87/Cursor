@@ -165,7 +165,7 @@ export function PricingPageClient() {
       )}
 
       {/* Pricing Tiers Grid */}
-      <div className="mt-12 grid gap-8 lg:grid-cols-3 lg:items-stretch">
+      <div className="mx-auto mt-12 grid max-w-4xl gap-8 md:grid-cols-2 md:items-stretch">
         {PricingTier.map((tier) => {
           const currentPriceId = tier.priceId[frequency];
           const hasPriceId = Boolean(currentPriceId && currentPriceId.trim().length > 0);

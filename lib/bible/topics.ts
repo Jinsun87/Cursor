@@ -11,7 +11,6 @@ export interface TopicVerse {
 
 export interface TopicHomily {
   title: string;
-  preacher: string;
   duration: string;
   practicalTips: string[];
   audioScript: string;
@@ -72,12 +71,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           bookSlug: "philippians",
           chapterNumber: 4,
           verseSnippet:
-            "Do not be anxious about anything, but in every situation, by prayer and petition, with thanksgiving, present your requests to God. And the peace of God, which transcends all understanding, will guard your hearts and your minds in Christ Jesus.",
+            "Be anxious for nothing, but in everything, by prayer and petition, with thanksgiving, present your requests to God. And the peace of God, which surpasses all understanding, will guard your hearts and your minds in Christ Jesus.",
           thematicTakeaway: "Trading white-knuckled worry for grateful prayer releases God's supernatural sentry over your mind.",
         },
         homily: {
           title: "The Sentry of God's Peace",
-          preacher: "Saint John Chrysostom",
           duration: "2 min",
           practicalTips: [
             "Write down the single scenario keeping you awake and hand it physically to God in prayer.",
@@ -85,7 +83,7 @@ export const BIBLE_TOPICS: BibleTopic[] = [
             "Practice five minutes of silent breath prayer: 'Lord Jesus, I receive Your peace.'",
           ],
           audioScript:
-            "Beloved soul, anxiety seeks to convince you that tomorrow is an unmanaged wilderness. But Saint Paul wrote from a Roman prison cell: 'Do not be anxious about anything.' The peace of God is not the mere absence of conflict, but a divine garrison guarding your heart. Entrust this day to Him.",
+            "Beloved soul, anxiety seeks to convince you that tomorrow is an unmanaged wilderness. But Saint Paul wrote from a Roman prison cell: 'Be anxious for nothing.' The peace of God is not the mere absence of conflict, but a divine garrison guarding your heart. Entrust this day to Him.",
         },
       },
       {
@@ -96,12 +94,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           reference: "1 Peter 5:7",
           bookSlug: "1-peter",
           chapterNumber: 5,
-          verseSnippet: "Cast all your anxiety on him because he cares for you.",
+          verseSnippet: "Cast all your anxiety on Him, because He cares for you.",
           thematicTakeaway: "You were never designed to bear life's weight alone; the Creator personally cares for you.",
         },
         homily: {
           title: "The Father Who Bears Your Load",
-          preacher: "Saint Augustine of Hippo",
           duration: "2 min",
           practicalTips: [
             "Physically open your hands flat on your lap as an act of surrendering what you cannot control.",
@@ -121,12 +118,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           bookSlug: "matthew",
           chapterNumber: 6,
           verseSnippet:
-            "Therefore do not worry about tomorrow, for tomorrow will worry about itself. Each day has enough trouble of its own. Look at the birds of the air: they do not sow or reap, yet your heavenly Father feeds them.",
+            "Therefore I tell you, do not worry about your life, what you will eat or drink; or about your body, what you will wear. Is not life more than food, and the body more than clothes? Look at the birds of the air: They do not sow or reap or gather into barns, and yet your heavenly Father feeds them. Are you not much more valuable than they? Who of you by worrying can add a single hour to his life? And why do you worry about clothes? Consider how the lilies of the field grow: They do not labor or spin. Yet I tell you that not even Solomon in all his glory was adorned like one of these. If that is how God clothes the grass of the field, which is here today and tomorrow is thrown into the furnace, will He not much more clothe you, O you of little faith? Therefore do not worry, saying, ‘What shall we eat?’ or ‘What shall we drink?’ or ‘What shall we wear?’ For the Gentiles strive after all these things, and your heavenly Father knows that you need them. But seek first the kingdom of God and His righteousness, and all these things will be added unto you. Therefore do not worry about tomorrow, for tomorrow will worry about itself. Today has enough trouble of its own.",
           thematicTakeaway: "Worry cannot add a single cubit to your life. Today's grace is sufficient for today's burden.",
         },
         homily: {
           title: "Living in the Grace of Today",
-          preacher: "Saint Francis of Assisi",
           duration: "2 min",
           practicalTips: [
             "Notice the birds outside your window and remember your infinite worth in God's sight.",
@@ -145,12 +141,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           reference: "Psalm 94:19",
           bookSlug: "psalms",
           chapterNumber: 94,
-          verseSnippet: "When anxiety was great within me, your consolation brought me joy.",
+          verseSnippet: "When anxiety overwhelms me, Your consolation delights my soul.",
           thematicTakeaway: "Even when inner panic multiplies like a storm, God's whisper brings enduring consolation.",
         },
         homily: {
           title: "Joy That Pierces the Cloud",
-          preacher: "Saint Isaac the Syrian",
           duration: "2 min",
           practicalTips: [
             "Acknowledge the storm without judging yourself for feeling overwhelmed.",
@@ -180,12 +175,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           bookSlug: "1-john",
           chapterNumber: 1,
           verseSnippet:
-            "If we confess our sins, he is faithful and just and will forgive us our sins and purify us from all unrighteousness.",
+            "If we confess our sins, He is faithful and just to forgive us our sins and to cleanse us from all unrighteousness.",
           thematicTakeaway: "Confession is not informing God of something He didn't know; it is stepping into His waiting fountain of mercy.",
         },
         homily: {
           title: "The Cleansing of the Heart",
-          preacher: "Saint John the Theologian",
           duration: "2 min",
           practicalTips: [
             "Name your transgression plainly before God without making defensive excuses.",
@@ -205,12 +199,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           bookSlug: "psalms",
           chapterNumber: 32,
           verseSnippet:
-            "Then I acknowledged my sin to you and did not cover up my iniquity. I said, 'I will confess my transgressions to the Lord.' And you forgave the guilt of my sin.",
+            "Then I acknowledged my sin to You and did not hide my iniquity. I said, “I will confess my transgressions to the LORD,” and You forgave the guilt of my sin. Selah",
           thematicTakeaway: "Unconfessed sin wastes the bones; unburdening your soul unlocks unhindered joy.",
         },
         homily: {
           title: "Breaking the Silence of Shame",
-          preacher: "David the King",
           duration: "2 min",
           practicalTips: [
             "Stop concealing the fault you have carried in secrecy.",
@@ -230,12 +223,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           bookSlug: "romans",
           chapterNumber: 8,
           verseSnippet:
-            "Therefore, there is now no condemnation for those who are in Christ Jesus, because through Christ Jesus the law of the Spirit who gives life has set you free.",
+            "Therefore, there is now no condemnation for those who are in Christ Jesus. For in Christ Jesus the law of the Spirit of life set you free from the law of sin and death.",
           thematicTakeaway: "The verdict has been rendered in heaven's courtroom: acquitted, redeemed, and beloved.",
         },
         homily: {
           title: "The Courtroom of Grace",
-          preacher: "Saint Paul the Apostle",
           duration: "2 min",
           practicalTips: [
             "Distinguish between Holy Spirit conviction (which restores) and demonic condemnation (which accuses).",
@@ -255,12 +247,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           bookSlug: "psalms",
           chapterNumber: 51,
           verseSnippet:
-            "Have mercy on me, O God, according to your unfailing love; according to your great compassion blot out my transgressions. Wash away all my iniquity and cleanse me from my sin.",
+            "For the choirmaster. A Psalm of David. When Nathan the prophet came to him after his adultery with Bathsheba. Have mercy on me, O God, according to Your loving devotion; according to Your great compassion, blot out my transgressions. Wash me clean of my iniquity and cleanse me from my sin. For I know my transgressions, and my sin is always before me. Against You, You only, have I sinned and done what is evil in Your sight, so that You may be proved right when You speak and blameless when You judge.",
           thematicTakeaway: "God desires truth in the inmost being and delights in creating a clean heart out of ruins.",
         },
         homily: {
           title: "The Cry for a Pure Heart",
-          preacher: "Saint Gregory of Nyssa",
           duration: "2 min",
           practicalTips: [
             "Pray Psalm 51:10: 'Create in me a pure heart, O God.'",
@@ -290,12 +281,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           bookSlug: "philippians",
           chapterNumber: 3,
           verseSnippet:
-            "Brothers and sisters, I do not consider myself yet to have taken hold of it. But one thing I do: Forgetting what is behind and straining toward what is ahead, I press on toward the goal to win the prize for which God has called me heavenward.",
+            "Brothers, I do not consider myself yet to have taken hold of it. But one thing I do: Forgetting what is behind and straining toward what is ahead, I press on toward the goal to win the prize of God’s heavenly calling in Christ Jesus.",
           thematicTakeaway: "You cannot run the race of faith while looking backward in the rearview mirror.",
         },
         homily: {
           title: "Eyes on the Celestial Finish Line",
-          preacher: "Saint Paul",
           duration: "2 min",
           practicalTips: [
             "Make peace with the fact that yesterday cannot be rewritten, but tomorrow can be consecrated.",
@@ -303,7 +293,7 @@ export const BIBLE_TOPICS: BibleTopic[] = [
             "Focus your attention on the prize of knowing Christ today.",
           ],
           audioScript:
-            "Saint Paul had plenty to regret—he had persecuted the church and approved the stoning of Stephen. Yet he resolved: 'One thing I do: forgetting what is behind, I press forward.' Hand your yesterday to God's mercy.",
+            "Saint Paul had plenty to regret—he had persecuted the church and approved the stoning of Stephen. Yet he resolved: 'One thing I do: Forgetting what is behind and straining toward what is ahead, I press on.' Hand your yesterday to God's mercy.",
         },
       },
       {
@@ -315,12 +305,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           bookSlug: "2-corinthians",
           chapterNumber: 7,
           verseSnippet:
-            "Godly sorrow brings repentance that leads to salvation and leaves no regret, but worldly sorrow brings death.",
+            "Godly sorrow brings repentance that leads to salvation without regret, but worldly sorrow brings death.",
           thematicTakeaway: "Worldly sorrow traps you in self-pity; godly sorrow turns your feet toward life and salvation.",
         },
         homily: {
           title: "Turning Sorrow into Sacred Fuel",
-          preacher: "Saint John Cassian",
           duration: "2 min",
           practicalTips: [
             "Ask yourself: 'Is this regret drawing me closer to Jesus, or sinking me in shame?'",
@@ -340,12 +329,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           bookSlug: "isaiah",
           chapterNumber: 43,
           verseSnippet:
-            "Forget the former things; do not dwell on the past. See, I am doing a new thing! Now it springs up; do you not perceive it? I am making a way in the wilderness and streams in the wasteland.",
+            "“Do not call to mind the former things; pay no attention to the things of old. Behold, I am about to do something new; even now it is coming. Do you not see it? Indeed, I will make a way in the wilderness and streams in the desert.",
           thematicTakeaway: "God specializes in carving roads through wilderness and rivers through desert wastelands.",
         },
         homily: {
           title: "Streams in the Desert of Memory",
-          preacher: "Isaiah the Prophet",
           duration: "2 min",
           practicalTips: [
             "Stop dwelling on the closed doors and missed opportunities of past years.",
@@ -375,12 +363,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           bookSlug: "james",
           chapterNumber: 3,
           verseSnippet:
-            "For where you have envy and selfish ambition, there you find disorder and every evil practice.",
+            "For where jealousy and selfish ambition exist, there will be disorder and every evil practice.",
           thematicTakeaway: "Jealousy is a spiritual rot that blinds you to the feast God has placed on your own table.",
         },
         homily: {
           title: "Uprooting the Weed of Envy",
-          preacher: "Saint Basil the Great",
           duration: "2 min",
           practicalTips: [
             "Silently pray a prayer of blessing over the person you feel envious toward.",
@@ -388,7 +375,7 @@ export const BIBLE_TOPICS: BibleTopic[] = [
             "Refuse to scroll social media when your heart feels prone to comparison.",
           ],
           audioScript:
-            "Saint Basil called envy the viper that poisons the breast of the one who carries it. When someone else succeeds, do not grieve. God's treasury is not exhausted; another's blessing does not diminish God's goodness to you.",
+            "Envy is like a poison that harms the one who carries it far more than the one it is aimed at. When someone else succeeds, do not grieve. God's treasury is not exhausted; another's blessing does not diminish God's goodness to you.",
         },
       },
       {
@@ -399,12 +386,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           reference: "Proverbs 14:30",
           bookSlug: "proverbs",
           chapterNumber: 14,
-          verseSnippet: "A heart at peace gives life to the body, but envy rots the bones.",
+          verseSnippet: "A tranquil heart is life to the body, but envy rots the bones.",
           thematicTakeaway: "Contentment brings physical and spiritual vitality, while envy drains life from within.",
         },
         homily: {
           title: "Healing the Bone-Rot of Envy",
-          preacher: "Solomon the Wise",
           duration: "2 min",
           practicalTips: [
             "Notice how envy tightens your chest and shoulders; breathe deeply and let it go.",
@@ -424,12 +410,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           bookSlug: "1-corinthians",
           chapterNumber: 3,
           verseSnippet:
-            "You are still worldly. For since there is jealousy and quarreling among you, are you not worldly? Are you not acting merely like humans?",
+            "for you are still worldly. For since there is jealousy and dissension among you, are you not worldly? Are you not walking in the way of man?",
           thematicTakeaway: "Spiritual maturity means moving from factional competition to kingdom cooperation.",
         },
         homily: {
           title: "The Higher Walk of the Spirit",
-          preacher: "Saint Paul",
           duration: "2 min",
           practicalTips: [
             "Stop keeping score of who gets recognition or applause.",
@@ -448,12 +433,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           reference: "Galatians 5:26",
           bookSlug: "galatians",
           chapterNumber: 5,
-          verseSnippet: "Let us not become conceited, provoking and envying each other.",
+          verseSnippet: "Let us not become conceited, provoking and envying one another.",
           thematicTakeaway: "True freedom in the Spirit means you have nothing to prove and no one to outshine.",
         },
         homily: {
           title: "Walking in Freedom Together",
-          preacher: "Saint John Chrysostom",
           duration: "2 min",
           practicalTips: [
             "Catch yourself when boasting about an accomplishment and redirect glory to God.",
@@ -482,13 +466,12 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           reference: "Proverbs 19:11",
           bookSlug: "proverbs",
           chapterNumber: 19,
-          verseSnippet: "A person’s wisdom yields patience; it is to one’s glory to overlook an offense.",
+          verseSnippet: "A man’s insight gives him patience, and his virtue is to overlook an offense.",
           thematicTakeaway: "Unspoken expectations create resentments. Wisdom yields patience and the glory of letting offenses go.",
           categoryTag: "Personal",
         },
         homily: {
           title: "Overcoming Expectations of Others",
-          preacher: "Solomon",
           duration: "2 min",
           practicalTips: [
             "Acknowledge that people will fall short of your silent standards.",
@@ -503,7 +486,7 @@ export const BIBLE_TOPICS: BibleTopic[] = [
             reference: "Proverbs 19:11",
             bookSlug: "proverbs",
             chapterNumber: 19,
-            verseSnippet: "A person’s wisdom yields patience; it is to one’s glory to overlook an offense.",
+            verseSnippet: "A man’s insight gives him patience, and his virtue is to overlook an offense.",
             thematicTakeaway: "Patience dissolves unrealistic expectations before they ferment into bitter rage.",
             categoryTag: "Personal",
           },
@@ -511,7 +494,7 @@ export const BIBLE_TOPICS: BibleTopic[] = [
             reference: "James 1:19-20",
             bookSlug: "james",
             chapterNumber: 1,
-            verseSnippet: "Everyone should be quick to listen, slow to speak and slow to become angry, because human anger does not produce the righteousness that God desires.",
+            verseSnippet: "My beloved brothers, understand this: Everyone should be quick to listen, slow to speak, and slow to anger, for man’s anger does not bring about the righteousness that God desires.",
             thematicTakeaway: "Quick listening diffuses the friction when expectations clash.",
             categoryTag: "Relational",
           },
@@ -533,13 +516,12 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           reference: "James 4:1-3",
           bookSlug: "james",
           chapterNumber: 4,
-          verseSnippet: "What causes fights and quarrels among you? Don’t they come from your desires that battle within you? You desire but do not have, so you kill. You covet but you cannot get what you want, so you quarrel and fight.",
+          verseSnippet: "What causes conflicts and quarrels among you? Don’t they come from the passions at war within you? You crave what you do not have; you kill and covet, but are unable to obtain it. You quarrel and fight. You do not have, because you do not ask. And when you do ask, you do not receive, because you ask with wrong motives, that you may squander it on your pleasures.",
           thematicTakeaway: "Outward quarrels originate from inward thwarted desires and covetousness.",
           categoryTag: "Personal",
         },
         homily: {
           title: "The Root of Quarrels",
-          preacher: "Saint James the Just",
           duration: "2 min",
           practicalTips: [
             "Ask yourself: 'What desire of mine was just blocked to make me this angry?'",
@@ -554,7 +536,7 @@ export const BIBLE_TOPICS: BibleTopic[] = [
             reference: "James 4:1-3",
             bookSlug: "james",
             chapterNumber: 4,
-            verseSnippet: "What causes fights and quarrels among you? Don’t they come from your desires that battle within you? You desire but do not have, so you kill. You covet but you cannot get what you want, so you quarrel and fight.",
+            verseSnippet: "What causes conflicts and quarrels among you? Don’t they come from the passions at war within you? You crave what you do not have; you kill and covet, but are unable to obtain it. You quarrel and fight. You do not have, because you do not ask. And when you do ask, you do not receive, because you ask with wrong motives, that you may squander it on your pleasures.",
             thematicTakeaway: "Unchecked cravings and selfish ambitions ignite interpersonal warfare.",
             categoryTag: "Personal",
           },
@@ -562,7 +544,7 @@ export const BIBLE_TOPICS: BibleTopic[] = [
             reference: "Proverbs 14:29",
             bookSlug: "proverbs",
             chapterNumber: 14,
-            verseSnippet: "Whoever is patient has great understanding, but one who is quick-tempered displays folly.",
+            verseSnippet: "A patient man has great understanding, but a quick-tempered man promotes folly.",
             thematicTakeaway: "Patient understanding restrains the urge to lash out when wants are thwarted.",
             categoryTag: "Social",
           },
@@ -576,13 +558,12 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           reference: "Colossians 3:8",
           bookSlug: "colossians",
           chapterNumber: 3,
-          verseSnippet: "But now you must also rid yourselves of all such things as these: anger, rage, malice, slander, and filthy language from your lips.",
+          verseSnippet: "But now you must put aside all such things as these: anger, rage, malice, slander, and filthy language from your lips.",
           thematicTakeaway: "When pride feels slighted, discard rage and clothe yourself in Christ's humility.",
           categoryTag: "Relational",
         },
         homily: {
           title: "Overcoming Wounded Pride",
-          preacher: "Saint Ambrose of Milan",
           duration: "2 min",
           practicalTips: [
             "Recognize when anger is merely pride wounded by someone's lack of respect.",
@@ -597,7 +578,7 @@ export const BIBLE_TOPICS: BibleTopic[] = [
             reference: "Colossians 3:8",
             bookSlug: "colossians",
             chapterNumber: 3,
-            verseSnippet: "But now you must also rid yourselves of all such things as these: anger, rage, malice, slander, and filthy language from your lips.",
+            verseSnippet: "But now you must put aside all such things as these: anger, rage, malice, slander, and filthy language from your lips.",
             thematicTakeaway: "Strip off reactive rage when treated unfairly.",
             categoryTag: "Social",
           },
@@ -605,7 +586,7 @@ export const BIBLE_TOPICS: BibleTopic[] = [
             reference: "Ecclesiastes 7:9",
             bookSlug: "ecclesiastes",
             chapterNumber: 7,
-            verseSnippet: "Do not be quickly provoked in your spirit, for anger resides in the lap of fools.",
+            verseSnippet: "Do not be quickly provoked in your spirit, for anger settles in the lap of a fool.",
             thematicTakeaway: "Refuse to be easily offended; foolishness harbors wounded indignation.",
             categoryTag: "Personal",
           },
@@ -613,7 +594,7 @@ export const BIBLE_TOPICS: BibleTopic[] = [
             reference: "Proverbs 16:32",
             bookSlug: "proverbs",
             chapterNumber: 16,
-            verseSnippet: "Better a patient person than a warrior, one with self-control than one who takes a city.",
+            verseSnippet: "He who is slow to anger is better than a warrior, and he who controls his temper is greater than one who captures a city.",
             thematicTakeaway: "Mastering your own spirit is greater than conquering worldly opposition.",
             categoryTag: "Personal",
           },
@@ -627,13 +608,12 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           reference: "Ephesians 4:26-27",
           bookSlug: "ephesians",
           chapterNumber: 4,
-          verseSnippet: "In your anger do not sin: Do not let the sun go down while you are still angry, and do not give the devil a foothold.",
+          verseSnippet: "“Be angry, yet do not sin.” Do not let the sun set upon your anger, and do not give the devil a foothold.",
           thematicTakeaway: "Nursing past hurts overnight gives demonic bitterness an open entryway into your soul.",
           categoryTag: "Spiritual",
         },
         homily: {
           title: "Closing the Door on Lingering Resentment",
-          preacher: "Saint John Chrysostom",
           duration: "2 min",
           practicalTips: [
             "Refuse to rehearse the betrayal in your thoughts like an endless movie reel.",
@@ -648,7 +628,7 @@ export const BIBLE_TOPICS: BibleTopic[] = [
             reference: "Ephesians 4:26-27",
             bookSlug: "ephesians",
             chapterNumber: 4,
-            verseSnippet: "In your anger do not sin: Do not let the sun go down while you are still angry, and do not give the devil a foothold.",
+            verseSnippet: "“Be angry, yet do not sin.” Do not let the sun set upon your anger, and do not give the devil a foothold.",
             thematicTakeaway: "Clear grievances before sleep; do not nurse grudges overnight.",
             categoryTag: "Spiritual",
           },
@@ -656,7 +636,7 @@ export const BIBLE_TOPICS: BibleTopic[] = [
             reference: "Romans 12:19",
             bookSlug: "romans",
             chapterNumber: 12,
-            verseSnippet: "Do not take revenge, my dear friends, but leave room for God’s wrath, for it is written: 'It is mine to avenge; I will repay,' says the Lord.",
+            verseSnippet: "Do not avenge yourselves, beloved, but leave room for God’s wrath. For it is written: “Vengeance is Mine; I will repay, says the Lord.”",
             thematicTakeaway: "Transfer the courtroom to God's throne rather than executing vigilante revenge.",
             categoryTag: "Spiritual",
           },
@@ -670,13 +650,12 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           reference: "Proverbs 13:12",
           bookSlug: "proverbs",
           chapterNumber: 13,
-          verseSnippet: "Hope deferred makes the heart sick, but a longing fulfilled is a tree of life.",
+          verseSnippet: "Hope deferred makes the heart sick, but desire fulfilled is a tree of life.",
           thematicTakeaway: "Chronic disappointment turns to simmering frustration unless anchored in divine hope.",
           categoryTag: "Personal",
         },
         homily: {
           title: "Healing Hope Deferred",
-          preacher: "Solomon",
           duration: "2 min",
           practicalTips: [
             "Acknowledge the heartache of unfulfilled dreams without turning bitter toward God.",
@@ -691,7 +670,7 @@ export const BIBLE_TOPICS: BibleTopic[] = [
             reference: "Proverbs 13:12",
             bookSlug: "proverbs",
             chapterNumber: 13,
-            verseSnippet: "Hope deferred makes the heart sick, but a longing fulfilled is a tree of life.",
+            verseSnippet: "Hope deferred makes the heart sick, but desire fulfilled is a tree of life.",
             thematicTakeaway: "Bring deferred longings to God instead of projecting frustration onto others.",
             categoryTag: "Personal",
           },
@@ -699,7 +678,7 @@ export const BIBLE_TOPICS: BibleTopic[] = [
             reference: "Psalm 37:7-8",
             bookSlug: "psalms",
             chapterNumber: 37,
-            verseSnippet: "Be still before the Lord and wait patiently for him... Refrain from anger and turn from wrath; do not fret—it leads only to evil.",
+            verseSnippet: "Be still before the LORD and wait patiently for Him; do not fret when men prosper in their ways, when they carry out wicked schemes. Refrain from anger and abandon wrath; do not fret—it can only bring harm.",
             thematicTakeaway: "Patient stillness in God dissolves the fretful rage of delayed expectations.",
             categoryTag: "Spiritual",
           },
@@ -713,13 +692,12 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           reference: "1 John 4:20",
           bookSlug: "1-john",
           chapterNumber: 4,
-          verseSnippet: "Whoever claims to love God yet hates a brother or sister is a liar. For whoever does not love their brother and sister, whom they have seen, cannot love God, whom they have not seen.",
+          verseSnippet: "If anyone says, “I love God,” but hates his brother, he is a liar. For anyone who does not love his brother, whom he has seen, cannot love God, whom he has not seen.",
           thematicTakeaway: "You cannot hold true communion with God while nursing conscious hatred toward another soul.",
           categoryTag: "Relational",
         },
         homily: {
           title: "The Poison of Hatred",
-          preacher: "Saint John the Apostle",
           duration: "2 min",
           practicalTips: [
             "Confess any secret hatred or wishing ill on an enemy to God.",
@@ -734,7 +712,7 @@ export const BIBLE_TOPICS: BibleTopic[] = [
             reference: "1 John 4:20",
             bookSlug: "1-john",
             chapterNumber: 4,
-            verseSnippet: "Whoever claims to love God yet hates a brother or sister is a liar. For whoever does not love their brother and sister, whom they have seen, cannot love God, whom they have not seen.",
+            verseSnippet: "If anyone says, “I love God,” but hates his brother, he is a liar. For anyone who does not love his brother, whom he has seen, cannot love God, whom he has not seen.",
             thematicTakeaway: "Genuine faith purifies the heart from secret hatred.",
             categoryTag: "Relational",
           },
@@ -742,7 +720,7 @@ export const BIBLE_TOPICS: BibleTopic[] = [
             reference: "Leviticus 19:17-18",
             bookSlug: "leviticus",
             chapterNumber: 19,
-            verseSnippet: "Do not hate a fellow Israelite in your heart... Do not seek revenge or bear a grudge against anyone among your people, but love your neighbor as yourself.",
+            verseSnippet: "You must not harbor hatred against your brother in your heart. Directly rebuke your neighbor, so that you will not incur guilt on account of him. Do not seek revenge or bear a grudge against any of your people, but love your neighbor as yourself. I am the LORD.",
             thematicTakeaway: "The ancient covenant forbade silent grudges; love your neighbor as yourself.",
             categoryTag: "Social",
           },
@@ -766,12 +744,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           reference: "Proverbs 16:18",
           bookSlug: "proverbs",
           chapterNumber: 16,
-          verseSnippet: "Pride goes before destruction, a haughty spirit before a fall.",
+          verseSnippet: "Pride goes before destruction, and a haughty spirit before a fall.",
           thematicTakeaway: "Self-exaltation paves the road to ruin; staying low is the safest place on earth.",
         },
         homily: {
           title: "The Pitfall of Self-Exaltation",
-          preacher: "Saint John Chrysostom",
           duration: "2 min",
           practicalTips: [
             "Examine your motives: are you working for God's glory or human applause?",
@@ -790,12 +767,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           reference: "James 4:6",
           bookSlug: "james",
           chapterNumber: 4,
-          verseSnippet: "God opposes the proud but shows favor to the humble.",
+          verseSnippet: "But He gives us more grace. This is why it says: “God opposes the proud, but gives grace to the humble.”",
           thematicTakeaway: "God actively resists the self-sufficient, but pours out ocean waves of grace to the lowly.",
         },
         homily: {
           title: "The Gravity of Divine Favor",
-          preacher: "Saint Bernard of Clairvaux",
           duration: "2 min",
           practicalTips: [
             "Acknowledge your total dependence on God for your next breath and heartbeat.",
@@ -815,12 +791,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           bookSlug: "philippians",
           chapterNumber: 2,
           verseSnippet:
-            "Do nothing out of selfish ambition or vain conceit. Rather, in humility value others above yourselves.",
+            "Do nothing out of selfish ambition or empty pride, but in humility consider others more important than yourselves.",
           thematicTakeaway: "The mind of Christ seeks not its own rights, but the enrichment and honor of others.",
         },
         homily: {
           title: "The Mind That Was in Christ",
-          preacher: "Saint Paul",
           duration: "2 min",
           practicalTips: [
             "Let someone else take the first place in line or the best seat.",
@@ -840,12 +815,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           bookSlug: "1-peter",
           chapterNumber: 5,
           verseSnippet:
-            "All of you, clothe yourselves with humility toward one another, because, 'God opposes the proud but shows favor to the humble.'",
+            "Young men, in the same way, submit yourselves to your elders. And all of you, clothe yourselves with humility toward one another, because, “God opposes the proud, but gives grace to the humble.”",
           thematicTakeaway: "Humility is not thinking less of yourself; it is thinking of yourself less.",
         },
         homily: {
           title: "Wearing the Servant's Apron",
-          preacher: "Simon Peter",
           duration: "2 min",
           practicalTips: [
             "Remember Peter watching Jesus wrap an apron around His waist to wash dusty feet.",
@@ -874,12 +848,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           reference: "Mark 9:24",
           bookSlug: "mark",
           chapterNumber: 9,
-          verseSnippet: "Immediately the boy's father exclaimed, 'I do believe; help me overcome my unbelief!'",
+          verseSnippet: "Immediately the boy’s father cried out, “I do believe; help my unbelief!”",
           thematicTakeaway: "Jesus welcomes honest doubt mixed with trembling faith; you don't need perfect certainty to reach for Him.",
         },
         homily: {
           title: "The Cry of Fragile Faith",
-          preacher: "Saint John Chrysostom",
           duration: "2 min",
           practicalTips: [
             "Be completely honest with God about your questions and struggles.",
@@ -899,12 +872,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           bookSlug: "james",
           chapterNumber: 1,
           verseSnippet:
-            "But when you ask, you must believe and not doubt, because the one who doubts is like a wave of the sea, blown and tossed by the wind.",
+            "But he must ask in faith, without doubting, because he who doubts is like a wave of the sea, blown and tossed by the wind.",
           thematicTakeaway: "Anchor your heart in God's immutable character rather than shifting cultural winds.",
         },
         homily: {
           title: "Dropping the Anchor in the Surge",
-          preacher: "Saint James the Just",
           duration: "2 min",
           practicalTips: [
             "Write down three foundational truths about God that never change.",
@@ -924,12 +896,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           bookSlug: "matthew",
           chapterNumber: 21,
           verseSnippet:
-            "Truly I tell you, if you have faith and do not doubt, not only can you do what was done to the fig tree, but also you can say to this mountain, 'Go, throw yourself into the sea,' and it will be done.",
+            "“Truly I tell you,” Jesus replied, “if you have faith and do not doubt, not only will you do what was done to the fig tree, but even if you say to this mountain, ‘Be lifted up and thrown into the sea,’ it will happen.",
           thematicTakeaway: "The power of faith is not the greatness of your belief, but the greatness of the God you trust.",
         },
         homily: {
           title: "The Mountain-Moving God",
-          preacher: "Saint Cyril of Jerusalem",
           duration: "2 min",
           practicalTips: [
             "Look at the mountain in your life and declare God's sovereign power over it.",
@@ -948,12 +919,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           reference: "Jude 1:22",
           bookSlug: "jude",
           chapterNumber: 1,
-          verseSnippet: "Be merciful to those who doubt.",
+          verseSnippet: "And indeed, have mercy on those who doubt;",
           thematicTakeaway: "The church is called to be a hospital of mercy for those wrestling with sincere questions.",
         },
         homily: {
           title: "The Gentle Touch for Troubled Minds",
-          preacher: "Jude the Apostle",
           duration: "2 min",
           practicalTips: [
             "Extend patient compassion to friends or family who are questioning their faith.",
@@ -982,12 +952,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           reference: "Proverbs 24:16",
           bookSlug: "proverbs",
           chapterNumber: 24,
-          verseSnippet: "For though the righteous fall seven times, they rise again, but the wicked stumble when calamity strikes.",
+          verseSnippet: "For though a righteous man may fall seven times, he still gets up; but the wicked stumble in bad times.",
           thematicTakeaway: "Righteousness is not about never falling; it is about always getting back up by God's grace.",
         },
         homily: {
           title: "The Art of Getting Back Up",
-          preacher: "Saint John Chrysostom",
           duration: "2 min",
           practicalTips: [
             "Do not confuse a temporary setback with a permanent identity.",
@@ -1007,12 +976,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           bookSlug: "psalms",
           chapterNumber: 37,
           verseSnippet:
-            "The Lord makes firm the steps of the one who delights in him; though he may stumble, he will not fall, for the Lord upholds him with his hand.",
+            "The steps of a man are ordered by the LORD who takes delight in his journey. Though he falls, he will not be overwhelmed, for the LORD is holding his hand.",
           thematicTakeaway: "You may stumble, but you will not be utterly cast down, for the Lord grips you by the hand.",
         },
         homily: {
           title: "The Father's Firm Grip",
-          preacher: "Saint Augustine",
           duration: "2 min",
           practicalTips: [
             "Picture a toddler walking with a strong father: when the child trips, the father's grip holds.",
@@ -1032,12 +1000,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           bookSlug: "lamentations",
           chapterNumber: 3,
           verseSnippet:
-            "Because of the Lord's great love we are not consumed, for his compassions never fail. They are new every morning; great is your faithfulness.",
+            "Because of the loving devotion of the LORD we are not consumed, for His mercies never fail. They are new every morning; great is Your faithfulness!",
           thematicTakeaway: "Yesterday's failures do not exhaust God's mercies; His compassions are fresh out of the oven every morning.",
         },
         homily: {
           title: "The Fresh Bread of Morning Grace",
-          preacher: "Jeremiah the Weeping Prophet",
           duration: "2 min",
           practicalTips: [
             "Begin every morning by whispering: 'Lord, great is Your faithfulness.'",
@@ -1057,12 +1024,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           bookSlug: "micah",
           chapterNumber: 7,
           verseSnippet:
-            "Do not gloat over me, my enemy! Though I have fallen, I will rise. Though I sit in darkness, the Lord will be my light.",
+            "Do not gloat over me, my enemy! Though I have fallen, I will arise; though I sit in darkness, the LORD will be my light.",
           thematicTakeaway: "Even when sitting in the dark of defeat, the Lord remains your unquenchable dawn.",
         },
         homily: {
           title: "The Light in the Dark Valley",
-          preacher: "Micah",
           duration: "2 min",
           practicalTips: [
             "Tell the accusing voices of failure: 'Do not gloat over me; I will rise.'",
@@ -1091,12 +1057,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           reference: "1 Corinthians 14:33",
           bookSlug: "1-corinthians",
           chapterNumber: 14,
-          verseSnippet: "For God is not a God of disorder but of peace—as in all the congregations of the Lord's people.",
+          verseSnippet: "For God is not a God of disorder, but of peace—as in all the churches of the saints.",
           thematicTakeaway: "Chaos and frenzied panic do not originate from God; His guidance brings calm, ordered peace.",
         },
         homily: {
           title: "Stillness Over Chaos",
-          preacher: "Saint Paul",
           duration: "2 min",
           practicalTips: [
             "Step away from contradictory advice and sit in ten minutes of quiet prayer.",
@@ -1116,12 +1081,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           bookSlug: "proverbs",
           chapterNumber: 3,
           verseSnippet:
-            "Trust in the Lord with all your heart and lean not on your own understanding; in all your ways submit to him, and he will make your paths straight.",
+            "Trust in the LORD with all your heart, and lean not on your own understanding; in all your ways acknowledge Him, and He will make your paths straight.",
           thematicTakeaway: "You don't need to understand every detail when you surrender the steering wheel to God.",
         },
         homily: {
           title: "Straight Paths for Tangled Steps",
-          preacher: "Solomon",
           duration: "2 min",
           practicalTips: [
             "Consciously acknowledge God in the dilemma facing you today.",
@@ -1141,12 +1105,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           bookSlug: "james",
           chapterNumber: 1,
           verseSnippet:
-            "If any of you lacks wisdom, you should ask God, who gives generously to all without finding fault, and it will be given to you.",
+            "Now if any of you lacks wisdom, he should ask God, who gives generously to all without finding fault, and it will be given to him.",
           thematicTakeaway: "God never mocks your lack of understanding; He gives wisdom lavishly to all who ask.",
         },
         homily: {
           title: "The Open Treasury of Wisdom",
-          preacher: "Saint James",
           duration: "2 min",
           practicalTips: [
             "Ask God plainly: 'Father, give me heavenly wisdom for this choice.'",
@@ -1165,12 +1128,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           reference: "Psalm 119:105",
           bookSlug: "psalms",
           chapterNumber: 119,
-          verseSnippet: "Your word is a lamp for my feet, a light on my path.",
+          verseSnippet: "Your word is a lamp to my feet and a light to my path.",
           thematicTakeaway: "God's Word illuminates the immediate step under your feet, keeping you safe step by step.",
         },
         homily: {
           title: "The Small Oil Lamp in the Night",
-          preacher: "Saint Gregory the Great",
           duration: "2 min",
           practicalTips: [
             "Read one chapter of Scripture before making a significant life decision.",
@@ -1199,12 +1161,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           reference: "Matthew 6:24",
           bookSlug: "matthew",
           chapterNumber: 6,
-          verseSnippet: "No one can serve two masters... You cannot serve both God and money.",
+          verseSnippet: "No one can serve two masters: Either he will hate the one and love the other, or he will be devoted to the one and despise the other. You cannot serve both God and money.",
           thematicTakeaway: "Divided allegiance tears the soul; total devotion to Christ brings undivided peace.",
         },
         homily: {
           title: "Choosing Your True Sovereign",
-          preacher: "Saint John Chrysostom",
           duration: "2 min",
           practicalTips: [
             "Identify what object, status, or bank balance rivals God in your thoughts.",
@@ -1224,12 +1185,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           bookSlug: "1-john",
           chapterNumber: 2,
           verseSnippet:
-            "Do not love the world or anything in the world. If anyone loves the world, love for the Father is not in them.",
+            "Do not love the world or anything in the world. If anyone loves the world, the love of the Father is not in him.",
           thematicTakeaway: "Clinging to passing worldly systems starves the soul of eternal divine love.",
         },
         homily: {
           title: "Loving the Eternal Over the Passing",
-          preacher: "Saint Augustine",
           duration: "2 min",
           practicalTips: [
             "Notice where consumer cravings hijack your quiet time with God.",
@@ -1253,7 +1213,6 @@ export const BIBLE_TOPICS: BibleTopic[] = [
         },
         homily: {
           title: "The Heavenly Horizon",
-          preacher: "Saint Paul",
           duration: "2 min",
           practicalTips: [
             "Start your day contemplating Christ seated in majesty at the right hand of God.",
@@ -1273,12 +1232,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           bookSlug: "matthew",
           chapterNumber: 6,
           verseSnippet:
-            "Do not store up for yourselves treasures on earth, where moths and vermin destroy, and where thieves break in and steal. But store up for yourselves treasures in heaven... For where your treasure is, there your heart will be also.",
+            "Do not store up for yourselves treasures on earth, where moth and rust destroy, and where thieves break in and steal. But store up for yourselves treasures in heaven, where moth and rust do not destroy, and where thieves do not break in and steal. For where your treasure is, there your heart will be also.",
           thematicTakeaway: "Whatever you invest in the kingdom of God is safe from decay, inflation, and death.",
         },
         homily: {
           title: "The Incorruptible Vault",
-          preacher: "Saint Basil the Great",
           duration: "2 min",
           practicalTips: [
             "Invest generously in charity, ministry, and helping the poor.",
@@ -1308,12 +1266,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           bookSlug: "luke",
           chapterNumber: 12,
           verseSnippet:
-            "Then he said to them, 'Watch out! Be on your guard against all kinds of greed; life does not consist in an abundance of possessions.'",
+            "And He said to them, “Watch out! Guard yourselves against every form of greed, for one’s life does not consist in the abundance of his possessions.”",
           thematicTakeaway: "You are an immortal soul made in God's image, not a warehouse of accumulated goods.",
         },
         homily: {
           title: "The Foolish Rich Man's Barns",
-          preacher: "Saint John Chrysostom",
           duration: "2 min",
           practicalTips: [
             "Give away three items you have hoarded but do not need.",
@@ -1333,12 +1290,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           bookSlug: "1-timothy",
           chapterNumber: 6,
           verseSnippet:
-            "For the love of money is a root of all kinds of evil. Some people, eager for money, have wandered from the faith and pierced themselves with many griefs.",
+            "For the love of money is the root of all kinds of evil. By craving it, some have wandered away from the faith and pierced themselves with many sorrows.",
           thematicTakeaway: "Money is a tool, but the love of money is a barbed hook that pierces the soul with sorrows.",
         },
         homily: {
           title: "The Golden Snares",
-          preacher: "Saint Paul",
           duration: "2 min",
           practicalTips: [
             "Practice regular, sacrificial tithing to keep money from mastering your heart.",
@@ -1358,12 +1314,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           bookSlug: "hebrews",
           chapterNumber: 13,
           verseSnippet:
-            "Keep your lives free from the love of money and be content with what you have, because God has said, 'Never will I leave you; never will I forsake you.'",
+            "Keep your lives free from the love of money and be content with what you have, for God has said: “Never will I leave you, never will I forsake you.”",
           thematicTakeaway: "The cure for financial greed is the unshakeable promise: God will never leave you.",
         },
         homily: {
           title: "The Eternal Companion",
-          preacher: "The Author of Hebrews",
           duration: "2 min",
           practicalTips: [
             "Say aloud: 'The Lord is my helper; I will not fear.'",
@@ -1382,12 +1337,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           reference: "Proverbs 11:28",
           bookSlug: "proverbs",
           chapterNumber: 11,
-          verseSnippet: "Those who trust in their riches will fall, but the righteous will thrive like a green leaf.",
+          verseSnippet: "He who trusts in his riches will fall, but the righteous will thrive like foliage.",
           thematicTakeaway: "Riches are a withered crutch; righteousness rooted in God flourishes in every season.",
         },
         homily: {
           title: "Green Leaves in a Scorched World",
-          preacher: "Solomon",
           duration: "2 min",
           practicalTips: [
             "Reflect on the temporary nature of stock markets and savings.",
@@ -1416,12 +1370,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           reference: "Psalm 34:18",
           bookSlug: "psalms",
           chapterNumber: 34,
-          verseSnippet: "The Lord is close to the brokenhearted and saves those who are crushed in spirit.",
+          verseSnippet: "The LORD is near to the brokenhearted; He saves the contrite in spirit.",
           thematicTakeaway: "When your heart breaks, God does not stand at a distance; He draws nearer than your own breath.",
         },
         homily: {
           title: "The God Who Leans Close",
-          preacher: "Saint Bernard of Clairvaux",
           duration: "2 min",
           practicalTips: [
             "Do not feel pressured to hide your tears; crying is holy water washing a wounded heart.",
@@ -1441,12 +1394,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           bookSlug: "revelation",
           chapterNumber: 21,
           verseSnippet:
-            "'He will wipe every tear from their eyes. There will be no more death' or mourning or crying or pain, for the old order of things has passed away.",
+            "‘He will wipe away every tear from their eyes,’ and there will be no more death or mourning or crying or pain, for the former things have passed away.”",
           thematicTakeaway: "Grief is real, but it is not eternal. Resurrection and restoration have the final word.",
         },
         homily: {
           title: "The Hand That Dries All Tears",
-          preacher: "Saint John the Seer",
           duration: "2 min",
           practicalTips: [
             "Anchor in the certainty that in Christ, goodbyes are temporary.",
@@ -1470,7 +1422,6 @@ export const BIBLE_TOPICS: BibleTopic[] = [
         },
         homily: {
           title: "The Sacred Beatitude of Mourning",
-          preacher: "Jesus on the Mount",
           duration: "2 min",
           practicalTips: [
             "Give yourself permission to grieve without rushing the timetable.",
@@ -1494,7 +1445,6 @@ export const BIBLE_TOPICS: BibleTopic[] = [
         },
         homily: {
           title: "The Great Physician of Hearts",
-          preacher: "The Psalmist",
           duration: "2 min",
           practicalTips: [
             "Trust the slow, gentle healing process of God over time.",
@@ -1524,12 +1474,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           bookSlug: "galatians",
           chapterNumber: 6,
           verseSnippet:
-            "Each one should test their own actions. Then they can take pride in themselves alone, without comparing themselves to someone else, for each one should carry their own load.",
+            "Each one should test his own work. Then he will have reason to boast in himself alone, and not in someone else. For each one should carry his own load.",
           thematicTakeaway: "God did not call you to live someone else's story; celebrate your own faithful walk.",
         },
         homily: {
           title: "Running Your Own Assigned Race",
-          preacher: "Saint Paul",
           duration: "2 min",
           practicalTips: [
             "Take a hiatus from comparing your life to highlight reels on social media.",
@@ -1549,12 +1498,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           bookSlug: "2-corinthians",
           chapterNumber: 10,
           verseSnippet:
-            "We do not dare to classify or compare ourselves with some who commend themselves. When they measure themselves by themselves and compare themselves with themselves, they are not wise.",
+            "We do not dare to classify or compare ourselves with some who commend themselves. When they measure themselves by themselves and compare themselves with themselves, they show their ignorance.",
           thematicTakeaway: "Comparing yourself to human standards is foolish; Christ is our only standard and righteousness.",
         },
         homily: {
           title: "Stepping Off the Human Measuring Scale",
-          preacher: "Saint Paul",
           duration: "2 min",
           practicalTips: [
             "Stop seeking human commendation and focus on pleasing the Father.",
@@ -1574,12 +1522,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           bookSlug: "james",
           chapterNumber: 3,
           verseSnippet:
-            "But if you harbor bitter envy and selfish ambition in your hearts, do not boast about it or deny the truth. Such 'wisdom' does not come down from heaven but is earthly, unspiritual, demonic.",
+            "But if you harbor bitter jealousy and selfish ambition in your hearts, do not boast in it or deny the truth. Such wisdom does not come from above, but is earthly, unspiritual, demonic. For where jealousy and selfish ambition exist, there will be disorder and every evil practice.",
           thematicTakeaway: "Comparison-driven ambition poisons community; heavenly wisdom is gentle, impartial, and sincere.",
         },
         homily: {
           title: "The Purity of Heavenly Wisdom",
-          preacher: "Saint James",
           duration: "2 min",
           practicalTips: [
             "Repent of secret pleasure when an opponent stumbles.",
@@ -1608,12 +1555,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           reference: "Psalm 37:4",
           bookSlug: "psalms",
           chapterNumber: 37,
-          verseSnippet: "Take delight in the Lord, and he will give you the desires of your heart.",
+          verseSnippet: "Delight yourself in the LORD, and He will give you the desires of your heart.",
           thematicTakeaway: "When God becomes your supreme delight, He aligns your heart's desires with His eternal goodness.",
         },
         homily: {
           title: "The Highest Joy",
-          preacher: "David the King",
           duration: "2 min",
           practicalTips: [
             "Spend five minutes praising God simply for who He is, asking for nothing.",
@@ -1621,7 +1567,7 @@ export const BIBLE_TOPICS: BibleTopic[] = [
             "Trust that God's plans for you are greater than your narrow cravings.",
           ],
           audioScript:
-            "Saint Augustine famously said: 'Love God, and do what you will.' When you truly delight in the Lord, your desires are transformed. You begin to desire what God desires, and He pours out His blessing without sorrow.",
+            "Saint Augustine, preaching on the First Letter of John, put it simply: 'Love, and do what you will.' When you truly delight in the Lord, your desires are transformed. You begin to desire what God desires, and He pours out His blessing without sorrow.",
         },
       },
       {
@@ -1633,12 +1579,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           bookSlug: "matthew",
           chapterNumber: 6,
           verseSnippet:
-            "But seek first his kingdom and his righteousness, and all these things will be given to you as well.",
+            "But seek first the kingdom of God and His righteousness, and all these things will be added unto you.",
           thematicTakeaway: "Put first things first: pursue the King's presence, and all necessary things will follow.",
         },
         homily: {
           title: "The Proper Hierarchy of Life",
-          preacher: "Jesus",
           duration: "2 min",
           practicalTips: [
             "Dedicate the first thirty minutes of your morning to prayer and Scripture.",
@@ -1658,12 +1603,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           bookSlug: "1-john",
           chapterNumber: 2,
           verseSnippet:
-            "For everything in the world—the lust of the flesh, the lust of the eyes, and the pride of life—comes not from the Father but from the world. The world and its desires pass away, but whoever does the will of God lives forever.",
+            "For all that is in the world—the desires of the flesh, the desires of the eyes, and the pride of life—is not from the Father but from the world. The world is passing away, along with its desires; but whoever does the will of God remains forever.",
           thematicTakeaway: "Transient cravings evaporate like morning mist; doing God's will anchors you in eternity.",
         },
         homily: {
           title: "The Rock of the Father's Will",
-          preacher: "Saint John the Beloved",
           duration: "2 min",
           practicalTips: [
             "When temptation flares, remind your soul: 'This craving will pass, but God's word stands forever.'",
@@ -1682,12 +1626,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           reference: "Proverbs 10:24",
           bookSlug: "proverbs",
           chapterNumber: 10,
-          verseSnippet: "What the wicked dreads will overtake them; what the righteous desire will be granted.",
+          verseSnippet: "What the wicked man dreads will overtake him, but the desire of the righteous will be granted.",
           thematicTakeaway: "Longings conceived in righteousness find their ultimate fulfillment in God's favor.",
         },
         homily: {
           title: "Fulfillment for the Pure Heart",
-          preacher: "Solomon",
           duration: "2 min",
           practicalTips: [
             "Purify your desires in prayer: 'Lord, make my desires holy.'",
@@ -1721,12 +1664,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           bookSlug: "hebrews",
           chapterNumber: 12,
           verseSnippet:
-            "Therefore, since we are surrounded by such a great cloud of witnesses, let us throw off everything that hinders and the sin that so easily entangles. And let us run with perseverance the race marked out for us, fixing our eyes on Jesus, the pioneer and perfecter of faith.",
+            "Therefore, since we are surrounded by such a great cloud of witnesses, let us throw off every encumbrance and the sin that so easily entangles, and let us run with endurance the race set out for us. Let us fix our eyes on Jesus, the author and perfecter of our faith, who for the joy set before Him endured the cross, scorning its shame, and sat down at the right hand of the throne of God.",
           thematicTakeaway: "Strip off the extra baggage, fix your eyes on Jesus, and keep your feet moving on the marked track.",
         },
         homily: {
           title: "Eyes on the Pioneer of Faith",
-          preacher: "Saint John Chrysostom",
           duration: "2 min",
           practicalTips: [
             "Identify the specific weight or distraction slowing your spiritual pace.",
@@ -1745,12 +1687,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           reference: "Philippians 4:13",
           bookSlug: "philippians",
           chapterNumber: 4,
-          verseSnippet: "I can do all this through him who gives me strength.",
+          verseSnippet: "I can do all things through Christ who gives me strength.",
           thematicTakeaway: "Christ's indwelling power equips you to endure abundance and hardship with equal victory.",
         },
         homily: {
           title: "The Channel of Christ's Might",
-          preacher: "Saint Paul",
           duration: "2 min",
           practicalTips: [
             "Recite Philippians 4:13 when faced with an intimidating challenge.",
@@ -1770,12 +1711,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           bookSlug: "galatians",
           chapterNumber: 6,
           verseSnippet:
-            "Let us not become weary in doing good, for at the proper time we will reap a harvest if we do not give up.",
+            "Let us not grow weary in well-doing, for in due time we will reap a harvest if we do not give up.",
           thematicTakeaway: "Seeds sown in tears and perseverance will yield an abundant harvest at God's appointed hour.",
         },
         homily: {
           title: "The Patience of the Sower",
-          preacher: "Saint Gregory of Nazianzus",
           duration: "2 min",
           practicalTips: [
             "Do not dig up the seed today just because green shoots haven't appeared yet.",
@@ -1795,12 +1735,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           bookSlug: "1-corinthians",
           chapterNumber: 15,
           verseSnippet:
-            "Therefore, my dear brothers and sisters, stand firm. Let nothing move you. Always give yourselves fully to the work of the Lord, because you know that your labor in the Lord is not in vain.",
+            "Therefore, my beloved brothers, be steadfast and immovable. Always excel in the work of the Lord, because you know that your labor in the Lord is not in vain.",
           thematicTakeaway: "Because Christ conquered the grave, every act of faithful service possesses eternal significance.",
         },
         homily: {
           title: "Labor That Outlasts the Grave",
-          preacher: "Saint Athanasius",
           duration: "2 min",
           practicalTips: [
             "Stand firm in moral conviction even when cultural pressure pushes against you.",
@@ -1830,12 +1769,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           bookSlug: "hebrews",
           chapterNumber: 12,
           verseSnippet:
-            "No discipline seems pleasant at the time, but painful. Later on, however, it produces a harvest of righteousness and peace for those who have been trained by it.",
+            "No discipline seems enjoyable at the time, but painful. Later on, however, it yields a harvest of righteousness and peace to those who have been trained by it.",
           thematicTakeaway: "Discipline is the pruning of the vine so that abundant fruit may burst forth in the season to come.",
         },
         homily: {
           title: "The Pruning Shears of the Father",
-          preacher: "Saint John Climacus",
           duration: "2 min",
           practicalTips: [
             "Embrace current constraints as God's spiritual gymnasium.",
@@ -1854,12 +1792,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           reference: "Proverbs 12:1",
           bookSlug: "proverbs",
           chapterNumber: 12,
-          verseSnippet: "Whoever loves discipline loves knowledge, but whoever hates correction is stupid.",
+          verseSnippet: "Whoever loves discipline loves knowledge, but he who hates correction is stupid.",
           thematicTakeaway: "Wisdom welcomes loving correction; foolishness bristles and defends its ignorance.",
         },
         homily: {
           title: "The Openness of the Teachable",
-          preacher: "Solomon",
           duration: "2 min",
           practicalTips: [
             "Thank someone when they point out a blind spot in your character.",
@@ -1878,12 +1815,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           reference: "2 Timothy 1:7",
           bookSlug: "2-timothy",
           chapterNumber: 1,
-          verseSnippet: "For the Spirit God gave us does not make us timid, but gives us power, love and self-discipline.",
+          verseSnippet: "For God has not given us a spirit of fear, but of power, love, and self-control.",
           thematicTakeaway: "You have not been given a spirit of cowardice, but divine power, love, and a disciplined mind.",
         },
         homily: {
           title: "The Sound Mind in the Spirit",
-          preacher: "Saint Paul to Timothy",
           duration: "2 min",
           practicalTips: [
             "Reject fearful, chaotic thoughts by speaking 2 Timothy 1:7 aloud.",
@@ -1903,12 +1839,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           bookSlug: "1-corinthians",
           chapterNumber: 9,
           verseSnippet:
-            "No, I strike a blow to my body and make it my slave so that after I have preached to others, I myself will not be disqualified for the prize.",
+            "No, I discipline my body and make it my slave, so that after I have preached to others, I myself will not be disqualified.",
           thematicTakeaway: "Subdue physical impulses so your bodily vessel serves the eternal mission of Christ.",
         },
         homily: {
           title: "Training for the Imperishable Crown",
-          preacher: "Saint Paul",
           duration: "2 min",
           practicalTips: [
             "Practice fasting from food or entertainment to strengthen spiritual self-mastery.",
@@ -1938,12 +1873,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           bookSlug: "ephesians",
           chapterNumber: 2,
           verseSnippet:
-            "For we are God's handiwork, created in Christ Jesus to do good works, which God prepared in advance for us to do.",
+            "For we are God’s workmanship, created in Christ Jesus to do good works, which God prepared in advance as our way of life.",
           thematicTakeaway: "You are God's masterpiece, custom-crafted with pre-planned good works to walk into.",
         },
         homily: {
           title: "The Masterpiece of the Creator",
-          preacher: "Saint Paul",
           duration: "2 min",
           practicalTips: [
             "Stop calling yourself an accident or failure; you are God's 'poiema' (masterpiece).",
@@ -1963,12 +1897,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           bookSlug: "jeremiah",
           chapterNumber: 29,
           verseSnippet:
-            "'For I know the plans I have for you,' declares the Lord, 'plans to prosper you and not to harm you, plans to give you hope and a future.'",
+            "For I know the plans I have for you, declares the LORD, plans to prosper you and not to harm you, to give you a future and a hope.",
           thematicTakeaway: "God's heart toward His people is peace and a glorious future, even through seasons of exile.",
         },
         homily: {
           title: "The Sovereign Blueprint",
-          preacher: "Jeremiah",
           duration: "2 min",
           practicalTips: [
             "Remember that this promise was given to exiles in Babylon; God works in hard places.",
@@ -1988,12 +1921,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           bookSlug: "romans",
           chapterNumber: 8,
           verseSnippet:
-            "And we know that in all things God works for the good of those who love him, who have been called according to his purpose.",
+            "And we know that God works all things together for the good of those who love Him, who are called according to His purpose.",
           thematicTakeaway: "God weaves both trials and triumphs into a tapestry that fulfills His glorious purpose in your life.",
         },
         homily: {
           title: "The Master Weaver",
-          preacher: "Saint Augustine",
           duration: "2 min",
           practicalTips: [
             "View current trials through the lens of God's overarching weaving.",
@@ -2012,12 +1944,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           reference: "Proverbs 19:21",
           bookSlug: "proverbs",
           chapterNumber: 19,
-          verseSnippet: "Many are the plans in a person's heart, but it is the Lord's purpose that prevails.",
+          verseSnippet: "Many plans are in a man’s heart, but the purpose of the LORD will prevail.",
           thematicTakeaway: "Human plans fluctuate and fall away, but the Lord's eternal purpose stands invincible.",
         },
         homily: {
           title: "The Anchor of Sovereign Will",
-          preacher: "Solomon",
           duration: "2 min",
           practicalTips: [
             "Hold your human schedule loosely in an open hand.",
@@ -2047,12 +1978,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           bookSlug: "galatians",
           chapterNumber: 5,
           verseSnippet:
-            "But the fruit of the Spirit is love, joy, peace, forbearance, kindness, goodness, faithfulness, gentleness and self-control. Against such things there is no law.",
+            "But the fruit of the Spirit is love, joy, peace, patience, kindness, goodness, faithfulness, gentleness, and self-control. Against such things there is no law.",
           thematicTakeaway: "Self-control is not harsh legalism; it is the sweet fruit of the Holy Spirit ruling in your heart.",
         },
         homily: {
           title: "The Crowning Fruit of the Spirit",
-          preacher: "Saint John Chrysostom",
           duration: "2 min",
           practicalTips: [
             "Yield to the Holy Spirit before making decisions under emotional pressure.",
@@ -2071,12 +2001,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           reference: "Proverbs 25:28",
           bookSlug: "proverbs",
           chapterNumber: 25,
-          verseSnippet: "Like a city whose walls are broken through is a person who lacks self-control.",
+          verseSnippet: "Like a city whose walls are broken down is a man who does not control his temper.",
           thematicTakeaway: "Without self-restraint, your life is defenseless against every passing invasion of appetite and fury.",
         },
         homily: {
           title: "Rebuilding the Walls of the Soul",
-          preacher: "Solomon",
           duration: "2 min",
           practicalTips: [
             "Set digital boundaries on apps and websites that breach your mental defenses.",
@@ -2096,12 +2025,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           bookSlug: "titus",
           chapterNumber: 2,
           verseSnippet:
-            "For the grace of God has appeared that offers salvation to all people. It teaches us to say 'No' to ungodliness and worldly passions, and to live self-controlled, upright and godly lives in this present age.",
+            "For the grace of God has appeared, bringing salvation to everyone. It instructs us to renounce ungodliness and worldly passions, and to live sensible, upright, and godly lives in the present age,",
           thematicTakeaway: "True grace does not excuse reckless indulgence; grace trains you to say a decisive 'no' to sin.",
         },
         homily: {
           title: "The School of Grace",
-          preacher: "Saint Paul to Titus",
           duration: "2 min",
           practicalTips: [
             "Look at temptation and practice saying a clear, quiet 'no' in Jesus' name.",
@@ -2121,12 +2049,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           bookSlug: "1-peter",
           chapterNumber: 5,
           verseSnippet:
-            "Be alert and of sober mind. Your enemy the devil prowls around like a roaring lion looking for someone to devour.",
+            "Be sober-minded and alert. Your adversary the devil prowls around like a roaring lion, seeking someone to devour.",
           thematicTakeaway: "Sober vigilance keeps you standing firm when subtle temptations prowl near your door.",
         },
         homily: {
           title: "The Watchman on the Tower",
-          preacher: "Simon Peter",
           duration: "2 min",
           practicalTips: [
             "Stay spiritually sober by avoiding intoxicating distractions.",
@@ -2155,12 +2082,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           reference: "Romans 14:12",
           bookSlug: "romans",
           chapterNumber: 14,
-          verseSnippet: "So then, each of us will give an account of ourselves to God.",
+          verseSnippet: "So then, each of us will give an account of himself to God.",
           thematicTakeaway: "Stop blaming circumstances or others; you will answer to God for your stewardship of life.",
         },
         homily: {
           title: "The Solemnity of Personal Accountability",
-          preacher: "Saint Paul",
           duration: "2 min",
           practicalTips: [
             "Refuse to blame parents, culture, or leaders for your personal choices.",
@@ -2179,12 +2105,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           reference: "Galatians 6:5",
           bookSlug: "galatians",
           chapterNumber: 6,
-          verseSnippet: "For each one should carry their own load.",
+          verseSnippet: "For each one should carry his own load.",
           thematicTakeaway: "Carry your personal pack of moral duties without shirking responsibility onto others.",
         },
         homily: {
           title: "The Soldier's Pack",
-          preacher: "Saint John Chrysostom",
           duration: "2 min",
           practicalTips: [
             "Fulfill your daily commitments with quiet diligence.",
@@ -2204,12 +2129,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           bookSlug: "ezekiel",
           chapterNumber: 18,
           verseSnippet:
-            "The one who sins is the one who will die. The child will not share the guilt of the parent, nor will the parent share the guilt of the child. The righteousness of the righteous will be credited to them, and the wickedness of the wicked will be charged against them.",
+            "The soul who sins is the one who will die. A son will not bear the iniquity of his father, and a father will not bear the iniquity of his son. The righteousness of the righteous man will fall upon him, and the wickedness of the wicked man will fall upon him.",
           thematicTakeaway: "Generational curses are broken at the cross; your destiny is shaped by your personal repentance and obedience.",
         },
         homily: {
           title: "Breaking the Generational Chain",
-          preacher: "Ezekiel the Prophet",
           duration: "2 min",
           practicalTips: [
             "Stop defining your future by your family's past mistakes.",
@@ -2228,12 +2152,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           reference: "James 4:17",
           bookSlug: "james",
           chapterNumber: 4,
-          verseSnippet: "If anyone, then, knows the good they ought to do and doesn't do it, it is sin for them.",
+          verseSnippet: "Anyone, then, who knows the right thing to do, yet fails to do it, is guilty of sin.",
           thematicTakeaway: "Passive neglect of known good is just as serious as committing active evil.",
         },
         homily: {
           title: "The Sins of Omission",
-          preacher: "Saint James",
           duration: "2 min",
           practicalTips: [
             "Act immediately when prompted by the Holy Spirit to encourage or help someone.",
@@ -2262,12 +2185,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           reference: "Proverbs 10:9",
           bookSlug: "proverbs",
           chapterNumber: 10,
-          verseSnippet: "Whoever walks in integrity walks securely, but whoever takes crooked paths will be found out.",
+          verseSnippet: "He who walks in integrity walks securely, but he who perverts his ways will be found out.",
           thematicTakeaway: "An honest person sleeps peacefully; crooked schemes always unravel in the light.",
         },
         homily: {
           title: "The Unshakable Foundation of Truth",
-          preacher: "Solomon",
           duration: "2 min",
           practicalTips: [
             "Never tell a lie that requires three more lies to defend.",
@@ -2286,12 +2208,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           reference: "Proverbs 11:3",
           bookSlug: "proverbs",
           chapterNumber: 11,
-          verseSnippet: "The integrity of the upright guides them, but the unfaithful are destroyed by their duplicity.",
+          verseSnippet: "The integrity of the upright guides them, but the perversity of the faithless destroys them.",
           thematicTakeaway: "Integrity is the internal compass that guides your choices when navigation gets dark.",
         },
         homily: {
           title: "The Compass of the Upright",
-          preacher: "Saint Ambrose",
           duration: "2 min",
           practicalTips: [
             "Make decisions based on moral principle rather than temporary convenience.",
@@ -2310,12 +2231,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           reference: "Psalm 41:12",
           bookSlug: "psalms",
           chapterNumber: 41,
-          verseSnippet: "Because of my integrity you uphold me and set me in your presence forever.",
+          verseSnippet: "In my integrity You uphold me and set me in Your presence forever.",
           thematicTakeaway: "Integrity preserves your fellowship with God and positions you before His face forever.",
         },
         homily: {
           title: "Set in His Presence Forever",
-          preacher: "David",
           duration: "2 min",
           practicalTips: [
             "Remember that God's approval is worth infinitely more than human accolades.",
@@ -2335,12 +2255,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           bookSlug: "titus",
           chapterNumber: 2,
           verseSnippet:
-            "In everything set them an example by doing what is good. In your teaching show integrity, seriousness and soundness of speech that cannot be condemned.",
+            "In everything, show yourself to be an example by doing good works. In your teaching show integrity, dignity,",
           thematicTakeaway: "Let your conduct and speech be so sound that opponents have nothing bad to say about you.",
         },
         homily: {
           title: "Living Above Reproach",
-          preacher: "Saint Paul",
           duration: "2 min",
           practicalTips: [
             "Model good works in your workplace and home.",
@@ -2370,12 +2289,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           bookSlug: "psalms",
           chapterNumber: 139,
           verseSnippet:
-            "Search me, God, and know my heart; test me and know my anxious thoughts. See if there is any offensive way in me, and lead me in the way everlasting.",
+            "Search me, O God, and know my heart; test me and know my concerns. See if there is any offensive way in me; lead me in the way everlasting.",
           thematicTakeaway: "Inviting God's spotlight into your soul dismantles blind spots and leads to everlasting life.",
         },
         homily: {
           title: "Under the Spotlight of Grace",
-          preacher: "David the King",
           duration: "2 min",
           practicalTips: [
             "Spend three minutes in silence praying Psalm 139:23-24.",
@@ -2394,12 +2312,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           reference: "Lamentations 3:40",
           bookSlug: "lamentations",
           chapterNumber: 3,
-          verseSnippet: "Let us examine our ways and test them, and let us return to the Lord.",
+          verseSnippet: "Let us examine and test our ways, and turn back to the LORD.",
           thematicTakeaway: "Honest introspection is only fruitful when it turns our steps back toward the Father.",
         },
         homily: {
           title: "Examining the Compass Heading",
-          preacher: "Jeremiah",
           duration: "2 min",
           practicalTips: [
             "Take honest inventory of where your habits and speech have drifted.",
@@ -2418,12 +2335,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           reference: "1 Corinthians 11:28",
           bookSlug: "1-corinthians",
           chapterNumber: 11,
-          verseSnippet: "Everyone ought to examine themselves before they eat of the bread and drink from the cup.",
+          verseSnippet: "Each one must examine himself before he eats of the bread and drinks of the cup.",
           thematicTakeaway: "Approach holy communion with sober self-examination and awe for Christ's broken body.",
         },
         homily: {
           title: "Approaching the Sacred Table",
-          preacher: "Saint John Chrysostom",
           duration: "2 min",
           practicalTips: [
             "Pause before receiving the Eucharist or entering prayer to reconcile with anyone you have hurt.",
@@ -2453,12 +2369,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           bookSlug: "colossians",
           chapterNumber: 3,
           verseSnippet:
-            "Whatever you do, work at it with all your heart, as working for the Lord, not for human masters.",
+            "Whatever you do, work at it with your whole being, as for the Lord and not for men,",
           thematicTakeaway: "When Christ is your true supervisor, even mundane tasks are transformed into acts of sacred worship.",
         },
         homily: {
           title: "Turning Your Desk into an Altar",
-          preacher: "Saint Paul",
           duration: "2 min",
           practicalTips: [
             "Dedicate your workday to Jesus before opening your computer or starting tools.",
@@ -2477,12 +2392,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           reference: "1 Corinthians 10:31",
           bookSlug: "1-corinthians",
           chapterNumber: 10,
-          verseSnippet: "So whether you eat or drink or whatever you do, do it all for the glory of God.",
+          verseSnippet: "So whether you eat or drink or whatever you do, do it all to the glory of God.",
           thematicTakeaway: "Every ordinary breath, meal, and assignment can be sanctified to magnify God's glory.",
         },
         homily: {
           title: "The Golden Thread of Glory",
-          preacher: "Saint Ignatius of Antioch",
           duration: "2 min",
           practicalTips: [
             "Frame every decision around: 'Does this bring glory to God?'",
@@ -2501,12 +2415,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           reference: "Proverbs 16:3",
           bookSlug: "proverbs",
           chapterNumber: 16,
-          verseSnippet: "Commit to the Lord whatever you do, and he will establish your plans.",
+          verseSnippet: "Commit your works to the LORD and your plans will be achieved.",
           thematicTakeaway: "Roll your burdens and ventures onto God, and He will solidify your path.",
         },
         homily: {
           title: "Rolling the Burden onto God",
-          preacher: "Solomon",
           duration: "2 min",
           practicalTips: [
             "Pray over your goals before initiating action.",
@@ -2536,12 +2449,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           bookSlug: "romans",
           chapterNumber: 12,
           verseSnippet:
-            "Therefore, I urge you, brothers and sisters, in view of God's mercy, to offer your bodies as a living sacrifice, holy and pleasing to God—this is your true and proper worship.",
+            "Therefore I urge you, brothers, on account of God’s mercy, to offer your bodies as living sacrifices, holy and pleasing to God, which is your spiritual service of worship.",
           thematicTakeaway: "True worship is not just singing on Sunday; it is yielding your bodily life daily to God's will.",
         },
         homily: {
           title: "The Altar of the Heart",
-          preacher: "Saint John Chrysostom",
           duration: "2 min",
           practicalTips: [
             "Consecrate your eyes, hands, and feet to holy service each morning.",
@@ -2560,12 +2472,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           reference: "Hebrews 13:16",
           bookSlug: "hebrews",
           chapterNumber: 13,
-          verseSnippet: "And do not forget to do good and to share with others, for with such sacrifices God is pleased.",
+          verseSnippet: "And do not neglect to do good and to share with others, for with such sacrifices God is pleased.",
           thematicTakeaway: "Practical generosity and tangible sharing are sweet-smelling incense before heaven's throne.",
         },
         homily: {
           title: "The Incense of Generosity",
-          preacher: "Saint Basil the Great",
           duration: "2 min",
           practicalTips: [
             "Share food, money, or resources with someone in acute need.",
@@ -2584,12 +2495,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           reference: "John 15:13",
           bookSlug: "john",
           chapterNumber: 15,
-          verseSnippet: "Greater love has no one than this: to lay down one's life for one's friends.",
+          verseSnippet: "Greater love has no one than this, that he lay down his life for his friends.",
           thematicTakeaway: "The pinnacle of agape love is voluntary self-surrender for the redemption of another.",
         },
         homily: {
           title: "The Measure of Agape",
-          preacher: "Saint Polycarp of Smyrna",
           duration: "2 min",
           practicalTips: [
             "Lay down your convenience, ego, or pride for a spouse, child, or friend today.",
@@ -2609,12 +2519,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           bookSlug: "1-john",
           chapterNumber: 3,
           verseSnippet:
-            "This is how we know what love is: Jesus Christ laid down his life for us. And we ought to lay down our lives for our brothers and sisters.",
+            "By this we know what love is: Jesus laid down His life for us, and we ought to lay down our lives for our brothers.",
           thematicTakeaway: "Love is defined not by sentimental words, but by concrete, self-giving sacrifice.",
         },
         homily: {
           title: "Love Without Pretense",
-          preacher: "Saint John the Evangelist",
           duration: "2 min",
           practicalTips: [
             "Let love move from theoretical feeling into concrete action.",
@@ -2644,12 +2553,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           bookSlug: "mark",
           chapterNumber: 6,
           verseSnippet:
-            "Then, because so many people were coming and going that they did not even have a chance to eat, he said to them, 'Come with me by yourselves to a quiet place and get some rest.'",
+            "And He said to them, “Come with Me privately to a solitary place, and let us rest for a while.” For many people were coming and going, and they did not even have time to eat.",
           thematicTakeaway: "Jesus commands His disciples to rest; exhaustion is not a spiritual virtue.",
         },
         homily: {
           title: "The Master's Invitation to Solitude",
-          preacher: "Saint Francis de Sales",
           duration: "2 min",
           practicalTips: [
             "Schedule thirty minutes of uninterrupted quiet retreat this week.",
@@ -2669,12 +2577,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           bookSlug: "matthew",
           chapterNumber: 11,
           verseSnippet:
-            "Come to me, all you who are weary and burdened, and I will give you rest. Take my yoke upon you and learn from me, for I am gentle and humble in heart, and you will find rest for your souls.",
+            "Come to Me, all you who are weary and burdened, and I will give you rest.",
           thematicTakeaway: "Physical sleep restores the body, but only Christ's gentle yoke gives rest to the weary soul.",
         },
         homily: {
           title: "The Unburdened Soul",
-          preacher: "Saint Augustine",
           duration: "2 min",
           practicalTips: [
             "Take off the heavy yoke of people-pleasing and performance dread.",
@@ -2694,12 +2601,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           bookSlug: "psalms",
           chapterNumber: 23,
           verseSnippet:
-            "The Lord is my shepherd, I lack nothing. He makes me lie down in green pastures, he leads me beside quiet waters, he refreshes my soul.",
+            "A Psalm of David. The LORD is my shepherd; I shall not want. He makes me lie down in green pastures; He leads me beside quiet waters. He restores my soul; He guides me in the paths of righteousness for the sake of His name.",
           thematicTakeaway: "The Good Shepherd leads you beside still waters so your depleted soul can be completely revived.",
         },
         homily: {
           title: "Beside the Still Waters",
-          preacher: "David the Shepherd",
           duration: "2 min",
           practicalTips: [
             "Sit quietly by a window or outdoors and read Psalm 23 slowly.",
@@ -2719,12 +2625,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           bookSlug: "1-corinthians",
           chapterNumber: 6,
           verseSnippet:
-            "Do you not know that your bodies are temples of the Holy Spirit, who is in you, whom you have received from God? You are not your own.",
+            "Do you not know that your body is a temple of the Holy Spirit who is in you, whom you have received from God? You are not your own;",
           thematicTakeaway: "Caring for your physical health, nutrition, and rest is sacred stewardship of God's temple.",
         },
         homily: {
           title: "Honoring the Living Sanctuary",
-          preacher: "Saint Paul",
           duration: "2 min",
           practicalTips: [
             "Prioritize adequate sleep, healthy food, and hydration as acts of stewardship.",
@@ -2754,12 +2659,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           bookSlug: "mark",
           chapterNumber: 10,
           verseSnippet:
-            "Whoever wants to become great among you must be your servant, and whoever wants to be first must be slave of all. For even the Son of Man did not come to be served, but to serve, and to give his life as a ransom for many.",
+            "So Jesus called them together and said, “You know that those regarded as rulers of the Gentiles lord it over them, and their superiors exercise authority over them. But it shall not be this way among you. Instead, whoever wants to become great among you must be your servant, and whoever wants to be first must be the slave of all. For even the Son of Man did not come to be served, but to serve, and to give His life as a ransom for many.”",
           thematicTakeaway: "Kingdom leadership flips worldly pyramids upside down: the greatest leader is the servant of all.",
         },
         homily: {
           title: "The Towel and the Basin of Greatness",
-          preacher: "Saint John Chrysostom",
           duration: "2 min",
           practicalTips: [
             "Measure your leadership by how effectively you empower and serve your team.",
@@ -2779,12 +2683,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           bookSlug: "1-timothy",
           chapterNumber: 3,
           verseSnippet:
-            "Now the overseer is to be above reproach, faithful to his spouse, temperate, self-controlled, respectable, hospitable, able to teach... not a lover of money.",
+            "This is a trustworthy saying: If anyone aspires to be an overseer, he desires a noble task. An overseer, then, must be above reproach, the husband of but one wife, temperate, self-controlled, respectable, hospitable, able to teach, not dependent on wine, not violent but gentle, peaceable, and free of the love of money. An overseer must manage his own household well and keep his children under control, with complete dignity. For if someone does not know how to manage his own household, how can he care for the church of God? He must not be a recent convert, or he may become conceited and fall under the same condemnation as the devil. Furthermore, he must have a good reputation with outsiders, so that he will not fall into disgrace and into the snare of the devil. Deacons likewise must be dignified, not double-tongued or given to much wine or greedy for money. They must hold to the mystery of the faith with a clear conscience. Additionally, they must first be tested. Then, if they are above reproach, let them serve as deacons. In the same way, the women must be dignified, not slanderers, but temperate and faithful in all things. A deacon must be the husband of but one wife, a good manager of his children and of his own household. For those who have served well as deacons acquire for themselves a high standing and great confidence in the faith that is in Christ Jesus.",
           thematicTakeaway: "Leadership authority flows from private character, self-control, and moral integrity.",
         },
         homily: {
           title: "The Anchor of Noble Character",
-          preacher: "Saint Paul to Timothy",
           duration: "2 min",
           practicalTips: [
             "Prioritize character development above charisma and public performance.",
@@ -2803,12 +2706,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           reference: "Proverbs 11:14",
           bookSlug: "proverbs",
           chapterNumber: 11,
-          verseSnippet: "For lack of guidance a nation falls, but victory is won through many advisers.",
+          verseSnippet: "For lack of guidance, a nation falls, but with many counselors comes deliverance.",
           thematicTakeaway: "Wise leaders surround themselves with discerning, godly counsel and welcome diverse insight.",
         },
         homily: {
           title: "The Multiplicity of Wise Counsel",
-          preacher: "Solomon",
           duration: "2 min",
           practicalTips: [
             "Seek out experienced, God-fearing mentors before making major executive choices.",
@@ -2828,12 +2730,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           bookSlug: "1-peter",
           chapterNumber: 5,
           verseSnippet:
-            "Be shepherds of God's flock that is under your care, watching over them—not because you must, but because you are willing, as God wants you to be; not pursuing dishonest gain, but eager to serve; not lording it over those entrusted to you, but being examples to the flock.",
+            "Be shepherds of God’s flock that is among you, watching over them not out of compulsion, but willingly, as God would have you; not out of greed, but out of eagerness; not lording it over those entrusted to you, but being examples to the flock.",
           thematicTakeaway: "Lead by setting a luminous personal example, not by bullying, manipulating, or coercive control.",
         },
         homily: {
           title: "Examples to the Flock",
-          preacher: "Simon Peter",
           duration: "2 min",
           practicalTips: [
             "Inspire through your own sacrificial example rather than dictating orders.",
@@ -2863,12 +2764,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           bookSlug: "ecclesiastes",
           chapterNumber: 3,
           verseSnippet:
-            "There is a time for everything, and a season for every activity under the heavens: a time to be born and a time to die, a time to plant and a time to uproot... a time to weep and a time to laugh, a time to mourn and a time to dance.",
+            "To everything there is a season, and a time for every purpose under heaven: a time to be born and a time to die, a time to plant and a time to uproot, a time to kill and a time to heal, a time to break down and a time to build, a time to weep and a time to laugh, a time to mourn and a time to dance, a time to cast away stones and a time to gather stones together, a time to embrace and a time to refrain from embracing, a time to search and a time to count as lost, a time to keep and a time to discard, a time to tear and a time to mend, a time to be silent and a time to speak, a time to love and a time to hate, a time for war and a time for peace.",
           thematicTakeaway: "God makes everything beautiful in its time; peace comes from accepting your current season.",
         },
         homily: {
           title: "The Wisdom of the Seasons",
-          preacher: "The Preacher (Qoheleth)",
           duration: "2 min",
           practicalTips: [
             "Identify what season you are in right now (planting, waiting, harvesting, or resting).",
@@ -2887,12 +2787,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           reference: "Proverbs 11:1",
           bookSlug: "proverbs",
           chapterNumber: 11,
-          verseSnippet: "The Lord detests dishonest scales, but accurate weights find favor with him.",
+          verseSnippet: "Dishonest scales are an abomination to the LORD, but an accurate weight is His delight.",
           thematicTakeaway: "Honesty, fair balance, and ethical equilibrium bring the radiant smile of God upon your labor.",
         },
         homily: {
           title: "Accurate Scales Before God",
-          preacher: "Solomon",
           duration: "2 min",
           practicalTips: [
             "Be scrupulously fair in business dealings, billing, and transactions.",
@@ -2912,12 +2811,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           bookSlug: "romans",
           chapterNumber: 12,
           verseSnippet:
-            "Do not think of yourself more highly than you ought, but rather think of yourself with sober judgment, in accordance with the faith God has distributed to each of you.",
+            "For by the grace given me I say to every one of you: Do not think of yourself more highly than you ought, but think of yourself with sober judgment, according to the measure of faith God has given you.",
           thematicTakeaway: "Balanced humility avoids both arrogant self-exaltation and toxic self-loathing.",
         },
         homily: {
           title: "The Golden Mean of Sober Judgment",
-          preacher: "Saint Paul",
           duration: "2 min",
           practicalTips: [
             "Avoid thinking too highly of yourself, and avoid self-destructive despair.",
@@ -2951,12 +2849,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           bookSlug: "1-corinthians",
           chapterNumber: 13,
           verseSnippet:
-            "Love is patient, love is kind. It does not envy, it does not boast, it is not proud. It does not dishonor others, it is not self-seeking, it is not easily angered, it keeps no record of wrongs. Love does not delight in evil but rejoices with the truth. It always protects, always trusts, always hopes, always perseveres.",
+            "Love is patient, love is kind. It does not envy, it does not boast, it is not proud. It is not rude, it is not self-seeking, it is not easily angered, it keeps no account of wrongs. Love takes no pleasure in evil, but rejoices in the truth. It bears all things, believes all things, hopes all things, endures all things.",
           thematicTakeaway: "Agape love is the portrait of Jesus Himself—sacrificial, enduring, and unfailing.",
         },
         homily: {
           title: "The Supreme Way of Agape",
-          preacher: "Saint Paul",
           duration: "2 min",
           practicalTips: [
             "Insert your own name in place of 'love' and see where you fall short of patience.",
@@ -2980,7 +2877,6 @@ export const BIBLE_TOPICS: BibleTopic[] = [
         },
         homily: {
           title: "The Source of All Affection",
-          preacher: "Saint John the Evangelist",
           duration: "2 min",
           practicalTips: [
             "Reflect on how deeply you are loved by God right now.",
@@ -2999,12 +2895,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           reference: "Romans 13:8",
           bookSlug: "romans",
           chapterNumber: 13,
-          verseSnippet: "Let no debt remain outstanding, except the continuing debt to love one another, for whoever loves others has fulfilled the law.",
+          verseSnippet: "Be indebted to no one, except to one another in love. For he who loves his neighbor has fulfilled the law.",
           thematicTakeaway: "The only debt you can never fully pay off is your sacred obligation to love your neighbor.",
         },
         homily: {
           title: "The Debt of Love",
-          preacher: "Saint Augustine",
           duration: "2 min",
           practicalTips: [
             "View every person you meet as someone to whom you owe the debt of Christian love.",
@@ -3023,12 +2918,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           reference: "Colossians 3:14",
           bookSlug: "colossians",
           chapterNumber: 3,
-          verseSnippet: "And over all these virtues put on love, which binds them all together in perfect unity.",
+          verseSnippet: "And over all these virtues put on love, which is the bond of perfect unity.",
           thematicTakeaway: "Love is the master garment that clasps all other virtues together in perfect harmony.",
         },
         homily: {
           title: "The Clasp of Perfection",
-          preacher: "Saint Ambrose",
           duration: "2 min",
           practicalTips: [
             "Consciously put on love each morning like a royal outer robe.",
@@ -3058,12 +2952,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           bookSlug: "proverbs",
           chapterNumber: 3,
           verseSnippet:
-            "Trust in the Lord with all your heart and lean not on your own understanding; in all your ways submit to him, and he will make your paths straight.",
+            "Trust in the LORD with all your heart, and lean not on your own understanding; in all your ways acknowledge Him, and He will make your paths straight.",
           thematicTakeaway: "Surrender your fragile logic to God's all-seeing wisdom, and He will steer your path.",
         },
         homily: {
           title: "Unconditional Confidence in God",
-          preacher: "Solomon",
           duration: "2 min",
           practicalTips: [
             "Acknowledge where you have been leaning on your own cleverness.",
@@ -3082,12 +2975,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           reference: "Psalm 56:3",
           bookSlug: "psalms",
           chapterNumber: 56,
-          verseSnippet: "When I am afraid, I put my trust in you.",
+          verseSnippet: "When I am afraid, I put my trust in You.",
           thematicTakeaway: "Courage is not the absence of fear; it is choosing to put your trust in God the moment fear strikes.",
         },
         homily: {
           title: "The Pivot from Terror to Trust",
-          preacher: "David in Gath",
           duration: "2 min",
           practicalTips: [
             "Whisper: 'When I am afraid, I trust in You, Lord.'",
@@ -3107,12 +2999,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           bookSlug: "jeremiah",
           chapterNumber: 17,
           verseSnippet:
-            "But blessed is the one who trusts in the Lord, whose confidence is in him. They will be like a tree planted by the water that sends out its roots by the stream. It does not fear when heat comes; its leaves are always green.",
+            "But blessed is the man who trusts in the LORD, whose confidence is in Him. He is like a tree planted by the waters that sends out its roots toward the stream. It does not fear when the heat comes, and its leaves are always green. It does not worry in a year of drought, nor does it cease to produce fruit.",
           thematicTakeaway: "A life rooted in trust never withers, even during long seasons of scorching drought.",
         },
         homily: {
           title: "The Deep-Rooted Tree",
-          preacher: "Jeremiah",
           duration: "2 min",
           practicalTips: [
             "Send your spiritual roots deep into daily prayer and meditation.",
@@ -3131,12 +3022,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           reference: "Isaiah 26:3",
           bookSlug: "isaiah",
           chapterNumber: 26,
-          verseSnippet: "You will keep in perfect peace those whose minds are steadfast, because they trust in you.",
+          verseSnippet: "You will keep in perfect peace the steadfast of mind, because he trusts in You.",
           thematicTakeaway: "Perfect peace ('shalom shalom') belongs to the mind that stays anchored in God's faithfulness.",
         },
         homily: {
           title: "Double Peace for the Steadfast",
-          preacher: "Isaiah the Prophet",
           duration: "2 min",
           practicalTips: [
             "Keep your thoughts fixed on God's promises throughout the day.",
@@ -3166,12 +3056,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           bookSlug: "isaiah",
           chapterNumber: 41,
           verseSnippet:
-            "So do not fear, for I am with you; do not be dismayed, for I am your God. I will strengthen you and help you; I will uphold you with my righteous right hand.",
+            "Do not fear, for I am with you; do not be afraid, for I am your God. I will strengthen you; I will surely help you; I will uphold you with My righteous right hand.",
           thematicTakeaway: "The antidote to fear is not self-confidence, but God's promised presence and upholding right hand.",
         },
         homily: {
           title: "The Upholding Right Hand",
-          preacher: "Isaiah",
           duration: "2 min",
           practicalTips: [
             "Repeat: 'God is with me; I will not be dismayed.'",
@@ -3191,12 +3080,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           bookSlug: "psalms",
           chapterNumber: 27,
           verseSnippet:
-            "The Lord is my light and my salvation—whom shall I fear? The Lord is the stronghold of my life—of whom shall I be afraid?",
+            "Of David. The LORD is my light and my salvation—whom shall I fear? The LORD is the stronghold of my life—whom shall I dread?",
           thematicTakeaway: "When the Almighty is your light and stronghold, every earthly terror is rendered powerless.",
         },
         homily: {
           title: "The Light That Banishes Nightmares",
-          preacher: "David the King",
           duration: "2 min",
           practicalTips: [
             "Declare Psalm 27:1 when walking into intimidating rooms or meetings.",
@@ -3215,12 +3103,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           reference: "2 Timothy 1:7",
           bookSlug: "2-timothy",
           chapterNumber: 1,
-          verseSnippet: "For the Spirit God gave us does not make us timid, but gives us power, love and self-discipline.",
+          verseSnippet: "For God has not given us a spirit of fear, but of power, love, and self-control.",
           thematicTakeaway: "Timidity and dread are not from God; His Spirit fills you with power, love, and a sound mind.",
         },
         homily: {
           title: "The Lion-Heart of the Spirit",
-          preacher: "Saint Paul to Timothy",
           duration: "2 min",
           practicalTips: [
             "Reject cowardice and timidity as foreign to the Holy Spirit.",
@@ -3240,12 +3127,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           bookSlug: "1-john",
           chapterNumber: 4,
           verseSnippet:
-            "There is no fear in love. But perfect love drives out fear, because fear has to do with punishment. The one who fears is not made perfect in love.",
+            "There is no fear in love, but perfect love drives out fear, because fear involves punishment. The one who fears has not been perfected in love.",
           thematicTakeaway: "When you understand how radically you are loved by God, the dread of condemnation vanishes.",
         },
         homily: {
           title: "The Expulsive Power of Perfect Love",
-          preacher: "Saint John the Evangelist",
           duration: "2 min",
           practicalTips: [
             "Meditate on the cross where Christ took all your punishment.",
@@ -3275,12 +3161,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           bookSlug: "joshua",
           chapterNumber: 1,
           verseSnippet:
-            "Have I not commanded you? Be strong and courageous. Do not be afraid; do not be discouraged, for the Lord your God will be with you wherever you go.",
+            "Have I not commanded you to be strong and courageous? Do not be afraid; do not be discouraged, for the LORD your God is with you wherever you go.”",
           thematicTakeaway: "Courage is a command rooted in the certainty that God accompanies you wherever you set your foot.",
         },
         homily: {
           title: "Taking Territory in Christ's Name",
-          preacher: "Joshua the General",
           duration: "2 min",
           practicalTips: [
             "Memorize Joshua 1:9 and repeat it before stepping into difficult assignments.",
@@ -3300,12 +3185,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           bookSlug: "deuteronomy",
           chapterNumber: 31,
           verseSnippet:
-            "Be strong and courageous. Do not be afraid or terrified because of them, for the Lord your God goes with you; he will never leave you nor forsake you.",
+            "Be strong and courageous; do not be afraid or terrified of them, for it is the LORD your God who goes with you; He will never leave you nor forsake you.”",
           thematicTakeaway: "No enemy or obstacle can outmatch the God who marches at your side.",
         },
         homily: {
           title: "The Vanguard of God",
-          preacher: "Moses the Lawgiver",
           duration: "2 min",
           practicalTips: [
             "Remind your soul that you never fight battles alone.",
@@ -3324,12 +3208,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           reference: "Psalm 31:24",
           bookSlug: "psalms",
           chapterNumber: 31,
-          verseSnippet: "Be strong and take heart, all you who hope in the Lord.",
+          verseSnippet: "Be strong and courageous, all you who hope in the LORD.",
           thematicTakeaway: "Hope in the Lord infuses iron strength into the faintest heart.",
         },
         homily: {
           title: "Taking Heart in the Lord",
-          preacher: "David",
           duration: "2 min",
           practicalTips: [
             "Take courage today by lifting your eyes from earthly dilemmas to heaven.",
@@ -3348,12 +3231,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           reference: "1 Corinthians 16:13",
           bookSlug: "1-corinthians",
           chapterNumber: 16,
-          verseSnippet: "Be on your guard; stand firm in the faith; be courageous; be strong.",
+          verseSnippet: "Be on the alert. Stand firm in the faith. Be men of courage. Be strong.",
           thematicTakeaway: "Spiritual valor requires alert vigilance, unshakable doctrine, and active courage.",
         },
         homily: {
           title: "The Fourfold Clarion Call",
-          preacher: "Saint Paul",
           duration: "2 min",
           practicalTips: [
             "Be on your guard against moral compromise.",
@@ -3382,12 +3264,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           reference: "James 1:5",
           bookSlug: "james",
           chapterNumber: 1,
-          verseSnippet: "If any of you lacks wisdom, you should ask God, who gives generously to all without finding fault, and it will be given to you.",
+          verseSnippet: "Now if any of you lacks wisdom, he should ask God, who gives generously to all without finding fault, and it will be given to him.",
           thematicTakeaway: "God delights to pour heavenly wisdom into every open, seeking heart.",
         },
         homily: {
           title: "The Heavenly Gift of Counsel",
-          preacher: "Saint James the Just",
           duration: "2 min",
           practicalTips: [
             "Pray for wisdom before every important conversation or transaction.",
@@ -3406,12 +3287,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           reference: "Proverbs 2:6",
           bookSlug: "proverbs",
           chapterNumber: 2,
-          verseSnippet: "For the Lord gives wisdom; from his mouth come knowledge and understanding.",
+          verseSnippet: "For the LORD gives wisdom; from His mouth come knowledge and understanding.",
           thematicTakeaway: "True wisdom is not human philosophy; it proceeds directly from the mouth of the Lord.",
         },
         homily: {
           title: "Listening to the Voice of Wisdom",
-          preacher: "Solomon",
           duration: "2 min",
           practicalTips: [
             "Open the Scriptures to receive knowledge directly from God's mouth.",
@@ -3430,12 +3310,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           reference: "Proverbs 4:7",
           bookSlug: "proverbs",
           chapterNumber: 4,
-          verseSnippet: "The beginning of wisdom is this: Get wisdom. Though it cost all you have, get understanding.",
+          verseSnippet: "Wisdom is supreme; so acquire wisdom. And whatever you may acquire, gain understanding.",
           thematicTakeaway: "Wisdom is the principal thing; invest everything to acquire understanding.",
         },
         homily: {
           title: "Acquiring the Pearl of Understanding",
-          preacher: "Solomon the Wise",
           duration: "2 min",
           practicalTips: [
             "Make the pursuit of godly wisdom your primary life goal.",
@@ -3454,12 +3333,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           reference: "Colossians 2:3",
           bookSlug: "colossians",
           chapterNumber: 2,
-          verseSnippet: "In whom are hidden all the treasures of wisdom and knowledge.",
+          verseSnippet: "in whom are hidden all the treasures of wisdom and knowledge.",
           thematicTakeaway: "Every secret of divine wisdom and knowledge is personified and unveiled in Jesus Christ.",
         },
         homily: {
           title: "Christ, the Incarnate Wisdom",
-          preacher: "Saint Paul",
           duration: "2 min",
           practicalTips: [
             "Look to Jesus as the ultimate source of truth, morality, and discernment.",
@@ -3488,12 +3366,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           reference: "Hebrews 11:1",
           bookSlug: "hebrews",
           chapterNumber: 11,
-          verseSnippet: "Now faith is confidence in what we hope for and assurance about what we do not see.",
+          verseSnippet: "Now faith is the assurance of what we hope for and the certainty of what we do not see.",
           thematicTakeaway: "Faith is not blind wishful thinking; it is absolute conviction in God's character and promises.",
         },
         homily: {
           title: "The Substance of the Unseen",
-          preacher: "The Author of Hebrews",
           duration: "2 min",
           practicalTips: [
             "Anchor your soul in what God has promised, not merely what your physical eyes behold.",
@@ -3512,12 +3389,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           reference: "Romans 10:17",
           bookSlug: "romans",
           chapterNumber: 10,
-          verseSnippet: "Consequently, faith comes from hearing the message, and the message is heard through the word about Christ.",
+          verseSnippet: "Consequently, faith comes by hearing, and hearing by the word of Christ.",
           thematicTakeaway: "Faith is nourished and ignited whenever you hear and meditate on the Gospel of Christ.",
         },
         homily: {
           title: "The Fuel of Faith",
-          preacher: "Saint Paul",
           duration: "2 min",
           practicalTips: [
             "Listen to Scripture read aloud or audio devotionals daily.",
@@ -3536,12 +3412,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           reference: "2 Corinthians 5:7",
           bookSlug: "2-corinthians",
           chapterNumber: 5,
-          verseSnippet: "For we live by faith, not by sight.",
+          verseSnippet: "For we walk by faith, not by sight.",
           thematicTakeaway: "Physical eyesight sees temporary obstacles; faith perceives eternal realities.",
         },
         homily: {
           title: "Living Above the Horizon of Sight",
-          preacher: "Saint Paul",
           duration: "2 min",
           practicalTips: [
             "Do not let current visible limitations dictate what God can accomplish.",
@@ -3560,12 +3435,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           reference: "Ephesians 2:8",
           bookSlug: "ephesians",
           chapterNumber: 2,
-          verseSnippet: "For it is by grace you have been saved, through faith—and this is not from yourselves, it is the gift of God.",
+          verseSnippet: "For it is by grace you have been saved through faith, and this not from yourselves; it is the gift of God,",
           thematicTakeaway: "Salvation is an unearned gift of grace received with open hands through faith.",
         },
         homily: {
           title: "The Open Hands of Grace",
-          preacher: "Saint Paul",
           duration: "2 min",
           practicalTips: [
             "Cease trying to earn God's love through legalistic striving.",
@@ -3595,12 +3469,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           bookSlug: "romans",
           chapterNumber: 15,
           verseSnippet:
-            "May the God of hope fill you with all joy and peace as you trust in him, so that you may overflow with hope by the power of the Holy Spirit.",
+            "Now may the God of hope fill you with all joy and peace as you believe in Him, so that you may overflow with hope by the power of the Holy Spirit.",
           thematicTakeaway: "The Holy Spirit causes hope to overflow like a fountain in the middle of dry seasons.",
         },
         homily: {
           title: "The Fountain of Holy Hope",
-          preacher: "Saint Paul",
           duration: "2 min",
           practicalTips: [
             "Pray Romans 15:13 as a morning blessing over your household.",
@@ -3619,12 +3492,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           reference: "Hebrews 6:19",
           bookSlug: "hebrews",
           chapterNumber: 6,
-          verseSnippet: "We have this hope as an anchor for the soul, firm and secure. It enters the inner sanctuary behind the curtain.",
+          verseSnippet: "We have this hope as an anchor for the soul, firm and secure. It enters the inner sanctuary behind the curtain,",
           thematicTakeaway: "Your hope is not tied to shifting waves, but anchored in the holy presence of God where Jesus intercedes.",
         },
         homily: {
           title: "The Anchor in the Holy of Holies",
-          preacher: "Saint John Chrysostom",
           duration: "2 min",
           practicalTips: [
             "When storms rage, visualize your soul's anchor firmly lodged before God's throne.",
@@ -3643,12 +3515,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           reference: "Jeremiah 29:11",
           bookSlug: "jeremiah",
           chapterNumber: 29,
-          verseSnippet: "'For I know the plans I have for you,' declares the Lord, 'plans to prosper you and not to harm you, plans to give you hope and a future.'",
+          verseSnippet: "For I know the plans I have for you, declares the LORD, plans to prosper you and not to harm you, to give you a future and a hope.",
           thematicTakeaway: "God has written your future with letters of redemption, shalom, and enduring hope.",
         },
         homily: {
           title: "The Dawn Behind the Clouds",
-          preacher: "Jeremiah the Prophet",
           duration: "2 min",
           practicalTips: [
             "Hold onto God's promises even when current circumstances look bleak.",
@@ -3667,12 +3538,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           reference: "Psalm 71:14",
           bookSlug: "psalms",
           chapterNumber: 71,
-          verseSnippet: "As for me, I will always have hope; I will praise you more and more.",
+          verseSnippet: "But I will always hope and will praise You more and more.",
           thematicTakeaway: "A heart resolved to hope answers every sorrow with multiplied praise.",
         },
         homily: {
           title: "The Song of Unquenchable Hope",
-          preacher: "The Aging Psalmist",
           duration: "2 min",
           practicalTips: [
             "Choose praise as your weapon against despair.",
@@ -3701,12 +3571,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           reference: "John 14:27",
           bookSlug: "john",
           chapterNumber: 14,
-          verseSnippet: "Peace I leave with you; my peace I give you. I do not give to you as the world gives. Do not let your hearts be troubled and do not be afraid.",
+          verseSnippet: "Peace I leave with you; My peace I give to you. I do not give to you as the world gives. Do not let your hearts be troubled; do not be afraid.",
           thematicTakeaway: "Christ's peace is not the absence of trouble, but His calming presence inside the trouble.",
         },
         homily: {
           title: "The Farewell Gift in the Upper Room",
-          preacher: "Jesus to His Disciples",
           duration: "2 min",
           practicalTips: [
             "Receive Christ's peace as a gift, not something you must manufacture.",
@@ -3725,12 +3594,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           reference: "Philippians 4:7",
           bookSlug: "philippians",
           chapterNumber: 4,
-          verseSnippet: "And the peace of God, which transcends all understanding, will guard your hearts and your minds in Christ Jesus.",
+          verseSnippet: "And the peace of God, which surpasses all understanding, will guard your hearts and your minds in Christ Jesus.",
           thematicTakeaway: "God's peace stands like an armed guard over your emotions and mental health.",
         },
         homily: {
           title: "The Heavenly Guard over the Soul",
-          preacher: "Saint Paul",
           duration: "2 min",
           practicalTips: [
             "Exchange anxious thoughts for thankful prayers.",
@@ -3749,12 +3617,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           reference: "Isaiah 26:3",
           bookSlug: "isaiah",
           chapterNumber: 26,
-          verseSnippet: "You will keep in perfect peace those whose minds are steadfast, because they trust in you.",
+          verseSnippet: "You will keep in perfect peace the steadfast of mind, because he trusts in You.",
           thematicTakeaway: "When your mind is anchored in the Rock of Ages, perfect peace fills your life.",
         },
         homily: {
           title: "The Fortress of Shalom",
-          preacher: "Isaiah the Prophet",
           duration: "2 min",
           practicalTips: [
             "Focus your attention on God's unchanging nature.",
@@ -3773,12 +3640,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           reference: "Romans 12:18",
           bookSlug: "romans",
           chapterNumber: 12,
-          verseSnippet: "If it is possible, as far as it depends on you, live at peace with everyone.",
+          verseSnippet: "If it is possible on your part, live at peace with everyone.",
           thematicTakeaway: "Take responsibility for your part in fostering harmony and de-escalating strife.",
         },
         homily: {
           title: "The Blessed Peacemaker",
-          preacher: "Saint Paul",
           duration: "2 min",
           practicalTips: [
             "Do your 100% to live peaceably, even if others refuse.",
@@ -3808,12 +3674,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           bookSlug: "colossians",
           chapterNumber: 3,
           verseSnippet:
-            "Therefore, as God's chosen people, holy and dearly loved, clothe yourselves with compassion, kindness, humility, gentleness and patience.",
+            "Therefore, as the elect of God, holy and beloved, clothe yourselves with hearts of compassion, kindness, humility, gentleness, and patience.",
           thematicTakeaway: "Put on compassion intentionally every morning, as a chosen and beloved child of God.",
         },
         homily: {
           title: "The Robe of Tender Mercies",
-          preacher: "Saint Paul",
           duration: "2 min",
           practicalTips: [
             "Intentionally choose compassion over annoyance when dealing with difficult people.",
@@ -3832,12 +3697,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           reference: "Ephesians 4:32",
           bookSlug: "ephesians",
           chapterNumber: 4,
-          verseSnippet: "Be kind and compassionate to one another, forgiving each other, just as in Christ God forgave you.",
+          verseSnippet: "Be kind and tenderhearted to one another, forgiving each other just as in Christ God forgave you.",
           thematicTakeaway: "Tenderhearted kindness flows naturally when you remember the depth of your own forgiveness.",
         },
         homily: {
           title: "The Melting of the Stone Heart",
-          preacher: "Saint John Chrysostom",
           duration: "2 min",
           practicalTips: [
             "Soften your posture toward someone who has irritated you.",
@@ -3856,12 +3720,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           reference: "Zechariah 7:9",
           bookSlug: "zechariah",
           chapterNumber: 7,
-          verseSnippet: "This is what the Lord Almighty said: 'Administer true justice; show mercy and compassion to one another.'",
+          verseSnippet: "“This is what the LORD of Hosts says: ‘Administer true justice. Show loving devotion and compassion to one another.",
           thematicTakeaway: "True religion pairs honest justice with active mercy and compassion for the vulnerable.",
         },
         homily: {
           title: "The Heart That Pleases God",
-          preacher: "Zechariah the Prophet",
           duration: "2 min",
           practicalTips: [
             "Defend the cause of the vulnerable, the widow, and the orphan.",
@@ -3880,12 +3743,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           reference: "Psalm 103:13",
           bookSlug: "psalms",
           chapterNumber: 103,
-          verseSnippet: "As a father has compassion on his children, so the Lord has compassion on those who fear him.",
+          verseSnippet: "As a father has compassion on his children, so the LORD has compassion on those who fear Him.",
           thematicTakeaway: "God remembers that we are dust and treats our fragile frame with tender paternal care.",
         },
         homily: {
           title: "The Tenderness of the Heavenly Father",
-          preacher: "David the King",
           duration: "2 min",
           practicalTips: [
             "Rest in the knowledge that God knows your human frame and weaknesses.",
@@ -3915,12 +3777,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           bookSlug: "matthew",
           chapterNumber: 6,
           verseSnippet:
-            "For if you forgive other people when they sin against you, your heavenly Father will also forgive you. But if you do not forgive others their sins, your Father will not forgive your sins.",
+            "For if you forgive men their trespasses, your heavenly Father will also forgive you. But if you do not forgive men their trespasses, neither will your Father forgive yours.",
           thematicTakeaway: "Unforgiveness closes the conduit through which heaven's mercy flows into our own lives.",
         },
         homily: {
           title: "The Unlocked Door of Mercy",
-          preacher: "Jesus",
           duration: "2 min",
           practicalTips: [
             "Pray specifically for the soul who offended or hurt you.",
@@ -3939,12 +3800,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           reference: "Colossians 3:13",
           bookSlug: "colossians",
           chapterNumber: 3,
-          verseSnippet: "Bear with each other and forgive one another if any of you has a grievance against someone. Forgive as the Lord forgave you.",
+          verseSnippet: "Bear with one another and forgive any complaint you may have against someone else. Forgive as the Lord forgave you.",
           thematicTakeaway: "The measure of our forgiveness toward others is the infinite forgiveness we received at the cross.",
         },
         homily: {
           title: "The Cross, Our Measure of Mercy",
-          preacher: "Saint Paul",
           duration: "2 min",
           practicalTips: [
             "Remember the insurmountable debt of sin that Jesus wiped out on your behalf.",
@@ -3963,12 +3823,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           reference: "Ephesians 4:32",
           bookSlug: "ephesians",
           chapterNumber: 4,
-          verseSnippet: "Be kind and compassionate to one another, forgiving each other, just as in Christ God forgave you.",
+          verseSnippet: "Be kind and tenderhearted to one another, forgiving each other just as in Christ God forgave you.",
           thematicTakeaway: "Pardon releases the poison of bitterness and restores fellowship in the body of Christ.",
         },
         homily: {
           title: "The Healing Balm of Pardon",
-          preacher: "Saint John Chrysostom",
           duration: "2 min",
           practicalTips: [
             "Do not allow bitterness to poison your thoughts.",
@@ -3988,12 +3847,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           bookSlug: "mark",
           chapterNumber: 11,
           verseSnippet:
-            "And when you stand praying, if you hold anything against anyone, forgive them, so that your Father in heaven may forgive you your sins.",
+            "And when you stand to pray, if you hold anything against another, forgive it, so that your Father in heaven will forgive your trespasses as well.”",
           thematicTakeaway: "Clear your horizontal relationships before approaching the vertical throne of prayer.",
         },
         homily: {
           title: "Clear Skies over the Altar",
-          preacher: "Jesus",
           duration: "2 min",
           practicalTips: [
             "Before entering deep prayer, pause and forgive anyone you hold a grudge against.",
@@ -4022,12 +3880,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           reference: "Romans 12:12",
           bookSlug: "romans",
           chapterNumber: 12,
-          verseSnippet: "Be joyful in hope, patient in affliction, faithful in prayer.",
+          verseSnippet: "Be joyful in hope, patient in affliction, persistent in prayer.",
           thematicTakeaway: "Three golden cords of spiritual stamina: joyful hope, patient endurance, and constant prayer.",
         },
         homily: {
           title: "The Threefold Cord of Christian Endurance",
-          preacher: "Saint Paul",
           duration: "2 min",
           practicalTips: [
             "Keep your hope joyful even when the trial lingers.",
@@ -4047,12 +3904,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           bookSlug: "james",
           chapterNumber: 5,
           verseSnippet:
-            "Be patient, then, brothers and sisters, until the Lord's coming. See how the farmer waits for the land to yield its valuable crop, patiently waiting for the autumn and spring rains. You too, be patient and stand firm, because the Lord's coming is near.",
+            "Be patient, then, brothers, until the Lord’s coming. See how the farmer awaits the precious fruit of the soil—how patient he is for the fall and spring rains. You, too, be patient and strengthen your hearts, because the Lord’s coming is near.",
           thematicTakeaway: "Like the farmer waiting for the early and late rains, wait patiently for God's coming harvest.",
         },
         homily: {
           title: "Waiting for the Latter Rain",
-          preacher: "Saint James the Just",
           duration: "2 min",
           practicalTips: [
             "Do not lose heart during the long seasons between sowing and harvest.",
@@ -4071,12 +3927,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           reference: "Galatians 6:9",
           bookSlug: "galatians",
           chapterNumber: 6,
-          verseSnippet: "Let us not become weary in doing good, for at the proper time we will reap a harvest if we do not give up.",
+          verseSnippet: "Let us not grow weary in well-doing, for in due time we will reap a harvest if we do not give up.",
           thematicTakeaway: "Weariness in well-doing is conquered by faith in God's guaranteed harvest calendar.",
         },
         homily: {
           title: "The Promise of the Due Season",
-          preacher: "Saint Paul",
           duration: "2 min",
           practicalTips: [
             "Do not quit when your labor seems unnoticed or unappreciated.",
@@ -4095,12 +3950,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           reference: "Psalm 37:7",
           bookSlug: "psalms",
           chapterNumber: 37,
-          verseSnippet: "Be still before the Lord and wait patiently for him; do not fret when people succeed in their ways, when they carry out their wicked schemes.",
+          verseSnippet: "Be still before the LORD and wait patiently for Him; do not fret when men prosper in their ways, when they carry out wicked schemes.",
           thematicTakeaway: "Stillness before the Lord frees you from frantic fretting over the temporary success of the wicked.",
         },
         homily: {
           title: "The Quiet Harbor of Stillness",
-          preacher: "David the King",
           duration: "2 min",
           practicalTips: [
             "Sit in complete silence for two minutes before God.",
@@ -4129,12 +3983,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           reference: "1 Thessalonians 5:18",
           bookSlug: "1-thessalonians",
           chapterNumber: 5,
-          verseSnippet: "Give thanks in all circumstances; for this is God's will for you in Christ Jesus.",
+          verseSnippet: "Give thanks in every circumstance, for this is God’s will for you in Christ Jesus.",
           thematicTakeaway: "Gratitude is not contingent on pleasant weather; it is an unshakeable stance of the redeemed heart.",
         },
         homily: {
           title: "The Sacred Sacrifice of Thanksgiving",
-          preacher: "Saint Paul",
           duration: "2 min",
           practicalTips: [
             "Give thanks for three blessings right now, even if you are facing a trial.",
@@ -4153,12 +4006,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           reference: "Psalm 100:4",
           bookSlug: "psalms",
           chapterNumber: 100,
-          verseSnippet: "Enter his gates with thanksgiving and his courts with praise; give thanks to him and praise his name.",
+          verseSnippet: "Enter His gates with thanksgiving and His courts with praise; give thanks to Him and bless His name.",
           thematicTakeaway: "Thanksgiving is the royal key that unlocks the palace gates of God's presence.",
         },
         homily: {
           title: "The Key to the Heavenly Palace",
-          preacher: "The Psalmist",
           duration: "2 min",
           practicalTips: [
             "Begin your prayer time with thanksgiving before asking for requests.",
@@ -4178,12 +4030,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           bookSlug: "colossians",
           chapterNumber: 3,
           verseSnippet:
-            "Let the peace of Christ rule in your hearts, since as members of one body you were called to peace. And be thankful.",
+            "Let the peace of Christ rule in your hearts, for to this you were called as members of one body. And be thankful.",
           thematicTakeaway: "A thankful heart creates a serene atmosphere where Christ's peace umpire rules every dispute.",
         },
         homily: {
           title: "The Umpire of Peace and Thanksgiving",
-          preacher: "Saint Paul",
           duration: "2 min",
           practicalTips: [
             "Let peace be the deciding factor when making relational decisions.",
@@ -4202,12 +4053,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           reference: "Philippians 4:6",
           bookSlug: "philippians",
           chapterNumber: 4,
-          verseSnippet: "Do not be anxious about anything, but in every situation, by prayer and petition, with thanksgiving, present your requests to God.",
+          verseSnippet: "Be anxious for nothing, but in everything, by prayer and petition, with thanksgiving, present your requests to God.",
           thematicTakeaway: "Pair every prayer request with thanksgiving for past mercies and current grace.",
         },
         homily: {
           title: "The Golden Spice of Prayer",
-          preacher: "Saint Paul",
           duration: "2 min",
           practicalTips: [
             "Before asking God for what you lack, thank Him for what He has already provided.",
@@ -4237,12 +4087,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           bookSlug: "philippians",
           chapterNumber: 2,
           verseSnippet:
-            "Do nothing out of selfish ambition or vain conceit. Rather, in humility value others above yourselves, not looking to your own interests but each of you to the interests of the others.",
+            "Do nothing out of selfish ambition or empty pride, but in humility consider others more important than yourselves. Each of you should look not only to your own interests, but also to the interests of others.",
           thematicTakeaway: "Look to the interests of your neighbors, mirroring the servant heart of Christ.",
         },
         homily: {
           title: "The Lowly Way of Jesus",
-          preacher: "Saint Paul",
           duration: "2 min",
           practicalTips: [
             "Intentionally serve someone who cannot advance your career or social standing.",
@@ -4261,12 +4110,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           reference: "James 4:10",
           bookSlug: "james",
           chapterNumber: 4,
-          verseSnippet: "Humble yourselves before the Lord, and he will lift you up.",
+          verseSnippet: "Humble yourselves before the Lord, and He will exalt you.",
           thematicTakeaway: "When you take the lowest place before God, He delights to lift you up in His perfect timing.",
         },
         homily: {
           title: "The Lift of the Father's Hand",
-          preacher: "Saint James the Just",
           duration: "2 min",
           practicalTips: [
             "Kneel or bow physically in prayer as a sign of inward reverence.",
@@ -4285,12 +4133,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           reference: "Proverbs 22:4",
           bookSlug: "proverbs",
           chapterNumber: 22,
-          verseSnippet: "Humility is the fear of the Lord; its wages are riches and honor and life.",
+          verseSnippet: "The rewards of humility and the fear of the LORD are wealth and honor and life.",
           thematicTakeaway: "True spiritual wealth, enduring honor, and vibrant life flow from reverent humility.",
         },
         homily: {
           title: "The True Wages of the Humble",
-          preacher: "Solomon",
           duration: "2 min",
           practicalTips: [
             "Fear the Lord with holy awe and reverence.",
@@ -4309,12 +4156,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           reference: "Micah 6:8",
           bookSlug: "micah",
           chapterNumber: 6,
-          verseSnippet: "He has shown you, O mortal, what is good. And what does the Lord require of you? To act justly and to love mercy and to walk humbly with your God.",
+          verseSnippet: "He has shown you, O man, what is good. And what does the LORD require of you but to act justly, to love mercy, and to walk humbly with your God?",
           thematicTakeaway: "God requires three simple, profound marks: justice in actions, love in mercy, and humility in walk.",
         },
         homily: {
           title: "The Walk That Pleases Heaven",
-          preacher: "Micah the Prophet",
           duration: "2 min",
           practicalTips: [
             "Act justly in every personal and business encounter.",
@@ -4343,12 +4189,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           reference: "Psalm 133:1",
           bookSlug: "psalms",
           chapterNumber: 133,
-          verseSnippet: "How good and pleasant it is when God's people live together in unity!",
+          verseSnippet: "A song of ascents. Of David. Behold, how good and pleasant it is when brothers live together in harmony!",
           thematicTakeaway: "Brotherly unity is like the sacred anointing oil that brings God's commanded blessing.",
         },
         homily: {
           title: "The Fragrance of Brotherly Concord",
-          preacher: "David the King",
           duration: "2 min",
           practicalTips: [
             "Be a bridge-builder where division or gossip threatens relationships.",
@@ -4367,12 +4212,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           reference: "Ephesians 4:3",
           bookSlug: "ephesians",
           chapterNumber: 4,
-          verseSnippet: "Make every effort to keep the unity of the Spirit through the bond of peace.",
+          verseSnippet: "and with diligence to preserve the unity of the Spirit through the bond of peace.",
           thematicTakeaway: "Unity is already created by the Holy Spirit; our responsibility is to eagerly guard it.",
         },
         homily: {
           title: "Guarding the Sacred Bond",
-          preacher: "Saint Paul",
           duration: "2 min",
           practicalTips: [
             "Make 'every effort'—do not give up on reconciliation easily.",
@@ -4392,12 +4236,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           bookSlug: "1-corinthians",
           chapterNumber: 1,
           verseSnippet:
-            "I appeal to you, brothers and sisters, in the name of our Lord Jesus Christ, that all of you agree with one another in what you say and that there be no divisions among you, but that you be perfectly united in mind and thought.",
+            "I appeal to you, brothers, in the name of our Lord Jesus Christ, that all of you agree together, so that there may be no divisions among you and that you may be united in mind and conviction.",
           thematicTakeaway: "Christ is not divided; let the church be united in one heart, mind, and Gospel purpose.",
         },
         homily: {
           title: "One Body, One Lord, One Faith",
-          preacher: "Saint Paul",
           duration: "2 min",
           practicalTips: [
             "Lay aside party factions and petty tribalism.",
@@ -4416,12 +4259,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           reference: "Colossians 3:14",
           bookSlug: "colossians",
           chapterNumber: 3,
-          verseSnippet: "And over all these virtues put on love, which binds them all together in perfect unity.",
+          verseSnippet: "And over all these virtues put on love, which is the bond of perfect unity.",
           thematicTakeaway: "Love is the golden cement that unites diverse people into one unshakeable family.",
         },
         homily: {
           title: "The Cement of the Household of God",
-          preacher: "Saint Paul",
           duration: "2 min",
           practicalTips: [
             "Love your fellow believers despite personality quirks or differences.",
@@ -4450,12 +4292,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           reference: "1 Peter 2:17",
           bookSlug: "1-peter",
           chapterNumber: 2,
-          verseSnippet: "Show proper respect to everyone, love the family of believers, fear God, honor the emperor.",
+          verseSnippet: "Treat everyone with high regard: Love the brotherhood of believers, fear God, honor the king.",
           thematicTakeaway: "Every human being bears God's image and is worthy of dignity, respect, and honor.",
         },
         homily: {
           title: "The Image of God in Every Soul",
-          preacher: "Simon Peter",
           duration: "2 min",
           practicalTips: [
             "Treat servers, cashiers, and subordinates with genuine dignity.",
@@ -4474,12 +4315,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           reference: "Romans 12:10",
           bookSlug: "romans",
           chapterNumber: 12,
-          verseSnippet: "Be devoted to one another in love. Honor one another above yourselves.",
+          verseSnippet: "Be devoted to one another in brotherly love. Outdo yourselves in honoring one another.",
           thematicTakeaway: "Engage in holy competition: seek to be the first to honor and elevate your brother.",
         },
         homily: {
           title: "The Holy Contest of Honor",
-          preacher: "Saint Paul",
           duration: "2 min",
           practicalTips: [
             "Publicly praise someone else's contribution before highlighting your own.",
@@ -4498,12 +4338,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           reference: "Philippians 2:3",
           bookSlug: "philippians",
           chapterNumber: 2,
-          verseSnippet: "Do nothing out of selfish ambition or vain conceit. Rather, in humility value others above yourselves.",
+          verseSnippet: "Do nothing out of selfish ambition or empty pride, but in humility consider others more important than yourselves.",
           thematicTakeaway: "Respect is born when you genuinely view others as worthy of dignity and service.",
         },
         homily: {
           title: "Dethroning Vain Conceit",
-          preacher: "Saint Paul",
           duration: "2 min",
           practicalTips: [
             "Check your motives: are you looking to impress or to serve?",
@@ -4522,12 +4361,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           reference: "Leviticus 19:32",
           bookSlug: "leviticus",
           chapterNumber: 19,
-          verseSnippet: "Stand up in the presence of the aged, show respect for the elderly and revere your God. I am the Lord.",
+          verseSnippet: "You are to rise in the presence of the elderly, honor the aged, and fear your God. I am the LORD.",
           thematicTakeaway: "Honoring the elderly is a sacred reflection of your reverence for the Eternal God.",
         },
         homily: {
           title: "The Crown of Gray Hair",
-          preacher: "Moses",
           duration: "2 min",
           practicalTips: [
             "Show honor and patient attention to aging parents and grandparents.",
@@ -4556,12 +4394,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           reference: "Romans 12:16",
           bookSlug: "romans",
           chapterNumber: 12,
-          verseSnippet: "Live in harmony with one another. Do not be proud, but be willing to associate with people of low position. Do not be conceited.",
+          verseSnippet: "Live in harmony with one another. Do not be proud, but associate with the lowly. Do not be conceited.",
           thematicTakeaway: "Harmony flourishes when haughty superiority is abandoned in favor of sweet communion.",
         },
         homily: {
           title: "The Symphony of Lowly Concord",
-          preacher: "Saint Paul",
           duration: "2 min",
           practicalTips: [
             "Do not chase after elitist status or climb social ladders.",
@@ -4580,12 +4417,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           reference: "1 Peter 3:8",
           bookSlug: "1-peter",
           chapterNumber: 3,
-          verseSnippet: "Finally, all of you, be like-minded, be sympathetic, love one another, be compassionate and humble.",
+          verseSnippet: "Finally, all of you, be like-minded and sympathetic, love as brothers, be tenderhearted and humble.",
           thematicTakeaway: "Symphonic community requires shared sympathy, brotherly affection, and tender humility.",
         },
         homily: {
           title: "The Fivefold Harmony of Peter",
-          preacher: "Simon Peter",
           duration: "2 min",
           practicalTips: [
             "Weep with those who weep, and rejoice with those who rejoice.",
@@ -4604,12 +4440,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           reference: "Romans 14:19",
           bookSlug: "romans",
           chapterNumber: 14,
-          verseSnippet: "Let us therefore make every effort to do what leads to peace and to mutual edification.",
+          verseSnippet: "So then, let us pursue what leads to peace and to mutual edification.",
           thematicTakeaway: "Harmony does not happen by chance; it is actively pursued through mutual upbuilding.",
         },
         homily: {
           title: "Building Up the Living Stones",
-          preacher: "Saint Paul",
           duration: "2 min",
           practicalTips: [
             "Ask before speaking: 'Will this build up peace, or spark unnecessary controversy?'",
@@ -4629,12 +4464,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           bookSlug: "2-corinthians",
           chapterNumber: 13,
           verseSnippet:
-            "Finally, brothers and sisters, rejoice! Strive for full restoration, encourage one another, be of one mind, live in peace. And the God of love and peace will be with you.",
+            "Finally, brothers, rejoice! Aim for perfect harmony, encourage one another, be of one mind, live in peace. And the God of love and peace will be with you.",
           thematicTakeaway: "When you pursue restoration and peace, the God of love and peace makes His dwelling with you.",
         },
         homily: {
           title: "The Final Apostolic Benediction",
-          preacher: "Saint Paul",
           duration: "2 min",
           practicalTips: [
             "Rejoice in the Lord always.",
@@ -4663,12 +4497,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           reference: "Proverbs 4:7",
           bookSlug: "proverbs",
           chapterNumber: 4,
-          verseSnippet: "The beginning of wisdom is this: Get wisdom. Though it cost all you have, get understanding.",
+          verseSnippet: "Wisdom is supreme; so acquire wisdom. And whatever you may acquire, gain understanding.",
           thematicTakeaway: "Understanding is worth more than all earthly assets; prize it above gold.",
         },
         homily: {
           title: "The Treasure of Understanding",
-          preacher: "Solomon the Wise",
           duration: "2 min",
           practicalTips: [
             "Invest time in studying God's Word deeply.",
@@ -4687,12 +4520,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           reference: "Proverbs 3:5",
           bookSlug: "proverbs",
           chapterNumber: 3,
-          verseSnippet: "Trust in the Lord with all your heart and lean not on your own understanding.",
+          verseSnippet: "Trust in the LORD with all your heart, and lean not on your own understanding;",
           thematicTakeaway: "True understanding begins when you recognize the limits of your own human reasoning.",
         },
         homily: {
           title: "The Finite and the Infinite",
-          preacher: "Solomon",
           duration: "2 min",
           practicalTips: [
             "Acknowledge God's infinite wisdom above your limited vantage point.",
@@ -4711,12 +4543,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           reference: "Psalm 119:130",
           bookSlug: "psalms",
           chapterNumber: 119,
-          verseSnippet: "The unfolding of your words gives light; it gives understanding to the simple.",
+          verseSnippet: "The unfolding of Your words gives light; it informs the simple.",
           thematicTakeaway: "God's Word imparts supernatural understanding even to the simple and uneducated.",
         },
         homily: {
           title: "The Unfolding of Holy Light",
-          preacher: "The Psalmist",
           duration: "2 min",
           practicalTips: [
             "Read Scripture with an open, teachable spirit.",
@@ -4735,12 +4566,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           reference: "1 Kings 3:9",
           bookSlug: "1-kings",
           chapterNumber: 3,
-          verseSnippet: "So give your servant a discerning heart to govern your people and to distinguish between right and wrong. For who is able to govern this great people of yours?",
+          verseSnippet: "Therefore give Your servant an understanding heart to judge Your people and to discern between good and evil. For who is able to govern this great people of Yours?”",
           thematicTakeaway: "When given any wish by God, Solomon asked for a listening heart to discern right from wrong.",
         },
         homily: {
           title: "The Prayer That Pleased God",
-          preacher: "Solomon at Gibeon",
           duration: "2 min",
           practicalTips: [
             "Pray: 'Lord, give me a listening, discerning heart.'",
@@ -4773,12 +4603,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           reference: "Micah 6:8",
           bookSlug: "micah",
           chapterNumber: 6,
-          verseSnippet: "He has shown you, O mortal, what is good. And what does the Lord require of you? To act justly and to love mercy and to walk humbly with your God.",
+          verseSnippet: "He has shown you, O man, what is good. And what does the LORD require of you but to act justly, to love mercy, and to walk humbly with your God?",
           thematicTakeaway: "True righteousness is not cold legalism, but a living harmony of justice, mercy, and humility.",
         },
         homily: {
           title: "The Divine Triad of Righteousness",
-          preacher: "Micah the Prophet",
           duration: "2 min",
           practicalTips: [
             "Practice justice in your speech, billing, and relationships.",
@@ -4797,12 +4626,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           reference: "Ecclesiastes 12:13",
           bookSlug: "ecclesiastes",
           chapterNumber: 12,
-          verseSnippet: "Now all has been heard; here is the conclusion of the matter: Fear God and keep his commandments, for this is the duty of all mankind.",
+          verseSnippet: "When all has been heard, the conclusion of the matter is this: Fear God and keep His commandments, because this is the whole duty of man.",
           thematicTakeaway: "After exploring every earthly vanity, the conclusion of wisdom is reverent obedience to God.",
         },
         homily: {
           title: "The Conclusion of the Matter",
-          preacher: "The Preacher (Qoheleth)",
           duration: "2 min",
           practicalTips: [
             "Let the fear of the Lord anchor your soul in an age of confusion.",
@@ -4821,12 +4649,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           reference: "Romans 12:1",
           bookSlug: "romans",
           chapterNumber: 12,
-          verseSnippet: "I urge you, brothers and sisters, in view of God's mercy, to offer your bodies as a living sacrifice, holy and pleasing to God—this is your true and proper worship.",
+          verseSnippet: "Therefore I urge you, brothers, on account of God’s mercy, to offer your bodies as living sacrifices, holy and pleasing to God, which is your spiritual service of worship.",
           thematicTakeaway: "Righteousness means placing your whole life, mind, and body onto God's altar of service.",
         },
         homily: {
           title: "The Altar of Righteous Devotion",
-          preacher: "Saint Paul",
           duration: "2 min",
           practicalTips: [
             "Present your body each morning to God as an instrument of righteousness.",
@@ -4845,12 +4672,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           reference: "Ephesians 4:1",
           bookSlug: "ephesians",
           chapterNumber: 4,
-          verseSnippet: "As a prisoner for the Lord, then, I urge you to live a life worthy of the calling you have received.",
+          verseSnippet: "As a prisoner in the Lord, then, I urge you to walk in a manner worthy of the calling you have received:",
           thematicTakeaway: "Righteous living means matching your daily footsteps to the celestial dignity of your calling in Christ.",
         },
         homily: {
           title: "Walking in Celestial Dignity",
-          preacher: "Saint Paul from Prison",
           duration: "2 min",
           practicalTips: [
             "Remember your identity as a chosen, adopted child of God.",
@@ -4879,12 +4705,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           reference: "1 John 2:15",
           bookSlug: "1-john",
           chapterNumber: 2,
-          verseSnippet: "Do not love the world or anything in the world. If anyone loves the world, love for the Father is not in them.",
+          verseSnippet: "Do not love the world or anything in the world. If anyone loves the world, the love of the Father is not in him.",
           thematicTakeaway: "Holy detachment from worldly applause and transient comforts makes room for the Father's love.",
         },
         homily: {
           title: "Holy Detachment from the Shadows",
-          preacher: "Saint John the Beloved",
           duration: "2 min",
           practicalTips: [
             "Hold possessions with an open hand, viewing yourself as a steward, not an owner.",
@@ -4903,12 +4728,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           reference: "Matthew 6:19-20",
           bookSlug: "matthew",
           chapterNumber: 6,
-          verseSnippet: "Do not store up for yourselves treasures on earth, where moths and vermin destroy, and where thieves break in and steal. But store up for yourselves treasures in heaven.",
+          verseSnippet: "Do not store up for yourselves treasures on earth, where moth and rust destroy, and where thieves break in and steal. But store up for yourselves treasures in heaven, where moth and rust do not destroy, and where thieves do not break in and steal.",
           thematicTakeaway: "True detachment frees you from the terror of losing material wealth by investing in heaven.",
         },
         homily: {
           title: "The Freedom of the Unburdened Soul",
-          preacher: "Saint Francis of Assisi",
           duration: "2 min",
           practicalTips: [
             "Practice voluntary simplicity in your lifestyle.",
@@ -4916,7 +4740,7 @@ export const BIBLE_TOPICS: BibleTopic[] = [
             "Rejoice in the treasures that no thief or moth can touch.",
           ],
           audioScript:
-            "When Francis of Assisi renounced his wealthy father's inheritance, he walked into the snow singing praises to God. Why? Because the soul detached from earthly clutter is light as a bird, soaring into the joy of the Lord.",
+            "When Francis of Assisi gave up his wealthy father's inheritance, the early accounts say he went on his way singing praises to God. Why? Because the soul detached from earthly clutter is light as a bird, soaring into the joy of the Lord.",
         },
       },
       {
@@ -4932,7 +4756,6 @@ export const BIBLE_TOPICS: BibleTopic[] = [
         },
         homily: {
           title: "Looking Past the Horizon",
-          preacher: "Saint Paul",
           duration: "2 min",
           practicalTips: [
             "Evaluate daily worries in the light of eternal resurrection.",
@@ -4951,12 +4774,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           reference: "Philippians 3:8",
           bookSlug: "philippians",
           chapterNumber: 3,
-          verseSnippet: "What is more, I consider everything a loss because of the surpassing worth of knowing Christ Jesus my Lord, for whose sake I have lost all things. I consider them garbage, that I may gain Christ.",
+          verseSnippet: "More than that, I count all things as loss compared to the surpassing excellence of knowing Christ Jesus my Lord, for whom I have lost all things. I consider them rubbish, that I may gain Christ",
           thematicTakeaway: "When you discover the pearl of great price in Jesus, parting with everything else is pure joy.",
         },
         homily: {
           title: "The Pearl of Great Price",
-          preacher: "Saint Paul",
           duration: "2 min",
           practicalTips: [
             "View pedigree, credentials, and achievements as loss compared to knowing Christ.",
@@ -4986,12 +4808,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           bookSlug: "ephesians",
           chapterNumber: 1,
           verseSnippet:
-            "I pray that the eyes of your heart may be enlightened in order that you may know the hope to which he has called you, the riches of his glorious inheritance in his holy people.",
+            "I ask that the eyes of your heart may be enlightened, so that you may know the hope of His calling, the riches of His glorious inheritance in the saints,",
           thematicTakeaway: "Christian awakening is when the Holy Spirit opens the inner eye of your heart to behold God's glory.",
         },
         homily: {
           title: "The Opening of the Inward Eye",
-          preacher: "Saint Gregory of Nyssa",
           duration: "2 min",
           practicalTips: [
             "Pray Ephesians 1:18 over your spiritual life daily.",
@@ -5010,12 +4831,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           reference: "Psalm 119:105",
           bookSlug: "psalms",
           chapterNumber: 119,
-          verseSnippet: "Your word is a lamp for my feet, a light on my path.",
+          verseSnippet: "Your word is a lamp to my feet and a light to my path.",
           thematicTakeaway: "God's Word dispels the shadows of ignorance and illuminates every step of your journey.",
         },
         homily: {
           title: "The Radiant Lamp of Truth",
-          preacher: "Saint Athanasius",
           duration: "2 min",
           practicalTips: [
             "Read Scripture before facing challenging decisions.",
@@ -5035,12 +4855,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           bookSlug: "2-corinthians",
           chapterNumber: 4,
           verseSnippet:
-            "For God, who said, 'Let light shine out of darkness,' made his light shine in our hearts to give us the light of the knowledge of God's glory displayed in the face of Christ.",
+            "For God, who said, “Let light shine out of darkness,” made His light shine in our hearts to give us the light of the knowledge of the glory of God in the face of Jesus Christ.",
           thematicTakeaway: "The same Creator who commanded physical light at creation now shines in human hearts through Jesus.",
         },
         homily: {
           title: "The Dawn in the Human Heart",
-          preacher: "Saint Paul",
           duration: "2 min",
           practicalTips: [
             "Gaze upon the face of Jesus through the Gospels.",
@@ -5060,12 +4879,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           bookSlug: "john",
           chapterNumber: 8,
           verseSnippet:
-            "When Jesus spoke again to the people, he said, 'I am the light of the world. Whoever follows me will never walk in darkness, but will have the light of life.'",
+            "Once again, Jesus spoke to the people and said, “I am the light of the world. Whoever follows Me will never walk in the darkness, but will have the light of life.”",
           thematicTakeaway: "Following Christ guarantees that you will never walk in darkness; you possess the light of life.",
         },
         homily: {
           title: "The Sun of Righteousness",
-          preacher: "Jesus in the Temple",
           duration: "2 min",
           practicalTips: [
             "Follow Jesus closely in daily obedience.",
@@ -5094,12 +4912,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           reference: "Romans 8:28",
           bookSlug: "romans",
           chapterNumber: 8,
-          verseSnippet: "And we know that in all things God works for the good of those who love him, who have been called according to his purpose.",
+          verseSnippet: "And we know that God works all things together for the good of those who love Him, who are called according to His purpose.",
           thematicTakeaway: "Acceptance is not fatalistic resignation; it is the confident trust that God redeems every circumstance.",
         },
         homily: {
           title: "The Redemptive Weaving of God",
-          preacher: "Saint Augustine",
           duration: "2 min",
           practicalTips: [
             "Accept unexpected setbacks as part of God's redemptive school of character.",
@@ -5119,12 +4936,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           bookSlug: "philippians",
           chapterNumber: 4,
           verseSnippet:
-            "I have learned to be content whatever the circumstances. I know what it is to be in need, and I know what it is to have plenty. I have learned the secret of being content in any and every situation, whether well fed or hungry, whether living in plenty or in want.",
+            "I am not saying this out of need, for I have learned to be content regardless of my circumstances. I know how to live humbly, and I know how to abound. In any and every situation I have learned the secret of being filled and being hungry, of having plenty and having need.",
           thematicTakeaway: "Contentment is not a natural instinct; it is a learned spiritual grace anchored in Christ's sufficiency.",
         },
         homily: {
           title: "The Mystery of Contentment",
-          preacher: "Saint Paul",
           duration: "2 min",
           practicalTips: [
             "Stop waiting for circumstances to be perfect before choosing to be content.",
@@ -5143,12 +4959,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           reference: "Proverbs 16:9",
           bookSlug: "proverbs",
           chapterNumber: 16,
-          verseSnippet: "In their hearts humans plan their course, but the Lord establishes their steps.",
+          verseSnippet: "A man’s heart plans his course, but the LORD determines his steps.",
           thematicTakeaway: "Plan with diligence, but surrender every outcome to the wise direction of the Lord.",
         },
         homily: {
           title: "Accepting the Divine Course Correction",
-          preacher: "Solomon",
           duration: "2 min",
           practicalTips: [
             "Make wise plans, but hold them with open hands.",
@@ -5167,12 +4982,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           reference: "Job 2:10",
           bookSlug: "job",
           chapterNumber: 2,
-          verseSnippet: "He replied, 'You are talking like a foolish woman. Shall we accept good from God, and not trouble?' In all this, Job did not sin in what he said.",
+          verseSnippet: "“You speak as a foolish woman speaks,” he told her. “Should we accept from God only good and not adversity?” In all this, Job did not sin in what he said.",
           thematicTakeaway: "True faith loves God for who He is, not merely for the pleasant gifts in His hands.",
         },
         homily: {
           title: "The Unconditional Faith of Job",
-          preacher: "Saint Gregory the Great",
           duration: "2 min",
           practicalTips: [
             "Do not love God only when the sun shines; worship Him in the storm.",
@@ -5201,12 +5015,11 @@ export const BIBLE_TOPICS: BibleTopic[] = [
           reference: "Galatians 5:1",
           bookSlug: "galatians",
           chapterNumber: 5,
-          verseSnippet: "It is for freedom that Christ has set us free. Stand firm, then, and do not let yourselves be burdened again by a yoke of slavery.",
+          verseSnippet: "It is for freedom that Christ has set us free. Stand firm, then, and do not be encumbered once more by a yoke of slavery.",
           thematicTakeaway: "Christ did not liberate you from sin so you could return to legalistic bondage; stand firm in His liberty.",
         },
         homily: {
           title: "The Charter of Christian Freedom",
-          preacher: "Saint Paul",
           duration: "2 min",
           practicalTips: [
             "Refuse to fall back into legalistic guilt or people-pleasing.",
@@ -5230,7 +5043,6 @@ export const BIBLE_TOPICS: BibleTopic[] = [
         },
         homily: {
           title: "Free Indeed in the Son",
-          preacher: "Jesus",
           duration: "2 min",
           practicalTips: [
             "Declare: 'I am free indeed in Christ Jesus.'",
@@ -5254,7 +5066,6 @@ export const BIBLE_TOPICS: BibleTopic[] = [
         },
         homily: {
           title: "The Unveiled Face",
-          preacher: "Saint Paul",
           duration: "2 min",
           practicalTips: [
             "Approach God with an open, unveiled face in prayer.",
@@ -5278,7 +5089,6 @@ export const BIBLE_TOPICS: BibleTopic[] = [
         },
         homily: {
           title: "The Liberty of Righteousness",
-          preacher: "Saint Paul",
           duration: "2 min",
           practicalTips: [
             "Offer your members as instruments of righteousness to God.",
@@ -5329,7 +5139,6 @@ export function getHomilyForChapter(
   return {
     homily: {
       title: `Pastoral Meditation on ${formattedBook} ${chapterNumber}`,
-      preacher: "Church Father Pastoral Elder",
       duration: "2 min",
       practicalTips: [
         "Take two minutes of stillness before reading; let your racing thoughts quiet down.",

@@ -1,13 +1,30 @@
 import { expect, test } from "@playwright/test";
 
-test("home sells Scripture and routes into Open the Book", async ({ page }) => {
+test("home shows Today, Walk, Sleep and Breathe", async ({ page }) => {
   await page.goto("/");
-  await expect(page.getByRole("heading", { name: /know the text/i })).toBeVisible();
-  await page.getByRole("link", { name: /take your first quiz/i }).click();
-  await expect(page).toHaveURL(/open-the-book/);
-  await expect(page.getByRole("heading", { name: /open the book/i })).toBeVisible();
-  await expect(page.getByTestId("course-medals")).toBeVisible();
-  await expect(page.getByTestId("course-medal-1")).toHaveAttribute("data-plated", "false");
+  await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
+  await expect(page.getByText("Verse for today")).toBeVisible();
+  const sections = page.getByRole("tablist", { name: "Sections" });
+  for (const name of [/walk/i, /sleep/i, /breathe/i]) {
+    await expect(sections.getByRole("tab", { name })).toBeVisible();
+  }
+  await sections.getByRole("tab", { name: /breathe/i }).click();
+  await expect(page).toHaveURL(/\?tab=breathe/);
+  await expect(page.getByRole("button", { name: "Begin" })).toBeVisible();
+});
+
+test("retired pages redirect to the home screen", async ({ request }) => {
+  for (const path of ["/read/genesis/1", "/ebooks", "/home-preview"]) {
+    const res = await request.get(path, { maxRedirects: 0 });
+    expect([307, 308]).toContain(res.status());
+  }
+});
+
+test("Open the Book quiz loads its first question", async ({ page }) => {
+  await page.goto("/quizzes/open-the-book");
+  await expect(page.getByRole("heading", { name: /^open the book/i })).toBeVisible();
+  await expect(page.getByTestId("hud-question")).toContainText("Question 1");
+  await expect(page.getByTestId("choice-0")).toHaveText(/.+/);
 });
 
 test("a guest can finish a quiz and see a score", async ({ page }) => {
@@ -103,9 +120,7 @@ test("privacy and ads.txt are on the quiz host", async ({ page, request }) => {
   expect([301, 302, 307, 308]).toContain(ads.status());
   expect(ads.headers()["location"] ?? "").toContain("srv.adstxtmanager.com/85097/mediareferee.com");
   await page.goto("/privacy");
-  await expect(page.getByRole("heading", { name: /privacy/i })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Privacy Policy", level: 1 })).toBeVisible();
   await expect(page.getByText("Lampstand on lampstandbible.com")).toBeVisible();
-  await expect(
-    page.getByText("The Ezoic dashboard site is the registrable domain"),
-  ).toBeVisible();
+  await expect(page.getByText("Premium members see no ads anywhere", { exact: false })).toBeVisible();
 });

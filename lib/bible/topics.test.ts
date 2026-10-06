@@ -1,3 +1,4 @@
+import { getPassageText } from "./bsb";
 import { describe, it, expect } from "vitest";
 import {
   BIBLE_TOPICS,
@@ -96,9 +97,9 @@ describe("Bible Topics & Life Situations Catalog", () => {
         expect(sub.verse.verseSnippet).toBeTruthy();
         expect(sub.verse.thematicTakeaway).toBeTruthy();
 
-        // Church Father Homily Check
+        // Lampstand reflection (no named speaker: these are Lampstand's own words)
         expect(sub.homily.title).toBeTruthy();
-        expect(sub.homily.preacher).toBeTruthy();
+        expect(sub.homily).not.toHaveProperty("preacher");
         expect(sub.homily.duration).toBeTruthy();
         expect(sub.homily.practicalTips.length).toBeGreaterThanOrEqual(2);
         expect(sub.homily.audioScript.length).toBeGreaterThan(50);
@@ -113,8 +114,15 @@ describe("Bible Topics & Life Situations Catalog", () => {
     const result = getHomilyForChapter("philippians", 4);
     expect(result).toBeDefined();
     expect(result.homily.title).toBeTruthy();
-    expect(result.homily.preacher).toBeTruthy();
     expect(result.homily.practicalTips.length).toBeGreaterThan(0);
     expect(result.scriptureReference).toBeTruthy();
+  });
+
+  it("quotes every verse word for word from the BSB", () => {
+    for (const topic of BIBLE_TOPICS) {
+      for (const sub of topic.subSections) {
+        expect(sub.verse.verseSnippet, sub.id).toBe(getPassageText(sub.verse.reference));
+      }
+    }
   });
 });

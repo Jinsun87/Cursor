@@ -10,6 +10,10 @@ export const metadata: Metadata = pageMetadata({
   path: "/daily",
 });
 
+// The quiz is chosen by date, so rebuild this page hourly (it rotates at UTC midnight);
+// as a fully static page it stayed frozen on the date of the last deployment.
+export const revalidate = 3600;
+
 export default function DailyPage() {
   const quiz = getDailyQuiz();
   return (

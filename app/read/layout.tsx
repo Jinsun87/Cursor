@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   ...pageMetadata({
     title: "Read the Bible: Scripture & Counsel",
     description:
-      "Illustrated Bible chapters to read, listen to and reflect on, plus Scripture for everyday struggles like anxiety, grief and anger.",
+      "Scripture for everyday struggles like anxiety, grief and anger, in the public-domain Berean Standard Bible.",
     path: "/read",
   }),
   title: { default: "Read the Bible: Scripture & Counsel", template: "%s · Lampstand" },

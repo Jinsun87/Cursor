@@ -10,7 +10,6 @@ const ITEMS = [
   { href: "/read", label: "Bible & life topics", note: "Chapters, and Scripture for anxiety, grief and more" },
   { href: "/quizzes", label: "Bible quizzes", note: "Test what you know, with a fact after each answer" },
   { href: "/daily", label: "Quiz of the day", note: "Ten new questions every day" },
-  { href: "/ebooks", label: "Library", note: "Free illustrated study guides" },
 ];
 
 /**

@@ -1,7 +1,5 @@
 import type { MetadataRoute } from "next";
 import { QUIZZES, SERIES } from "@/lib/catalog";
-import { CHAPTERS } from "@/lib/bible/catalog";
-import { EBOOKS } from "@/lib/ebooks/catalog";
 import { CANONICAL_ORIGIN } from "@/lib/site";
 
 type Entry = { path: string; priority: number; changeFrequency: MetadataRoute.Sitemap[number]["changeFrequency"] };
@@ -12,7 +10,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/quizzes", priority: 0.9, changeFrequency: "weekly" },
     { path: "/daily", priority: 0.8, changeFrequency: "daily" },
     { path: "/read", priority: 0.8, changeFrequency: "weekly" },
-    { path: "/ebooks", priority: 0.6, changeFrequency: "monthly" },
     { path: "/pricing", priority: 0.6, changeFrequency: "monthly" },
     { path: "/premium", priority: 0.5, changeFrequency: "monthly" },
     { path: "/how-it-works", priority: 0.5, changeFrequency: "monthly" },
@@ -24,13 +21,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: q.category === "bible" ? 0.8 : 0.4,
       changeFrequency: "monthly" as const,
     })),
-    ...CHAPTERS.map((c) => ({
-      path: `/read/${c.bookSlug}/${c.chapterNumber}`,
-      priority: 0.7,
-      changeFrequency: "monthly" as const,
-    })),
     ...SERIES.map((s) => ({ path: `/series/${s.slug}`, priority: 0.5, changeFrequency: "monthly" as const })),
-    ...EBOOKS.map((e) => ({ path: `/ebooks/${e.slug}`, priority: 0.6, changeFrequency: "monthly" as const })),
   ];
   return entries.map(({ path, ...rest }) => ({ url: `${CANONICAL_ORIGIN}${path === "/" ? "" : path}`, ...rest }));
 }

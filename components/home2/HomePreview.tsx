@@ -5,6 +5,7 @@ import Link from "next/link";
 import type { WalkEpisode } from "@/lib/daily-walk/types";
 import type { ClipTiming } from "@/lib/daily-walk/timeline";
 import type { SleepChapter } from "@/lib/sleep/types";
+import { pickDailyVerse, type DailyVerse } from "@/lib/daily-verse";
 import { Lamp } from "./Lamp";
 import { BreathePanel } from "./BreathePanel";
 import { SleepPlayer } from "./SleepPlayer";
@@ -40,18 +41,21 @@ export function HomePreview({
   walk,
   walkTiming,
   sleep,
+  dailyVerses = [],
   forcedPart,
   forcedTab,
 }: {
   walk: WalkEpisode;
   walkTiming: ClipTiming;
   sleep: SleepChapter;
+  dailyVerses?: DailyVerse[];
   forcedPart?: Part;
   forcedTab?: Tab;
 }) {
   const [part, setPart] = useState<Part>(forcedPart ?? "evening");
   const [tab, setTab] = useState<Tab>(forcedTab ?? "walk");
   const [ready, setReady] = useState(false);
+  const [verse, setVerse] = useState<DailyVerse | undefined>(undefined);
   const listening = useListening();
   const section = useSection();
 
@@ -63,8 +67,9 @@ export function HomePreview({
     setPart(p);
     setTab(wanted ?? (p === "evening" || p === "night" ? "sleep" : "walk"));
     setSection(wanted ?? "today", { updateUrl: false });
+    setVerse(pickDailyVerse(dailyVerses));
     setReady(true);
-  }, [forcedPart, forcedTab]);
+  }, [forcedPart, forcedTab, dailyVerses]);
 
   // The bottom bar or header picked a section: show it here.
   useEffect(() => {
@@ -94,7 +99,15 @@ export function HomePreview({
           <div className="h2-hello">
             <p className="h2-greeting">{copy.greeting}</p>
             <h1 className="h2-headline">{copy.line}</h1>
-            <p className="h2-sub">Walk with Scripture by day. Rest in it by night.</p>
+            {verse ? (
+              <figure className="h2-verse">
+                <figcaption>Verse for today</figcaption>
+                <blockquote>{verse.text}</blockquote>
+                <p className="h2-verse-ref">{verse.reference} · BSB</p>
+              </figure>
+            ) : (
+              <p className="h2-sub">Walk with Scripture by day. Rest in it by night.</p>
+            )}
           </div>
           <Lamp
             progress={listening.progress}
@@ -160,22 +173,6 @@ export function HomePreview({
         <Link href="/daily" className="h2-quiz">
           Prefer a quick quiz? Try today&apos;s ten Bible questions →
         </Link>
-        <div className="h2-preview-switch" aria-label="Preview the time of day">
-          <span>Preview:</span>
-          {(["morning", "evening"] as const).map((p) => (
-            <button
-              key={p}
-              type="button"
-              aria-pressed={p === "morning" ? !dark : dark}
-              onClick={() => {
-                setPart(p);
-                choose(p === "evening" ? "sleep" : "walk");
-              }}
-            >
-              {p === "morning" ? "Daytime" : "Night"}
-            </button>
-          ))}
-        </div>
       </div>
     </section>
   );

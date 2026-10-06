@@ -6,7 +6,7 @@ import { Footer } from "@/components/Footer";
 import { AppProvider } from "@/lib/store";
 import { ThemeProvider } from "@/lib/theme";
 import { CANONICAL_ORIGIN } from "@/lib/site";
-import { AdSenseHead } from "@/components/AdSenseHead";
+import { AdSenseLoader } from "@/components/AdSenseLoader";
 import { EzoicBoot } from "@/components/EzoicBoot";
 import { EzoicHead } from "@/components/EzoicHead";
 import { GA4Head } from "@/components/GA4Head";
@@ -56,13 +56,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" className={`${sans.variable} ${display.variable}`} suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeBoot }} />
-        <AdSenseHead />
         <EzoicHead />
         <GA4Head />
       </head>
       <body className="font-sans antialiased">
         <ThemeProvider>
           <AppProvider>
+            <AdSenseLoader />
             <AnalyticsTracker />
             <Analytics />
             <EzoicBoot />

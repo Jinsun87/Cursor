@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { QUIZZES, getQuiz } from "@/lib/catalog";
 import { QuizRunner } from "@/components/QuizRunner";
-import { EbookRewardBanner } from "@/components/EbookRewardBanner";
 import Link from "next/link";
 import { pageMetadata } from "@/lib/seo";
 
@@ -34,9 +33,6 @@ export default async function QuizPage({
 
   return (
     <div className="mx-auto max-w-3xl">
-      <div className="mb-3">
-        <EbookRewardBanner />
-      </div>
       <p className="text-xs uppercase tracking-widest text-pine-400">{quiz.category}</p>
       <h1 className="mt-2 font-display text-3xl md:text-4xl leading-tight">{quiz.title}</h1>
       <p className="mt-3 text-parchment/75">{quiz.blurb}</p>

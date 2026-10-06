@@ -27,7 +27,7 @@ export default function HowItWorksPage() {
         <li>
           <strong className="text-parchment">Learn as a guest or with an account.</strong>{" "}
           You can play without signing up. Progress, coins, and certificates
-          require registration. Coins buy 50/50 lifelines or unlock study eBooks.
+          require registration. Coins buy 50/50 lifelines.
         </li>
         <li>
           <strong className="text-parchment">Master the topic.</strong> Finish every
@@ -35,7 +35,7 @@ export default function HowItWorksPage() {
         </li>
         <li>
           <strong className="text-parchment">Earn coins & rewards.</strong> Completions and
-          correct answers pay out coins. Score 70%+ to claim the $29 Bible Foundations eBook free.
+          correct answers pay out coins.
         </li>
         <li>
           <strong className="text-parchment">Keep the lamps lit.</strong> Ads on

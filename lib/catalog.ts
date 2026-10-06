@@ -92,7 +92,7 @@ export const QUIZZES: Quiz[] = [
     slug: "open-the-book",
     title: "Open the Book: Show You Have Solomon's Wisdom on Scripture",
     blurb:
-      "Fifty-four original questions on the text — patriarchs, prophets, Gospels, and letters. Score 70%+ to prove your mastery and claim the $29 Bible Foundations eBook free.",
+      "Fifty-four original questions on the text — patriarchs, prophets, Gospels, and letters. Score 70% or more to prove your mastery.",
     category: "bible",
     isLongform: true,
     coinsOnComplete: 250,

@@ -9,7 +9,7 @@ export const SLEEP_GENESIS_1: SleepChapter = {
   chapter: 1,
   title: "In the Beginning",
   translation: "Berean Standard Bible",
-  audioSrc: "/sleep/genesis-1/chapter.wav",
+  audioSrc: "/sleep/genesis-1/chapter.mp3",
   timingSrc: "/sleep/genesis-1/timing.json",
   verses: [
     { n: 1, image: `${IMG}/s1.jpg`, text: "In the beginning God created the heavens and the earth." },

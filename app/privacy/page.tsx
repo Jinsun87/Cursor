@@ -16,28 +16,31 @@ export default function PrivacyPage() {
           Privacy Policy
         </h1>
         <p className="mt-2 text-sm text-[var(--muted)]">
-          Last updated: September 29, 2026 · Effective Date: September 29, 2026
+          Last updated: October 5, 2026 · Effective Date: September 29, 2026
         </p>
       </header>
 
       <section className="space-y-4">
         <p className="text-base sm:text-lg text-[var(--muted)]">
-          Lampstand on lampstandbible.com is a Scripture quiz desk and illuminated Bible study platform. It is not a church and does not provide pastoral care. We respect your personal privacy and are committed to clear, transparent data practices.
+          Lampstand on lampstandbible.com offers guided Scripture walks, whole Bible chapters read aloud for sleep, breathing exercises and Bible quizzes. It is not a church and does not provide pastoral care. We collect as little as we can and explain all of it here.
         </p>
       </section>
 
       <section className="space-y-3">
         <h2 className="font-display text-2xl font-bold">1. Information We Collect</h2>
-        <p>We collect only the minimum information necessary to deliver and improve our services:</p>
+        <p>We collect only what we need to run Lampstand:</p>
         <ul className="list-disc pl-6 space-y-1.5 text-sm text-[var(--muted)]">
           <li>
-            <strong className="text-[var(--ink)]">Account &amp; Profile Information:</strong> When you register an account, we collect your chosen username, email address, and an encrypted password.
+            <strong className="text-[var(--ink)]">Your account:</strong> if you create one, your email address, chosen username and newsletter preference, and (only if you set one) a password, which is stored securely hashed. Accounts are stored with our database provider Supabase (servers in Mumbai, India).
           </li>
           <li>
-            <strong className="text-[var(--ink)]">Study Progress &amp; Quiz Activity:</strong> Your quiz scores, series progress, earned coins, and certificates are saved to your account session (currently stored locally in your browser via <code>localStorage</code>).
+            <strong className="text-[var(--ink)]">Your subscription:</strong> if you subscribe, Paddle tells us your subscription status, plan and renewal date so we can switch Premium on. We never receive your card details.
           </li>
           <li>
-            <strong className="text-[var(--ink)]">Technical &amp; Log Data:</strong> Device type, browser user agent, IP address (used for server-side country localization), and basic telemetry.
+            <strong className="text-[var(--ink)]">On your device only:</strong> your listening streak and minutes, quiz progress, coins and display settings are kept in your browser (localStorage) and are not sent to us.
+          </li>
+          <li>
+            <strong className="text-[var(--ink)]">Technical data:</strong> device and browser type, IP address and basic logs from our hosting provider (Vercel), used to keep the site running and secure.
           </li>
         </ul>
       </section>
@@ -64,14 +67,22 @@ export default function PrivacyPage() {
       <section className="space-y-3">
         <h2 className="font-display text-2xl font-bold">3. Advertising &amp; Analytics</h2>
         <p className="text-sm text-[var(--muted)]">
-          Free sittings may show ads. Prefer Google AdSense on this quiz host (same publisher id as the approved apex, <code>NEXT_PUBLIC_ADSENSE_CLIENT</code>). Do not load AdSense and Ezoic on the same page. Premium hides the in-page slots. The Ezoic dashboard site is the registrable domain mediareferee.com (subdomains are not separate Ezoic sites). This quiz host still serves{" "}
-          <a href="/ads.txt" className="text-[var(--gold)] underline underline-offset-4">
-            ads.txt
-          </a>{" "}
-          (301 to the same Ads.txt Manager file as mediareferee.com). If you still use Ezoic instead, set <code>NEXT_PUBLIC_EZOIC_ADS=true</code> and leave the AdSense client unset.
+          Some pages show ads from Google AdSense to readers without Premium. Google may use cookies to show and measure ads, including personalised ads where you have allowed them; you can manage this at{" "}
+          <a
+            href="https://adssettings.google.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-[var(--gold)] underline underline-offset-4"
+          >
+            adssettings.google.com
+          </a>
+          . The Walk, Sleep and Breathe sessions never show ads, and Premium members see no ads anywhere.
         </p>
         <p className="text-sm text-[var(--muted)]">
-          We use lightweight, privacy-focused analytics (Vercel Analytics and Google Analytics 4) to monitor page views and ensure high platform performance. These services use anonymized identifiers and do not sell personal data.
+          We use Vercel Analytics and Google Analytics 4 to count visits and keep the site working well. Google Analytics uses cookies. We do not sell your personal data.
+        </p>
+        <p className="text-sm text-[var(--muted)]">
+          <strong className="text-[var(--ink)]">Cookies we set ourselves</strong> are only the ones needed to keep you signed in.
         </p>
       </section>
 
@@ -86,7 +97,7 @@ export default function PrivacyPage() {
           <li>Opt out of marketing communications or newsletter updates at any time.</li>
         </ul>
         <p className="text-sm text-[var(--muted)]">
-          Because current quiz progress is saved in your browser&apos;s <code>localStorage</code>, clearing your browser cache immediately deletes your client-side data. For account or server data deletion requests, contact us at{" "}
+          Data kept on your device (your streak, quiz progress and settings) is removed when you clear your browser's site data. To see or delete your account and subscription records, email{" "}
           <a href="mailto:support@lampstandbible.com" className="text-[var(--gold)] underline underline-offset-4">
             support@lampstandbible.com
           </a>.

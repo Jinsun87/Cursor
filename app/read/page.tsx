@@ -19,7 +19,7 @@ export default function ReadSanctuaryPage() {
               Scripture &amp; Counsel
             </h1>
             <p className="text-xs sm:text-sm text-[var(--muted)]">
-              Find biblical wisdom and church father counsel tailored to your exact life situation
+              Scripture for what you are facing: anxiety, grief, anger, loneliness and more
             </p>
           </div>
         </div>

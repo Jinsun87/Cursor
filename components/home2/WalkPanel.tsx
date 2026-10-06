@@ -117,7 +117,7 @@ export function WalkPanel({
           <p className="walk-note">
             {length === 20
               ? "The 20-minute session is part of Premium. This preview plays the walk."
-              : `The walk is about ${walkMinutes} minutes with this preview voice; the chapter follows.`}
+              : `The walk is about ${walkMinutes} minutes, then the chapter follows.`}
           </p>
         </div>
       </div>

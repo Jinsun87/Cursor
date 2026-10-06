@@ -280,7 +280,7 @@ export function SleepPlayer({ chapter }: { chapter: SleepChapter }) {
         }
       />
       <p className="sleep-credit">
-        Scripture from the {chapter.translation}. Placeholder voice for this preview.
+        Scripture from the {chapter.translation}.
         {muted ? " · Muted: reading along does not count toward your lamp." : ""}
         {timerEndsAt ? ` · Sleep timer: ${Math.max(0, Math.ceil((timerEndsAt - Date.now()) / 60000))} min left` : ""}
       </p>
