@@ -1,15 +1,6 @@
 "use client";
 
-import {
-  createContext,
-  useCallback,
-  useContext,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-  type ReactNode,
-} from "react";
+import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import type { SleepChapter, SleepTiming } from "./types";
 import { useListeningMeter } from "@/components/home2/useListening";
 import { saveProgress } from "./progress";
@@ -18,10 +9,20 @@ export const SLEEP_SPEEDS = [0.75, 1, 1.25] as const;
 export type SleepSpeed = (typeof SLEEP_SPEEDS)[number];
 export const TIMER_OPTIONS = [0, 15, 30, 60] as const; // minutes; 0 = end of chapter
 export type TimerMinutes = (typeof TIMER_OPTIONS)[number];
+/** Walk: a brisk daytime reading. Sleep: the soft night reading. Same text, two recordings. */
+export type ReadingMode = "walk" | "sleep";
 const FADE_SECONDS = 12;
+
+/** Where each mode's recording of a chapter lives. */
+export function readingSources(chapter: SleepChapter, mode: ReadingMode) {
+  return mode === "walk"
+    ? { audio: `/walk/${chapter.slug}/chapter.mp3`, timing: `/walk/${chapter.slug}/timing.json` }
+    : { audio: chapter.audioSrc, timing: chapter.timingSrc };
+}
 
 type SleepAudio = {
   chapter: SleepChapter | null;
+  mode: ReadingMode;
   /** Index of the verse being read, or -1 before the first verse. */
   index: number;
   starts: number[];
@@ -38,10 +39,10 @@ type SleepAudio = {
   timerMin: TimerMinutes;
   timerEndsAt: number | null;
   /**
-   * Load a chapter (if not already loaded), start it and open the full-screen
-   * player; resumeAt (seconds) picks up where the reader stopped last time.
+   * Load a chapter in Walk or Sleep (if not already loaded that way), start it
+   * and open the full-screen player; verse picks up at that verse.
    */
-  open: (chapter: SleepChapter, resumeAt?: number) => void;
+  open: (chapter: SleepChapter, opts?: { mode?: ReadingMode; verse?: number }) => void;
   toggle: () => void;
   seekBy: (seconds: number) => void;
   seekTo: (seconds: number) => void;
@@ -66,20 +67,20 @@ export function useSleepAudio(): SleepAudio {
 }
 
 /**
- * One Sleep audio engine for the whole app. It lives in the root layout, so a
- * chapter keeps playing while the reader moves between sections and pages; the
- * full-screen player and the mini player are two views of it. Audio is a plain
- * <audio> element, so it keeps going with the screen locked and shows on the
- * lock screen (Media Session).
+ * One reading engine for the whole app, for both Walk and Sleep. It lives in
+ * the root layout, so a chapter keeps playing while the reader moves between
+ * sections and pages; the full-screen player and the mini player are two
+ * views of it. Audio is a plain <audio> element, so it keeps going with the
+ * screen locked and shows on the lock screen (Media Session).
  */
 export function SleepAudioProvider({ children }: { children: ReactNode }) {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const [chapter, setChapter] = useState<SleepChapter | null>(null);
+  const [mode, setMode] = useState<ReadingMode>("sleep");
   const [timing, setTiming] = useState<SleepTiming | null>(null);
   const [playing, setPlaying] = useState(false);
   const [ended, setEnded] = useState(false);
   const [time, setTime] = useState(0);
-  const savedAt = useRef(0);
   const [expanded, setExpanded] = useState(false);
   const [muted, setMuted] = useState(false);
   const [speed, setSpeed] = useState<SleepSpeed>(1);
@@ -87,26 +88,38 @@ export function SleepAudioProvider({ children }: { children: ReactNode }) {
   const [rain, setRain] = useState(0);
   const [timerMin, setTimerMin] = useState<TimerMinutes>(0);
   const [timerEndsAt, setTimerEndsAt] = useState<number | null>(null);
+  // Verse to jump to once this recording's timings have loaded.
+  const pendingVerse = useRef(0);
   const meter = useListeningMeter();
   const ambient = useAmbientRain();
 
   useEffect(() => {
     if (!chapter) return setTiming(null);
     let live = true;
-    fetch(chapter.timingSrc)
+    setTiming(null);
+    fetch(readingSources(chapter, mode).timing)
       .then((r) => r.json())
       .then((t: SleepTiming) => live && setTiming(t))
       .catch(() => live && setTiming(null));
     return () => {
       live = false;
     };
-  }, [chapter]);
+  }, [chapter, mode]);
+
+  // Continue at a verse: seek once the timings (and the audio's length) are known.
+  useEffect(() => {
+    const el = audioRef.current;
+    const v = pendingVerse.current;
+    if (!el || !timing || v <= 1) return;
+    pendingVerse.current = 0;
+    const at = timing.verses[String(v)];
+    if (at === undefined) return;
+    if (el.readyState >= 1) el.currentTime = at;
+    else el.addEventListener("loadedmetadata", () => (el.currentTime = at), { once: true });
+  }, [timing]);
 
   const starts = useMemo(
-    () =>
-      chapter?.verses.map(
-        (v) => timing?.verses[String(v.n)] ?? Number.POSITIVE_INFINITY,
-      ) ?? [],
+    () => chapter?.verses.map((v) => timing?.verses[String(v.n)] ?? Number.POSITIVE_INFINITY) ?? [],
     [chapter, timing],
   );
   const index = useMemo(() => {
@@ -118,32 +131,26 @@ export function SleepAudioProvider({ children }: { children: ReactNode }) {
   }, [starts, time]);
   const verse = chapter && index >= 0 ? chapter.verses[index] : null;
 
+  // Remember the verse as the reading moves on, so either mode can continue from it.
+  useEffect(() => {
+    // Not while waiting to jump to a saved verse, or it would be overwritten with verse 1.
+    if (chapter && playing && verse && !pendingVerse.current) saveProgress(chapter.slug, verse.n);
+  }, [chapter, playing, verse]);
+
   // Lock-screen title follows the verse being read.
   useEffect(() => {
     if (!chapter || !("mediaSession" in navigator)) return;
     navigator.mediaSession.metadata = new MediaMetadata({
-      title: verse
-        ? `${chapter.book} ${chapter.chapter}:${verse.n} · ${verse.text.slice(0, 60)}`
-        : `${chapter.book} ${chapter.chapter}`,
-      artist: "Lampstand Sleep",
+      title: verse ? `${chapter.book} ${chapter.chapter}:${verse.n} · ${verse.text.slice(0, 60)}` : `${chapter.book} ${chapter.chapter}`,
+      artist: mode === "walk" ? "Lampstand Walk" : "Lampstand Sleep",
       album: chapter.translation,
-      artwork: [
-        {
-          src: verse?.image ?? chapter.verses[0].image,
-          sizes: "768x1376",
-          type: "image/jpeg",
-        },
-      ],
+      artwork: [{ src: verse?.image ?? chapter.verses[0].image, sizes: "768x1376", type: "image/jpeg" }],
     });
-  }, [verse, chapter]);
+  }, [verse, chapter, mode]);
 
   const seekBy = useCallback((delta: number) => {
     const el = audioRef.current;
-    if (el)
-      el.currentTime = Math.max(
-        0,
-        Math.min(el.duration || Infinity, el.currentTime + delta),
-      );
+    if (el) el.currentTime = Math.max(0, Math.min(el.duration || Infinity, el.currentTime + delta));
   }, []);
 
   useEffect(() => {
@@ -192,7 +199,7 @@ export function SleepAudioProvider({ children }: { children: ReactNode }) {
     return () => window.clearInterval(id);
   }, [timerEndsAt, playing, narration, rain, ambient]);
 
-  // Another player on the page (the Walk) starting pauses the chapter.
+  // Any other audio or video on the page starting pauses the reading.
   useEffect(() => {
     const onPlay = (e: Event) => {
       if (e.target !== audioRef.current) audioRef.current?.pause();
@@ -217,24 +224,23 @@ export function SleepAudioProvider({ children }: { children: ReactNode }) {
   }, [start]);
 
   const open = useCallback(
-    (next: SleepChapter, resumeAt = 0) => {
+    (next: SleepChapter, opts: { mode?: ReadingMode; verse?: number } = {}) => {
       const el = audioRef.current;
+      const nextMode = opts.mode ?? "sleep";
       setExpanded(true);
       setEnded(false);
       if (!el) return;
-      if (chapter?.slug !== next.slug) {
+      if (chapter?.slug !== next.slug || mode !== nextMode) {
         // Set the source here, inside the tap, so phones allow play() straight away.
-        el.src = next.audioSrc;
-        savedAt.current = resumeAt;
-        setTime(resumeAt);
+        el.src = readingSources(next, nextMode).audio;
+        pendingVerse.current = opts.verse && opts.verse > 1 ? opts.verse : 0;
+        setTime(0);
+        setMode(nextMode);
         setChapter(next);
-        if (resumeAt > 0) {
-          el.addEventListener("loadedmetadata", () => (el.currentTime = resumeAt), { once: true });
-        }
       }
       if (el.paused) start();
     },
-    [chapter, start],
+    [chapter, mode, start],
   );
 
   const seekTo = useCallback((seconds: number) => {
@@ -276,6 +282,7 @@ export function SleepAudioProvider({ children }: { children: ReactNode }) {
   const value = useMemo<SleepAudio>(
     () => ({
       chapter,
+      mode,
       index,
       starts,
       playing,
@@ -303,29 +310,7 @@ export function SleepAudioProvider({ children }: { children: ReactNode }) {
       setRain,
       chooseTimer,
     }),
-    [
-      chapter,
-      index,
-      starts,
-      playing,
-      ended,
-      time,
-      timing,
-      expanded,
-      muted,
-      speed,
-      narration,
-      rain,
-      timerMin,
-      timerEndsAt,
-      open,
-      toggle,
-      seekBy,
-      seekTo,
-      seekToVerse,
-      close,
-      chooseTimer,
-    ],
+    [chapter, mode, index, starts, playing, ended, time, timing, expanded, muted, speed, narration, rain, timerMin, timerEndsAt, open, toggle, seekBy, seekTo, seekToVerse, close, chooseTimer],
   );
 
   return (
@@ -339,25 +324,19 @@ export function SleepAudioProvider({ children }: { children: ReactNode }) {
           setPlaying(true);
           setEnded(false);
         }}
-        onPause={(e) => {
+        onPause={() => {
           setPlaying(false);
           meter.stop();
-          if (chapter && !e.currentTarget.ended) saveProgress(chapter.slug, e.currentTarget.currentTime);
         }}
         onEnded={() => {
           setPlaying(false);
           setEnded(true);
           meter.stop();
-          if (chapter) saveProgress(chapter.slug, 0, true);
+          if (chapter) saveProgress(chapter.slug, 1, true);
         }}
         onTimeUpdate={(e) => {
           const t = e.currentTarget.currentTime;
           setTime(t);
-          // Remember the place every few seconds, so a closed tab or a reload resumes here.
-          if (chapter && !e.currentTarget.paused && Math.abs(t - savedAt.current) >= 5) {
-            savedAt.current = t;
-            saveProgress(chapter.slug, t);
-          }
           // Muted time is reading, not listening, so it does not light the lamp.
           if (!e.currentTarget.paused && !e.currentTarget.muted) meter.tick(t);
           else meter.stop();
@@ -377,10 +356,7 @@ function useAmbientRain() {
       void ctx.current.resume();
       return;
     }
-    const Ctor =
-      window.AudioContext ??
-      (window as unknown as { webkitAudioContext: typeof AudioContext })
-        .webkitAudioContext;
+    const Ctor = window.AudioContext ?? (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
     if (!Ctor) return;
     const ac = new Ctor();
     const seconds = 4;

@@ -22,7 +22,7 @@ export default function PrivacyPage() {
 
       <section className="space-y-4">
         <p className="text-base sm:text-lg text-[var(--muted)]">
-          Lampstand on lampstandbible.com offers guided Scripture walks, whole Bible chapters read aloud for sleep, breathing exercises and Bible quizzes. It is not a church and does not provide pastoral care. We collect as little as we can and explain all of it here.
+          Lampstand on lampstandbible.com offers whole Bible chapters read aloud, briskly for walks and softly for sleep, breathing exercises and Bible quizzes. It is not a church and does not provide pastoral care. We collect as little as we can and explain all of it here.
         </p>
       </section>
 

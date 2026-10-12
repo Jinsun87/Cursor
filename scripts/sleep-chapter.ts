@@ -1,9 +1,9 @@
 /**
- * Builds Sleep chapters from the BSB: paintings (Vertex AI), the chapter data
+ * Builds Sleep and Walk chapters from the BSB: paintings (Vertex AI), the chapter data
  * the app reads, and the narration with verse timings.
  *
  *   npx tsx scripts/sleep-chapter.ts "Genesis 2-10"            # everything missing
- *   npx tsx scripts/sleep-chapter.ts "Genesis 3" --only=images  # or --only=voice, --only=data
+ *   npx tsx scripts/sleep-chapter.ts "Genesis 3" --only=images  # or --only=voice, --only=walk, --only=data
  *   npx tsx scripts/sleep-chapter.ts "Genesis 3" --redo         # regenerate even if files exist
  *
  * Writes public/images/sleep/<slug>/sN.jpg, public/sleep/<slug>/{chapter.mp3,timing.json},
@@ -16,6 +16,7 @@ import { getChapter, BSB_NAME } from "../lib/bible/bsb";
 import { generateVertexImage } from "../lib/ai/vertex-imagen";
 import { GENESIS_PLANS, NIGHT_STYLE, type SleepChapterPlan } from "../content/sleep/genesis";
 import type { SleepChapter } from "../lib/sleep/types";
+import { SLEEP_GENESIS_1 } from "../lib/sleep/genesis-1";
 import { voiceChapter } from "./lib/sleep-voice";
 
 // GCP_PROJECT_ID and friends for Vertex.
@@ -102,8 +103,8 @@ function buildData(plan: SleepChapterPlan, book: string, chapter: number, slug: 
  */
 function writeIndex() {
   const dir = join("lib", "sleep", "chapters");
-  const seconds = (slug: string) => {
-    const t = join("public", "sleep", slug, "timing.json");
+  const seconds = (slug: string, mode: "sleep" | "walk" = "sleep") => {
+    const t = join("public", mode, slug, "timing.json");
     return existsSync(t) ? Math.round(JSON.parse(readFileSync(t, "utf8")).duration) : 0;
   };
   const files = readdirSync(dir)
@@ -128,6 +129,11 @@ function writeIndex() {
     ...slugs.map((slug) => `  "${slug}": ${seconds(slug)},`),
     "};",
     "",
+    "/** Length of each chapter's brisk Walk reading in seconds, by slug (0 = not voiced yet). */",
+    "export const WALK_SECONDS: Record<string, number> = {",
+    ...slugs.map((slug) => `  "${slug}": ${seconds(slug, "walk")},`),
+    "};",
+    "",
   ];
   writeFileSync(join(dir, "index.ts"), lines.join("\n"));
 }
@@ -138,22 +144,27 @@ async function main() {
   mkdirSync(join("lib", "sleep", "chapters"), { recursive: true });
 
   for (const { book, chapter } of chaptersFrom(ref)) {
-    const plan = PLANS[book]?.find((p) => p.chapter === chapter);
-    if (!plan) throw new Error(`No plan for ${book} ${chapter} in content/sleep/`);
     const slug = slugOf(book, chapter);
     const label = `${book} ${chapter}`;
-    const data = buildData(plan, book, chapter, slug);
+    const plan = PLANS[book]?.find((p) => p.chapter === chapter);
+    // Genesis 1 is hand-made (lib/sleep/genesis-1.ts) and has no plan; it can still get a Walk reading.
+    const data = plan ? buildData(plan, book, chapter, slug) : slug === "genesis-1" ? SLEEP_GENESIS_1 : null;
+    if (!data) throw new Error(`No plan for ${book} ${chapter} in content/sleep/`);
 
-    if (step("images")) await paint(plan, slug, label);
-    if (step("data") || step("images") || step("voice")) {
+    if (plan && step("images")) await paint(plan, slug, label);
+    if (plan && (step("data") || step("images") || step("voice"))) {
       writeFileSync(join("lib", "sleep", "chapters", `${slug}.json`), JSON.stringify(data, null, 2) + "\n");
     }
-    if (step("voice") && (redo || !existsSync(join("public", "sleep", slug, "chapter.mp3")))) {
+    const notes: string[] = [];
+    if (plan && step("voice") && (redo || !existsSync(join("public", "sleep", slug, "chapter.mp3")))) {
       const { duration, missed } = await voiceChapter(data.verses, join("public", "sleep", slug), { label });
-      console.log(`\r  ${label}: ${data.verses.length} verses, ${Math.round(duration)}s, ${missed} verse starts estimated`);
-    } else {
-      console.log(`\r  ${label}: done`);
+      notes.push(`sleep ${Math.round(duration)}s, ${missed} estimated`);
     }
+    if (step("walk") && (redo || !existsSync(join("public", "walk", slug, "chapter.mp3")))) {
+      const { duration, missed } = await voiceChapter(data.verses, join("public", "walk", slug), { mode: "walk", label });
+      notes.push(`walk ${Math.round(duration)}s, ${missed} estimated`);
+    }
+    console.log(`\r  ${label}: ${data.verses.length} verses${notes.length ? `, ${notes.join("; ")}` : ", nothing new"}`);
   }
   writeIndex();
 }

@@ -12,10 +12,10 @@ export interface Tier {
 export const PricingTier: Tier[] = [
   {
     name: "Starter",
-    description: "Free forever: today\'s walk, Breathe, Bible quizzes and Scripture for life\'s struggles.",
+    description: "Free forever: Walk and Sleep readings, Breathe, Bible quizzes and Scripture for life\'s struggles.",
     features: [
       "Free forever, no card needed",
-      "Today's guided walk and the free Sleep chapters",
+      "Walk and Sleep: whole chapters read aloud, briskly by day or softly by night",
       "Breathe: guided breathing exercises",
       "Bible quizzes with a fact after every answer",
       "Scripture for anxiety, grief, anger and more",
@@ -28,7 +28,7 @@ export const PricingTier: Tier[] = [
   },
   {
     name: "Pro",
-    description: "Everything in Lampstand, with no ads, and every new walk and Sleep chapter as it is released.",
+    description: "Everything in Lampstand, with no ads, and every new Walk and Sleep chapter as it is released.",
     features: [
       "7-day free trial on the monthly plan",
       "$4.99/mo or $39.99/yr (save 33%)",

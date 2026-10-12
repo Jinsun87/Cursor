@@ -2,27 +2,32 @@
 
 import { useEffect, useState } from "react";
 
-/** Where the reader stopped in each Sleep chapter, kept on this device. */
-export type ChapterProgress = { t: number; done: boolean; at: number };
-export type SleepProgress = Record<string, ChapterProgress>;
+/**
+ * Where the reader is in each chapter, shared by Walk and Sleep and kept on
+ * this device. Saved as a verse, not seconds: the two readings run at
+ * different speeds, so "Genesis 3:14" is the same place in both.
+ */
+export type ChapterProgress = { verse: number; done: boolean; at: number };
+export type ReadingProgress = Record<string, ChapterProgress>;
 
-const KEY = "lampstand-sleep-progress";
-const EVENT = "lampstand:sleep-progress";
+const KEY = "lampstand-reading-progress";
+const EVENT = "lampstand:reading-progress";
 
-export function readProgress(): SleepProgress {
+export function readProgress(): ReadingProgress {
   try {
-    return JSON.parse(localStorage.getItem(KEY) ?? "{}") as SleepProgress;
+    return JSON.parse(localStorage.getItem(KEY) ?? "{}") as ReadingProgress;
   } catch {
     return {};
   }
 }
 
-export function saveProgress(slug: string, t: number, done = false) {
+/** Remember the verse being read; done marks the chapter finished (and sticks). */
+export function saveProgress(slug: string, verse: number, done = false) {
   try {
     const all = readProgress();
     const was = all[slug];
-    // Finishing a chapter sticks; starting it again only moves the place.
-    all[slug] = { t: done ? 0 : Math.floor(t), done: done || Boolean(was?.done), at: Date.now() };
+    if (!done && was && was.verse === verse && !was.done) return; // nothing new
+    all[slug] = { verse: done ? 1 : Math.max(1, verse), done: done || Boolean(was?.done), at: Date.now() };
     localStorage.setItem(KEY, JSON.stringify(all));
     window.dispatchEvent(new Event(EVENT));
   } catch {
@@ -30,9 +35,9 @@ export function saveProgress(slug: string, t: number, done = false) {
   }
 }
 
-/** Live view of the progress, updated whenever any player saves. */
-export function useSleepProgress(): SleepProgress {
-  const [progress, setProgress] = useState<SleepProgress>({});
+/** Live view of the progress, updated whenever either player saves. */
+export function useReadingProgress(): ReadingProgress {
+  const [progress, setProgress] = useState<ReadingProgress>({});
   useEffect(() => {
     const refresh = () => setProgress(readProgress());
     refresh();
@@ -47,17 +52,17 @@ export function useSleepProgress(): SleepProgress {
 }
 
 /**
- * The chapter to offer tonight: the one last listened to if unfinished,
- * otherwise the next one after it, otherwise the first.
+ * The chapter to offer next, in Walk or Sleep: the one last read if it was left
+ * part-way (with the verse to continue from), otherwise the next unfinished
+ * one after it, otherwise the first.
  */
-export function pickTonight<T extends { slug: string }>(chapters: T[], progress: SleepProgress): { chapter: T; resumeAt: number } {
+export function pickNext<T extends { slug: string }>(chapters: T[], progress: ReadingProgress): { chapter: T; verse: number } {
   const last = Object.entries(progress)
     .filter(([slug]) => chapters.some((c) => c.slug === slug))
     .sort((a, b) => b[1].at - a[1].at)[0];
-  if (!last) return { chapter: chapters[0], resumeAt: 0 };
+  if (!last) return { chapter: chapters[0], verse: 1 };
   const k = chapters.findIndex((c) => c.slug === last[0]);
-  if (last[1].t > 5) return { chapter: chapters[k], resumeAt: last[1].t };
-  if (!last[1].done) return { chapter: chapters[k], resumeAt: 0 };
+  if (last[1].verse > 1 || !last[1].done) return { chapter: chapters[k], verse: last[1].verse };
   const next = chapters.slice(k + 1).find((c) => !progress[c.slug]?.done) ?? chapters.find((c) => !progress[c.slug]?.done);
-  return { chapter: next ?? chapters[k], resumeAt: 0 };
+  return { chapter: next ?? chapters[k], verse: 1 };
 }

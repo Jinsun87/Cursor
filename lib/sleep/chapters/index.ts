@@ -38,3 +38,17 @@ export const SLEEP_SECONDS: Record<string, number> = {
   "genesis-9": 199,
   "genesis-10": 181,
 };
+
+/** Length of each chapter's brisk Walk reading in seconds, by slug (0 = not voiced yet). */
+export const WALK_SECONDS: Record<string, number> = {
+  "genesis-1": 292,
+  "genesis-2": 205,
+  "genesis-3": 219,
+  "genesis-4": 232,
+  "genesis-5": 244,
+  "genesis-6": 186,
+  "genesis-7": 182,
+  "genesis-8": 180,
+  "genesis-9": 225,
+  "genesis-10": 195,
+};

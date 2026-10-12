@@ -843,3 +843,30 @@ body.has-mini-player main {
   font-size: 16px;
   cursor: pointer;
 }
+
+/* Continue / start over */
+.sl-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 14px;
+  margin-top: 20px;
+}
+.sl-actions .sl-begin {
+  margin-top: 0;
+}
+.sl-over {
+  min-height: 48px;
+  padding: 0 20px;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.3);
+  color: #e8e0cf;
+  font-size: 16px;
+  cursor: pointer;
+}
+.sl-over:focus-visible {
+  outline: 3px solid #e4c04a;
+  outline-offset: 3px;
+}
+

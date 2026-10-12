@@ -33,7 +33,8 @@ export function MiniPlayer() {
           <strong>
             {chapter.book} {chapter.chapter}
           </strong>
-          <small>{s.playing ? (v ? `Verse ${v.n} of ${chapter.verses.length}` : chapter.title) : "Paused"}</small>
+          <small>{s.mode === "walk" ? "Walk · " : "Sleep · "}
+            {s.playing ? (v ? `verse ${v.n} of ${chapter.verses.length}` : chapter.title) : "paused"}</small>
         </span>
       </button>
       <button type="button" className="mini-play" onClick={s.toggle} aria-label={s.playing ? "Pause" : "Play"}>

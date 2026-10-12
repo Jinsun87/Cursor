@@ -1,16 +1,18 @@
 /**
- * Sleep narration for one chapter: gpt-4o-mini-tts (onyx) with bedtime
- * delivery instructions, one request per passage so the voice keeps one breath
- * and tone, then a warm, soft finish at podcast loudness. Verse start times
- * come from a word-timestamped transcript, matched to each verse's opening
- * words.
+ * Narration for one chapter, one request per passage so the voice keeps one
+ * breath and tone. Sleep: gpt-4o-mini-tts (onyx) with bedtime delivery
+ * instructions and a warm, soft finish. Walk: Google Gemini TTS (Iapetus) at a
+ * brisk audiobook pace with a bright finish. Verse start times come from a
+ * word-timestamped transcript, matched to each verse's opening words.
  *
- * Needs OPENAI_API_KEY in .env.local and ffmpeg/ffprobe on the PATH.
+ * Needs OPENAI_API_KEY in .env.local, the Google Cloud login for Walk
+ * (gcloud auth application-default login) and ffmpeg/ffprobe on the PATH.
  */
 import { execFileSync } from "node:child_process";
 import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
+import { GoogleAuth } from "google-auth-library";
 
 export type VoiceVerse = { n: number; text: string; heading?: string };
 
@@ -27,6 +29,39 @@ const RATE = 24000; // OpenAI "pcm": 24 kHz, 16-bit, mono
 export const FINISH =
   "highpass=f=70,lowpass=f=6500,equalizer=f=3500:t=q:w=1.2:g=-4,equalizer=f=180:t=q:w=1:g=2," +
   "loudnorm=I=-16:TP=-1.5:LRA=7";
+
+/** Walk, for daylight: a clear male voice at a lively audiobook pace. */
+export const WALK_PROMPT =
+  "You are a clear, warm narrator reading the Bible aloud for a morning walk. " +
+  "Read at a lively, confident audiobook pace, a little quicker than conversation, with energy and warmth. " +
+  "Sound awake and engaged but never theatrical or preachy. Keep an even volume, and move from verse to verse with only a short breath.";
+// Daytime: keep the voice bright (no warm EQ), just clean up and level it.
+export const DAY_FINISH = "highpass=f=70,loudnorm=I=-16:TP=-1.5:LRA=7";
+const WALK_GAP_SECONDS = 1.2;
+
+/** Google Cloud project for Gemini TTS: GCP_PROJECT_ID, else the one the paintings use. */
+function googleProject(): string {
+  const fromFile = existsSync(".env.local")
+    ? readFileSync(".env.local", "utf8").match(/^GCP_PROJECT_ID=(.+)$/m)?.[1].trim()
+    : undefined;
+  return process.env.GCP_PROJECT_ID || fromFile || "nascar-auto";
+}
+
+async function geminiSpeak(text: string, voice: string): Promise<Buffer> {
+  const auth = new GoogleAuth({ scopes: ["https://www.googleapis.com/auth/cloud-platform"] });
+  const token = (await (await auth.getClient()).getAccessToken()).token;
+  if (!token) throw new Error("No Google Cloud access token; run gcloud auth application-default login");
+  const res = await post("https://texttospeech.googleapis.com/v1/text:synthesize", {
+    method: "POST",
+    headers: { Authorization: `Bearer ${token}`, "x-goog-user-project": googleProject(), "Content-Type": "application/json" },
+    body: JSON.stringify({
+      input: { text, prompt: WALK_PROMPT },
+      voice: { languageCode: "en-US", name: voice, modelName: "gemini-2.5-flash-tts" },
+      audioConfig: { audioEncoding: "LINEAR16", sampleRateHertz: RATE },
+    }),
+  });
+  return Buffer.from((await res.json()).audioContent, "base64").subarray(44); // drop the WAV header
+}
 
 function openAiKey(): string {
   // .env.local wins over any OPENAI_API_KEY already set in the shell.
@@ -73,10 +108,12 @@ export function passages(verses: VoiceVerse[]): VoiceVerse[][] {
 export async function voiceChapter(
   verses: VoiceVerse[],
   outDir: string,
-  opts: { voice?: string; plain?: string; keepPlain?: boolean; label?: string } = {},
+  opts: { mode?: "sleep" | "walk"; voice?: string; plain?: string; keepPlain?: boolean; label?: string } = {},
 ): Promise<{ duration: number; missed: number }> {
   const key = openAiKey();
-  const voice = opts.voice ?? "onyx";
+  const walk = opts.mode === "walk";
+  const voice = opts.voice ?? (walk ? "Iapetus" : "onyx");
+  const gap = walk ? WALK_GAP_SECONDS : SECTION_GAP_SECONDS;
   const work = join(tmpdir(), `sleep-voice-${Date.now()}`);
   mkdirSync(work, { recursive: true });
   mkdirSync(outDir, { recursive: true });
@@ -91,18 +128,17 @@ export async function voiceChapter(
     const parts: Buffer[] = [silence(LEAD_SECONDS)];
     const list = passages(verses);
     for (const [i, passage] of list.entries()) {
-      const res = await post("https://api.openai.com/v1/audio/speech", {
-        method: "POST",
-        headers: { Authorization: `Bearer ${key}`, "Content-Type": "application/json" },
-        body: JSON.stringify({
-          model: "gpt-4o-mini-tts",
-          voice,
-          input: passage.map((v) => v.text).join("\n\n"),
-          instructions: INSTRUCTIONS,
-          response_format: "pcm",
-        }),
-      });
-      parts.push(Buffer.from(await res.arrayBuffer()), silence(SECTION_GAP_SECONDS));
+      const text = passage.map((v) => v.text).join("\n\n");
+      if (walk) {
+        parts.push(await geminiSpeak(text, voice), silence(gap));
+      } else {
+        const res = await post("https://api.openai.com/v1/audio/speech", {
+          method: "POST",
+          headers: { Authorization: `Bearer ${key}`, "Content-Type": "application/json" },
+          body: JSON.stringify({ model: "gpt-4o-mini-tts", voice, input: text, instructions: INSTRUCTIONS, response_format: "pcm" }),
+        });
+        parts.push(Buffer.from(await res.arrayBuffer()), silence(gap));
+      }
       process.stdout.write(`\r  ${opts.label ?? ""} passage ${i + 1}/${list.length}   `);
     }
     const raw = join(work, "raw.pcm");
@@ -164,7 +200,7 @@ export async function voiceChapter(
 
   duration = Math.round(duration * 100) / 100;
   if (opts.keepPlain && !opts.plain) writeFileSync(join(outDir, "plain.mp3"), readFileSync(plain));
-  ff(["-i", plain, "-af", FINISH, "-codec:a", "libmp3lame", "-b:a", "64k", join(outDir, "chapter.mp3")]);
+  ff(["-i", plain, "-af", walk ? DAY_FINISH : FINISH, "-codec:a", "libmp3lame", "-b:a", "64k", join(outDir, "chapter.mp3")]);
   writeFileSync(join(outDir, "timing.json"), JSON.stringify({ duration, verses: timing }, null, 2) + "\n");
   rmSync(work, { recursive: true, force: true });
   return { duration, missed };

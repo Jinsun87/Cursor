@@ -89,7 +89,7 @@ export default function PremiumPage() {
           {[
             ["Access to public packs", "Yes", "Yes"],
             ["Certificates of Mastery", "Yes", "Yes"],
-            ["Today's walk, Breathe and quizzes", "Yes", "Yes"],
+            ["Walk and Sleep readings, Breathe and quizzes", "Yes", "Yes"],
             ["Every Walk and Sleep chapter as released", "Some", "Yes"],
             ["No ads anywhere", "No", "Yes"],
             ["5,000 bonus coins and a Premium badge", "No", "Yes"],

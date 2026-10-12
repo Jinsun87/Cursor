@@ -2,14 +2,11 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import type { WalkEpisode } from "@/lib/daily-walk/types";
-import type { ClipTiming } from "@/lib/daily-walk/timeline";
 import type { SleepChapter } from "@/lib/sleep/types";
 import { pickDailyVerse, type DailyVerse } from "@/lib/daily-verse";
 import { Lamp } from "./Lamp";
 import { BreathePanel } from "./BreathePanel";
-import { SleepLanding } from "@/components/sleep/SleepLanding";
-import { WalkPanel } from "./WalkPanel";
+import { ReadingLanding } from "@/components/sleep/ReadingLanding";
 import { useListening } from "./useListening";
 import { sectionFromUrl, setSection, useSection } from "@/lib/section-store";
 import "./home2.css";
@@ -38,16 +35,16 @@ const COPY: Record<Part, { greeting: string; line: string }> = {
  * chosen section is shared with the bottom bar and kept in the address (?tab=).
  */
 export function HomePreview({
-  walk,
-  walkTiming,
+  walkChapters,
+  walkSeconds,
   sleepChapters,
   sleepSeconds,
   dailyVerses = [],
   forcedPart,
   forcedTab,
 }: {
-  walk: WalkEpisode;
-  walkTiming: ClipTiming;
+  walkChapters: SleepChapter[];
+  walkSeconds: Record<string, number>;
   sleepChapters: SleepChapter[];
   sleepSeconds: Record<string, number>;
   dailyVerses?: DailyVerse[];
@@ -130,7 +127,7 @@ export function HomePreview({
           </svg>
           <span>
             <strong>Walk</strong>
-            <small>Guided · 10 or 20 min</small>
+            <small>The chapter, read briskly</small>
           </span>
         </button>
         <button type="button" role="tab" aria-selected={tab === "sleep"} onClick={() => choose("sleep")}>
@@ -156,16 +153,9 @@ export function HomePreview({
 
       <div className="h2-panel" role="tabpanel">
         {tab === "walk" ? (
-          <WalkPanel
-            episode={walk}
-            timing={walkTiming}
-            title="The Creation of the Cosmos"
-            reference="Genesis 1"
-            cover="/images/stories/genesis-1/s2.jpg"
-            onContinueToChapter={() => choose("sleep")}
-          />
+          <ReadingLanding mode="walk" chapters={walkChapters} seconds={walkSeconds} />
         ) : tab === "sleep" ? (
-          <SleepLanding chapters={sleepChapters} seconds={sleepSeconds} />
+          <ReadingLanding mode="sleep" chapters={sleepChapters} seconds={sleepSeconds} />
         ) : (
           <BreathePanel />
         )}

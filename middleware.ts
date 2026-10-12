@@ -30,6 +30,6 @@ export async function middleware(request: NextRequest) {
 export const config = {
   matcher: [
     // Skip static assets, images, media, and the Paddle webhook (no user session).
-    "/((?!_next/static|_next/image|favicon.ico|images/|daily-walk/|api/webhooks/|.*\\.(?:png|jpg|jpeg|gif|webp|svg|ico|mp3|wav|txt|xml)$).*)",
+    "/((?!_next/static|_next/image|favicon.ico|images/|sleep/|walk/|api/webhooks/|.*\\.(?:png|jpg|jpeg|gif|webp|svg|ico|mp3|wav|txt|xml)$).*)",
   ],
 };

@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import type { SleepChapter } from "@/lib/sleep/types";
 import { SLEEP_SPEEDS, TIMER_OPTIONS, clock, useSleepAudio } from "@/lib/sleep/sleep-audio";
-import { SLEEP_CHAPTERS } from "@/lib/sleep/chapters";
+import { SLEEP_CHAPTERS, WALK_SECONDS } from "@/lib/sleep/chapters";
 import "./sleep.css";
 
 type Mode = "listen" | "read";
@@ -65,7 +65,7 @@ export function SleepFullscreen() {
       className={`sf${calm ? " is-calm" : ""}`}
       role="dialog"
       aria-modal="true"
-      aria-label={`${chapter.book} ${chapter.chapter}, Sleep player`}
+      aria-label={`${chapter.book} ${chapter.chapter}, ${s.mode === "walk" ? "Walk" : "Sleep"} player`}
       style={{ ["--sf-text" as string]: textSize }}
       onPointerDownCapture={() => {
         calmAtTap.current = calm;
@@ -166,16 +166,17 @@ export function SleepFullscreen() {
 /** When a chapter ends: a quiet close, and the next chapter one tap away. Nothing plays by itself. */
 function UpNext({ chapter }: { chapter: SleepChapter }) {
   const s = useSleepAudio();
+  // The next chapter that has a recording in this mode (Walk stays Walk, Sleep stays Sleep).
   const k = SLEEP_CHAPTERS.findIndex((c) => c.slug === chapter.slug);
-  const next = k >= 0 ? SLEEP_CHAPTERS[k + 1] : undefined;
+  const next = SLEEP_CHAPTERS.slice(k + 1).find((c) => s.mode === "sleep" || WALK_SECONDS[c.slug] > 0);
   return (
     <div className="sf-end" role="status">
       <p className="sf-eyebrow">
         {chapter.book} {chapter.chapter} · finished
       </p>
-      <p className="sf-end-line">Rest now. The Word stays with you.</p>
+      <p className="sf-end-line">{s.mode === "walk" ? "Well done. Carry it with you today." : "Rest now. The Word stays with you."}</p>
       {next ? (
-        <button type="button" className="sf-next" onClick={() => s.open(next)}>
+        <button type="button" className="sf-next" onClick={() => s.open(next, { mode: s.mode })}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src={next.verses[0].image} alt="" />
           <span>
