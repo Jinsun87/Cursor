@@ -100,14 +100,19 @@ export function PricingPageClient() {
       <div className="text-center">
         <div className="inline-flex items-center gap-2 rounded-full border border-[var(--gold)]/30 bg-[var(--gold)]/10 px-4 py-1 text-xs font-medium text-[var(--gold)]">
           <span className="h-1.5 w-1.5 rounded-full bg-[var(--gold)] animate-pulse" />
-          Illuminated Scripture Study
+          Honest pricing
         </div>
         <h1 className="mt-4 font-display text-4xl sm:text-5xl md:text-6xl text-[var(--ink)] tracking-tight">
-          Invest in Quiet, Deep Recall
+          Stay in the Word
         </h1>
         <p className="mx-auto mt-4 max-w-2xl text-base sm:text-lg text-[var(--muted)]">
-          Support the Scripture knowledge mission, unlock distraction-free reading, and earn Certificates of Mastery
-          with zero advertising.
+          Every Walk and Sleep chapter as it is recorded, and no ads anywhere. Walk, Sleep, Breathe and the quizzes stay free.
+        </p>
+        <p className="mx-auto mt-3 max-w-2xl text-sm sm:text-base font-semibold text-[var(--ink)]">
+          No fake inflated prices: no crossed-out prices that never existed, no countdown timers. The price you see is the price.{" "}
+          <Link href="/open" className="font-normal text-[var(--gold)] underline underline-offset-4">
+            See the open book
+          </Link>
         </p>
 
         {/* Billing Frequency Toggle */}

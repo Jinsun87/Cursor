@@ -9,6 +9,8 @@ import { BreathePanel } from "./BreathePanel";
 import { ReadingLanding } from "@/components/sleep/ReadingLanding";
 import { useListening } from "./useListening";
 import { sectionFromUrl, setSection, useSection } from "@/lib/section-store";
+import { Onboarding } from "@/components/onboarding/Onboarding";
+import { readOnboarding } from "@/lib/onboarding";
 import "./home2.css";
 
 type Tab = "walk" | "sleep" | "breathe";
@@ -55,6 +57,8 @@ export function HomePreview({
   const [tab, setTab] = useState<Tab>(forcedTab ?? "walk");
   const [ready, setReady] = useState(false);
   const [verse, setVerse] = useState<DailyVerse | undefined>(undefined);
+  const [onboarding, setOnboarding] = useState(false);
+  const [name, setName] = useState<string | undefined>(undefined);
   const listening = useListening();
   const section = useSection();
 
@@ -67,6 +71,10 @@ export function HomePreview({
     setTab(wanted ?? (p === "evening" || p === "night" ? "sleep" : "walk"));
     setSection(wanted ?? "today", { updateUrl: false });
     setVerse(pickDailyVerse(dailyVerses));
+    // First visit to the home screen: welcome them before anything else.
+    const answers = readOnboarding();
+    setName(answers.name);
+    setOnboarding(!answers.done && !forcedTab && !forcedPart);
     setReady(true);
   }, [forcedPart, forcedTab, dailyVerses]);
 
@@ -96,7 +104,10 @@ export function HomePreview({
         {dark ? <Stars /> : null}
         <div className="h2-hero-inner">
           <div className="h2-hello">
-            <p className="h2-greeting">{copy.greeting}</p>
+            <p className="h2-greeting">
+              {copy.greeting}
+              {name ? `, ${name}` : ""}
+            </p>
             <h1 className="h2-headline">{copy.line}</h1>
             {verse ? (
               <figure className="h2-verse">
@@ -166,6 +177,15 @@ export function HomePreview({
           Prefer a quick quiz? Try today&apos;s ten Bible questions →
         </Link>
       </div>
+      {onboarding ? (
+        <Onboarding
+          onDone={() => {
+            setOnboarding(false);
+            setName(readOnboarding().name);
+            document.getElementById("sections")?.scrollIntoView({ block: "start" });
+          }}
+        />
+      ) : null}
     </section>
   );
 }

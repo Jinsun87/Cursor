@@ -117,7 +117,8 @@
   margin: 10px 0 2px;
   font-size: 14px;
 }
-.more-legal a {
+.more-legal a,
+.more-legal button {
   display: inline-flex;
   align-items: center;
   min-height: 40px;
@@ -126,6 +127,15 @@
   text-underline-offset: 3px;
 }
 .more-legal a:hover,
-.more-legal a:focus-visible {
+.more-legal a:focus-visible,
+.more-legal button:hover,
+.more-legal button:focus-visible {
   color: var(--ink);
+}
+.more-legal button {
+  border: 0;
+  padding: 0;
+  background: transparent;
+  font: inherit;
+  cursor: pointer;
 }

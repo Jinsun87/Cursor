@@ -42,7 +42,7 @@ type SleepAudio = {
    * Load a chapter in Walk or Sleep (if not already loaded that way), start it
    * and open the full-screen player; verse picks up at that verse.
    */
-  open: (chapter: SleepChapter, opts?: { mode?: ReadingMode; verse?: number }) => void;
+  open: (chapter: SleepChapter, opts?: { mode?: ReadingMode; verse?: number; expand?: boolean }) => void;
   toggle: () => void;
   seekBy: (seconds: number) => void;
   seekTo: (seconds: number) => void;
@@ -85,7 +85,24 @@ export function SleepAudioProvider({ children }: { children: ReactNode }) {
   const [muted, setMuted] = useState(false);
   const [speed, setSpeed] = useState<SleepSpeed>(1);
   const [narration, setNarration] = useState(1);
-  const [rain, setRain] = useState(0);
+  const [rain, setRainState] = useState(0);
+  // The reader's rain choice (Options or onboarding), remembered on this device.
+  useEffect(() => {
+    try {
+      const saved = Number(localStorage.getItem("lampstand-rain"));
+      if (saved > 0 && saved <= 1) setRainState(saved);
+    } catch {
+      // ignore
+    }
+  }, []);
+  const setRain = useCallback((v: number) => {
+    setRainState(v);
+    try {
+      localStorage.setItem("lampstand-rain", String(v));
+    } catch {
+      // ignore
+    }
+  }, []);
   const [timerMin, setTimerMin] = useState<TimerMinutes>(0);
   const [timerEndsAt, setTimerEndsAt] = useState<number | null>(null);
   // Verse to jump to once this recording's timings have loaded.
@@ -224,10 +241,11 @@ export function SleepAudioProvider({ children }: { children: ReactNode }) {
   }, [start]);
 
   const open = useCallback(
-    (next: SleepChapter, opts: { mode?: ReadingMode; verse?: number } = {}) => {
+    (next: SleepChapter, opts: { mode?: ReadingMode; verse?: number; expand?: boolean } = {}) => {
       const el = audioRef.current;
       const nextMode = opts.mode ?? "sleep";
-      setExpanded(true);
+      // expand: false plays without opening the full-screen player (onboarding's first moment).
+      setExpanded(opts.expand ?? true);
       setEnded(false);
       if (!el) return;
       if (chapter?.slug !== next.slug || mode !== nextMode) {
@@ -310,7 +328,7 @@ export function SleepAudioProvider({ children }: { children: ReactNode }) {
       setRain,
       chooseTimer,
     }),
-    [chapter, mode, index, starts, playing, ended, time, timing, expanded, muted, speed, narration, rain, timerMin, timerEndsAt, open, toggle, seekBy, seekTo, seekToVerse, close, chooseTimer],
+    [chapter, mode, index, starts, playing, ended, time, timing, expanded, muted, speed, narration, rain, setRain, timerMin, timerEndsAt, open, toggle, seekBy, seekTo, seekToVerse, close, chooseTimer],
   );
 
   return (

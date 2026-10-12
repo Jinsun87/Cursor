@@ -77,6 +77,8 @@ export function MoreSheet({ open, onClose, anchor }: { open: boolean; onClose: (
           <Link href="/terms" onClick={onClose}>Terms</Link>
           <Link href="/refunds" onClick={onClose}>Refunds</Link>
           <Link href="/donate" onClick={onClose}>Donate</Link>
+          <Link href="/open" onClick={onClose}>Open book</Link>
+          <Link href="/onboarding" onClick={onClose}>Set up again</Link>
         </nav>
         {anchor === "bottom" ? (
           <button type="button" className="more-close" onClick={onClose}>
