@@ -16,8 +16,8 @@ function stateOf(recorded: boolean, p: ChapterProgress | undefined): TileState {
 }
 
 /**
- * The shelf under the Walk and Sleep cards: books first, then a book's
- * chapters as a grid grouped by story. Tapping a chapter shows what it is and
+ * The shelf under the Walk and Sleep cards: the list of books, and a book's
+ * chapters (a grid grouped by story) once it is opened. Tapping a chapter shows what it is and
  * where the reader stopped, with Play; nothing starts until Play is pressed.
  */
 export function BookShelf({
@@ -34,8 +34,8 @@ export function BookShelf({
   const s = useSleepAudio();
   const progress = useReadingProgress();
   const bySlug = new Map(chapters.map((c) => [c.slug, c]));
-  // Open on the book tonight's chapter belongs to.
-  const [bookSlug, setBookSlug] = useState<string | null>(tonightSlug.replace(/-\d+$/, ""));
+  // Starts on the list of books; a book's chapters show only once it is opened.
+  const [bookSlug, setBookSlug] = useState<string | null>(null);
   const [selected, setSelected] = useState<number | null>(null);
   const book = SHELF.find((b) => b.slug === bookSlug && !b.comingSoon);
 
