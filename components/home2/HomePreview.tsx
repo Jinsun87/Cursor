@@ -40,16 +40,16 @@ const COPY: Record<Part, { greeting: string; line: string }> = {
 export function HomePreview({
   walk,
   walkTiming,
-  sleep,
-  sleepMinutes,
+  sleepChapters,
+  sleepSeconds,
   dailyVerses = [],
   forcedPart,
   forcedTab,
 }: {
   walk: WalkEpisode;
   walkTiming: ClipTiming;
-  sleep: SleepChapter;
-  sleepMinutes: number;
+  sleepChapters: SleepChapter[];
+  sleepSeconds: Record<string, number>;
   dailyVerses?: DailyVerse[];
   forcedPart?: Part;
   forcedTab?: Tab;
@@ -165,7 +165,7 @@ export function HomePreview({
             onContinueToChapter={() => choose("sleep")}
           />
         ) : tab === "sleep" ? (
-          <SleepLanding chapter={sleep} minutes={sleepMinutes} />
+          <SleepLanding chapters={sleepChapters} seconds={sleepSeconds} />
         ) : (
           <BreathePanel />
         )}

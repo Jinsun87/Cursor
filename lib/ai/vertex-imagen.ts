@@ -82,6 +82,7 @@ export async function generateVertexImage(options: GenerateImageOptions): Promis
     ],
     generationConfig: {
       responseModalities: ["IMAGE"],
+      ...(options.aspectRatio ? { imageConfig: { aspectRatio: options.aspectRatio } } : {}),
     },
   };
 

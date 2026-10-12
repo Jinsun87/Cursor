@@ -12,6 +12,7 @@ import {
 } from "react";
 import type { SleepChapter, SleepTiming } from "./types";
 import { useListeningMeter } from "@/components/home2/useListening";
+import { saveProgress } from "./progress";
 
 export const SLEEP_SPEEDS = [0.75, 1, 1.25] as const;
 export type SleepSpeed = (typeof SLEEP_SPEEDS)[number];
@@ -25,6 +26,8 @@ type SleepAudio = {
   index: number;
   starts: number[];
   playing: boolean;
+  /** The chapter played to its end (cleared when anything starts again). */
+  ended: boolean;
   time: number;
   duration: number;
   expanded: boolean;
@@ -34,8 +37,11 @@ type SleepAudio = {
   rain: number;
   timerMin: TimerMinutes;
   timerEndsAt: number | null;
-  /** Load a chapter (if not already loaded), start it and open the full-screen player. */
-  open: (chapter: SleepChapter) => void;
+  /**
+   * Load a chapter (if not already loaded), start it and open the full-screen
+   * player; resumeAt (seconds) picks up where the reader stopped last time.
+   */
+  open: (chapter: SleepChapter, resumeAt?: number) => void;
   toggle: () => void;
   seekBy: (seconds: number) => void;
   seekTo: (seconds: number) => void;
@@ -71,7 +77,9 @@ export function SleepAudioProvider({ children }: { children: ReactNode }) {
   const [chapter, setChapter] = useState<SleepChapter | null>(null);
   const [timing, setTiming] = useState<SleepTiming | null>(null);
   const [playing, setPlaying] = useState(false);
+  const [ended, setEnded] = useState(false);
   const [time, setTime] = useState(0);
+  const savedAt = useRef(0);
   const [expanded, setExpanded] = useState(false);
   const [muted, setMuted] = useState(false);
   const [speed, setSpeed] = useState<SleepSpeed>(1);
@@ -209,15 +217,20 @@ export function SleepAudioProvider({ children }: { children: ReactNode }) {
   }, [start]);
 
   const open = useCallback(
-    (next: SleepChapter) => {
+    (next: SleepChapter, resumeAt = 0) => {
       const el = audioRef.current;
       setExpanded(true);
+      setEnded(false);
       if (!el) return;
       if (chapter?.slug !== next.slug) {
         // Set the source here, inside the tap, so phones allow play() straight away.
         el.src = next.audioSrc;
-        setTime(0);
+        savedAt.current = resumeAt;
+        setTime(resumeAt);
         setChapter(next);
+        if (resumeAt > 0) {
+          el.addEventListener("loadedmetadata", () => (el.currentTime = resumeAt), { once: true });
+        }
       }
       if (el.paused) start();
     },
@@ -266,6 +279,7 @@ export function SleepAudioProvider({ children }: { children: ReactNode }) {
       index,
       starts,
       playing,
+      ended,
       time,
       duration: timing?.duration ?? 0,
       expanded,
@@ -294,6 +308,7 @@ export function SleepAudioProvider({ children }: { children: ReactNode }) {
       index,
       starts,
       playing,
+      ended,
       time,
       timing,
       expanded,
@@ -320,18 +335,29 @@ export function SleepAudioProvider({ children }: { children: ReactNode }) {
       <audio
         ref={audioRef}
         preload="auto"
-        onPlay={() => setPlaying(true)}
-        onPause={() => {
+        onPlay={() => {
+          setPlaying(true);
+          setEnded(false);
+        }}
+        onPause={(e) => {
           setPlaying(false);
           meter.stop();
+          if (chapter && !e.currentTarget.ended) saveProgress(chapter.slug, e.currentTarget.currentTime);
         }}
         onEnded={() => {
           setPlaying(false);
+          setEnded(true);
           meter.stop();
+          if (chapter) saveProgress(chapter.slug, 0, true);
         }}
         onTimeUpdate={(e) => {
           const t = e.currentTarget.currentTime;
           setTime(t);
+          // Remember the place every few seconds, so a closed tab or a reload resumes here.
+          if (chapter && !e.currentTarget.paused && Math.abs(t - savedAt.current) >= 5) {
+            savedAt.current = t;
+            saveProgress(chapter.slug, t);
+          }
           // Muted time is reading, not listening, so it does not light the lamp.
           if (!e.currentTarget.paused && !e.currentTarget.muted) meter.tick(t);
           else meter.stop();

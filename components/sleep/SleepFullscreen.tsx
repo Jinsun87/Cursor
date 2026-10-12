@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import type { SleepChapter } from "@/lib/sleep/types";
 import { SLEEP_SPEEDS, TIMER_OPTIONS, clock, useSleepAudio } from "@/lib/sleep/sleep-audio";
+import { SLEEP_CHAPTERS } from "@/lib/sleep/chapters";
 import "./sleep.css";
 
 type Mode = "listen" | "read";
@@ -153,9 +154,47 @@ export function SleepFullscreen() {
         </p>
       </footer>
 
+      {s.ended ? <UpNext chapter={chapter} /> : null}
+
       {optionsOpen ? (
         <Options textSize={textSize} onTextSize={setTextSize} onClose={() => setOptionsOpen(false)} />
       ) : null}
+    </div>
+  );
+}
+
+/** When a chapter ends: a quiet close, and the next chapter one tap away. Nothing plays by itself. */
+function UpNext({ chapter }: { chapter: SleepChapter }) {
+  const s = useSleepAudio();
+  const k = SLEEP_CHAPTERS.findIndex((c) => c.slug === chapter.slug);
+  const next = k >= 0 ? SLEEP_CHAPTERS[k + 1] : undefined;
+  return (
+    <div className="sf-end" role="status">
+      <p className="sf-eyebrow">
+        {chapter.book} {chapter.chapter} · finished
+      </p>
+      <p className="sf-end-line">Rest now. The Word stays with you.</p>
+      {next ? (
+        <button type="button" className="sf-next" onClick={() => s.open(next)}>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={next.verses[0].image} alt="" />
+          <span>
+            <small>Up next</small>
+            <strong>
+              {next.book} {next.chapter}
+            </strong>
+            <em>{next.title}</em>
+          </span>
+          <svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true">
+            <path d="M8.5 5.2 L19 12 L8.5 18.8 Z" fill="currentColor" />
+          </svg>
+        </button>
+      ) : (
+        <p className="sf-end-line">More chapters are on the way.</p>
+      )}
+      <button type="button" className="sf-end-close" onClick={s.close}>
+        Close
+      </button>
     </div>
   );
 }
