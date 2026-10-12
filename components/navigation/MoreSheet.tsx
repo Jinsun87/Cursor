@@ -71,6 +71,13 @@ export function MoreSheet({ open, onClose, anchor }: { open: boolean; onClose: (
             </button>
           </li>
         </ul>
+        {/* On phones the site footer is hidden, so its legal links live here. */}
+        <nav className="more-legal" aria-label="About Lampstand">
+          <Link href="/privacy" onClick={onClose}>Privacy</Link>
+          <Link href="/terms" onClick={onClose}>Terms</Link>
+          <Link href="/refunds" onClick={onClose}>Refunds</Link>
+          <Link href="/donate" onClick={onClose}>Donate</Link>
+        </nav>
         {anchor === "bottom" ? (
           <button type="button" className="more-close" onClick={onClose}>
             Close

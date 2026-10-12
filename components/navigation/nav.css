@@ -107,3 +107,25 @@
     animation: none;
   }
 }
+
+/* Privacy, Terms, Refunds and Donate: the footer's links, for phones where the footer is hidden */
+.more-legal {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 4px 18px;
+  margin: 10px 0 2px;
+  font-size: 14px;
+}
+.more-legal a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 40px;
+  color: var(--muted);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.more-legal a:hover,
+.more-legal a:focus-visible {
+  color: var(--ink);
+}

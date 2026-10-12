@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export function Footer() {
   return (
-    <footer className="mt-20 border-t" style={{ borderColor: "var(--line)", background: "var(--canvas-2)" }}>
+    <footer className="mt-20 hidden border-t md:block" style={{ borderColor: "var(--line)", background: "var(--canvas-2)" }}>
       <div className="mx-auto grid max-w-6xl gap-8 px-4 py-12 md:grid-cols-3">
         <div>
           <p className="font-display text-lg">
