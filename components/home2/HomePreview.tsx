@@ -8,7 +8,7 @@ import type { SleepChapter } from "@/lib/sleep/types";
 import { pickDailyVerse, type DailyVerse } from "@/lib/daily-verse";
 import { Lamp } from "./Lamp";
 import { BreathePanel } from "./BreathePanel";
-import { SleepPlayer } from "./SleepPlayer";
+import { SleepLanding } from "@/components/sleep/SleepLanding";
 import { WalkPanel } from "./WalkPanel";
 import { useListening } from "./useListening";
 import { sectionFromUrl, setSection, useSection } from "@/lib/section-store";
@@ -41,6 +41,7 @@ export function HomePreview({
   walk,
   walkTiming,
   sleep,
+  sleepMinutes,
   dailyVerses = [],
   forcedPart,
   forcedTab,
@@ -48,6 +49,7 @@ export function HomePreview({
   walk: WalkEpisode;
   walkTiming: ClipTiming;
   sleep: SleepChapter;
+  sleepMinutes: number;
   dailyVerses?: DailyVerse[];
   forcedPart?: Part;
   forcedTab?: Tab;
@@ -163,7 +165,7 @@ export function HomePreview({
             onContinueToChapter={() => choose("sleep")}
           />
         ) : tab === "sleep" ? (
-          <SleepPlayer chapter={sleep} />
+          <SleepLanding chapter={sleep} minutes={sleepMinutes} />
         ) : (
           <BreathePanel />
         )}

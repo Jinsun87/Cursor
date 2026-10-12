@@ -12,6 +12,9 @@ import { EzoicHead } from "@/components/EzoicHead";
 import { GA4Head } from "@/components/GA4Head";
 import { AnalyticsTracker } from "@/components/AnalyticsTracker";
 import { Analytics } from "@vercel/analytics/next";
+import { SleepAudioProvider } from "@/lib/sleep/sleep-audio";
+import { SleepFullscreen } from "@/components/sleep/SleepFullscreen";
+import { MiniPlayer } from "@/components/sleep/MiniPlayer";
 
 const sans = Inter({
   subsets: ["latin"],
@@ -51,9 +54,17 @@ const themeBoot = `(function(){try{var t=localStorage.getItem('lampstand-theme')
 
 import { BottomTabBar } from "@/components/navigation/BottomTabBar";
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
-    <html lang="en" className={`${sans.variable} ${display.variable}`} suppressHydrationWarning>
+    <html
+      lang="en"
+      className={`${sans.variable} ${display.variable}`}
+      suppressHydrationWarning
+    >
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeBoot }} />
         <EzoicHead />
@@ -62,19 +73,26 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className="font-sans antialiased">
         <ThemeProvider>
           <AppProvider>
-            <AdSenseLoader />
-            <AnalyticsTracker />
-            <Analytics />
-            <EzoicBoot />
-            <a href="#main" className="skip-link">
-              Skip to content
-            </a>
-            <Header />
-            <main id="main" className="mx-auto min-h-[70vh] max-w-6xl px-4 py-8 pb-24 md:pb-8">
-              {children}
-            </main>
-            <Footer />
-            <BottomTabBar />
+            <SleepAudioProvider>
+              <AdSenseLoader />
+              <AnalyticsTracker />
+              <Analytics />
+              <EzoicBoot />
+              <a href="#main" className="skip-link">
+                Skip to content
+              </a>
+              <Header />
+              <main
+                id="main"
+                className="mx-auto min-h-[70vh] max-w-6xl px-4 py-8 pb-24 md:pb-8"
+              >
+                {children}
+              </main>
+              <Footer />
+              <BottomTabBar />
+              <MiniPlayer />
+              <SleepFullscreen />
+            </SleepAudioProvider>
           </AppProvider>
         </ThemeProvider>
       </body>
