@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import type { SleepChapter } from "@/lib/sleep/types";
 import { useSleepAudio, type ReadingMode } from "@/lib/sleep/sleep-audio";
 import { pickNext, useReadingProgress } from "@/lib/sleep/progress";
+import { BookShelf } from "./BookShelf";
 import "./sleep.css";
 
 const COPY: Record<ReadingMode, { next: string; resume: string; note: string; how: string }> = {
@@ -23,8 +24,8 @@ const COPY: Record<ReadingMode, { next: string; resume: string; note: string; ho
 
 /**
  * Walk or Sleep: the chapter to read next as one card (the next unfinished
- * chapter, or the one left part-way, from that verse), then every chapter in
- * order. Both modes share one reading position, kept as a verse.
+ * chapter, or the one left part-way, from that verse), then the shelf: books
+ * and each book's chapters. Both modes share one reading position, kept as a verse.
  */
 export function ReadingLanding({
   mode,
@@ -79,44 +80,7 @@ export function ReadingLanding({
         </div>
       </div>
 
-      {chapters.length > 1 ? (
-        <section className="sl-list" aria-label="All chapters">
-          <h3>{chapters[0].book}</h3>
-          <ol>
-            {chapters.map((c) => {
-              const p = progress[c.slug];
-              const state = p?.verse && p.verse > 1 ? "started" : p?.done ? "done" : "new";
-              const playingThis = s.chapter?.slug === c.slug && s.mode === mode && s.playing;
-              return (
-                <li key={c.slug}>
-                  <button
-                    type="button"
-                    className={`sl-item is-${state}${c.slug === chapter.slug ? " is-tonight" : ""}`}
-                    onClick={() => begin(c, state === "started" ? p!.verse : 1)}
-                  >
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={c.verses[0].image} alt="" loading="lazy" />
-                    <span className="sl-item-text">
-                      <strong>
-                        {c.book} {c.chapter}
-                      </strong>
-                      <small>
-                        {c.title} · {minutes(c.slug)} min
-                      </small>
-                    </span>
-                    <span
-                      className="sl-item-state"
-                      aria-label={playingThis ? "Playing" : state === "done" ? "Heard" : state === "started" ? `Stopped at verse ${p!.verse}` : undefined}
-                    >
-                      {playingThis ? "▶" : state === "done" ? "✓" : state === "started" ? `v${p!.verse}` : ""}
-                    </span>
-                  </button>
-                </li>
-              );
-            })}
-          </ol>
-        </section>
-      ) : null}
+      <BookShelf mode={mode} chapters={chapters} seconds={seconds} tonightSlug={chapter.slug} />
     </div>
   );
 }
