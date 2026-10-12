@@ -41,7 +41,7 @@ const RATE = 24000; // OpenAI "pcm": 24 kHz, 16-bit, mono
 // Warm and soft: trim the highs, dip the 3.5 kHz band where harshness lives, add a little body.
 const FINISH =
   "highpass=f=70,lowpass=f=6500,equalizer=f=3500:t=q:w=1.2:g=-4,equalizer=f=180:t=q:w=1:g=2," +
-  "loudnorm=I=-20:TP=-2:LRA=7";
+  "loudnorm=I=-16:TP=-1.5:LRA=7";
 
 const chapter = SLEEP_GENESIS_1;
 const work = join(tmpdir(), `sleep-v2-${VOICE}`);
