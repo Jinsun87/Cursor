@@ -21,13 +21,17 @@ export function readProgress(): ReadingProgress {
   }
 }
 
-/** Remember the verse being read; done marks the chapter finished (and sticks). */
+/**
+ * Remember the verse being read; done marks the chapter finished. Reading a
+ * finished chapter again makes it unfinished, so pausing a replay near the
+ * start keeps Walk and Sleep on that chapter instead of skipping ahead.
+ */
 export function saveProgress(slug: string, verse: number, done = false) {
   try {
     const all = readProgress();
     const was = all[slug];
     if (!done && was && was.verse === verse && !was.done) return; // nothing new
-    all[slug] = { verse: done ? 1 : Math.max(1, verse), done: done || Boolean(was?.done), at: Date.now() };
+    all[slug] = { verse: done ? 1 : Math.max(1, verse), done, at: Date.now() };
     localStorage.setItem(KEY, JSON.stringify(all));
     window.dispatchEvent(new Event(EVENT));
   } catch {
