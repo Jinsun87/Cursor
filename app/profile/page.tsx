@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { useApp } from "@/lib/store";
 import { SERIES } from "@/lib/catalog";
+import { ListeningSummary } from "@/components/profile/ListeningSummary";
 
 export default function ProfilePage() {
   const { user, logout, ready } = useApp();
@@ -76,7 +77,9 @@ export default function ProfilePage() {
           {portalError ? <p className="mt-2 text-red-300">{portalError}</p> : null}
         </div>
       ) : null}
-      <dl className="mt-8 grid grid-cols-2 gap-4 text-sm">
+      <ListeningSummary />
+      <h2 className="mt-10 font-display text-2xl">Quizzes</h2>
+      <dl className="mt-3 grid grid-cols-2 gap-4 text-sm">
         <div className="rounded-2xl border border-pine-700 p-4">
           <dt className="text-pine-400">Coins</dt>
           <dd data-testid="coin-balance" className="font-display text-2xl">
@@ -88,7 +91,7 @@ export default function ProfilePage() {
           <dd className="font-display text-2xl">{user.attempts.length}</dd>
         </div>
       </dl>
-      <h2 className="mt-10 font-display text-2xl">Certificates</h2>
+      <h3 className="mt-6 font-display text-xl">Certificates</h3>
       {user.masteredSeries.length ? (
         <ul className="mt-3 space-y-2">
           {user.masteredSeries.map((slug) => {
@@ -103,7 +106,7 @@ export default function ProfilePage() {
           })}
         </ul>
       ) : (
-        <p className="mt-2 text-parchment/70">Finish a pack review at 70%+ to hang a certificate here.</p>
+        <p className="mt-2 text-sm text-parchment/70">Finish a quiz pack review at 70%+ to earn a certificate.</p>
       )}
       {user.donatedCents ? (
         <p className="mt-6 text-sm text-parchment/70">

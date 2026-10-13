@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
 import { pageMetadata } from "@/lib/seo";
-import Link from "next/link";
 import { ActivationStatus } from "@/components/pricing/ActivationStatus";
+import { WelcomeContent } from "@/components/pricing/WelcomeContent";
 
 export const metadata: Metadata = pageMetadata({
-  title: "Welcome to Lampstand Premium",
-  description: "Thank you for subscribing to Lampstand Premium.",
+  title: "Welcome to Lampstand Pro",
+  description: "Thank you for joining Lampstand Pro.",
   path: "/welcome",
   noindex: true,
 });
@@ -27,60 +27,7 @@ export default function WelcomePage() {
 
       <ActivationStatus />
 
-      <h1 className="mt-4 font-display text-4xl sm:text-5xl font-bold text-[var(--ink)] tracking-tight">
-        Welcome to Lampstand Pro
-      </h1>
-
-      <p className="mt-4 text-base sm:text-lg text-[var(--muted)] leading-relaxed">
-        Thank you for supporting the Lampstand Scripture recall mission. Premium gives you full access to our quiet
-        study room, mastery certificates, and an ad-free experience.
-      </p>
-
-      {/* Activated Perks Summary */}
-      <div className="mt-10 rounded-3xl border border-[var(--line)] bg-[var(--canvas-2)]/60 p-6 text-left shadow-sm">
-        <h2 className="font-display text-lg font-semibold text-[var(--ink)]">Your Pro Benefits:</h2>
-        <ul className="mt-4 space-y-3 text-sm text-[var(--ink)]/85">
-          <li className="flex items-center gap-3">
-            <span className="flex h-5 w-5 items-center justify-center rounded-full bg-emerald-500/20 text-emerald-400 text-xs">
-              ✓
-            </span>
-            <span><strong>Quiet Room:</strong> Complete longform study and quizzes without any advertising interruptions.</span>
-          </li>
-          <li className="flex items-center gap-3">
-            <span className="flex h-5 w-5 items-center justify-center rounded-full bg-emerald-500/20 text-emerald-400 text-xs">
-              ✓
-            </span>
-            <span><strong>Certificates of Mastery:</strong> Earn accredited completion badges on all 50+ question review sittings.</span>
-          </li>
-          <li className="flex items-center gap-3">
-            <span className="flex h-5 w-5 items-center justify-center rounded-full bg-emerald-500/20 text-emerald-400 text-xs">
-              ✓
-            </span>
-            <span><strong>Pro Badge & Coin Grant:</strong> Special profile badge with 5,000 bonus coins credited for lifelines.</span>
-          </li>
-        </ul>
-      </div>
-
-      {/* Navigation Links */}
-      <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
-        <Link
-          href="/read"
-          className="min-h-12 w-full sm:w-auto rounded-2xl btn btn-primary px-8 py-3 font-semibold shadow-lg shadow-[var(--gold)]/20 text-center"
-        >
-          Begin Reading Scripture
-        </Link>
-        <Link
-          href="/secret"
-          className="min-h-12 w-full sm:w-auto rounded-2xl border border-[var(--line-strong)] bg-[var(--canvas-2)] px-6 py-3 font-medium text-[var(--ink)] hover:border-[var(--gold)] hover:text-[var(--gold)] text-center transition-all"
-        >
-          Open Quiet Room
-        </Link>
-      </div>
-
-      <p className="mt-8 text-xs text-[var(--muted)]">
-        A receipt and invoice have been emailed to you directly by Paddle. You can manage or cancel your subscription at
-        any time from your profile.
-      </p>
+      <WelcomeContent />
     </div>
   );
 }
