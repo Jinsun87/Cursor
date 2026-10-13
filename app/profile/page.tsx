@@ -50,7 +50,10 @@ export default function ProfilePage() {
       {user.premium ? (
         <div data-testid="premium-status" className="mt-6 rounded-2xl border border-gold-500/40 p-4 text-sm">
           <p className="font-semibold text-gold-400">
-            Premium{user.premiumPlan ? ` · ${user.premiumPlan === "annual" ? "Annual" : "Monthly"}` : ""}
+            Premium
+            {user.premiumPlan
+              ? ` · ${user.premiumPlan === "lifetime" ? "Founding member, for life" : user.premiumPlan === "annual" ? "Annual" : "Monthly"}`
+              : ""}
           </p>
           {user.premiumPeriodEnd ? (
             <p className="mt-1 text-parchment/70">
@@ -64,7 +67,11 @@ export default function ProfilePage() {
             disabled={openingPortal}
             className="mt-3 text-gold-400 underline underline-offset-4"
           >
-            {openingPortal ? "Opening…" : "Manage subscription (cancel, card, invoices)"}
+            {openingPortal
+              ? "Opening…"
+              : user.premiumPlan === "lifetime"
+                ? "Receipts and billing details"
+                : "Manage subscription (cancel, card, invoices)"}
           </button>
           {portalError ? <p className="mt-2 text-red-300">{portalError}</p> : null}
         </div>

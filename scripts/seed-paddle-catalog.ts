@@ -1,5 +1,7 @@
 /**
- * Seed script for creating the Lampstand Pro catalog in Paddle.
+ * Seed script for creating the Lampstand Pro catalog in Paddle: Pro monthly and
+ * yearly (7-day trial on both) and the one-time Founding member price.
+ * Reads PADDLE_API_KEY from the shell or .env.local.
  *
  * Usage:
  *   # For Live / Production:
@@ -13,9 +15,14 @@
  *   npx tsx scripts/seed-paddle-catalog.ts
  */
 
+import { existsSync, readFileSync } from "node:fs";
 import { Environment, Paddle } from "@paddle/paddle-node-sdk";
 
-let rawKey = process.env.PADDLE_API_KEY?.trim() || "";
+// PADDLE_API_KEY from the shell, else from .env.local (sandbox key lives there).
+const fileKey = existsSync(".env.local")
+  ? readFileSync(".env.local", "utf8").match(/^PADDLE_API_KEY=(.+)$/m)?.[1].trim()
+  : undefined;
+let rawKey = process.env.PADDLE_API_KEY?.trim() || fileKey || "";
 // Strip surrounding quotes if any
 if ((rawKey.startsWith('"') && rawKey.endsWith('"')) || (rawKey.startsWith("'") && rawKey.endsWith("'"))) {
   rawKey = rawKey.slice(1, -1).trim();
@@ -102,6 +109,22 @@ async function seedCatalog() {
   });
   console.log(`   ✅ Annual Price created: ${annual.id}`);
 
+  // 4. Founding member: Pro for life, one payment, one per customer. The cap of
+  // founding members is enforced by the app (lib/founding.ts), not by Paddle.
+  console.log("\n🏛️  Creating product: Lampstand Founding Member (USD 99, one time)...");
+  const founding = await paddle.products.create({
+    name: "Lampstand Founding Member",
+    taxCategory: "saas",
+    description: "Lampstand Pro for life, one payment. Limited to the first founding members.",
+  });
+  const lifetime = await paddle.prices.create({
+    productId: founding.id,
+    description: "Founding member, lifetime",
+    unitPrice: { amount: "9900", currencyCode: "USD" },
+    quantity: { minimum: 1, maximum: 1 },
+  });
+  console.log(`   ✅ Founding member price created: ${lifetime.id}`);
+
   console.log("\n=======================================================");
   console.log("🎉 PADDLE CATALOG SETUP COMPLETE!");
   console.log("=======================================================");
@@ -112,6 +135,8 @@ async function seedCatalog() {
         productId: product.id,
         monthlyPriceId: monthly.id,
         annualPriceId: annual.id,
+        foundingProductId: founding.id,
+        lifetimePriceId: lifetime.id,
       },
       null,
       2
@@ -120,6 +145,7 @@ async function seedCatalog() {
   console.log("\nAdd these to your .env.local file:");
   console.log(`NEXT_PUBLIC_PADDLE_MONTHLY_PRICE_ID=${monthly.id}`);
   console.log(`NEXT_PUBLIC_PADDLE_ANNUAL_PRICE_ID=${annual.id}`);
+  console.log(`NEXT_PUBLIC_PADDLE_LIFETIME_PRICE_ID=${lifetime.id}`);
   console.log("=======================================================\n");
 }
 

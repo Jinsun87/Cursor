@@ -1,7 +1,7 @@
 import { describe, it, expect } from "vitest";
 import { EventName, type EventEntity } from "@paddle/paddle-node-sdk";
 import { isPaddleConfigured } from "./client";
-import { processPaddleWebhookEvent, type SubscriptionStore } from "./process-webhook";
+import { processPaddleWebhookEvent, type LifetimePurchase, type SubscriptionStore } from "./process-webhook";
 import type { SubscriptionRow } from "@/lib/entitlement";
 
 describe("Paddle Client Helper", () => {
@@ -35,7 +35,17 @@ const USER_ID = "3f2b8c1e-9a4d-4e7b-8c2a-1d5e6f7a8b9c";
 /** In-memory stand-in for the Supabase upsert_paddle_subscription function. */
 function fakeStore(emails: Record<string, string> = {}) {
   const rows = new Map<string, SubscriptionRow>();
+  const lifetime = new Map<string, LifetimePurchase & { status: string }>();
   const store: SubscriptionStore = {
+    async recordLifetimePurchase(purchase) {
+      if (!lifetime.has(purchase.paddle_transaction_id)) lifetime.set(purchase.paddle_transaction_id, { ...purchase, status: "completed" });
+    },
+    async markLifetimeRefunded(transactionId) {
+      const row = lifetime.get(transactionId);
+      if (!row) return false;
+      row.status = "refunded";
+      return true;
+    },
     async upsertSubscription(row) {
       const existing = rows.get(row.paddle_subscription_id);
       if (existing && existing.paddle_updated_at > row.paddle_updated_at) return false;
@@ -46,7 +56,7 @@ function fakeStore(emails: Record<string, string> = {}) {
       return emails[email] ?? null;
     },
   };
-  return { store, rows };
+  return { store, rows, lifetime };
 }
 
 function subscriptionEvent(
@@ -141,5 +151,59 @@ describe("Paddle Webhook Processor", () => {
     );
     expect(result.handled).toBe(false);
     expect(rows.size).toBe(0);
+  });
+});
+
+describe("Founding members (one-time lifetime purchase)", () => {
+  const LIFETIME = "pri_lifetime_test";
+  const transaction = (priceId: string, id = "txn_1"): EventEntity =>
+    ({
+      eventId: `evt_${Math.random()}`,
+      eventType: EventName.TransactionCompleted,
+      occurredAt: "2026-10-13T10:00:00Z",
+      notificationId: "ntf_2",
+      data: {
+        id,
+        status: "completed",
+        customerId: "ctm_9",
+        billedAt: "2026-10-13T10:00:00Z",
+        items: [{ price: { id: priceId } }],
+        customData: { userId: USER_ID },
+      },
+    }) as unknown as EventEntity;
+  const refund = (transactionId: string): EventEntity =>
+    ({
+      eventId: `evt_${Math.random()}`,
+      eventType: EventName.AdjustmentUpdated,
+      occurredAt: "2026-10-14T10:00:00Z",
+      notificationId: "ntf_3",
+      data: { transactionId, action: "refund", status: "approved" },
+    }) as unknown as EventEntity;
+
+  it("records a founding purchase against the buyer's account, once", async () => {
+    process.env.NEXT_PUBLIC_PADDLE_LIFETIME_PRICE_ID = LIFETIME;
+    const { store, lifetime } = fakeStore();
+    const first = await processPaddleWebhookEvent(transaction(LIFETIME), store);
+    await processPaddleWebhookEvent(transaction(LIFETIME), store); // Paddle redelivers
+    expect(first.handled).toBe(true);
+    expect(lifetime.size).toBe(1);
+    expect(lifetime.get("txn_1")).toMatchObject({ user_id: USER_ID, price_id: LIFETIME, status: "completed" });
+  });
+
+  it("ignores completed transactions for other prices (subscription renewals)", async () => {
+    process.env.NEXT_PUBLIC_PADDLE_LIFETIME_PRICE_ID = LIFETIME;
+    const { store, lifetime } = fakeStore();
+    const result = await processPaddleWebhookEvent(transaction("pri_monthly", "txn_2"), store);
+    expect(result.handled).toBe(false);
+    expect(lifetime.size).toBe(0);
+  });
+
+  it("marks a refunded founding purchase so it no longer grants Premium", async () => {
+    process.env.NEXT_PUBLIC_PADDLE_LIFETIME_PRICE_ID = LIFETIME;
+    const { store, lifetime } = fakeStore();
+    await processPaddleWebhookEvent(transaction(LIFETIME), store);
+    const result = await processPaddleWebhookEvent(refund("txn_1"), store);
+    expect(result.handled).toBe(true);
+    expect(lifetime.get("txn_1")?.status).toBe("refunded");
   });
 });

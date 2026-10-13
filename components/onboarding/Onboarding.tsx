@@ -10,6 +10,7 @@ import { readOnboarding, saveOnboarding, startTab, type Intent, type ListenWhen,
 import { setSection } from "@/lib/section-store";
 import { trackEvent } from "@/lib/analytics";
 import { FOUNDING_CAP, FOUNDING_PRICE, chaptersFundedPerMember, membersToFundBible } from "@/lib/founding";
+import { useFoundingSpots } from "@/components/founding/useFoundingSpots";
 import "./onboarding.css";
 
 type Step = "intent" | "when" | "name" | "reader" | "sound" | "moment" | "lamp" | "why" | "offer" | "install";
@@ -405,7 +406,9 @@ function FirstMoment({ hello, mode, start, onNext }: { hello: string; mode: "wal
 }
 
 function OfferStep({ hello, onFree, onLeave }: { hello: string; onFree: () => void; onLeave: () => void }) {
-  const lifetimeReady = Boolean(process.env.NEXT_PUBLIC_PADDLE_LIFETIME_PRICE_ID);
+  const spots = useFoundingSpots();
+  const soldOut = spots !== null && spots.left === 0;
+  const lifetimeReady = Boolean(process.env.NEXT_PUBLIC_PADDLE_LIFETIME_PRICE_ID) && !soldOut;
   return (
     <>
       <p className="ob-eyebrow">Lampstand Pro</p>
@@ -413,7 +416,9 @@ function OfferStep({ hello, onFree, onLeave }: { hello: string; onFree: () => vo
       <p className="ob-sub">Every chapter as it is recorded, every voice and sound, and no ads anywhere.</p>
 
       <div className="ob-plan is-best">
-        <p className="ob-plan-tag">Founding member · first {FOUNDING_CAP} only</p>
+        <p className="ob-plan-tag">
+          Founding member · {spots ? `${spots.left} of ${FOUNDING_CAP} spots left` : `first ${FOUNDING_CAP} only`}
+        </p>
         <p className="ob-price">
           ${FOUNDING_PRICE} <span>once</span>
         </p>
@@ -427,7 +432,7 @@ function OfferStep({ hello, onFree, onLeave }: { hello: string; onFree: () => vo
           </Link>
         ) : (
           <button type="button" className="ob-primary" disabled>
-            Opening soon
+            {soldOut ? "All founding spots are taken" : "Opening soon"}
           </button>
         )}
       </div>
@@ -437,7 +442,7 @@ function OfferStep({ hello, onFree, onLeave }: { hello: string; onFree: () => vo
         <p className="ob-price">
           $4.99 <span>a month</span> · $39.99 <span>a year</span>
         </p>
-        <p className="ob-plan-note">7 days free on the monthly plan. Cancel any time.</p>
+        <p className="ob-plan-note">7 days free on either plan. Cancel any time.</p>
         <Link href="/pricing" className="ob-secondary" onClick={onLeave}>
           Start the free trial
         </Link>

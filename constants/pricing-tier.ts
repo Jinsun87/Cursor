@@ -30,7 +30,7 @@ export const PricingTier: Tier[] = [
     name: "Pro",
     description: "Everything in Lampstand, with no ads, and every new Walk and Sleep chapter as it is released.",
     features: [
-      "7-day free trial on the monthly plan",
+      "7-day free trial on either plan",
       "$4.99/mo or $39.99/yr (save 33%)",
       "No ads anywhere on Lampstand",
       "Every Walk and Sleep chapter as new ones are released",
@@ -39,8 +39,9 @@ export const PricingTier: Tier[] = [
     ],
     featured: true,
     priceId: {
-      month: process.env.NEXT_PUBLIC_PADDLE_MONTHLY_PRICE_ID || "pri_01m3491eqp91gkse1fmpngdt7h",
-      year: process.env.NEXT_PUBLIC_PADDLE_ANNUAL_PRICE_ID || "pri_01m3491f04x6epgafayhm6saty",
+      // No hard-coded fallbacks: a missing setting must not quietly point at another Paddle account.
+      month: process.env.NEXT_PUBLIC_PADDLE_MONTHLY_PRICE_ID || "",
+      year: process.env.NEXT_PUBLIC_PADDLE_ANNUAL_PRICE_ID || "",
     },
   },
 ];

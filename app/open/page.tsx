@@ -2,7 +2,10 @@ import Link from "next/link";
 import { pageMetadata } from "@/lib/seo";
 import { SLEEP_CHAPTERS, SLEEP_SECONDS, WALK_SECONDS } from "@/lib/sleep/chapters";
 import { SHELF } from "@/lib/sleep/books";
-import { FOUNDING_CAP, FOUNDING_PRICE, chaptersFundedPerMember, membersToFundBible } from "@/lib/founding";
+import { FOUNDING_CAP, FOUNDING_PRICE, chaptersFundedPerMember, fetchFoundingSpots, membersToFundBible } from "@/lib/founding";
+
+// The founding count comes from the database; refresh the page every few minutes.
+export const revalidate = 300;
 
 export const metadata = pageMetadata({
   title: "The open book: where Lampstand stands",
@@ -16,7 +19,8 @@ export const metadata = pageMetadata({
  * money pays for. Every number here comes from the app's own data, so it
  * stays true as chapters are added.
  */
-export default function OpenBookPage() {
+export default async function OpenBookPage() {
+  const spots = await fetchFoundingSpots();
   const minutes = (map: Record<string, number>) => Math.round(Object.values(map).reduce((n, x) => n + x, 0) / 60);
   const books = SHELF.map((b) => {
     const recorded = SLEEP_CHAPTERS.filter((c) => c.slug.startsWith(`${b.slug}-`)).map((c) => c.chapter);
@@ -70,9 +74,10 @@ export default function OpenBookPage() {
         </p>
         <ul className="mt-4 grid gap-2 text-[var(--ink)]">
           <li>Free: Walk and Sleep readings, Breathe, Bible quizzes and Scripture for life&apos;s struggles.</li>
-          <li>Pro: $4.99 a month (7 days free) or $39.99 a year.</li>
+          <li>Pro: $4.99 a month or $39.99 a year, with 7 days free on either.</li>
           <li>
-            Founding member: ${FOUNDING_PRICE} once, Pro for life, limited to the first {FOUNDING_CAP} members. Opening soon.
+            Founding member: ${FOUNDING_PRICE} once, Pro for life, limited to the first {FOUNDING_CAP} members.
+            {spots ? ` ${spots.left} of ${FOUNDING_CAP} spots left.` : ""}
           </li>
         </ul>
       </section>

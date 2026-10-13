@@ -102,17 +102,20 @@ export function AppProvider({ children }: { children: ReactNode }) {
         return null;
       }
 
-      const [{ data: profile }, { data: subs }] = await Promise.all([
+      const [{ data: profile }, { data: subs }, { data: lifetimeRows }] = await Promise.all([
         supabase.from("profiles").select("username, newsletter, created_at").eq("id", authUser.id).maybeSingle(),
         supabase
           .from("subscriptions")
           .select("status, price_id, current_period_end, scheduled_change, paddle_updated_at"),
+        // A founding membership (one payment) is Premium for life, unless refunded.
+        supabase.from("lifetime_purchases").select("status").eq("status", "completed").limit(1),
       ]);
+      const lifetime = (lifetimeRows ?? []).length > 0;
       const subscriptions = (subs ?? []) as Pick<
         SubscriptionRow,
         "status" | "price_id" | "current_period_end" | "scheduled_change" | "paddle_updated_at"
       >[];
-      const premium = hasPremium(subscriptions);
+      const premium = lifetime || hasPremium(subscriptions);
       const primary = primarySubscription(subscriptions);
       const email = authUser.email ?? "";
 
@@ -129,9 +132,9 @@ export function AppProvider({ children }: { children: ReactNode }) {
         newsletter: Boolean(profile?.newsletter),
         createdAt: profile?.created_at ?? authUser.created_at,
         premium,
-        premiumPlan: premium ? planForPrice(primary?.price_id, PRICE_IDS) : undefined,
-        premiumScheduledChange: premium ? (primary?.scheduled_change ?? undefined) : undefined,
-        premiumPeriodEnd: premium ? (primary?.current_period_end ?? undefined) : undefined,
+        premiumPlan: lifetime ? "lifetime" : premium ? planForPrice(primary?.price_id, PRICE_IDS) : undefined,
+        premiumScheduledChange: premium && !lifetime ? (primary?.scheduled_change ?? undefined) : undefined,
+        premiumPeriodEnd: premium && !lifetime ? (primary?.current_period_end ?? undefined) : undefined,
         coins: progress.coins,
         attempts: progress.attempts,
         masteredSeries: progress.masteredSeries,

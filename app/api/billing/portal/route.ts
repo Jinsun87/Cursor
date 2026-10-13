@@ -2,7 +2,10 @@ import { getPaddleInstance } from "@/lib/paddle/get-paddle-instance";
 import { primarySubscription, type SubscriptionRow } from "@/lib/entitlement";
 import { getServerSupabase } from "@/lib/supabase/server";
 
-/** Returns a one-time link to Paddle's customer portal (cancel, update card, invoices). */
+/**
+ * Returns a one-time link to Paddle's customer portal: cancel, update card and
+ * invoices for subscribers; receipts for founding members (one payment).
+ */
 export async function POST() {
   const supabase = await getServerSupabase();
   const { data: auth } = await supabase.auth.getUser();
@@ -18,12 +21,23 @@ export async function POST() {
     SubscriptionRow,
     "paddle_subscription_id" | "paddle_customer_id" | "status" | "paddle_updated_at"
   >[]);
-  if (!sub) return Response.json({ error: "No subscription found" }, { status: 404 });
+  let customerId = sub?.paddle_customer_id;
+  if (!customerId) {
+    const { data: lifetime } = await supabase
+      .from("lifetime_purchases")
+      .select("paddle_customer_id")
+      .eq("status", "completed")
+      .limit(1)
+      .maybeSingle();
+    customerId = lifetime?.paddle_customer_id;
+  }
+  if (!customerId) return Response.json({ error: "No purchase found" }, { status: 404 });
 
   try {
-    const session = await getPaddleInstance().customerPortalSessions.create(sub.paddle_customer_id, [
-      sub.paddle_subscription_id,
-    ]);
+    const session = await getPaddleInstance().customerPortalSessions.create(
+      customerId,
+      sub ? [sub.paddle_subscription_id] : [],
+    );
     return Response.json({ url: session.urls.general.overview });
   } catch (err) {
     console.error("Paddle portal session failed:", err);

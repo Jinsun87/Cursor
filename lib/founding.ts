@@ -26,3 +26,30 @@ export function chaptersFundedPerMember(): number {
 export function membersToFundBible(): number {
   return Math.ceil((BIBLE_CHAPTERS * COST_PER_CHAPTER) / NET_FROM_FOUNDING);
 }
+
+export type FoundingSpots = { cap: number; taken: number; left: number };
+
+/**
+ * Founding spots taken so far, from the database (completed, unrefunded
+ * purchases). Null when it cannot be read, so callers show the cap rather
+ * than a made-up count.
+ */
+export async function fetchFoundingSpots(): Promise<FoundingSpots | null> {
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL?.trim();
+  const key = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY?.trim();
+  if (!url || !key) return null;
+  try {
+    const res = await fetch(`${url}/rest/v1/rpc/founding_spots_taken`, {
+      method: "POST",
+      headers: { apikey: key, Authorization: `Bearer ${key}`, "Content-Type": "application/json" },
+      body: "{}",
+      next: { revalidate: 60 },
+    } as RequestInit);
+    if (!res.ok) return null;
+    const taken = Number(await res.json());
+    if (!Number.isFinite(taken)) return null;
+    return { cap: FOUNDING_CAP, taken, left: Math.max(0, FOUNDING_CAP - taken) };
+  } catch {
+    return null;
+  }
+}

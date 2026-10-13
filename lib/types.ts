@@ -98,7 +98,7 @@ export type User = {
   newsletter: boolean;
   createdAt: string;
   premium: boolean;
-  premiumPlan?: "monthly" | "annual";
+  premiumPlan?: "monthly" | "annual" | "lifetime";
   /** Paddle scheduled change, e.g. "cancel" when Premium ends at the period end. */
   premiumScheduledChange?: string;
   premiumPeriodEnd?: string;

@@ -29,5 +29,23 @@ export function supabaseSubscriptionStore(admin: SupabaseClient): SubscriptionSt
       if (error) throw new Error(`profile lookup failed: ${error.message}`);
       return data?.id ?? null;
     },
+
+    async recordLifetimePurchase(purchase) {
+      // ignoreDuplicates: Paddle may deliver the same transaction more than once.
+      const { error } = await admin
+        .from("lifetime_purchases")
+        .upsert({ ...purchase, status: "completed" }, { onConflict: "paddle_transaction_id", ignoreDuplicates: true });
+      if (error) throw new Error(`lifetime purchase insert failed: ${error.message}`);
+    },
+
+    async markLifetimeRefunded(transactionId) {
+      const { data, error } = await admin
+        .from("lifetime_purchases")
+        .update({ status: "refunded", updated_at: new Date().toISOString() })
+        .eq("paddle_transaction_id", transactionId)
+        .select("paddle_transaction_id");
+      if (error) throw new Error(`lifetime refund update failed: ${error.message}`);
+      return (data?.length ?? 0) > 0;
+    },
   };
 }

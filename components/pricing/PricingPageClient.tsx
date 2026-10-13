@@ -7,6 +7,7 @@ import { PricingTier, type Tier } from "@/constants/pricing-tier";
 import { usePaddlePrices } from "@/hooks/usePaddlePrices";
 import { useApp } from "@/lib/store";
 import { getPaddleEnvironment, getPaddleClientToken } from "@/lib/paddle/client";
+import { FoundingCard } from "./FoundingCard";
 
 export function PricingPageClient() {
   const { user } = useApp();
@@ -197,7 +198,7 @@ export function PricingPageClient() {
                   <h3 className="font-display text-2xl font-bold text-[var(--ink)]">{tier.name}</h3>
                   {tier.name === "Pro" && (
                     <span className="rounded-full bg-emerald-500/10 border border-emerald-500/30 px-2.5 py-0.5 text-xs font-medium text-emerald-400">
-                      {frequency === "month" ? "7-day free trial" : "Save 33%"}
+                      {frequency === "month" ? "7-day free trial" : "7 days free · Save 33%"}
                     </span>
                   )}
                 </div>
@@ -268,7 +269,7 @@ export function PricingPageClient() {
                     ? tier.name === "Pro"
                       ? frequency === "month"
                         ? "Start 7-Day Free Trial"
-                        : "Subscribe Annually ($39.99)"
+                        : "Start 7-Day Free Trial (yearly)"
                       : "Subscribe"
                     : tier.name === "Starter"
                     ? user
@@ -287,6 +288,8 @@ export function PricingPageClient() {
           );
         })}
       </div>
+
+      <FoundingCard paddle={paddle} user={user} />
 
       {/* Trust & Guarantee Section */}
       <div className="mt-16 rounded-3xl border border-[var(--line)] bg-[var(--canvas-2)]/60 p-8 text-center backdrop-blur-sm">
