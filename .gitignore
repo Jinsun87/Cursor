@@ -18,3 +18,7 @@ public/sleep/**/*.wav
 
 # Voice listening tests (large; kept locally)
 voice-samples/*.mp3
+
+# Narration MP3s live in Cloudflare R2 (scripts/upload-audio-r2.ts); kept on disk, not in Git
+public/sleep/**/*.mp3
+public/walk/**/*.mp3
