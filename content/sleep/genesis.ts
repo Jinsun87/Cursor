@@ -19,6 +19,7 @@ export const NIGHT_STYLE =
   "Vertical 9:16 composition. Dramatic classical oil painting, chiaroscuro, deep night palette with warm gold light, " +
   "calm and still, reverent, soft edges, Rembrandt and Caravaggio inspired, museum quality. " +
   "Show people only if the scene names them; then few, clothed modestly in simple ancient garments, seen at a distance or from behind. God is shown only as light. " +
+  "Patriarchs and their families are weathered Near Eastern nomads in earth-toned wool; no figure resembles Jesus or the Virgin Mary, no one wears a white or red robe as the centre of the picture, and no light glows around anyone's head. " +
   "Full-bleed painting with no frame or border. No halos, no crosses. No text, no captions, no watermarks, no modern elements.";
 
 export const GENESIS_PLANS: SleepChapterPlan[] = [
@@ -275,6 +276,131 @@ export const GENESIS_PLANS: SleepChapterPlan[] = [
       { from: 7, prompt: "Two grown brothers standing quietly together at the mouth of a burial cave in a field at dusk, their heads bowed." },
       { from: 12, prompt: "Twelve nomad tribal camps spread across the desert from horizon to horizon at twilight, cooking fires glowing; seen from far away." },
       { from: 27, prompt: "A rugged hunter in skins returning from the field, tired, and a quiet young man stirring a pot of red lentil stew over a fire beside the tents at evening." },
+    ],
+  },
+  {
+    chapter: 26,
+    title: "Isaac and Abimelech",
+    headings: { 1: "God's Promise to Isaac", 7: "Isaac and Abimelech", 12: "Isaac Prospers", 23: "The Covenant at Beersheba", 34: "Esau's Wives" },
+    scenes: [
+      { from: 1, prompt: "A grey-bearded man in his prime standing alone on a dry hillside near Gerar at dusk during a famine, cracked earth, a soft light breaking through clouds above him." },
+      { from: 12, prompt: "Golden fields of barley ripe for harvest in the land of Gerar at sunset, sheaves stacked high, flocks and herds grazing beyond, a nomad camp at the edge." },
+      { from: 18, prompt: "Herdsmen at dusk reopening an old stone well in a dry valley, water glinting below, camels and goats waiting nearby." },
+      { from: 26, prompt: "A Philistine king in a tall plumed headdress and armour, with his army commander, sharing a feast with a grey-bearded nomad chief outside tents at night, seen from a little distance, lamps and a fire, an oath of peace." },
+      { from: 32, prompt: "A newly dug well brimming with water at Beersheba at sunrise, servants gathered gladly around it, the desert glowing gold." },
+    ],
+  },
+  {
+    chapter: 27,
+    title: "Jacob and the Blessing",
+    headings: { 1: "Jacob Steals Esau's Blessing", 30: "Esau's Lost Blessing", 41: "Jacob Flees from Esau" },
+    scenes: [
+      { from: 1, prompt: "A very old blind man resting on a cushioned bed inside a dim lamplit tent, his rugged hunter son with a bow standing at the entrance listening." },
+      { from: 18, prompt: "A smooth-skinned young man in goatskin-covered sleeves offering a dish of savory stew to an old blind father in a lamplit tent." },
+      { from: 30, prompt: "A rugged hunter in skins standing in the tent doorway holding a dish of game, his face full of grief, the old father seated trembling." },
+      { from: 41, prompt: "A young man leaving a nomad camp alone before dawn with a staff and a small bundle, his mother watching from a tent door far behind." },
+    ],
+  },
+  {
+    chapter: 28,
+    title: "Jacob's Ladder",
+    headings: { 1: "Jacob Sent to Paddan-aram", 6: "Esau Marries Mahalath", 10: "Jacob's Ladder" },
+    scenes: [
+      { from: 1, prompt: "An old father with his hand raised in blessing over his kneeling younger son outside a tent at dawn, a staff and travel bundle beside the young man." },
+      { from: 10, prompt: "A lone young traveller walking through rocky hill country at sunset with a staff, the road winding north into the distance." },
+      { from: 12, prompt: "A young man asleep on the ground with his head on a stone under a starry night, a great stairway of soft golden light rising from the earth into the sky, faint figures of light ascending and descending it." },
+      { from: 18, prompt: "A stone pillar set upright on a rocky hilltop at sunrise, oil glistening on its top, a staff leaning against it; no people." },
+    ],
+  },
+  {
+    chapter: 29,
+    title: "Jacob Meets Rachel",
+    headings: { 1: "Jacob Meets Rachel", 15: "Jacob Marries Leah and Rachel", 31: "Jacob's Children" },
+    scenes: [
+      { from: 1, prompt: "A well in an open field with a large stone over its mouth, three flocks of sheep lying beside it, shepherds resting, warm late-afternoon light." },
+      { from: 9, prompt: "A young shepherdess in simple wool clothing leading her father's sheep toward a stone well at evening, a traveller rolling the heavy stone from the well's mouth." },
+      { from: 15, prompt: "A young man tending large flocks of sheep in the hill country of Haran, seen at golden evening under a wide sky." },
+      { from: 31, prompt: "A quiet nomad camp of several tents at night, lamps glowing in each tent, small sandals at a doorway, stars above; no people visible." },
+    ],
+  },
+  {
+    chapter: 30,
+    title: "Jacob's Family Grows",
+    headings: { 1: "The Children of Jacob", 25: "Jacob's Flocks Increase" },
+    scenes: [
+      { from: 1, prompt: "A large nomad camp of goat-hair tents in the land of Haran at dusk, small clay jars and baskets by the tent doors, cooking fires; no people close up." },
+      { from: 14, prompt: "Mandrake plants with small yellow fruit growing at the edge of a wheat field at harvest time, golden evening light; no people." },
+      { from: 25, prompt: "A shepherd at evening setting peeled branches with white stripes in the stone watering troughs, flocks gathering to drink." },
+      { from: 37, prompt: "Great flocks of speckled and spotted goats and dark sheep spread across the hills of Haran at sunset, a prosperous camp with camels and donkeys." },
+    ],
+  },
+  {
+    chapter: 31,
+    title: "Jacob Flees from Laban",
+    headings: { 1: "Jacob Flees from Laban", 22: "Laban Pursues Jacob", 43: "Jacob's Covenant with Laban" },
+    scenes: [
+      { from: 1, prompt: "A shepherd speaking quietly with two women out in the open field among his flocks at evening, the camp far behind." },
+      { from: 17, prompt: "A long caravan of camels carrying families and herds of livestock crossing a wide river at night under moonlight, heading west." },
+      { from: 22, prompt: "A band of men on camels riding hard across the desert by moonlight, dust trailing behind them, the mountains of Gilead ahead." },
+      { from: 33, prompt: "Inside a lamplit goat-hair tent, a camel saddle draped with a striped rug, baskets, rolled carpets and clay jars turned over as if searched; no people visible." },
+      { from: 45, prompt: "A heap of stones and a single standing stone on a hilltop in Gilead at dawn, two camps of tents on either side below; a covenant of peace." },
+    ],
+  },
+  {
+    chapter: 32,
+    title: "Jacob Wrestles with God",
+    headings: { 1: "Jacob Prepares to Meet Esau", 22: "Jacob Wrestles with God" },
+    scenes: [
+      { from: 1, prompt: "A nomad caravan camped on a hillside at dusk, faint figures of light standing on the far ridge like a camp of angels, the travellers looking up in awe." },
+      { from: 9, prompt: "A grey-haired old shepherd seen from behind, kneeling alone in prayer on a rocky slope above his sleeping camp at night, small against the stars." },
+      { from: 13, prompt: "Herds of goats, sheep, camels, cows and donkeys sent ahead in separate droves across a valley at sunrise, servants driving each drove with gaps between them." },
+      { from: 22, prompt: "The ford of the Jabbok river at night seen from far away, a small lone figure of an old shepherd at the water's edge after his family has crossed, dark hills and the river glinting under the moon." },
+      { from: 31, prompt: "The first rays of sunrise over the ford of the Jabbok, a man walking away with a limp, leaning on his staff, golden light ahead of him." },
+    ],
+  },
+  {
+    chapter: 33,
+    title: "Jacob Meets Esau",
+    headings: { 1: "Jacob Meets Esau", 18: "Jacob Settles in Shechem" },
+    scenes: [
+      { from: 1, prompt: "A man bowing low to the ground as his brother approaches with four hundred men in the distance, a family waiting behind the bowing man, morning light." },
+      { from: 4, prompt: "Two grown brothers embracing in an open field at morning, weeping, one rugged in skins and one in a traveller's cloak, their companions watching from a distance." },
+      { from: 17, prompt: "A simple house and shelters for livestock built at Succoth beside a river at evening, a peaceful settled camp." },
+      { from: 18, prompt: "A stone altar in an open field outside the walled town of Shechem at sunset, tents pitched nearby; no people close up." },
+    ],
+  },
+  {
+    chapter: 34,
+    title: "Dinah and the Shechemites",
+    headings: { 1: "Dinah and the Shechemites" },
+    scenes: [
+      { from: 1, prompt: "The walled Canaanite town of Shechem seen from the hills at dusk, a nomad camp of tents in the valley below; no people close up." },
+      { from: 5, prompt: "A father sitting alone and silent at the door of his tent at night, a single lamp beside him, his head bowed in sorrow." },
+      { from: 25, prompt: "Smoke rising from a distant walled town at dawn seen from far across empty fields, a grey and sorrowful sky; no people." },
+      { from: 30, prompt: "A troubled old man standing at his tent door at night facing two of his sons whose backs are turned, a lamp between them." },
+    ],
+  },
+  {
+    chapter: 35,
+    title: "Jacob Returns to Bethel",
+    headings: { 1: "Jacob Returns to Bethel", 16: "The Death of Rachel", 23: "The Sons of Jacob", 27: "The Death of Isaac" },
+    scenes: [
+      { from: 1, prompt: "A family burying small carved idols and earrings under a great oak tree at dusk before setting out on a journey." },
+      { from: 6, prompt: "A rough stone altar on the hilltop at Bethel at sunrise, a standing stone beside it shining with poured oil; no people close up." },
+      { from: 16, prompt: "A single stone pillar beside the road to Bethlehem at dusk, wildflowers at its foot, the road leading on into gentle hills; no people." },
+      { from: 23, prompt: "Twelve young men of different ages standing together in a field at golden evening with their flocks, seen from a little distance." },
+      { from: 27, prompt: "Two older brothers, one rugged in skins and one in a shepherd's cloak, standing side by side at a cave tomb at Hebron at dusk, heads bowed." },
+    ],
+  },
+  {
+    chapter: 36,
+    title: "The Descendants of Esau",
+    headings: { 1: "The Descendants of Esau", 20: "The Descendants of Seir", 31: "The Kings of Edom" },
+    scenes: [
+      { from: 1, prompt: "A large caravan of camels, herds and households moving away across the desert toward the red mountains of Seir at sunset." },
+      { from: 9, prompt: "The red sandstone mountains of Edom at dusk, many tribal camps with fires glowing in the valleys below; seen from far away." },
+      { from: 20, prompt: "Hot springs steaming in a desert valley at twilight, donkeys grazing nearby, rocky red cliffs; no people close up." },
+      { from: 31, prompt: "An ancient stone city on a red mountain ridge of Edom under a sky full of stars, a royal hall lit by torches; no people close up." },
     ],
   },
 ];

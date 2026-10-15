@@ -25,6 +25,17 @@ import genesis22 from "./genesis-22.json";
 import genesis23 from "./genesis-23.json";
 import genesis24 from "./genesis-24.json";
 import genesis25 from "./genesis-25.json";
+import genesis26 from "./genesis-26.json";
+import genesis27 from "./genesis-27.json";
+import genesis28 from "./genesis-28.json";
+import genesis29 from "./genesis-29.json";
+import genesis30 from "./genesis-30.json";
+import genesis31 from "./genesis-31.json";
+import genesis32 from "./genesis-32.json";
+import genesis33 from "./genesis-33.json";
+import genesis34 from "./genesis-34.json";
+import genesis35 from "./genesis-35.json";
+import genesis36 from "./genesis-36.json";
 
 /** Every Sleep chapter with narration, in reading order. */
 export const SLEEP_CHAPTERS: SleepChapter[] = [
@@ -53,6 +64,17 @@ export const SLEEP_CHAPTERS: SleepChapter[] = [
   genesis23 as SleepChapter,
   genesis24 as SleepChapter,
   genesis25 as SleepChapter,
+  genesis26 as SleepChapter,
+  genesis27 as SleepChapter,
+  genesis28 as SleepChapter,
+  genesis29 as SleepChapter,
+  genesis30 as SleepChapter,
+  genesis31 as SleepChapter,
+  genesis32 as SleepChapter,
+  genesis33 as SleepChapter,
+  genesis34 as SleepChapter,
+  genesis35 as SleepChapter,
+  genesis36 as SleepChapter,
 ];
 
 /** Length of each chapter's narration in seconds, by slug. */
@@ -82,6 +104,17 @@ export const SLEEP_SECONDS: Record<string, number> = {
   "genesis-23": 188,
   "genesis-24": 753,
   "genesis-25": 366,
+  "genesis-26": 391,
+  "genesis-27": 536,
+  "genesis-28": 246,
+  "genesis-29": 372,
+  "genesis-30": 458,
+  "genesis-31": 587,
+  "genesis-32": 377,
+  "genesis-33": 227,
+  "genesis-34": 324,
+  "genesis-35": 293,
+  "genesis-36": 451,
 };
 
 /** Length of each chapter's brisk Walk reading in seconds, by slug (0 = not voiced yet). */
@@ -111,4 +144,15 @@ export const WALK_SECONDS: Record<string, number> = {
   "genesis-23": 144,
   "genesis-24": 553,
   "genesis-25": 265,
+  "genesis-26": 302,
+  "genesis-27": 407,
+  "genesis-28": 194,
+  "genesis-29": 274,
+  "genesis-30": 344,
+  "genesis-31": 467,
+  "genesis-32": 266,
+  "genesis-33": 173,
+  "genesis-34": 244,
+  "genesis-35": 234,
+  "genesis-36": 334,
 };
