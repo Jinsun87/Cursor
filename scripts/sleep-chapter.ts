@@ -6,7 +6,8 @@
  *   npx tsx scripts/sleep-chapter.ts "Genesis 3" --only=images  # or --only=voice, --only=walk, --only=data
  *   npx tsx scripts/sleep-chapter.ts "Genesis 3" --redo         # regenerate even if files exist
  *
- * Writes public/images/sleep/<slug>/sN.jpg, public/sleep/<slug>/{chapter.mp3,timing.json},
+ * Writes public/images/sleep/<slug>/sN.jpg, public/sleep/<slug>/{chapter.mp3,timing.json}
+ * (and uploads each new chapter.mp3 to the R2 bucket),
  * lib/sleep/chapters/<slug>.json and the catalogue lib/sleep/chapters/index.ts.
  */
 import { execFileSync } from "node:child_process";
@@ -18,6 +19,7 @@ import { GENESIS_PLANS, NIGHT_STYLE, type SleepChapterPlan } from "../content/sl
 import type { SleepChapter } from "../lib/sleep/types";
 import { SLEEP_GENESIS_1 } from "../lib/sleep/genesis-1";
 import { voiceChapter } from "./lib/sleep-voice";
+import { r2Env, uploadToR2 } from "./upload-audio-r2";
 
 // GCP_PROJECT_ID and friends for Vertex.
 if (existsSync(".env.local")) {
@@ -142,6 +144,9 @@ async function main() {
   const ref = process.argv[2];
   if (!ref || ref.startsWith("--")) throw new Error('Usage: npx tsx scripts/sleep-chapter.ts "Genesis 2-10"');
   mkdirSync(join("lib", "sleep", "chapters"), { recursive: true });
+  // New recordings go straight to the R2 bucket the app streams from (when configured).
+  const r2 = r2Env();
+  if (!r2) console.log("  (R2 not configured: recordings stay in public/ only)");
 
   for (const { book, chapter } of chaptersFrom(ref)) {
     const slug = slugOf(book, chapter);
@@ -159,10 +164,12 @@ async function main() {
     if (plan && step("voice") && (redo || !existsSync(join("public", "sleep", slug, "chapter.mp3")))) {
       const { duration, missed } = await voiceChapter(data.verses, join("public", "sleep", slug), { label });
       notes.push(`sleep ${Math.round(duration)}s, ${missed} estimated`);
+      if (r2 && (await uploadToR2(r2, join("public", "sleep", slug, "chapter.mp3"), true))) notes.push("sleep on R2");
     }
     if (step("walk") && (redo || !existsSync(join("public", "walk", slug, "chapter.mp3")))) {
       const { duration, missed } = await voiceChapter(data.verses, join("public", "walk", slug), { mode: "walk", label });
       notes.push(`walk ${Math.round(duration)}s, ${missed} estimated`);
+      if (r2 && (await uploadToR2(r2, join("public", "walk", slug, "chapter.mp3"), true))) notes.push("walk on R2");
     }
     console.log(`\r  ${label}: ${data.verses.length} verses${notes.length ? `, ${notes.join("; ")}` : ", nothing new"}`);
   }

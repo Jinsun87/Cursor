@@ -4,6 +4,7 @@ import { createContext, useCallback, useContext, useEffect, useMemo, useRef, use
 import type { SleepChapter, SleepTiming } from "./types";
 import { useListeningMeter } from "@/components/home2/useListening";
 import { saveProgress } from "./progress";
+import { audioUrl } from "@/lib/audio-url";
 
 export const SLEEP_SPEEDS = [0.75, 1, 1.25] as const;
 export type SleepSpeed = (typeof SLEEP_SPEEDS)[number];
@@ -16,8 +17,8 @@ const FADE_SECONDS = 12;
 /** Where each mode's recording of a chapter lives. */
 export function readingSources(chapter: SleepChapter, mode: ReadingMode) {
   return mode === "walk"
-    ? { audio: `/walk/${chapter.slug}/chapter.mp3`, timing: `/walk/${chapter.slug}/timing.json` }
-    : { audio: chapter.audioSrc, timing: chapter.timingSrc };
+    ? { audio: audioUrl(`/walk/${chapter.slug}/chapter.mp3`), timing: `/walk/${chapter.slug}/timing.json` }
+    : { audio: audioUrl(chapter.audioSrc), timing: chapter.timingSrc };
 }
 
 type SleepAudio = {

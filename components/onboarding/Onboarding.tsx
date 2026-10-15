@@ -8,6 +8,7 @@ import { SLEEP_CHAPTERS, SLEEP_SECONDS, WALK_SECONDS } from "@/lib/sleep/chapter
 import { useListening } from "@/components/home2/useListening";
 import { readOnboarding, saveOnboarding, startTab, type Intent, type ListenWhen, type OnboardingAnswers } from "@/lib/onboarding";
 import { setSection } from "@/lib/section-store";
+import { audioUrl } from "@/lib/audio-url";
 import { trackEvent } from "@/lib/analytics";
 import { FOUNDING_CAP, FOUNDING_PRICE, chaptersFundedPerMember, membersToFundBible } from "@/lib/founding";
 import { useFoundingSpots } from "@/components/founding/useFoundingSpots";
@@ -295,8 +296,8 @@ function ReaderStep({ when, onNext }: { when: ListenWhen; onNext: () => void }) 
   const audio = useRef<HTMLAudioElement | null>(null);
   const timer = useRef<number | undefined>(undefined);
   const readers = [
-    { id: "walk" as const, title: "Iapetus · by day", note: "Clear and warm, for a walk or a commute", src: "/walk/genesis-1/chapter.mp3" },
-    { id: "sleep" as const, title: "Theo · by night", note: "Deep and calm, for falling asleep", src: "/sleep/genesis-1/chapter.mp3" },
+    { id: "walk" as const, title: "Iapetus · by day", note: "Clear and warm, for a walk or a commute", src: audioUrl("/walk/genesis-1/chapter.mp3") },
+    { id: "sleep" as const, title: "Theo · by night", note: "Deep and calm, for falling asleep", src: audioUrl("/sleep/genesis-1/chapter.mp3") },
   ].filter((r) => when === "both" || r.id === when);
 
   const stop = () => {
