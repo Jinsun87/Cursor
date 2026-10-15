@@ -20,6 +20,11 @@ import genesis17 from "./genesis-17.json";
 import genesis18 from "./genesis-18.json";
 import genesis19 from "./genesis-19.json";
 import genesis20 from "./genesis-20.json";
+import genesis21 from "./genesis-21.json";
+import genesis22 from "./genesis-22.json";
+import genesis23 from "./genesis-23.json";
+import genesis24 from "./genesis-24.json";
+import genesis25 from "./genesis-25.json";
 
 /** Every Sleep chapter with narration, in reading order. */
 export const SLEEP_CHAPTERS: SleepChapter[] = [
@@ -43,6 +48,11 @@ export const SLEEP_CHAPTERS: SleepChapter[] = [
   genesis18 as SleepChapter,
   genesis19 as SleepChapter,
   genesis20 as SleepChapter,
+  genesis21 as SleepChapter,
+  genesis22 as SleepChapter,
+  genesis23 as SleepChapter,
+  genesis24 as SleepChapter,
+  genesis25 as SleepChapter,
 ];
 
 /** Length of each chapter's narration in seconds, by slug. */
@@ -67,6 +77,11 @@ export const SLEEP_SECONDS: Record<string, number> = {
   "genesis-18": 376,
   "genesis-19": 418,
   "genesis-20": 225,
+  "genesis-21": 312,
+  "genesis-22": 286,
+  "genesis-23": 188,
+  "genesis-24": 753,
+  "genesis-25": 366,
 };
 
 /** Length of each chapter's brisk Walk reading in seconds, by slug (0 = not voiced yet). */
@@ -91,4 +106,9 @@ export const WALK_SECONDS: Record<string, number> = {
   "genesis-18": 287,
   "genesis-19": 339,
   "genesis-20": 172,
+  "genesis-21": 243,
+  "genesis-22": 207,
+  "genesis-23": 144,
+  "genesis-24": 553,
+  "genesis-25": 265,
 };

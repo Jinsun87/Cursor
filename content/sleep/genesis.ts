@@ -221,4 +221,60 @@ export const GENESIS_PLANS: SleepChapterPlan[] = [
       { from: 17, prompt: "The old man praying with lifted hands at sunrise, the king's household gathered behind him in gentle morning light." },
     ],
   },
+  {
+    chapter: 21,
+    title: "The Birth of Isaac",
+    headings: { 1: "The Birth of Isaac", 8: "Hagar and Ishmael Sent Away", 22: "The Covenant at Beersheba" },
+    scenes: [
+      { from: 1, prompt: "An old woman with grey hair standing alone at the door of a goat-hair tent at sunrise, her face bright with laughter and joy, the wide Negev hills behind her." },
+      { from: 8, prompt: "A feast at evening outside nomad tents, lamps and a cooking fire, guests seated on rugs around bread and roast meat, seen from a little distance." },
+      { from: 14, prompt: "A young Egyptian woman walking alone into the dry wilderness of Beersheba at dawn with a water skin and a little bread on her shoulder, a boy beside her, long shadows on the sand." },
+      { from: 17, prompt: "A hidden well of clear water in the desert wilderness at dusk, a stone rim, a water skin lying beside it, soft light on the water; no people." },
+      { from: 33, prompt: "A young tamarisk tree newly planted beside a stone well at Beersheba under a calm evening sky, sheep resting nearby; no people." },
+    ],
+  },
+  {
+    chapter: 22,
+    title: "The Offering of Isaac",
+    headings: { 1: "The Offering of Isaac", 20: "The Sons of Nahor" },
+    scenes: [
+      { from: 3, prompt: "An old man and a youth walking at dawn along a rocky path toward distant mountains, a donkey carrying a bundle of wood, two servants behind." },
+      { from: 6, prompt: "A father and his son walking together up a mountain path seen from behind, the son carrying a bundle of wood, the father with a small fire pot, quiet evening light." },
+      { from: 13, prompt: "A ram caught by its horns in a thicket on a mountaintop at sunrise, a rough stone altar nearby, golden morning light; no people." },
+      { from: 17, prompt: "Countless stars over a quiet seashore at night, waves on endless sand, a sense of a promise; no people." },
+    ],
+  },
+  {
+    chapter: 23,
+    title: "The Death of Sarah",
+    headings: { 1: "The Death and Burial of Sarah" },
+    scenes: [
+      { from: 1, prompt: "A goat-hair tent at Hebron at night with a single clay lamp burning inside, a quiet mourning stillness, oak trees under the stars; no people visible." },
+      { from: 3, prompt: "An old man bowing respectfully before the elders seated at the stone gate of the ancient town of Hebron, evening light." },
+      { from: 17, prompt: "The mouth of a cave at the edge of a field with trees around it at Machpelah, near Mamre, in soft dusk light; no people." },
+    ],
+  },
+  {
+    chapter: 24,
+    title: "A Bride for Isaac",
+    headings: { 1: "A Bride for Isaac", 10: "Rebekah at the Well", 62: "Isaac Marries Rebekah" },
+    scenes: [
+      { from: 10, prompt: "An old servant setting out at dawn leading a line of ten camels laden with gifts across the desert toward distant hills." },
+      { from: 11, prompt: "Camels kneeling beside a stone well outside an ancient town at evening, an old servant standing with his hands lifted in prayer." },
+      { from: 15, prompt: "A young woman carrying a clay water jar on her shoulder at a spring at evening, modestly dressed, camels kneeling nearby, warm golden light." },
+      { from: 28, prompt: "A family household gathered by lamplight in a courtyard at night, a brother greeting an old travelling servant, camels resting by the wall." },
+      { from: 63, prompt: "A young man walking alone in an open field at evening, looking up as a line of camels approaches in the distance under a soft sky." },
+    ],
+  },
+  {
+    chapter: 25,
+    title: "Jacob and Esau",
+    headings: { 1: "Abraham and Keturah", 7: "The Death of Abraham", 12: "The Descendants of Ishmael", 19: "The Births of Jacob and Esau", 27: "Esau Sells His Birthright" },
+    scenes: [
+      { from: 1, prompt: "An old man sitting at the door of his tent at evening watching many grandchildren and flocks across a wide valley, peaceful sunset." },
+      { from: 7, prompt: "Two grown brothers standing quietly together at the mouth of a burial cave in a field at dusk, their heads bowed." },
+      { from: 12, prompt: "Twelve nomad tribal camps spread across the desert from horizon to horizon at twilight, cooking fires glowing; seen from far away." },
+      { from: 27, prompt: "A rugged hunter in skins returning from the field, tired, and a quiet young man stirring a pot of red lentil stew over a fire beside the tents at evening." },
+    ],
+  },
 ];

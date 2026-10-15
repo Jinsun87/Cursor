@@ -14,6 +14,7 @@ import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { GoogleAuth } from "google-auth-library";
+import { alignVerses } from "../../lib/sleep/align";
 
 export type VoiceVerse = { n: number; text: string; heading?: string };
 
@@ -190,7 +191,6 @@ async function post(url: string, init: RequestInit): Promise<Response> {
 }
 
 const silence = (seconds: number) => Buffer.alloc(Math.round(seconds * RATE) * 2);
-const words = (s: string) => s.toLowerCase().replace(/[^a-z\s']/g, " ").split(/\s+/).filter(Boolean);
 const ff = (args: string[]) => execFileSync("ffmpeg", ["-y", "-loglevel", "error", ...args], { stdio: "inherit" });
 
 /** Passages: a new one at every heading, and long ones split at a verse boundary. */
@@ -282,41 +282,7 @@ export async function voiceChapter(
       body: form,
     })
   ).json();
-  const heard: { word: string; start: number }[] = tr.words.map((w: { word: string; start: number }) => ({
-    word: words(w.word).join("").replace(/'/g, ""),
-    start: w.start,
-  }));
-
-  // Each verse starts where its first words are heard, nearest to where the running word count
-  // says it should be. Whisper can merge or drop words, so search a window either side, accept
-  // 2 of the first 3 words, and re-sync the cursor on every match.
-  const timing: Record<string, number> = {};
-  let cursor = 0;
-  let lastStart = -1;
-  let missed = 0;
-  for (const v of verses) {
-    const toks = words(v.text).map((t) => t.replace(/'/g, ""));
-    const probe = toks.slice(0, 3);
-    const need = Math.min(2, probe.length);
-    let at = -1;
-    let best = 0;
-    for (let i = Math.max(0, cursor - 15); i < Math.min(heard.length, cursor + 40); i++) {
-      if (heard[i].start <= lastStart) continue;
-      const score = probe.filter((t, k) => heard[i + k]?.word === t).length;
-      if (score >= need && (score > best || (score === best && Math.abs(i - cursor) < Math.abs(at - cursor)))) {
-        best = score;
-        at = i;
-      }
-    }
-    if (at < 0) {
-      missed++;
-      at = Math.min(cursor, heard.length - 1);
-    }
-    // Never step backwards, even when a verse had to be estimated.
-    lastStart = Math.max(heard[at].start, lastStart + 0.5);
-    timing[String(v.n)] = Math.round(lastStart * 100) / 100;
-    cursor = at + toks.length;
-  }
+  const { timing, missed } = alignVerses(verses, tr.words, duration);
 
   duration = Math.round(duration * 100) / 100;
   if (opts.keepPlain && !opts.plain) writeFileSync(join(outDir, "plain.mp3"), readFileSync(plain));
