@@ -296,7 +296,7 @@ function ReaderStep({ when, onNext }: { when: ListenWhen; onNext: () => void }) 
   const timer = useRef<number | undefined>(undefined);
   const readers = [
     { id: "walk" as const, title: "Iapetus · by day", note: "Clear and warm, for a walk or a commute", src: "/walk/genesis-1/chapter.mp3" },
-    { id: "sleep" as const, title: "Onyx · by night", note: "Low and soft, for falling asleep", src: "/sleep/genesis-1/chapter.mp3" },
+    { id: "sleep" as const, title: "Theo · by night", note: "Deep and calm, for falling asleep", src: "/sleep/genesis-1/chapter.mp3" },
   ].filter((r) => when === "both" || r.id === when);
 
   const stop = () => {
@@ -423,7 +423,7 @@ function OfferStep({ hello, onFree, onLeave }: { hello: string; onFree: () => vo
           ${FOUNDING_PRICE} <span>once</span>
         </p>
         <p className="ob-plan-note">
-          Pro for life. Less than 2½ years of the yearly plan, then never pay again. One founding member funds about{" "}
+          Pro for life, including every new voice as it arrives (a gentle female Sleep reader is coming soon). Less than 2½ years of the yearly plan, then never pay again. One founding member funds about{" "}
           {chaptersFundedPerMember()} chapters; about {membersToFundBible()} fund the whole Bible.
         </p>
         {lifetimeReady ? (

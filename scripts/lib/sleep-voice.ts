@@ -1,11 +1,12 @@
 /**
  * Narration for one chapter, one request per passage so the voice keeps one
- * breath and tone. Sleep: gpt-4o-mini-tts (onyx) with bedtime delivery
- * instructions and a warm, soft finish. Walk: Google Gemini TTS (Iapetus) at a
- * brisk audiobook pace with a bright finish. Verse start times come from a
+ * breath and tone. Sleep: ElevenLabs Flash (Theo Silk) with continuity between passages and
+ * a warm, soft finish (OpenAI onyx and Gemini voices on Vertex AI can still be tried
+ * via --voice). Walk: Gemini Flash TTS (Iapetus) at a brisk
+ * audiobook pace with a bright finish. Verse start times come from a
  * word-timestamped transcript, matched to each verse's opening words.
  *
- * Needs OPENAI_API_KEY in .env.local, the Google Cloud login for Walk
+ * Needs OPENAI_API_KEY in .env.local (verse timing), the Google Cloud login
  * (gcloud auth application-default login) and ffmpeg/ffprobe on the PATH.
  */
 import { execFileSync } from "node:child_process";
@@ -21,6 +22,25 @@ const INSTRUCTIONS =
   "Tone: soothing and reverent, never dramatic, no performance. " +
   "Pacing: slow and even, with a long natural pause between verses. " +
   "Let the end of every verse settle and fall softly, as if trailing toward rest.";
+/**
+ * Sleep voice, chosen 2026-10-15: Theo Silk ("British Deep Sleep & Calm") on
+ * ElevenLabs Flash v2.5 at 1.0x, each passage linked to its neighbours so the
+ * tone carries across joins. Gemini voices were dropped on 2026-10-14 (tone
+ * shifts between requests and after pauses); OpenAI voices such as onyx still
+ * work via --voice=onyx.
+ */
+export const SLEEP_VOICE = "elevenlabs:UmQN7jS1Ee8B1czsUtQh";
+const ELEVEN_MODEL = "eleven_flash_v2_5";
+// High stability keeps the delivery even; no style exaggeration; normal speed.
+const ELEVEN_SETTINGS = { stability: 0.65, similarity_boost: 0.8, style: 0, use_speaker_boost: true, speed: 1.0 };
+const SLEEP_MODEL = "gemini-2.5-pro-tts";
+// Calm and close, but at a natural pace: "slow" makes Gemini drag.
+export const SLEEP_STYLE =
+  "Read the following Scripture aloud for someone settling down to sleep. Speak gently and warmly, close to the microphone, " +
+  "at a calm, natural reading pace: unhurried, but never slow or dragged. Keep an even, quiet volume and never sound dramatic. " +
+  "Take one relaxed breath between verses, and let each verse end softly. " +
+  "Keep exactly the same voice, pitch, warmth and pace from the first word to the last, as one continuous reading.";
+const OPENAI_VOICES = new Set(["alloy", "ash", "ballad", "coral", "echo", "fable", "nova", "onyx", "sage", "shimmer", "verse"]);
 const LEAD_SECONDS = 2;
 const SECTION_GAP_SECONDS = 2.4;
 const MAX_PASSAGE_CHARS = 2400; // well inside the speech API's input limit
@@ -48,9 +68,7 @@ function googleProject(): string {
 }
 
 async function geminiSpeak(text: string, voice: string): Promise<Buffer> {
-  const auth = new GoogleAuth({ scopes: ["https://www.googleapis.com/auth/cloud-platform"] });
-  const token = (await (await auth.getClient()).getAccessToken()).token;
-  if (!token) throw new Error("No Google Cloud access token; run gcloud auth application-default login");
+  const token = await googleToken();
   const res = await post("https://texttospeech.googleapis.com/v1/text:synthesize", {
     method: "POST",
     headers: { Authorization: `Bearer ${token}`, "x-goog-user-project": googleProject(), "Content-Type": "application/json" },
@@ -63,6 +81,87 @@ async function geminiSpeak(text: string, voice: string): Promise<Buffer> {
   return Buffer.from((await res.json()).audioContent, "base64").subarray(44); // drop the WAV header
 }
 
+async function googleToken(): Promise<string> {
+  const auth = new GoogleAuth({ scopes: ["https://www.googleapis.com/auth/cloud-platform"] });
+  const token = (await (await auth.getClient()).getAccessToken()).token;
+  if (!token) throw new Error("No Google Cloud access token; run gcloud auth application-default login");
+  return token;
+}
+
+/** Sleep: Gemini Pro TTS on Vertex AI. Returns 24 kHz 16-bit mono PCM. */
+async function vertexSpeak(text: string, voice: string): Promise<Buffer> {
+  const url = `https://aiplatform.googleapis.com/v1/projects/${googleProject()}/locations/global/publishers/google/models/${SLEEP_MODEL}:generateContent`;
+  const res = await post(url, {
+    method: "POST",
+    headers: { Authorization: `Bearer ${await googleToken()}`, "Content-Type": "application/json" },
+    body: JSON.stringify({
+      contents: [{ role: "user", parts: [{ text: `${SLEEP_STYLE}
+
+${text}` }] }],
+      generationConfig: {
+        responseModalities: ["AUDIO"],
+        // Each passage is its own request; a low temperature and a fixed seed keep the
+        // delivery the same from passage to passage instead of drifting every minute.
+        temperature: 0.3,
+        seed: 1105,
+        speechConfig: { voiceConfig: { prebuiltVoiceConfig: { voiceName: voice } } },
+      },
+    }),
+  });
+  const json = await res.json();
+  const data = json?.candidates?.[0]?.content?.parts?.find((p: { inlineData?: { data: string } }) => p.inlineData)?.inlineData?.data;
+  if (!data) throw new Error(`Vertex returned no audio: ${JSON.stringify(json).slice(0, 200)}`);
+  return softenEdges(Buffer.from(data, "base64"));
+}
+
+/**
+ * Gemini stops the audio the instant the last word ends, which sounds like a
+ * cut. Fade the last 0.3 s and add 0.4 s of quiet, and ease in the first
+ * 0.05 s, so each passage settles like a breath instead of stopping dead.
+ */
+export function softenEdges(pcm: Buffer): Buffer {
+  const samples = new Int16Array(pcm.buffer.slice(pcm.byteOffset, pcm.byteOffset + pcm.length - (pcm.length % 2)));
+  const fadeOut = Math.min(samples.length, Math.round(RATE * 0.3));
+  const fadeIn = Math.min(samples.length, Math.round(RATE * 0.05));
+  for (let i = 0; i < fadeIn; i++) samples[i] = Math.round(samples[i] * (i / fadeIn));
+  for (let i = 0; i < fadeOut; i++) {
+    const k = samples.length - fadeOut + i;
+    samples[k] = Math.round(samples[k] * (1 - i / fadeOut) ** 2);
+  }
+  return Buffer.concat([Buffer.from(samples.buffer), Buffer.alloc(Math.round(RATE * 0.4) * 2)]);
+}
+
+/**
+ * Sleep: ElevenLabs. Each passage is told what came before and after it, and
+ * linked to the previous requests, so the voice keeps one tone across joins.
+ * Returns 24 kHz 16-bit mono PCM.
+ */
+async function elevenSpeak(
+  voiceId: string,
+  text: string,
+  ctx: { previousText?: string; nextText?: string; previousRequestIds?: string[] },
+): Promise<{ pcm: Buffer; requestId: string | null }> {
+  const fromFile = existsSync(".env.local")
+    ? readFileSync(".env.local", "utf8").match(/^ELEVENLABS_API_KEY=(.+)$/m)?.[1].trim()
+    : undefined;
+  const key = fromFile ?? process.env.ELEVENLABS_API_KEY;
+  if (!key) throw new Error("ELEVENLABS_API_KEY is missing from .env.local");
+  const res = await post(`https://api.elevenlabs.io/v1/text-to-speech/${voiceId}?output_format=pcm_24000`, {
+    method: "POST",
+    headers: { "xi-api-key": key, "Content-Type": "application/json", Accept: "audio/pcm" },
+    body: JSON.stringify({
+      text,
+      model_id: ELEVEN_MODEL,
+      voice_settings: ELEVEN_SETTINGS,
+      // The API caps context; the last few thousand characters are what matter for continuity.
+      ...(ctx.previousText ? { previous_text: ctx.previousText.slice(-3000) } : {}),
+      ...(ctx.nextText ? { next_text: ctx.nextText.slice(0, 3000) } : {}),
+      ...(ctx.previousRequestIds?.length ? { previous_request_ids: ctx.previousRequestIds } : {}),
+    }),
+  });
+  return { pcm: Buffer.from(await res.arrayBuffer()), requestId: res.headers.get("request-id") };
+}
+
 function openAiKey(): string {
   // .env.local wins over any OPENAI_API_KEY already set in the shell.
   const fileKey = existsSync(".env.local")
@@ -73,11 +172,20 @@ function openAiKey(): string {
   return key;
 }
 
+/** POST with a 2-minute limit per try; retries dropped connections and server errors. */
 async function post(url: string, init: RequestInit): Promise<Response> {
   for (let attempt = 1; ; attempt++) {
-    const res = await fetch(url, init);
+    let res: Response;
+    try {
+      res = await fetch(url, { ...init, signal: AbortSignal.timeout(120_000) });
+    } catch (e) {
+      if (attempt >= 4) throw e;
+      await new Promise((r) => setTimeout(r, 3000 * attempt));
+      continue;
+    }
     if (res.ok) return res;
-    if (attempt >= 3 || res.status < 500) throw new Error(`${res.status}: ${await res.text()}`);
+    if (attempt >= 4 || (res.status < 500 && res.status !== 429)) throw new Error(`${res.status}: ${await res.text()}`);
+    await new Promise((r) => setTimeout(r, (res.status === 429 ? 15000 : 3000) * attempt));
   }
 }
 
@@ -112,7 +220,7 @@ export async function voiceChapter(
 ): Promise<{ duration: number; missed: number }> {
   const key = openAiKey();
   const walk = opts.mode === "walk";
-  const voice = opts.voice ?? (walk ? "Iapetus" : "onyx");
+  const voice = opts.voice ?? (walk ? "Iapetus" : SLEEP_VOICE);
   const gap = walk ? WALK_GAP_SECONDS : SECTION_GAP_SECONDS;
   const work = join(tmpdir(), `sleep-voice-${Date.now()}`);
   mkdirSync(work, { recursive: true });
@@ -127,10 +235,22 @@ export async function voiceChapter(
   } else {
     const parts: Buffer[] = [silence(LEAD_SECONDS)];
     const list = passages(verses);
+    const texts = list.map((p) => p.map((v) => v.text).join("\n\n"));
+    const elevenIds: string[] = []; // request ids so far, for ElevenLabs continuity
     for (const [i, passage] of list.entries()) {
-      const text = passage.map((v) => v.text).join("\n\n");
+      const text = texts[i];
       if (walk) {
         parts.push(await geminiSpeak(text, voice), silence(gap));
+      } else if (voice.startsWith("elevenlabs:")) {
+        const spoken = await elevenSpeak(voice.slice("elevenlabs:".length), text, {
+          previousText: texts.slice(0, i).join("\n\n") || undefined,
+          nextText: texts[i + 1],
+          previousRequestIds: elevenIds.slice(-3),
+        });
+        if (spoken.requestId) elevenIds.push(spoken.requestId);
+        parts.push(spoken.pcm, silence(gap));
+      } else if (!OPENAI_VOICES.has(voice)) {
+        parts.push(await vertexSpeak(text, voice), silence(gap));
       } else {
         const res = await post("https://api.openai.com/v1/audio/speech", {
           method: "POST",

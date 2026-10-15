@@ -27,16 +27,16 @@ export const SLEEP_CHAPTERS: SleepChapter[] = [
 
 /** Length of each chapter's narration in seconds, by slug. */
 export const SLEEP_SECONDS: Record<string, number> = {
-  "genesis-1": 272,
-  "genesis-2": 183,
-  "genesis-3": 213,
-  "genesis-4": 222,
-  "genesis-5": 194,
-  "genesis-6": 168,
-  "genesis-7": 169,
-  "genesis-8": 164,
-  "genesis-9": 199,
-  "genesis-10": 181,
+  "genesis-1": 407,
+  "genesis-2": 275,
+  "genesis-3": 294,
+  "genesis-4": 301,
+  "genesis-5": 267,
+  "genesis-6": 221,
+  "genesis-7": 239,
+  "genesis-8": 256,
+  "genesis-9": 277,
+  "genesis-10": 308,
 };
 
 /** Length of each chapter's brisk Walk reading in seconds, by slug (0 = not voiced yet). */
