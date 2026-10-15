@@ -15,7 +15,7 @@ export function WelcomeContent() {
   const benefits = founding
     ? [
         ["Pro for life", "One payment, nothing to renew or cancel, ever."],
-        ["Everything new, forever", "Every book, voice and sound as it is recorded, starting with Genesis."],
+        ["Everything new, forever", "Every book, voice and sound as it is recorded, starting with Genesis. A gentle female Sleep reader is coming soon."],
         ["No ads anywhere", "Not while you listen, and not in the quizzes either."],
         ["Premium quizzes", "The Quiet Room's secret quizzes, ad-free, plus 5,000 coins for lifelines."],
       ]

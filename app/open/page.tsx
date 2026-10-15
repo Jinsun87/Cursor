@@ -76,7 +76,7 @@ export default async function OpenBookPage() {
           <li>Free: Walk and Sleep readings, Breathe, Bible quizzes and Scripture for life&apos;s struggles.</li>
           <li>Pro: $4.99 a month or $39.99 a year, with 7 days free on either.</li>
           <li>
-            Founding member: ${FOUNDING_PRICE} once, Pro for life, limited to the first {FOUNDING_CAP} members.
+            Founding member: ${FOUNDING_PRICE} once, Pro for life (every new voice included, with a gentle female Sleep reader coming soon), limited to the first {FOUNDING_CAP} members.
             {spots ? ` ${spots.left} of ${FOUNDING_CAP} spots left.` : ""}
           </li>
         </ul>

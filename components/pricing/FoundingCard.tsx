@@ -68,7 +68,7 @@ export function FoundingCard({ paddle, user }: { paddle: Paddle | null; user: Us
           </p>
           <h3 className="mt-2 font-display text-3xl font-bold text-[var(--ink)]">Pro for life, one payment</h3>
           <p className="mt-3 text-sm leading-relaxed text-[var(--muted)]">
-            Everything in Pro, forever: every book, every voice and every sound as it is added. Less than 2½ years of the yearly plan,
+            Everything in Pro, forever: every book, every voice and every sound as it is added, including a gentle female Sleep reader, coming soon. Less than 2½ years of the yearly plan,
             then never pay again. One founding member funds about {chaptersFundedPerMember()} chapters; about{" "}
             {membersToFundBible()} founding members fund the whole Bible.
           </p>
