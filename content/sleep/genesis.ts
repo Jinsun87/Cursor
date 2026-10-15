@@ -114,4 +114,111 @@ export const GENESIS_PLANS: SleepChapterPlan[] = [
       { from: 15, prompt: "Coastlands and islands at dusk with small ships and harbour lights, peoples settling along the shores of a calm sea, stars overhead." },
     ],
   },
+  {
+    chapter: 11,
+    title: "The Tower of Babel",
+    headings: { 1: "The Tower of Babel", 10: "From Shem to Abram", 27: "Terah's Family" },
+    scenes: [
+      { from: 1, prompt: "Crowds of ancient builders making bricks and raising an enormous unfinished tower on the plain of Shinar at dusk, kilns glowing, ramps and scaffolds against a darkening sky." },
+      { from: 5, prompt: "The great tower standing half-built and abandoned under a vast night sky, a soft light descending from above, small groups of people walking away in different directions." },
+      { from: 10, prompt: "Generations of a family travelling slowly across a wide land by moonlight, tents and campfires spreading across the hills, an old man leading the way." },
+      { from: 27, prompt: "A family caravan leaving the walled city of Ur at dawn, ziggurat behind them, camels and flocks heading north along the river toward Haran." },
+    ],
+  },
+  {
+    chapter: 12,
+    title: "The Call of Abram",
+    headings: { 1: "The Call of Abram", 10: "Abram in Egypt" },
+    scenes: [
+      { from: 1, prompt: "An elderly man standing alone outside his tent in Haran at night, looking up at a sky full of stars, a soft light resting on him, his household asleep." },
+      { from: 4, prompt: "A long caravan setting out across open country at sunrise, camels, flocks and servants, an old man and his wife at the front, the road leading toward distant hills." },
+      { from: 7, prompt: "A simple stone altar beneath a great old oak tree at Shechem in the evening, smoke rising gently, the man kneeling, the land of Canaan spread out beyond." },
+      { from: 10, prompt: "A caravan arriving at the green banks of the Nile in Egypt during a famine, palms and fields, distant pyramids and a royal city in the warm evening haze." },
+    ],
+  },
+  {
+    chapter: 13,
+    title: "Abram and Lot Part Ways",
+    headings: { 1: "Abram and Lot Separate", 14: "God's Promise to Abram" },
+    scenes: [
+      { from: 1, prompt: "Two large camps of tents and crowded herds of sheep and cattle sharing one dry hillside at dusk, herdsmen arguing at a well, dust in the air." },
+      { from: 10, prompt: "A younger man on a ridge at evening looking down at the lush, well-watered plain of the Jordan, green as a garden, distant cities glinting in the low sun." },
+      { from: 14, prompt: "An old man standing on a high hill at twilight looking out over the whole land in every direction, north, south, east and west, under the first stars." },
+      { from: 18, prompt: "Tents pitched among the great oaks of Mamre near Hebron at night, a small stone altar with a faint fire, peace over the camp." },
+    ],
+  },
+  {
+    chapter: 14,
+    title: "Abram Rescues Lot",
+    headings: { 1: "The War of the Kings", 13: "Abram Rescues Lot", 17: "Melchizedek Blesses Abram" },
+    scenes: [
+      { from: 1, prompt: "Ancient armies with banners camped across the Valley of Siddim at dusk, dark tar pits among the rocks, the Salt Sea pale in the distance." },
+      { from: 13, prompt: "A band of men moving swiftly through hill country at night with shaded torches, an old leader at their head, a starlit sky above." },
+      { from: 18, prompt: "A round loaf of bread and a plain clay cup of wine set on a flat stone on a hillside at sunset, the stone walls of Salem on the ridge behind; a still life with no people." },
+    ],
+  },
+  {
+    chapter: 15,
+    title: "The Covenant with Abram",
+    headings: { 1: "God's Covenant with Abram" },
+    scenes: [
+      { from: 1, prompt: "An old man sitting at the door of his tent at night, lamp beside him, a soft light filling the space as if he is listening to a voice." },
+      { from: 5, prompt: "The old man standing outside under an immense, brilliant night sky full of countless stars, the Milky Way stretching overhead, looking up in wonder." },
+      { from: 9, prompt: "Animals laid out in two rows on a dry hillside at evening, a man keeping watch and waving away birds of prey, the sun sinking low." },
+      { from: 17, prompt: "Deep darkness over the hills, a smoking firepot and a flaming torch moving between the two rows, their glow the only light in the night." },
+    ],
+  },
+  {
+    chapter: 16,
+    title: "Hagar and Ishmael",
+    headings: { 1: "Sarai and Hagar", 7: "The God Who Sees Me", 15: "The Birth of Ishmael" },
+    scenes: [
+      { from: 1, prompt: "Inside a large tent at evening, an older woman and a young Egyptian servant woman in quiet tension, a lamp between them, the old man standing apart." },
+      { from: 7, prompt: "A young woman alone beside a spring in the desert on the road to Shur, a gentle light standing near her, the wilderness wide and empty around." },
+      { from: 15, prompt: "A goat-hair nomad tent at night seen from outside, warm lamplight glowing through its open flap, a small cooking fire and sleeping sheep nearby under many stars; no people visible." },
+    ],
+  },
+  {
+    chapter: 17,
+    title: "Abraham, Father of Nations",
+    headings: { 1: "The Covenant of Circumcision", 15: "Isaac Promised", 23: "Abraham Obeys" },
+    scenes: [
+      { from: 1, prompt: "A very old man lying face down on the ground outside his tent at dawn, a radiant light before him, the sky turning gold." },
+      { from: 15, prompt: "The very old man sitting by his tent at dusk, smiling quietly to himself, his elderly wife resting nearby, stars appearing over the hills." },
+      { from: 23, prompt: "A large peaceful camp at evening, tents and fires, the household gathered and still, the old man standing among them." },
+    ],
+  },
+  {
+    chapter: 18,
+    title: "Three Visitors",
+    headings: { 1: "The Three Visitors", 16: "Abraham Pleads for Sodom" },
+    scenes: [
+      { from: 1, prompt: "Three travellers standing near the great oaks of Mamre in the heat of the day, an old man running from his tent to greet them and bowing low." },
+      { from: 6, prompt: "A simple meal of bread, curds and roast meat set under the shade of a great tree, the three guests seated, the old man standing by to serve." },
+      { from: 10, prompt: "An elderly woman listening at the doorway of a tent, half hidden in shadow, a hand over her mouth, the guests outside in sunlight." },
+      { from: 22, prompt: "An old man standing alone on a hilltop at dusk, looking toward the distant cities of the plain, pleading quietly, a soft light before him." },
+    ],
+  },
+  {
+    chapter: 19,
+    title: "Sodom and Gomorrah",
+    headings: { 1: "Two Angels Visit Lot", 15: "The Escape from Sodom", 30: "Lot in the Mountains" },
+    scenes: [
+      { from: 1, prompt: "Two travellers in pale cloaks arriving at the gate of an ancient city at evening, a man rising from his seat at the gate to greet them, torches lit on the walls." },
+      { from: 15, prompt: "Two figures of light leading a man, his wife and two daughters by the hand out of a city before dawn, hurrying toward the hills." },
+      { from: 24, prompt: "Distant cities on the plain burning under a dark sky, smoke rising like a furnace, seen from far away in the hills, a small pale pillar on the road behind." },
+      { from: 30, prompt: "An empty mountain cave above the plain at night, a small fire inside, desolate hills under a dim moon." },
+    ],
+  },
+  {
+    chapter: 20,
+    title: "Abraham and Abimelech",
+    headings: { 1: "Abraham and Abimelech" },
+    scenes: [
+      { from: 1, prompt: "A nomad camp of tents settling near the town of Gerar in the dry Negev at dusk, a small royal residence in the distance." },
+      { from: 3, prompt: "A king asleep on his bed in a dark room, a soft light filling the room as he dreams, his face troubled." },
+      { from: 14, prompt: "The king at dawn giving sheep, cattle and servants to the old man, silver set before them, both standing at peace." },
+      { from: 17, prompt: "The old man praying with lifted hands at sunrise, the king's household gathered behind him in gentle morning light." },
+    ],
+  },
 ];

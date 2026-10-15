@@ -10,6 +10,16 @@ import genesis7 from "./genesis-7.json";
 import genesis8 from "./genesis-8.json";
 import genesis9 from "./genesis-9.json";
 import genesis10 from "./genesis-10.json";
+import genesis11 from "./genesis-11.json";
+import genesis12 from "./genesis-12.json";
+import genesis13 from "./genesis-13.json";
+import genesis14 from "./genesis-14.json";
+import genesis15 from "./genesis-15.json";
+import genesis16 from "./genesis-16.json";
+import genesis17 from "./genesis-17.json";
+import genesis18 from "./genesis-18.json";
+import genesis19 from "./genesis-19.json";
+import genesis20 from "./genesis-20.json";
 
 /** Every Sleep chapter with narration, in reading order. */
 export const SLEEP_CHAPTERS: SleepChapter[] = [
@@ -23,6 +33,16 @@ export const SLEEP_CHAPTERS: SleepChapter[] = [
   genesis8 as SleepChapter,
   genesis9 as SleepChapter,
   genesis10 as SleepChapter,
+  genesis11 as SleepChapter,
+  genesis12 as SleepChapter,
+  genesis13 as SleepChapter,
+  genesis14 as SleepChapter,
+  genesis15 as SleepChapter,
+  genesis16 as SleepChapter,
+  genesis17 as SleepChapter,
+  genesis18 as SleepChapter,
+  genesis19 as SleepChapter,
+  genesis20 as SleepChapter,
 ];
 
 /** Length of each chapter's narration in seconds, by slug. */
@@ -37,6 +57,16 @@ export const SLEEP_SECONDS: Record<string, number> = {
   "genesis-8": 256,
   "genesis-9": 277,
   "genesis-10": 308,
+  "genesis-11": 310,
+  "genesis-12": 214,
+  "genesis-13": 202,
+  "genesis-14": 307,
+  "genesis-15": 222,
+  "genesis-16": 196,
+  "genesis-17": 275,
+  "genesis-18": 376,
+  "genesis-19": 418,
+  "genesis-20": 225,
 };
 
 /** Length of each chapter's brisk Walk reading in seconds, by slug (0 = not voiced yet). */
@@ -51,4 +81,14 @@ export const WALK_SECONDS: Record<string, number> = {
   "genesis-8": 180,
   "genesis-9": 225,
   "genesis-10": 195,
+  "genesis-11": 240,
+  "genesis-12": 171,
+  "genesis-13": 149,
+  "genesis-14": 227,
+  "genesis-15": 172,
+  "genesis-16": 148,
+  "genesis-17": 234,
+  "genesis-18": 287,
+  "genesis-19": 339,
+  "genesis-20": 172,
 };
