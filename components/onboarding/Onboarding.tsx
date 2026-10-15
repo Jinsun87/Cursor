@@ -10,7 +10,7 @@ import { readOnboarding, saveOnboarding, startTab, type Intent, type ListenWhen,
 import { setSection } from "@/lib/section-store";
 import { audioUrl } from "@/lib/audio-url";
 import { trackEvent } from "@/lib/analytics";
-import { FOUNDING_CAP, FOUNDING_PRICE, chaptersFundedPerMember, membersToFundBible } from "@/lib/founding";
+import { FOUNDING_CAP, FOUNDING_PRICE, membersToFundBible } from "@/lib/founding";
 import { useFoundingSpots } from "@/components/founding/useFoundingSpots";
 import "./onboarding.css";
 
@@ -424,8 +424,9 @@ function OfferStep({ hello, onFree, onLeave }: { hello: string; onFree: () => vo
           ${FOUNDING_PRICE} <span>once</span>
         </p>
         <p className="ob-plan-note">
-          Pro for life, including every new voice as it arrives (a gentle female Sleep reader is coming soon). Less than 2½ years of the yearly plan, then never pay again. One founding member funds about{" "}
-          {chaptersFundedPerMember()} chapters; about {membersToFundBible()} fund the whole Bible.
+          Pro for life, including everything new as it arrives. Less than 2½ years of the yearly plan, then never pay again. The first{" "}
+          {membersToFundBible()} founding members fund the whole Bible; then a gentle female Sleep reader, Bedtime Bible Stories and
+          Spanish, all coming soon.
         </p>
         {lifetimeReady ? (
           <Link href="/pricing?plan=lifetime" className="ob-primary" onClick={onLeave}>

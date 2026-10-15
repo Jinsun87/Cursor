@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { useApp } from "@/lib/store";
-import { chaptersFundedPerMember } from "@/lib/founding";
 
 /**
  * After checkout: thanks, what Pro gives them (Walk, Sleep, no ads), and a
@@ -15,7 +14,7 @@ export function WelcomeContent() {
   const benefits = founding
     ? [
         ["Pro for life", "One payment, nothing to renew or cancel, ever."],
-        ["Everything new, forever", "Every book, voice and sound as it is recorded, starting with Genesis. A gentle female Sleep reader is coming soon."],
+        ["Everything new, forever", "Every book, voice and story as it arrives, starting with Genesis. Next: a gentle female Sleep reader, Bedtime Bible Stories and Spanish."],
         ["No ads anywhere", "Not while you listen, and not in the quizzes either."],
         ["Premium quizzes", "The Quiet Room's secret quizzes, ad-free, plus 5,000 coins for lifelines."],
       ]
@@ -33,7 +32,7 @@ export function WelcomeContent() {
       </h1>
       <p className="mt-4 text-base leading-relaxed text-[var(--muted)] sm:text-lg">
         {founding
-          ? `Thank you. Your one payment funds about ${chaptersFundedPerMember()} chapters of Scripture, read aloud and painted, and Pro is yours for life.`
+          ? "Thank you. Your one payment helps bring the whole Bible to Lampstand, read aloud and painted, and everything after it. Pro is yours for life."
           : "Thank you for joining. Every chapter, by day and by night, with no ads in the way."}
       </p>
 

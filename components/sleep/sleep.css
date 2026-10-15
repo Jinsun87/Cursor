@@ -725,6 +725,9 @@ body.has-mini-player main {
   font-size: 24px;
   font-weight: 600;
 }
+.shelf-books + .shelf-h {
+  margin-top: 26px;
+}
 .shelf-books {
   list-style: none;
   margin: 0;

@@ -1,9 +1,10 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Link from "next/link";
 import type { Paddle } from "@paddle/paddle-js";
 import type { User } from "@/lib/types";
-import { FOUNDING_CAP, FOUNDING_PRICE, chaptersFundedPerMember, membersToFundBible } from "@/lib/founding";
+import { FOUNDING_CAP, FOUNDING_PRICE, membersToFundBible } from "@/lib/founding";
 import { useFoundingSpots } from "@/components/founding/useFoundingSpots";
 
 /**
@@ -68,9 +69,12 @@ export function FoundingCard({ paddle, user }: { paddle: Paddle | null; user: Us
           </p>
           <h3 className="mt-2 font-display text-3xl font-bold text-[var(--ink)]">Pro for life, one payment</h3>
           <p className="mt-3 text-sm leading-relaxed text-[var(--muted)]">
-            Everything in Pro, forever: every book, every voice and every sound as it is added, including a gentle female Sleep reader, coming soon. Less than 2½ years of the yearly plan,
-            then never pay again. One founding member funds about {chaptersFundedPerMember()} chapters; about{" "}
-            {membersToFundBible()} founding members fund the whole Bible.
+            Everything in Pro, forever: every book, voice and sound as it is added. Less than 2½ years of the yearly plan, then never pay
+            again. The first {membersToFundBible()} founding members fund the whole Bible; after that, a gentle female Sleep reader,
+            Bedtime Bible Stories and Spanish, all coming soon.{" "}
+            <Link href="/open#ladder" className="font-semibold text-[var(--gold)] underline-offset-2 hover:underline">
+              See the plan
+            </Link>
           </p>
           <p className="mt-3 text-sm font-semibold text-[var(--ink)]">
             {spots ? `${spots.left} of ${FOUNDING_CAP} founding spots left.` : `Limited to the first ${FOUNDING_CAP} members.`} The

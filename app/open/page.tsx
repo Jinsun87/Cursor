@@ -2,7 +2,7 @@ import Link from "next/link";
 import { pageMetadata } from "@/lib/seo";
 import { SLEEP_CHAPTERS, SLEEP_SECONDS, WALK_SECONDS } from "@/lib/sleep/chapters";
 import { SHELF } from "@/lib/sleep/books";
-import { FOUNDING_CAP, FOUNDING_PRICE, chaptersFundedPerMember, fetchFoundingSpots, membersToFundBible } from "@/lib/founding";
+import { FOUNDING_CAP, FOUNDING_LADDER, FOUNDING_PRICE, MEMBERS_PER_LANGUAGE, MEMBERS_PER_MONTH, fetchFoundingSpots } from "@/lib/founding";
 
 // The founding count comes from the database; refresh the page every few minutes.
 export const revalidate = 300;
@@ -21,6 +21,7 @@ export const metadata = pageMetadata({
  */
 export default async function OpenBookPage() {
   const spots = await fetchFoundingSpots();
+  const taken = spots?.taken ?? null;
   const minutes = (map: Record<string, number>) => Math.round(Object.values(map).reduce((n, x) => n + x, 0) / 60);
   const books = SHELF.map((b) => {
     const recorded = SLEEP_CHAPTERS.filter((c) => c.slug.startsWith(`${b.slug}-`)).map((c) => c.chapter);
@@ -76,19 +77,59 @@ export default async function OpenBookPage() {
           <li>Free: Walk and Sleep readings, Breathe, Bible quizzes and Scripture for life&apos;s struggles.</li>
           <li>Pro: $4.99 a month or $39.99 a year, with 7 days free on either.</li>
           <li>
-            Founding member: ${FOUNDING_PRICE} once, Pro for life (every new voice included, with a gentle female Sleep reader coming soon), limited to the first {FOUNDING_CAP} members.
+            Founding member: ${FOUNDING_PRICE} once, Pro for life (every book, voice and story as it arrives), limited to the first {FOUNDING_CAP} members.
             {spots ? ` ${spots.left} of ${FOUNDING_CAP} spots left.` : ""}
           </li>
         </ul>
       </section>
 
-      <section className="mt-10">
-        <h2 className="font-display text-2xl text-[var(--ink)]">What your money pays for</h2>
+      <section id="ladder" className="mt-10 scroll-mt-24">
+        <h2 className="font-display text-2xl text-[var(--ink)]">What founding members fund</h2>
         <p className="mt-3 leading-relaxed text-[var(--muted)]">
-          Every chapter is recorded twice and painted, which costs real money. One founding member funds about{" "}
-          <strong className="text-[var(--ink)]">{chaptersFundedPerMember()} chapters</strong>, all costs included, and about{" "}
-          <strong className="text-[var(--ink)]">{membersToFundBible()} founding members fund the whole Bible</strong>: all 1,189 chapters.
+          Every chapter is read aloud twice and painted, which costs about $0.80, all in. After Paddle&apos;s fee, each founding member
+          brings us about $93. Here is what that money builds, in order. Each step lists how many founding members bring it within reach,
+          counting the steps before it.
         </p>
+        <ol className="mt-5 grid gap-3">
+          {FOUNDING_LADDER.map((m, i) => {
+            const funded = taken !== null && m.members !== null && taken >= m.members;
+            const isNext = m.members !== null && !funded && FOUNDING_LADDER.slice(0, i).every((p) => p.members === null || (taken ?? 0) >= p.members);
+            return (
+              <li key={m.title} className="rounded-2xl border border-[var(--line)] bg-[var(--canvas-2)] p-5">
+                <div className="flex flex-wrap items-baseline justify-between gap-2">
+                  <p className="text-lg font-semibold text-[var(--ink)]">
+                    {i + 1}. {m.title}
+                  </p>
+                  <p className="text-sm font-semibold text-[var(--gold)]">
+                    {m.members === null
+                      ? m.title === "More languages"
+                        ? `${MEMBERS_PER_LANGUAGE} more members each`
+                        : m.title === "Keeping it running"
+                          ? `About ${MEMBERS_PER_MONTH} members a month`
+                          : "Ongoing"
+                      : funded
+                        ? "Funded"
+                        : `${m.members} founding members`}
+                  </p>
+                </div>
+                <p className="mt-1 text-[var(--muted)]">
+                  {m.note}
+                  {m.cost !== null ? ` About $${Math.round(m.cost / 10) * 10}.` : ""}
+                </p>
+                {isNext && taken !== null && m.members !== null ? (
+                  <div className="mt-3">
+                    <div className="h-1.5 overflow-hidden rounded-full bg-[var(--line)]">
+                      <div className="h-full rounded-full bg-[var(--gold)]" style={{ width: `${Math.min(100, (taken / m.members) * 100)}%` }} />
+                    </div>
+                    <p className="mt-1 text-sm text-[var(--muted)]">
+                      {taken} of {m.members} founding members so far
+                    </p>
+                  </div>
+                ) : null}
+              </li>
+            );
+          })}
+        </ol>
       </section>
 
       <section className="mt-10">

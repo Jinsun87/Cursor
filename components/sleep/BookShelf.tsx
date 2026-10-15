@@ -4,7 +4,7 @@ import { useState } from "react";
 import type { SleepChapter } from "@/lib/sleep/types";
 import { useSleepAudio, type ReadingMode } from "@/lib/sleep/sleep-audio";
 import { useReadingProgress, type ChapterProgress } from "@/lib/sleep/progress";
-import { SHELF, storyGroups, type ShelfBook } from "@/lib/sleep/books";
+import { COMING_SOON, SHELF, storyGroups, type ComingSoonShelf, type ShelfBook } from "@/lib/sleep/books";
 
 type TileState = "heard" | "started" | "new" | "unrecorded";
 
@@ -92,6 +92,23 @@ export function BookShelf({
               </li>
             );
           })}
+        </ul>
+        <h3 className="shelf-h">Coming soon</h3>
+        <ul className="shelf-books">
+          {COMING_SOON.map((b) => (
+            <li key={b.slug}>
+              <button type="button" className="shelf-book is-locked" disabled>
+                <Cover book={b} />
+                <span className="shelf-book-text">
+                  <strong>{b.name}</strong>
+                  <small>{b.section}</small>
+                  <span className="shelf-book-meta">
+                    <Padlock /> Premium · coming soon
+                  </span>
+                </span>
+              </button>
+            </li>
+          ))}
         </ul>
       </section>
     );
@@ -241,7 +258,7 @@ function ChapterStrip({
   );
 }
 
-function Cover({ book, large = false }: { book: ShelfBook; large?: boolean }) {
+function Cover({ book, large = false }: { book: ComingSoonShelf; large?: boolean }) {
   return (
     <span
       className={`shelf-cover${large ? " is-large" : ""}`}

@@ -53,6 +53,20 @@ export const SHELF: ShelfBook[] = [
   },
 ];
 
+/** Shown under the books, locked, until they are made (see the founding ladder on /open). */
+export type ComingSoonShelf = Pick<ShelfBook, "slug" | "name" | "abbr" | "section" | "cover" | "premium">;
+
+export const COMING_SOON: ComingSoonShelf[] = [
+  {
+    slug: "bible-stories",
+    name: "Bedtime Bible Stories",
+    abbr: "St",
+    section: "Gentle retellings, from Noah to the Prodigal Son",
+    cover: ["#3f5a7a", "#1b2a3d"],
+    premium: true,
+  },
+];
+
 /** The story a chapter belongs to, or one group for the whole book. */
 export function storyGroups(book: ShelfBook): StoryGroup[] {
   return book.stories ?? [{ title: book.name, from: 1, to: book.chapters }];
