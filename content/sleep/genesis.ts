@@ -403,4 +403,153 @@ export const GENESIS_PLANS: SleepChapterPlan[] = [
       { from: 31, prompt: "An ancient stone city on a red mountain ridge of Edom under a sky full of stars, a royal hall lit by torches; no people close up." },
     ],
   },
+  {
+    chapter: 37,
+    title: "Joseph's Dreams",
+    headings: { 1: "Joseph's Dreams", 12: "Joseph Sold by His Brothers" },
+    scenes: [
+      { from: 1, prompt: "A teenage shepherd boy in a richly ornamented long robe of many colours standing among flocks at evening, his older brothers in plain wool watching him coldly from a distance." },
+      { from: 5, prompt: "A dreamlike wheat field at night, sheaves of grain bowing in a circle around one upright sheaf, a bright sun, a pale moon and eleven stars in the sky above; no people." },
+      { from: 23, prompt: "An empty dry cistern in the desert at dusk, a torn robe of many colours lying on the stones beside it; no people." },
+      { from: 28, prompt: "A caravan of traders with camels laden with spices and balm heading south toward Egypt at dusk, seen from far away across the desert." },
+      { from: 34, prompt: "An old father with a grey beard weeping in a lamplit tent at night, holding a torn robe of many colours to his chest." },
+    ],
+  },
+  {
+    chapter: 38,
+    title: "Judah and Tamar",
+    headings: { 1: "Judah and Tamar" },
+    scenes: [
+      { from: 1, prompt: "A man leaving his brothers' camp alone, walking down toward the hills of Adullam at dusk with his staff." },
+      { from: 12, prompt: "Sheep-shearing time on the hillsides of Timnah at sunset, great flocks gathered by stone pens, shepherds at work in the distance." },
+      { from: 18, prompt: "A shepherd's staff, a carved cylinder seal and its cord resting on a flat stone by a quiet roadside at twilight; no people." },
+    ],
+  },
+  {
+    chapter: 39,
+    title: "Joseph in Egypt",
+    headings: { 1: "Joseph and Potiphar", 20: "Joseph in Prison" },
+    scenes: [
+      { from: 1, prompt: "A young clean-shaven Hebrew steward in pleated Egyptian linen and a short black Egyptian wig directing servants in the columned courtyard of a grand Egyptian house at evening, lamps being lit." },
+      { from: 11, prompt: "A linen cloak lying on the polished floor of an empty Egyptian hall at night, painted columns and a single burning lamp; no people." },
+      { from: 20, prompt: "A dark stone prison in Egypt at night, a young clean-shaven Hebrew man in a plain linen kilt carrying a lamp and bread to other prisoners, the jailer watching kindly from the doorway." },
+    ],
+  },
+  {
+    chapter: 40,
+    title: "The Cupbearer and the Baker",
+    headings: { 1: "The Cupbearer and the Baker" },
+    scenes: [
+      { from: 1, prompt: "Two troubled Egyptian royal officials sitting in a dim prison cell at dawn, a young clean-shaven Hebrew man in a linen kilt kneeling to ask them what is wrong." },
+      { from: 9, prompt: "A dreamlike vine with three branches budding, blossoming and hanging with ripe grape clusters, a golden Egyptian cup beneath them, soft night light; no people." },
+      { from: 16, prompt: "Three woven baskets of bread stacked on a stone ledge under a pale sky, birds circling above; no people." },
+      { from: 20, prompt: "Pharaoh's birthday feast in a torchlit Egyptian hall, a cupbearer bowing as he offers a golden cup to the king on his throne." },
+    ],
+  },
+  {
+    chapter: 41,
+    title: "Joseph Interprets Pharaoh's Dreams",
+    headings: { 1: "Pharaoh's Dreams", 14: "Joseph Interprets the Dreams", 37: "Joseph Rules Egypt" },
+    scenes: [
+      { from: 1, prompt: "A dreamlike riverbank of the Nile at dusk, seven sleek cattle grazing in the reeds and seven gaunt cattle coming up from the river behind them; no people." },
+      { from: 14, prompt: "A young clean-shaven Hebrew man, freshly shaved in pleated Egyptian linen, standing before Pharaoh on his throne in a vast torchlit hall of painted columns." },
+      { from: 41, prompt: "A young Egyptian governor in pleated linen with a broad gold-and-lapis collar and a black Egyptian wig riding in a chariot through an Egyptian city at sunset, crowds bowing." },
+      { from: 47, prompt: "Great mud-brick granaries along the Nile overflowing with grain at sunset, workers carrying baskets of wheat, the river glowing gold." },
+    ],
+  },
+  {
+    chapter: 42,
+    title: "Joseph's Brothers Go to Egypt",
+    headings: { 1: "Joseph's Brothers Go to Egypt", 29: "The Brothers Return to Canaan" },
+    scenes: [
+      { from: 1, prompt: "Ten bearded shepherd brothers with donkeys setting out at dawn across the desert from Canaan toward Egypt." },
+      { from: 6, prompt: "Ten weary shepherd brothers bowing to the ground before an Egyptian governor in pleated linen, a gold collar and a black Egyptian wig, seated on a dais beside the granaries." },
+      { from: 27, prompt: "A desert lodging place at night lit by a small fire, a donkey loaded with sacks of grain, an opened sack with silver glinting at its mouth." },
+      { from: 36, prompt: "An old grey-bearded father at his tent door at night, his arm around his youngest son, refusing to let him go, a lamp beside them." },
+    ],
+  },
+  {
+    chapter: 43,
+    title: "The Second Journey to Egypt",
+    headings: { 1: "The Second Journey to Egypt", 16: "Joseph Welcomes His Brothers" },
+    scenes: [
+      { from: 1, prompt: "Parched fields and empty grain jars outside a nomad camp in a time of famine, dry hills under a hazy evening sky; no people close up." },
+      { from: 15, prompt: "Eleven shepherd brothers with donkeys carrying gifts of balm, honey, spices and almonds arriving at the gates of a grand Egyptian house at noon." },
+      { from: 30, prompt: "An Egyptian governor in pleated linen and a black Egyptian wig weeping alone in a private chamber, his face in his hands, lamplight on painted walls." },
+      { from: 32, prompt: "A banquet in a torchlit Egyptian hall, eleven shepherd brothers seated in a row from oldest to youngest, astonished, servants carrying dishes." },
+    ],
+  },
+  {
+    chapter: 44,
+    title: "Joseph's Silver Cup",
+    headings: { 1: "Joseph's Silver Cup", 18: "Judah Pleads for Benjamin" },
+    scenes: [
+      { from: 1, prompt: "An Egyptian steward by lamplight at night quietly placing a silver cup into the mouth of a sack of grain among loaded sacks; no faces seen." },
+      { from: 12, prompt: "A silver cup lying in spilled grain on a desert road at dawn, an open sack beside a donkey, brothers' torn cloaks on the ground." },
+      { from: 18, prompt: "A bearded shepherd stepping forward and pleading earnestly before an Egyptian governor in a torchlit hall, his brothers kneeling behind him." },
+    ],
+  },
+  {
+    chapter: 45,
+    title: "Joseph Reveals His Identity",
+    headings: { 1: "Joseph Reveals His Identity", 16: "Pharaoh Invites Jacob to Egypt" },
+    scenes: [
+      { from: 1, prompt: "An Egyptian governor in pleated linen and a black Egyptian wig weeping as he embraces a young shepherd, the other shepherd brothers standing amazed in a torchlit hall." },
+      { from: 16, prompt: "Egyptian wooden carts loaded with grain, bread and provisions, and donkeys carrying goods, setting off across the desert toward Canaan at sunrise." },
+      { from: 25, prompt: "Egyptian carts arriving at a nomad camp in Canaan at dusk, an old grey-bearded father rising from his seat at the tent door in astonishment." },
+    ],
+  },
+  {
+    chapter: 46,
+    title: "Jacob Goes to Egypt",
+    headings: { 1: "Jacob Goes to Egypt", 8: "The Family of Jacob", 28: "Jacob Arrives in Goshen" },
+    scenes: [
+      { from: 1, prompt: "An old grey-bearded man offering a sacrifice on a stone altar at Beersheba at night, a soft light in the sky above him, his camp sleeping nearby." },
+      { from: 5, prompt: "A great caravan of Egyptian carts, families, flocks and herds moving south across the desert toward Egypt at golden evening, seen from far away." },
+      { from: 29, prompt: "An Egyptian governor in pleated linen and a gold collar stepping down from his chariot to embrace an old grey-bearded shepherd father in the green land of Goshen at sunset." },
+    ],
+  },
+  {
+    chapter: 47,
+    title: "Jacob Settles in Goshen",
+    headings: { 1: "Jacob Settles in Goshen", 13: "The Famine Continues", 27: "Israel's Last Request" },
+    scenes: [
+      { from: 1, prompt: "Five shepherd brothers standing respectfully before Pharaoh on his throne in a torchlit hall, an Egyptian governor beside them." },
+      { from: 7, prompt: "A very old grey-bearded shepherd raising his hand in blessing over Pharaoh in a columned Egyptian hall, soft lamplight." },
+      { from: 13, prompt: "Egyptians bringing horses, flocks and cattle to the granaries in exchange for grain during a famine, dusty sunlight, long lines at dusk." },
+      { from: 27, prompt: "The green pastures of Goshen by a branch of the Nile at evening, flocks grazing, tents and simple houses of a settled family." },
+    ],
+  },
+  {
+    chapter: 48,
+    title: "Jacob Blesses Ephraim and Manasseh",
+    headings: { 1: "Jacob Blesses Ephraim and Manasseh" },
+    scenes: [
+      { from: 1, prompt: "A very old grey-bearded man sitting up on his bed by lamplight, a man in Egyptian linen and two young boys entering the room." },
+      { from: 13, prompt: "A very old man on his bed crossing his arms to lay his right hand on the younger boy's head and his left hand on the older boy's head, in warm lamplight." },
+      { from: 21, prompt: "An old man's weathered hand resting on his grown son's arm beside a bed at night, a single lamp burning low; faces not shown." },
+    ],
+  },
+  {
+    chapter: 49,
+    title: "Jacob Blesses His Sons",
+    headings: { 1: "Jacob Blesses His Sons", 29: "The Death of Jacob" },
+    scenes: [
+      { from: 1, prompt: "A very old grey-bearded man sitting up on his bed, twelve grown sons gathered around him by lamplight at night, listening." },
+      { from: 8, prompt: "A lion resting on a rocky hilltop at dusk, a vine heavy with grapes growing over the rocks below; no people." },
+      { from: 22, prompt: "A fruitful vine growing beside a spring, its branches climbing over an old stone wall in soft evening light; no people." },
+      { from: 33, prompt: "An empty bed in a quiet Egyptian room at night, a single lamp burning low beside it, a folded shepherd's cloak and staff at its foot; no people." },
+    ],
+  },
+  {
+    chapter: 50,
+    title: "The Death of Joseph",
+    headings: { 1: "The Burial of Jacob", 15: "Joseph Reassures His Brothers", 22: "The Death of Joseph" },
+    scenes: [
+      { from: 7, prompt: "A great funeral procession of chariots, horsemen and mourners travelling from Egypt toward the hills of Canaan at dusk, seen from far away." },
+      { from: 15, prompt: "Grey-haired shepherd brothers bowing before an Egyptian governor in pleated linen, who reaches out his hands to raise them up, warm lamplight." },
+      { from: 22, prompt: "A very old man in Egyptian linen sitting by the Nile at sunset, his grandchildren and great-grandchildren gathered around him." },
+      { from: 26, prompt: "A wooden coffin resting in a quiet Egyptian chamber lit by one lamp, palm leaves laid upon it; no people." },
+    ],
+  },
 ];

@@ -36,6 +36,20 @@ import genesis33 from "./genesis-33.json";
 import genesis34 from "./genesis-34.json";
 import genesis35 from "./genesis-35.json";
 import genesis36 from "./genesis-36.json";
+import genesis37 from "./genesis-37.json";
+import genesis38 from "./genesis-38.json";
+import genesis39 from "./genesis-39.json";
+import genesis40 from "./genesis-40.json";
+import genesis41 from "./genesis-41.json";
+import genesis42 from "./genesis-42.json";
+import genesis43 from "./genesis-43.json";
+import genesis44 from "./genesis-44.json";
+import genesis45 from "./genesis-45.json";
+import genesis46 from "./genesis-46.json";
+import genesis47 from "./genesis-47.json";
+import genesis48 from "./genesis-48.json";
+import genesis49 from "./genesis-49.json";
+import genesis50 from "./genesis-50.json";
 
 /** Every Sleep chapter with narration, in reading order. */
 export const SLEEP_CHAPTERS: SleepChapter[] = [
@@ -75,6 +89,20 @@ export const SLEEP_CHAPTERS: SleepChapter[] = [
   genesis34 as SleepChapter,
   genesis35 as SleepChapter,
   genesis36 as SleepChapter,
+  genesis37 as SleepChapter,
+  genesis38 as SleepChapter,
+  genesis39 as SleepChapter,
+  genesis40 as SleepChapter,
+  genesis41 as SleepChapter,
+  genesis42 as SleepChapter,
+  genesis43 as SleepChapter,
+  genesis44 as SleepChapter,
+  genesis45 as SleepChapter,
+  genesis46 as SleepChapter,
+  genesis47 as SleepChapter,
+  genesis48 as SleepChapter,
+  genesis49 as SleepChapter,
+  genesis50 as SleepChapter,
 ];
 
 /** Length of each chapter's narration in seconds, by slug. */
@@ -87,7 +115,7 @@ export const SLEEP_SECONDS: Record<string, number> = {
   "genesis-6": 221,
   "genesis-7": 239,
   "genesis-8": 256,
-  "genesis-9": 277,
+  "genesis-9": 288,
   "genesis-10": 308,
   "genesis-11": 310,
   "genesis-12": 214,
@@ -105,8 +133,8 @@ export const SLEEP_SECONDS: Record<string, number> = {
   "genesis-24": 753,
   "genesis-25": 366,
   "genesis-26": 391,
-  "genesis-27": 536,
-  "genesis-28": 246,
+  "genesis-27": 552,
+  "genesis-28": 254,
   "genesis-29": 372,
   "genesis-30": 458,
   "genesis-31": 587,
@@ -115,6 +143,20 @@ export const SLEEP_SECONDS: Record<string, number> = {
   "genesis-34": 324,
   "genesis-35": 293,
   "genesis-36": 451,
+  "genesis-37": 405,
+  "genesis-38": 362,
+  "genesis-39": 236,
+  "genesis-40": 225,
+  "genesis-41": 615,
+  "genesis-42": 435,
+  "genesis-43": 390,
+  "genesis-44": 366,
+  "genesis-45": 301,
+  "genesis-46": 377,
+  "genesis-47": 410,
+  "genesis-48": 296,
+  "genesis-49": 342,
+  "genesis-50": 300,
 };
 
 /** Length of each chapter's brisk Walk reading in seconds, by slug (0 = not voiced yet). */
@@ -123,7 +165,7 @@ export const WALK_SECONDS: Record<string, number> = {
   "genesis-2": 205,
   "genesis-3": 219,
   "genesis-4": 232,
-  "genesis-5": 244,
+  "genesis-5": 206,
   "genesis-6": 186,
   "genesis-7": 182,
   "genesis-8": 180,
@@ -142,7 +184,7 @@ export const WALK_SECONDS: Record<string, number> = {
   "genesis-21": 243,
   "genesis-22": 207,
   "genesis-23": 144,
-  "genesis-24": 553,
+  "genesis-24": 549,
   "genesis-25": 265,
   "genesis-26": 302,
   "genesis-27": 407,
@@ -155,4 +197,18 @@ export const WALK_SECONDS: Record<string, number> = {
   "genesis-34": 244,
   "genesis-35": 234,
   "genesis-36": 334,
+  "genesis-37": 305,
+  "genesis-38": 258,
+  "genesis-39": 204,
+  "genesis-40": 180,
+  "genesis-41": 464,
+  "genesis-42": 321,
+  "genesis-43": 303,
+  "genesis-44": 260,
+  "genesis-45": 251,
+  "genesis-46": 267,
+  "genesis-47": 299,
+  "genesis-48": 223,
+  "genesis-49": 265,
+  "genesis-50": 233,
 };
