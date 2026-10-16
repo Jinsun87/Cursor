@@ -18,7 +18,7 @@ import { generateVertexImage } from "../lib/ai/vertex-imagen";
 import { GENESIS_PLANS, NIGHT_STYLE, type SleepChapterPlan } from "../content/sleep/genesis";
 import type { SleepChapter } from "../lib/sleep/types";
 import { SLEEP_GENESIS_1 } from "../lib/sleep/genesis-1";
-import { voiceChapter } from "./lib/sleep-voice";
+import { takePath, transcriptPath, voiceChapter, type VoiceVerse } from "./lib/sleep-voice";
 import { r2Env, uploadToR2 } from "./upload-audio-r2";
 
 // GCP_PROJECT_ID and friends for Vertex.
@@ -140,6 +140,43 @@ function writeIndex() {
   writeFileSync(join(dir, "index.ts"), lines.join("\n"));
 }
 
+/** ", 1 phrase skipped" and the like, for the one-line summary. */
+function coverageNote(issues: { kind: string }[]): string {
+  const skipped = issues.filter((x) => x.kind === "skipped").length;
+  const extra = issues.filter((x) => x.kind === "extra").length;
+  return `${skipped ? `, ${skipped} skipped` : ""}${extra ? `, ${extra} repeated` : ""}`;
+}
+
+const problems: string[] = [];
+
+/**
+ * Voices one reading and checks it word for word; when words were skipped or added, voices it
+ * again (up to twice). Walk retries in shorter passages, which stops Gemini losing its place in
+ * repetitive text. Returns the note for the summary line.
+ */
+async function voiceClean(verses: VoiceVerse[], mode: "sleep" | "walk", slug: string, label: string): Promise<string> {
+  const tries: (number | undefined)[] = mode === "walk" ? [undefined, 1200, 600] : [undefined, undefined, undefined];
+  let result!: Awaited<ReturnType<typeof voiceChapter>>;
+  let attempt = 0;
+  for (const maxPassage of tries) {
+    attempt++;
+    result = await voiceChapter(verses, join("public", mode, slug), {
+      mode,
+      label,
+      transcriptFile: transcriptPath(mode, slug),
+      takeFile: takePath(mode, slug),
+      maxPassage,
+    });
+    const bad = result.issues.filter((x) => x.kind !== "unheard");
+    if (!bad.length || attempt === tries.length) break;
+    console.log(`  ${label} ${mode}: ${bad.length} word problem${bad.length > 1 ? "s" : ""}, voicing again   `);
+  }
+  const name = mode === "walk" ? "Walk" : "Sleep";
+  problems.push(...result.issues.filter((x) => x.kind !== "unheard").map((x) => `  ${label} ${name} v${x.verse} @${x.at}s ${x.kind}: "${x.words}"`));
+  const retried = attempt > 1 ? `, ${attempt} takes` : "";
+  return `${mode} ${Math.round(result.duration)}s, ${result.missed} estimated${retried}${coverageNote(result.issues)}`;
+}
+
 async function main() {
   const ref = process.argv[2];
   if (!ref || ref.startsWith("--")) throw new Error('Usage: npx tsx scripts/sleep-chapter.ts "Genesis 2-10"');
@@ -162,18 +199,19 @@ async function main() {
     }
     const notes: string[] = [];
     if (plan && step("voice") && (redo || !existsSync(join("public", "sleep", slug, "chapter.mp3")))) {
-      const { duration, missed } = await voiceChapter(data.verses, join("public", "sleep", slug), { label });
-      notes.push(`sleep ${Math.round(duration)}s, ${missed} estimated`);
+      notes.push(await voiceClean(data.verses, "sleep", slug, label));
       if (r2 && (await uploadToR2(r2, join("public", "sleep", slug, "chapter.mp3"), true))) notes.push("sleep on R2");
     }
     if (step("walk") && (redo || !existsSync(join("public", "walk", slug, "chapter.mp3")))) {
-      const { duration, missed } = await voiceChapter(data.verses, join("public", "walk", slug), { mode: "walk", label });
-      notes.push(`walk ${Math.round(duration)}s, ${missed} estimated`);
+      notes.push(await voiceClean(data.verses, "walk", slug, label));
       if (r2 && (await uploadToR2(r2, join("public", "walk", slug, "chapter.mp3"), true))) notes.push("walk on R2");
     }
     console.log(`\r  ${label}: ${data.verses.length} verses${notes.length ? `, ${notes.join("; ")}` : ", nothing new"}`);
   }
   writeIndex();
+  if (problems.length) {
+    console.log(`\nWords skipped or added by the narrator (re-voice these with --only=voice or --only=walk and --redo):\n${problems.join("\n")}`);
+  }
 }
 
 main().catch((e) => {

@@ -12,9 +12,10 @@
 import { execFileSync } from "node:child_process";
 import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
-import { join } from "node:path";
+import { dirname, join } from "node:path";
 import { GoogleAuth } from "google-auth-library";
 import { alignVerses } from "../../lib/sleep/align";
+import { checkCoverage, type CoverageIssue } from "../../lib/sleep/coverage";
 
 export type VoiceVerse = { n: number; text: string; heading?: string };
 
@@ -173,6 +174,21 @@ function openAiKey(): string {
   return key;
 }
 
+/** Whisper's word-by-word transcript of an MP3, with each word's start time. */
+export async function transcribe(mp3: string): Promise<{ word: string; start: number }[]> {
+  const form = new FormData();
+  form.append("file", new Blob([readFileSync(mp3)], { type: "audio/mpeg" }), "chapter.mp3");
+  form.append("model", "whisper-1");
+  form.append("response_format", "verbose_json");
+  form.append("timestamp_granularities[]", "word");
+  const res = await post("https://api.openai.com/v1/audio/transcriptions", {
+    method: "POST",
+    headers: { Authorization: `Bearer ${openAiKey()}` },
+    body: form,
+  });
+  return (await res.json()).words;
+}
+
 /** POST with a 2-minute limit per try; retries dropped connections and server errors. */
 async function post(url: string, init: RequestInit): Promise<Response> {
   for (let attempt = 1; ; attempt++) {
@@ -194,11 +210,11 @@ const silence = (seconds: number) => Buffer.alloc(Math.round(seconds * RATE) * 2
 const ff = (args: string[]) => execFileSync("ffmpeg", ["-y", "-loglevel", "error", ...args], { stdio: "inherit" });
 
 /** Passages: a new one at every heading, and long ones split at a verse boundary. */
-export function passages(verses: VoiceVerse[]): VoiceVerse[][] {
+export function passages(verses: VoiceVerse[], max = MAX_PASSAGE_CHARS): VoiceVerse[][] {
   const out: VoiceVerse[][] = [];
   let size = 0;
   for (const v of verses) {
-    if (!out.length || v.heading || size + v.text.length > MAX_PASSAGE_CHARS) {
+    if (!out.length || v.heading || size + v.text.length > max) {
       out.push([]);
       size = 0;
     }
@@ -208,16 +224,34 @@ export function passages(verses: VoiceVerse[]): VoiceVerse[][] {
   return out;
 }
 
+/** Where a recording's Whisper transcript is kept (git-ignored), for the word check in scripts/qc-sleep.ts. */
+export const transcriptPath = (mode: "sleep" | "walk", slug: string) => join("voice-transcripts", mode, `${slug}.json`);
+
+/** Where a new take waits (git-ignored) until it has been timed, so a failure after the speech API is not paid for twice. */
+export const takePath = (mode: "sleep" | "walk", slug: string) => join("voice-transcripts", mode, `${slug}.take.mp3`);
+
 /**
  * Voices a chapter into <outDir>/chapter.mp3 and <outDir>/timing.json.
  * With `plain`, skips the speech API and re-finishes and re-times that take.
- * Returns the length in seconds and how many verse starts had to be estimated.
+ * With `takeFile`, the new take is saved there before timing and reused if a run stopped after it.
+ * Returns the length in seconds, how many verse starts had to be estimated, and any words
+ * skipped or added (see lib/sleep/coverage.ts).
  */
 export async function voiceChapter(
   verses: VoiceVerse[],
   outDir: string,
-  opts: { mode?: "sleep" | "walk"; voice?: string; plain?: string; keepPlain?: boolean; label?: string } = {},
-): Promise<{ duration: number; missed: number }> {
+  opts: {
+    mode?: "sleep" | "walk";
+    voice?: string;
+    plain?: string;
+    keepPlain?: boolean;
+    label?: string;
+    transcriptFile?: string;
+    takeFile?: string;
+    /** Shorter passages help a voice that loses its place in repetitive text (genealogies). */
+    maxPassage?: number;
+  } = {},
+): Promise<{ duration: number; missed: number; issues: CoverageIssue[] }> {
   const key = openAiKey();
   const walk = opts.mode === "walk";
   const voice = opts.voice ?? (walk ? "Iapetus" : SLEEP_VOICE);
@@ -226,7 +260,10 @@ export async function voiceChapter(
   mkdirSync(work, { recursive: true });
   mkdirSync(outDir, { recursive: true });
 
-  let plain = opts.plain ?? "";
+  // A take made by a run that stopped before timing it: use it rather than paying for another.
+  const resumed = !opts.plain && opts.takeFile && existsSync(opts.takeFile) ? opts.takeFile : "";
+  if (resumed) process.stdout.write(`  ${opts.label ?? ""} reusing the take saved before timing   `);
+  let plain = opts.plain ?? resumed;
   let duration = 0;
   if (plain) {
     duration = Number(
@@ -234,7 +271,7 @@ export async function voiceChapter(
     );
   } else {
     const parts: Buffer[] = [silence(LEAD_SECONDS)];
-    const list = passages(verses);
+    const list = passages(verses, opts.maxPassage);
     const texts = list.map((p) => p.map((v) => v.text).join("\n\n"));
     const elevenIds: string[] = []; // request ids so far, for ElevenLabs continuity
     for (const [i, passage] of list.entries()) {
@@ -267,27 +304,27 @@ export async function voiceChapter(
     writeFileSync(raw, all);
     ff(["-f", "s16le", "-ar", String(RATE), "-ac", "1", "-i", raw, "-codec:a", "libmp3lame", "-b:a", "64k", plain]);
     duration = all.length / (RATE * 2);
+    if (opts.takeFile) {
+      mkdirSync(dirname(opts.takeFile), { recursive: true });
+      writeFileSync(opts.takeFile, readFileSync(plain));
+    }
   }
 
   // Word timestamps → verse start times.
-  const form = new FormData();
-  form.append("file", new Blob([readFileSync(plain)], { type: "audio/mpeg" }), "chapter.mp3");
-  form.append("model", "whisper-1");
-  form.append("response_format", "verbose_json");
-  form.append("timestamp_granularities[]", "word");
-  const tr = await (
-    await post("https://api.openai.com/v1/audio/transcriptions", {
-      method: "POST",
-      headers: { Authorization: `Bearer ${key}` },
-      body: form,
-    })
-  ).json();
+  const tr = { words: await transcribe(plain) };
   const { timing, missed } = alignVerses(verses, tr.words, duration);
+  // Word for word: was every word of the text actually said?
+  const issues = checkCoverage(verses, tr.words, duration);
+  if (opts.transcriptFile) {
+    mkdirSync(dirname(opts.transcriptFile), { recursive: true });
+    writeFileSync(opts.transcriptFile, JSON.stringify({ duration, words: tr.words }) + "\n");
+  }
 
   duration = Math.round(duration * 100) / 100;
   if (opts.keepPlain && !opts.plain) writeFileSync(join(outDir, "plain.mp3"), readFileSync(plain));
   ff(["-i", plain, "-af", walk ? DAY_FINISH : FINISH, "-codec:a", "libmp3lame", "-b:a", "64k", join(outDir, "chapter.mp3")]);
   writeFileSync(join(outDir, "timing.json"), JSON.stringify({ duration, verses: timing }, null, 2) + "\n");
   rmSync(work, { recursive: true, force: true });
-  return { duration, missed };
+  if (opts.takeFile) rmSync(opts.takeFile, { force: true });
+  return { duration, missed, issues };
 }
