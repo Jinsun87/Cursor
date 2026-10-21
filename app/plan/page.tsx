@@ -5,7 +5,7 @@ import { pageMetadata } from "@/lib/seo";
 export const metadata: Metadata = pageMetadata({
   title: "Bible reading plan",
   description:
-    "Build a Bible reading plan at your pace. Read each day on the page. Unlock the Walk or Sleep voice when you want the chapter read aloud.",
+    "Build a Bible reading plan at your pace and read each day free. Genesis can be heard free in Walk and Sleep; other books are read aloud with Premium.",
   path: "/plan",
 });
 

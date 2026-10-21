@@ -155,3 +155,37 @@
     gap: 2px;
   }
 }
+.plan-go:disabled {
+  opacity: 0.55;
+  cursor: default;
+}
+.plan-confirm,
+.plan-catchup {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 14px;
+  border-radius: 14px;
+  border: 1px solid rgba(228, 192, 74, 0.35);
+}
+.plan-confirm p,
+.plan-catchup p {
+  flex-basis: 100%;
+  margin: 0 0 4px;
+}
+.plan-catchup {
+  flex-basis: 100%;
+}
+.plan-sheet-note {
+  font-size: 14px;
+  opacity: 0.85;
+}
+.plan-sheet-link {
+  display: block;
+  margin-top: 10px;
+  text-align: center;
+  color: #e4c04a;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}

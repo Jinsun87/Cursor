@@ -90,10 +90,12 @@ export interface CheckoutOptions {
   customData?: Record<string, string>;
   onSuccess?: () => void;
   onError?: (err: unknown) => void;
+  /** Where Paddle sends the buyer after paying; defaults to /welcome. */
+  successUrl?: string;
 }
 
 /**
- * Opens Paddle Checkout as a one-page overlay with success redirect to /welcome.
+ * Opens Paddle Checkout as a one-page overlay with success redirect to /welcome (or `successUrl`).
  */
 export async function openPaddleCheckout(options: CheckoutOptions): Promise<boolean> {
   try {
@@ -111,7 +113,7 @@ export async function openPaddleCheckout(options: CheckoutOptions): Promise<bool
         displayMode: "overlay",
         theme: "dark",
         variant: "one-page",
-        successUrl: `${window.location.origin}/welcome`,
+        successUrl: options.successUrl ?? `${window.location.origin}/welcome`,
         allowLogout: !options.customerEmail,
       },
     });

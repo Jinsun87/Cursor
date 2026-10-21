@@ -1,4 +1,5 @@
 import counts from "./verse-counts.json";
+import { SHELF } from "@/lib/sleep/books";
 
 export type Testament = "Old Testament" | "New Testament";
 
@@ -29,4 +30,14 @@ export function bookByName(name: string): BibleBook | undefined {
 export function chapterSlug(book: string, chapter: number): string {
   const found = bookByName(book);
   return `${(found?.slug ?? book.toLowerCase().replace(/ /g, "-"))}-${chapter}`;
+}
+
+/**
+ * Whether a book's Walk and Sleep readings are free: the same rule as the shelf on the Walk
+ * and Sleep tabs (lib/sleep/books.ts), so Genesis is free and premium books need Premium.
+ * Books not on the shelf yet are treated as Premium.
+ */
+export function voiceIsFree(book: string): boolean {
+  const shelf = SHELF.find((b) => b.name === book);
+  return Boolean(shelf && !shelf.premium);
 }

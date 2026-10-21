@@ -14,9 +14,10 @@ export type PlanDay = {
 
 export type PlanInput = {
   scope: PlanScope;
+  /** Only the whole Bible has a choice of order; every other scope reads in Bible order. */
   order: PlanOrder;
-  /** How many days should carry a reading. A shorter book finishes in fewer days. */
-  readingDays: number;
+  /** Calendar days from the start to the finish, rest days included: "in a year" is 365. */
+  spanDays: number;
   /** First calendar day, YYYY-MM-DD. */
   start: string;
   /** Weekdays with no reading. 0 is Sunday. */
@@ -24,12 +25,13 @@ export type PlanInput = {
 };
 
 export const GOSPELS = ["Matthew", "Mark", "Luke", "John"];
+export const MAX_SPAN_DAYS = 3660;
 
-export const PRESETS: { id: string; label: string; scope: PlanScope; order: PlanOrder; readingDays: number }[] = [
-  { id: "bible-year", label: "Whole Bible in a year", scope: "bible", order: "ot-and-nt", readingDays: 365 },
-  { id: "nt-90", label: "New Testament in 90 days", scope: "nt", order: "canonical", readingDays: 90 },
-  { id: "gospels-30", label: "Gospels in 30 days", scope: "gospels", order: "canonical", readingDays: 30 },
-  { id: "psalms-30", label: "Psalms in a month", scope: "psalms", order: "canonical", readingDays: 30 },
+export const PRESETS: { id: string; label: string; scope: PlanScope; order: PlanOrder; spanDays: number }[] = [
+  { id: "bible-year", label: "Whole Bible in a year", scope: "bible", order: "ot-and-nt", spanDays: 365 },
+  { id: "nt-90", label: "New Testament in 90 days", scope: "nt", order: "canonical", spanDays: 90 },
+  { id: "gospels-30", label: "Gospels in 30 days", scope: "gospels", order: "canonical", spanDays: 30 },
+  { id: "psalms-30", label: "Psalms in a month", scope: "psalms", order: "canonical", spanDays: 30 },
 ];
 
 export function parseISODate(iso: string): Date {
@@ -50,6 +52,11 @@ export function addCalendarDays(iso: string, days: number): string {
   return formatISODate(date);
 }
 
+/** "Mon 20 Dec 2027", for people rather than machines. */
+export function friendlyDate(iso: string): string {
+  return parseISODate(iso).toLocaleDateString("en-GB", { weekday: "short", day: "numeric", month: "short", year: "numeric" });
+}
+
 function chaptersOf(book: BibleBook): Reading[] {
   return book.verseCounts.map((verses, i) => ({ book: book.name, chapter: i + 1, verses }));
 }
@@ -62,63 +69,97 @@ function booksFor(scope: PlanScope): BibleBook[] {
   return BOOKS;
 }
 
+/** The order that actually applies: only the whole Bible can be reordered. */
+export function effectiveOrder(scope: PlanScope, order: PlanOrder): PlanOrder {
+  return scope === "bible" ? order : "canonical";
+}
+
 /** Chapter list in reading order. Old-and-New is applied later, one track at a time. */
 export function readingsFor(scope: PlanScope, order: PlanOrder): Reading[] {
-  const books = booksFor(scope);
-  if (order === "gospels-first" && scope === "bible") {
+  if (effectiveOrder(scope, order) === "gospels-first") {
     const gospels = BOOKS.filter((b) => GOSPELS.includes(b.name));
     const restNt = BOOKS.filter((b) => b.testament === "New Testament" && !GOSPELS.includes(b.name));
     const ot = BOOKS.filter((b) => b.testament === "Old Testament");
     return [...gospels, ...restNt, ...ot].flatMap(chaptersOf);
   }
-  return books.flatMap(chaptersOf);
+  return booksFor(scope).flatMap(chaptersOf);
 }
 
 /**
- * Fill `days` buckets by verse weight. A chapter is never split.
- * Fewer chapters than days leaves later buckets empty.
- * Days left empty by a long chapter borrow the next chapter so the plan
- * does not collapse into fewer, heavier days.
+ * Split chapters into `days` days, in order, never splitting a chapter, so each day carries
+ * about the same number of verses. Every day gets at least one chapter while chapters last;
+ * with fewer chapters than days, the plan simply finishes early.
  */
 export function packIntoDays(items: Reading[], days: number): Reading[][] {
   const count = Math.max(1, Math.floor(days));
-  const buckets: Reading[][] = Array.from({ length: count }, () => []);
-  if (!items.length) return buckets;
-  if (items.length <= count) {
-    items.forEach((item, i) => buckets[i].push(item));
-    return buckets;
-  }
-  const total = items.reduce((n, r) => n + r.verses, 0);
-  let cursor = 0;
-  for (const item of items) {
-    const mid = cursor + item.verses / 2;
-    const day = Math.min(count - 1, Math.floor((mid / total) * count));
-    buckets[day].push(item);
-    cursor += item.verses;
-  }
-  for (let i = 0; i < buckets.length; i += 1) {
-    if (buckets[i].length) continue;
-    for (let j = i + 1; j < buckets.length; j += 1) {
-      if (buckets[j].length > 1) {
-        buckets[i].push(buckets[j].shift()!);
-        break;
+  if (items.length <= count) return items.map((item) => [item]);
+  const out: Reading[][] = [];
+  let remaining = items.reduce((n, r) => n + r.verses, 0);
+  let i = 0;
+  for (let day = 0; day < count; day++) {
+    const daysLeft = count - day;
+    const target = remaining / daysLeft;
+    const bucket: Reading[] = [];
+    let load = 0;
+    while (i < items.length) {
+      const item = items[i];
+      if (bucket.length) {
+        // Leave at least one chapter for each day still to come.
+        if (items.length - i <= daysLeft - 1) break;
+        // Take the next chapter only if most of it fits under today's share.
+        if (daysLeft > 1 && load + item.verses / 2 > target) break;
       }
+      bucket.push(item);
+      load += item.verses;
+      i++;
     }
+    remaining -= load;
+    out.push(bucket);
   }
-  return buckets;
+  return out;
 }
 
-function readingDates(start: string, count: number, skipWeekdays: number[]): string[] {
-  const skip = new Set(skipWeekdays.filter((d) => d >= 0 && d <= 6));
-  if (skip.size >= 7) skip.clear();
+/** The first `count` reading dates from `start`, skipping rest days. */
+export function readingDates(start: string, count: number, skipWeekdays: number[]): string[] {
+  const skip = restDays(skipWeekdays);
   const dates: string[] = [];
   let cursor = start;
   // A guard so a bad start can never loop forever.
-  for (let step = 0; dates.length < count && step < count + 3700; step += 1) {
+  for (let step = 0; dates.length < count && step < count * 7 + 7; step += 1) {
     if (!skip.has(parseISODate(cursor).getDay())) dates.push(cursor);
     cursor = addCalendarDays(cursor, 1);
   }
   return dates;
+}
+
+function restDays(skipWeekdays: number[]): Set<number> {
+  const skip = new Set(skipWeekdays.filter((d) => d >= 0 && d <= 6));
+  if (skip.size >= 7) skip.clear();
+  return skip;
+}
+
+/** How many reading days fall within `spanDays` calendar days from `start`. */
+export function readingDaysWithin(start: string, spanDays: number, skipWeekdays: number[]): number {
+  const skip = restDays(skipWeekdays);
+  const span = Math.min(MAX_SPAN_DAYS, Math.max(1, Math.floor(spanDays) || 1));
+  let n = 0;
+  for (let k = 0; k < span; k++) if (!skip.has(parseISODate(addCalendarDays(start, k)).getDay())) n++;
+  return Math.max(1, n);
+}
+
+/**
+ * The start date that puts reading `dayIndex` on `today` (or the next reading day when today
+ * is a rest day): used to catch up after missed days without marking anything read.
+ */
+export function startForDayOn(today: string, dayIndex: number, skipWeekdays: number[]): string {
+  const skip = restDays(skipWeekdays);
+  let cursor = today;
+  while (skip.has(parseISODate(cursor).getDay())) cursor = addCalendarDays(cursor, 1);
+  for (let k = 0; k < dayIndex; ) {
+    cursor = addCalendarDays(cursor, -1);
+    if (!skip.has(parseISODate(cursor).getDay())) k++;
+  }
+  return cursor;
 }
 
 function zipTracks(left: Reading[][], right: Reading[][]): Reading[][] {
@@ -131,17 +172,18 @@ function zipTracks(left: Reading[][], right: Reading[][]): Reading[][] {
   return days;
 }
 
-export function buildPlan(input: PlanInput): PlanDay[] {
-  const days = Math.min(3660, Math.max(1, Math.floor(input.readingDays) || 1));
-  let groups: Reading[][];
-  if (input.order === "ot-and-nt" && input.scope === "bible") {
-    const ot = readingsFor("ot", "canonical");
-    const nt = readingsFor("nt", "canonical");
-    groups = zipTracks(packIntoDays(ot, days), packIntoDays(nt, days));
-  } else {
-    groups = packIntoDays(readingsFor(input.scope, input.order), days).filter((g) => g.length);
-  }
-  const dates = readingDates(input.start, groups.length, input.skipWeekdays);
+/**
+ * The plan: which chapters on which day. `scheduleStart` re-dates the same days from a later
+ * start (catching up) without changing what each day contains.
+ */
+export function buildPlan(input: PlanInput, scheduleStart?: string): PlanDay[] {
+  const days = readingDaysWithin(input.start, input.spanDays, input.skipWeekdays);
+  const order = effectiveOrder(input.scope, input.order);
+  const groups =
+    order === "ot-and-nt"
+      ? zipTracks(packIntoDays(readingsFor("ot", "canonical"), days), packIntoDays(readingsFor("nt", "canonical"), days))
+      : packIntoDays(readingsFor(input.scope, order), days);
+  const dates = readingDates(scheduleStart ?? input.start, groups.length, input.skipWeekdays);
   return groups.map((readings, index) => ({ index, date: dates[index] ?? input.start, readings }));
 }
 
@@ -149,16 +191,16 @@ export function dayVerseCount(day: PlanDay): number {
   return day.readings.reduce((n, r) => n + r.verses, 0);
 }
 
-/** A short warning when the plan is about to become the kind people abandon. */
+/** A gentle heads-up about the slow stretch or the longest sitting. */
 export function planCaution(days: PlanDay[]): string | null {
   const lev = days.findIndex((d) => d.readings.some((r) => r.book === "Leviticus"));
   if (lev >= 0 && lev < 70) {
-    return `Leviticus starts on day ${lev + 1}. That is where most year-long plans stop. The text is still here when you get there.`;
+    return `Leviticus begins on day ${lev + 1}. It reads more slowly than the stories before it, so take it a chapter at a time.`;
   }
   const heavy = days.find((d) => dayVerseCount(d) > 150);
   if (heavy) {
     const where = heavy.readings.map((r) => `${r.book} ${r.chapter}`).join(", ");
-    return `${where} is a long sitting (${dayVerseCount(heavy)} verses). Read it, or come back to it.`;
+    return `Day ${heavy.index + 1} is a long sitting: ${where}, ${dayVerseCount(heavy)} verses. Read it in parts if you like.`;
   }
   return null;
 }

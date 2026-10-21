@@ -5,7 +5,7 @@ import { pageMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = pageMetadata({
   title: "Today's reading",
-  description: "Read today's chapter. Walk and Sleep voices are Premium.",
+  description: "Read today's chapter. Genesis is free to hear in Walk and Sleep; other books are read aloud with Premium.",
   path: "/plan/read",
   noindex: true,
 });
