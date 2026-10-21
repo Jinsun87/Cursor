@@ -108,6 +108,15 @@ describe("buildPlan", () => {
     expect(isInOrder(flat.filter((r) => BOOKS.findIndex((b) => b.name === r.book) >= 39))).toBe(true);
   });
 
+  it("spreads the New Testament across the whole year instead of finishing it early", () => {
+    const days = plan({ order: "ot-and-nt", skipWeekdays: [0] });
+    const isNt = (r: Reading) => BOOKS.findIndex((b) => b.name === r.book) >= 39;
+    const ntDays = days.filter((d) => d.readings.some(isNt)).map((d) => d.index);
+    expect(ntDays).toHaveLength(260);
+    expect(ntDays.at(-1)).toBeGreaterThan(days.length - 3);
+    expect(days.every((d) => d.readings.some((r) => !isNt(r)))).toBe(true);
+  });
+
   it("finishes early rather than inventing empty days", () => {
     const days = plan({ scope: "gospels", spanDays: 400 });
     expect(days.length).toBe(readingsFor("gospels", "canonical").length);

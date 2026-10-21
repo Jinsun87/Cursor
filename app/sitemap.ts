@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { QUIZZES, SERIES } from "@/lib/catalog";
 import { CANONICAL_ORIGIN } from "@/lib/site";
+import { PLAN_PAGES } from "@/lib/plan/landing";
 
 type Entry = { path: string; priority: number; changeFrequency: MetadataRoute.Sitemap[number]["changeFrequency"] };
 
@@ -11,6 +12,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/daily", priority: 0.8, changeFrequency: "daily" },
     { path: "/read", priority: 0.8, changeFrequency: "weekly" },
     { path: "/plan", priority: 0.7, changeFrequency: "monthly" },
+    ...PLAN_PAGES.map((p) => ({ path: `/plan/${p.slug}`, priority: 0.7, changeFrequency: "monthly" as const })),
     { path: "/pricing", priority: 0.6, changeFrequency: "monthly" },
     { path: "/open", priority: 0.5, changeFrequency: "weekly" },
     { path: "/premium", priority: 0.5, changeFrequency: "monthly" },

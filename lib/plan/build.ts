@@ -162,6 +162,17 @@ export function startForDayOn(today: string, dayIndex: number, skipWeekdays: num
   return cursor;
 }
 
+/**
+ * One track of an Old-and-New plan over `days` days. A track with fewer chapters than days
+ * (the New Testament in a year) is spread evenly, so it runs to the end instead of stopping early.
+ */
+function trackDays(items: Reading[], days: number): Reading[][] {
+  if (items.length >= days) return packIntoDays(items, days);
+  const out: Reading[][] = Array.from({ length: days }, () => []);
+  items.forEach((item, k) => out[Math.floor((k * days) / items.length)].push(item));
+  return out;
+}
+
 function zipTracks(left: Reading[][], right: Reading[][]): Reading[][] {
   const n = Math.max(left.length, right.length);
   const days: Reading[][] = [];
@@ -181,7 +192,7 @@ export function buildPlan(input: PlanInput, scheduleStart?: string): PlanDay[] {
   const order = effectiveOrder(input.scope, input.order);
   const groups =
     order === "ot-and-nt"
-      ? zipTracks(packIntoDays(readingsFor("ot", "canonical"), days), packIntoDays(readingsFor("nt", "canonical"), days))
+      ? zipTracks(trackDays(readingsFor("ot", "canonical"), days), trackDays(readingsFor("nt", "canonical"), days))
       : packIntoDays(readingsFor(input.scope, order), days);
   const dates = readingDates(scheduleStart ?? input.start, groups.length, input.skipWeekdays);
   return groups.map((readings, index) => ({ index, date: dates[index] ?? input.start, readings }));

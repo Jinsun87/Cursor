@@ -26,7 +26,6 @@ import {
   writeSavedPlan,
   type SavedPlan,
 } from "@/lib/plan/storage";
-import "./plan.css";
 
 const todayISO = () => formatISODate(new Date());
 
@@ -47,7 +46,12 @@ export function PlanBuilder() {
   useEffect(() => {
     const existing = readSavedPlan();
     setSaved(existing);
-    setInput(existing?.input ?? { ...DEFAULTS, start: todayISO() });
+    // /plan?preset=… (a plan page's "Start this plan") picks that plan; saving still asks before replacing one.
+    const preset = PRESETS.find((p) => p.id === new URLSearchParams(window.location.search).get("preset"));
+    const base = existing?.input ?? { ...DEFAULTS, start: todayISO() };
+    const same = preset && preset.scope === base.scope && preset.order === base.order && preset.spanDays === base.spanDays;
+    // A different plan picked from a plan page starts today, not on the old plan's start date.
+    setInput(preset && !same ? { ...base, scope: preset.scope, order: preset.order, spanDays: preset.spanDays, start: todayISO() } : base);
     setReady(true);
   }, []);
 
@@ -89,15 +93,10 @@ export function PlanBuilder() {
     setSaved(next);
   }
 
-  if (!ready) return <main className="plan" />;
+  if (!ready) return <section className="plan-builder" aria-label="Your plan" />;
 
   return (
-    <main className="plan">
-      <h1>Bible reading plan</h1>
-      <p className="plan-lead">
-        Choose a pace. Each day opens in the reader, and the text is always free. Genesis can also be heard free in Walk (by day)
-        and Sleep (by night); the voices for other books come with Premium as they are recorded.
-      </p>
+    <section className="plan-builder" aria-label="Your plan">
 
       <div className="plan-presets" role="group" aria-label="Presets">
         {PRESETS.map((preset) => {
@@ -236,6 +235,6 @@ export function PlanBuilder() {
           ))}
         </ol>
       ) : null}
-    </main>
+    </section>
   );
 }

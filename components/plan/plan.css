@@ -189,3 +189,135 @@
   text-decoration: underline;
   text-underline-offset: 3px;
 }
+.plan-builder {
+  min-height: 120px;
+}
+.plan-section {
+  margin-top: 40px;
+}
+.plan h2 {
+  font-family: var(--font-display), Georgia, serif;
+  font-size: 26px;
+  font-weight: 560;
+  margin: 0 0 12px;
+}
+.plan-cards {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 10px;
+  grid-template-columns: minmax(0, 1fr);
+}
+@media (min-width: 640px) {
+  .plan-cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+.plan-cards a {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  height: 100%;
+  padding: 14px 16px;
+  border-radius: 14px;
+  border: 1px solid rgba(228, 192, 74, 0.25);
+  background: rgba(228, 192, 74, 0.05);
+}
+.plan-cards a:hover {
+  border-color: rgba(228, 192, 74, 0.6);
+}
+.plan-cards span {
+  font-size: 14px;
+  color: var(--muted, rgba(241, 235, 221, 0.72));
+}
+.plan-cards .plan-card-more {
+  color: #e4c04a;
+}
+.plan-faq {
+  margin: 0;
+}
+.plan-faq div {
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(241, 235, 221, 0.1);
+}
+.plan-faq dt {
+  font-weight: 650;
+}
+.plan-faq dd {
+  margin: 4px 0 0;
+  color: var(--muted, rgba(241, 235, 221, 0.72));
+  line-height: 1.5;
+}
+.plan-crumbs {
+  font-size: 14px;
+  color: var(--muted, rgba(241, 235, 221, 0.72));
+}
+.plan-crumbs a {
+  color: #e4c04a;
+}
+.plan-stats {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 20px;
+  margin: 16px 0 0;
+  padding: 0;
+}
+.plan-stats strong {
+  color: #e4c04a;
+}
+.plan-week {
+  margin-top: 22px;
+  break-inside: avoid;
+}
+.plan-week h2 {
+  font-size: 18px;
+  margin-bottom: 6px;
+}
+.plan-schedule {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.plan-schedule li {
+  display: grid;
+  grid-template-columns: 64px minmax(0, 1fr);
+  gap: 12px;
+  padding: 6px 0;
+  border-bottom: 1px solid rgba(241, 235, 221, 0.08);
+}
+.plan-schedule-day {
+  color: var(--muted, rgba(241, 235, 221, 0.72));
+  font-variant-numeric: tabular-nums;
+}
+.plan-credit {
+  margin-top: 24px;
+  font-size: 13px;
+  color: var(--muted, rgba(241, 235, 221, 0.72));
+}
+
+/* A plan page prints as a clean schedule: no site header, tabs, footer or buttons. */
+@media print {
+  header,
+  footer,
+  .section-bar,
+  .plan-noprint,
+  .skip-link {
+    display: none !important;
+  }
+  body,
+  .plan,
+  .plan-lead,
+  .plan-schedule-day,
+  .plan-credit {
+    background: #fff !important;
+    color: #000 !important;
+  }
+  .plan-stats strong {
+    color: #000;
+  }
+  .plan {
+    padding: 0;
+  }
+}

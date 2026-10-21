@@ -173,6 +173,9 @@ export function HomePreview({
       </div>
 
       <div className="h2-foot">
+        <Link href="/plan" className="h2-quiz">
+          Reading the whole Bible? Make a free reading plan →
+        </Link>
         <Link href="/daily" className="h2-quiz">
           Prefer a quick quiz? Try today&apos;s ten Bible questions →
         </Link>
