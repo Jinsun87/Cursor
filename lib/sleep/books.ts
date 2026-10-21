@@ -49,7 +49,16 @@ export const SHELF: ShelfBook[] = [
     chapters: 40,
     cover: ["#7a3b33", "#3a1a17"],
     premium: true,
-    comingSoon: true,
+    stories: [
+      { title: "Moses", from: 1, to: 4 },
+      { title: "The Plagues", from: 5, to: 11 },
+      { title: "The Exodus", from: 12, to: 15 },
+      { title: "In the Wilderness", from: 16, to: 18 },
+      { title: "At Sinai", from: 19, to: 24 },
+      { title: "The Tabernacle", from: 25, to: 31 },
+      { title: "The Golden Calf", from: 32, to: 34 },
+      { title: "The Tabernacle Built", from: 35, to: 40 },
+    ],
   },
 ];
 
