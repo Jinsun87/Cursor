@@ -3,6 +3,8 @@
 import { useEffect, useState } from "react";
 import { useListening } from "@/components/home2/useListening";
 import { pickNext, useReadingProgress } from "@/lib/sleep/progress";
+import { canListen } from "@/lib/sleep/access";
+import { useApp } from "@/lib/store";
 import { SLEEP_CHAPTERS, WALK_SECONDS } from "@/lib/sleep/chapters";
 import { useSleepAudio, type ReadingMode } from "@/lib/sleep/sleep-audio";
 import type { SleepChapter } from "@/lib/sleep/types";
@@ -17,7 +19,9 @@ export function ListeningSummary() {
   const progress = useReadingProgress();
   const s = useSleepAudio();
   const [next, setNext] = useState<{ chapter: SleepChapter; verse: number } | null>(null);
-  useEffect(() => setNext(pickNext(SLEEP_CHAPTERS, progress)), [progress]);
+  const { user } = useApp();
+  const premium = Boolean(user?.premium);
+  useEffect(() => setNext(pickNext(SLEEP_CHAPTERS.filter((c) => canListen(c, premium)), progress)), [progress, premium]);
 
   const heard = SLEEP_CHAPTERS.filter((c) => progress[c.slug]?.done && !(progress[c.slug].verse > 1)).length;
   const minutesToday = Math.floor(listening.secondsToday / 60);

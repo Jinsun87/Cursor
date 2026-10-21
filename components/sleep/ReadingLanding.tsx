@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import type { SleepChapter } from "@/lib/sleep/types";
 import { useSleepAudio, type ReadingMode } from "@/lib/sleep/sleep-audio";
 import { pickNext, useReadingProgress } from "@/lib/sleep/progress";
+import { canListen } from "@/lib/sleep/access";
+import { useApp } from "@/lib/store";
 import { BookShelf } from "./BookShelf";
 import "./sleep.css";
 
@@ -41,7 +43,10 @@ export function ReadingLanding({
   const copy = COPY[mode];
   // Decided after mount, from this device's saved progress.
   const [pick, setPick] = useState<{ chapter: SleepChapter; verse: number }>({ chapter: chapters[0], verse: 1 });
-  useEffect(() => setPick(pickNext(chapters, progress)), [chapters, progress]);
+  const { user } = useApp();
+  const premium = Boolean(user?.premium);
+  // Tonight's chapter is always one this listener can play: without Premium it stays in Genesis.
+  useEffect(() => setPick(pickNext(chapters.filter((c) => canListen(c, premium)), progress)), [chapters, progress, premium]);
 
   const { chapter, verse } = pick;
   const live = s.chapter?.slug === chapter.slug && s.mode === mode && s.playing;

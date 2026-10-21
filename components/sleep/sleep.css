@@ -1024,3 +1024,45 @@ body.has-mini-player main {
   outline: 3px solid #e4c04a;
   outline-offset: 2px;
 }
+
+/* The Premium sheet: over everything, from the shelf as well as the full-screen player. */
+.pg-wrap {
+  position: fixed;
+  z-index: 80;
+  inset: 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.55);
+  animation: sf-fade-in 0.25s ease both;
+}
+.pg-sheet {
+  color: #f1ebdd;
+}
+.pg-sheet p {
+  line-height: 1.5;
+  margin: 8px 0;
+}
+.pg-price {
+  color: #e4c04a;
+}
+.pg-primary,
+.pg-secondary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 48px;
+  margin-top: 10px;
+  border-radius: 999px;
+  font-weight: 650;
+}
+.pg-primary {
+  background: #e4c04a;
+  color: #1b1505;
+}
+.pg-secondary {
+  background: transparent;
+  color: inherit;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}

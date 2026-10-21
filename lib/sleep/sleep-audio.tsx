@@ -5,6 +5,8 @@ import type { SleepChapter, SleepTiming } from "./types";
 import { useListeningMeter } from "@/components/home2/useListening";
 import { saveProgress } from "./progress";
 import { audioUrl } from "@/lib/audio-url";
+import { useApp } from "@/lib/store";
+import { canListen } from "./access";
 
 export const SLEEP_SPEEDS = [0.75, 1, 1.25] as const;
 export type SleepSpeed = (typeof SLEEP_SPEEDS)[number];
@@ -39,6 +41,9 @@ type SleepAudio = {
   rain: number;
   timerMin: TimerMinutes;
   timerEndsAt: number | null;
+  /** A Premium chapter someone without Premium tried to play: the Premium sheet shows it. */
+  locked: { chapter: SleepChapter; mode: ReadingMode } | null;
+  dismissLocked: () => void;
   /**
    * Load a chapter in Walk or Sleep (if not already loaded that way), start it
    * and open the full-screen player; verse picks up at that verse.
@@ -75,6 +80,9 @@ export function useSleepAudio(): SleepAudio {
  * screen locked and shows on the lock screen (Media Session).
  */
 export function SleepAudioProvider({ children }: { children: ReactNode }) {
+  const { user } = useApp();
+  const premium = Boolean(user?.premium);
+  const [locked, setLocked] = useState<{ chapter: SleepChapter; mode: ReadingMode } | null>(null);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const [chapter, setChapter] = useState<SleepChapter | null>(null);
   const [mode, setMode] = useState<ReadingMode>("sleep");
@@ -245,6 +253,12 @@ export function SleepAudioProvider({ children }: { children: ReactNode }) {
     (next: SleepChapter, opts: { mode?: ReadingMode; verse?: number; expand?: boolean } = {}) => {
       const el = audioRef.current;
       const nextMode = opts.mode ?? "sleep";
+      // Every way into the player passes here, so this is where Premium is enforced.
+      if (!canListen(next, premium)) {
+        setLocked({ chapter: next, mode: nextMode });
+        return;
+      }
+      setLocked(null);
       // expand: false plays without opening the full-screen player (onboarding's first moment).
       setExpanded(opts.expand ?? true);
       setEnded(false);
@@ -259,7 +273,7 @@ export function SleepAudioProvider({ children }: { children: ReactNode }) {
       }
       if (el.paused) start();
     },
-    [chapter, mode, start],
+    [chapter, mode, start, premium],
   );
 
   const seekTo = useCallback((seconds: number) => {
@@ -315,6 +329,8 @@ export function SleepAudioProvider({ children }: { children: ReactNode }) {
       rain,
       timerMin,
       timerEndsAt,
+      locked,
+      dismissLocked: () => setLocked(null),
       open,
       toggle,
       seekBy,
@@ -329,7 +345,7 @@ export function SleepAudioProvider({ children }: { children: ReactNode }) {
       setRain,
       chooseTimer,
     }),
-    [chapter, mode, index, starts, playing, ended, time, timing, expanded, muted, speed, narration, rain, setRain, timerMin, timerEndsAt, open, toggle, seekBy, seekTo, seekToVerse, close, chooseTimer],
+    [chapter, mode, index, starts, playing, ended, time, timing, expanded, muted, speed, narration, rain, setRain, timerMin, timerEndsAt, locked, open, toggle, seekBy, seekTo, seekToVerse, close, chooseTimer],
   );
 
   return (

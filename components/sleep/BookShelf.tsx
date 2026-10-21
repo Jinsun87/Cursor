@@ -1,5 +1,6 @@
 "use client";
 
+import { useApp } from "@/lib/store";
 import { useState } from "react";
 import type { SleepChapter } from "@/lib/sleep/types";
 import { useSleepAudio, type ReadingMode } from "@/lib/sleep/sleep-audio";
@@ -33,6 +34,8 @@ export function BookShelf({
 }) {
   const s = useSleepAudio();
   const progress = useReadingProgress();
+  const { user } = useApp();
+  const memberPremium = Boolean(user?.premium);
   const bySlug = new Map(chapters.map((c) => [c.slug, c]));
   // Starts on the list of books; a book's chapters show only once it is opened.
   const [bookSlug, setBookSlug] = useState<string | null>(null);
@@ -57,7 +60,8 @@ export function BookShelf({
         <ul className="shelf-books">
           {SHELF.map((b) => {
             const t = tally(b);
-            const locked = b.comingSoon || b.premium;
+            // Premium books look locked only to people without Premium; they can still open them to browse.
+            const locked = b.comingSoon || (b.premium && !memberPremium);
             return (
               <li key={b.slug}>
                 <button
@@ -77,6 +81,10 @@ export function BookShelf({
                       {b.comingSoon ? (
                         <>
                           <Padlock /> Premium · coming soon
+                        </>
+                      ) : locked ? (
+                        <>
+                          <Padlock /> Premium · {t.ready} of {b.chapters} chapters ready
                         </>
                       ) : (
                         `${t.ready} of ${b.chapters} chapters ready · ${t.totalMin} min`

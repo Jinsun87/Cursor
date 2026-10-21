@@ -1,5 +1,7 @@
 "use client";
 
+import { canListen } from "@/lib/sleep/access";
+import { useApp } from "@/lib/store";
 import { useEffect, useMemo, useRef, useState } from "react";
 import type { SleepChapter } from "@/lib/sleep/types";
 import { SLEEP_SPEEDS, TIMER_OPTIONS, clock, useSleepAudio } from "@/lib/sleep/sleep-audio";
@@ -166,6 +168,7 @@ export function SleepFullscreen() {
 /** When a chapter ends: a quiet close, and the next chapter one tap away. Nothing plays by itself. */
 function UpNext({ chapter }: { chapter: SleepChapter }) {
   const s = useSleepAudio();
+  const { user } = useApp();
   // The next chapter that has a recording in this mode (Walk stays Walk, Sleep stays Sleep).
   const k = SLEEP_CHAPTERS.findIndex((c) => c.slug === chapter.slug);
   const next = SLEEP_CHAPTERS.slice(k + 1).find((c) => s.mode === "sleep" || WALK_SECONDS[c.slug] > 0);
@@ -180,7 +183,7 @@ function UpNext({ chapter }: { chapter: SleepChapter }) {
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src={next.verses[0].image} alt="" />
           <span>
-            <small>Up next</small>
+            <small>Up next{next && !canListen(next, Boolean(user?.premium)) ? " · Premium" : ""}</small>
             <strong>
               {next.book} {next.chapter}
             </strong>

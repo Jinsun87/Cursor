@@ -1,5 +1,5 @@
 import counts from "./verse-counts.json";
-import { SHELF } from "@/lib/sleep/books";
+import { isPremiumBook } from "@/lib/sleep/access";
 
 export type Testament = "Old Testament" | "New Testament";
 
@@ -38,6 +38,5 @@ export function chapterSlug(book: string, chapter: number): string {
  * Books not on the shelf yet are treated as Premium.
  */
 export function voiceIsFree(book: string): boolean {
-  const shelf = SHELF.find((b) => b.name === book);
-  return Boolean(shelf && !shelf.premium);
+  return !isPremiumBook(book);
 }

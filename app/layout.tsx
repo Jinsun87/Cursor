@@ -13,6 +13,7 @@ import { GA4Head } from "@/components/GA4Head";
 import { AnalyticsTracker } from "@/components/AnalyticsTracker";
 import { Analytics } from "@vercel/analytics/next";
 import { SleepAudioProvider } from "@/lib/sleep/sleep-audio";
+import { PremiumGate } from "@/components/sleep/PremiumGate";
 import { SleepFullscreen } from "@/components/sleep/SleepFullscreen";
 import { MiniPlayer } from "@/components/sleep/MiniPlayer";
 
@@ -99,6 +100,7 @@ export default function RootLayout({
               <BottomTabBar />
               <MiniPlayer />
               <SleepFullscreen />
+              <PremiumGate />
             </SleepAudioProvider>
           </AppProvider>
         </ThemeProvider>
