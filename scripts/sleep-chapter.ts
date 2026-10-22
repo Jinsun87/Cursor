@@ -52,7 +52,8 @@ async function withRetry<T>(fn: () => Promise<T>): Promise<T> {
     try {
       return await fn();
     } catch (e) {
-      const limited = e instanceof Error && /\b429\b|RESOURCE_EXHAUSTED/.test(e.message);
+      // Rate limits and dropped connections are both worth another try.
+      const limited = e instanceof Error && /\b429\b|RESOURCE_EXHAUSTED|fetch failed|ECONNRESET|ETIMEDOUT|socket hang up|\b50[234]\b/.test(e.message);
       if (!limited || attempt >= 8) throw e;
       const wait = Math.min(120, 15 * attempt);
       process.stdout.write(`\r  rate limited; waiting ${wait}s   `);

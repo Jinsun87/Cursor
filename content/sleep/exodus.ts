@@ -224,7 +224,7 @@ export const EXODUS_PLANS: SleepChapterPlan[] = [
     title: "The Ten Commandments",
     headings: { 1: "The Ten Commandments", 18: "Israel Afraid of God's Presence", 22: "Idolatry Forbidden" },
     scenes: [
-      { from: 1, prompt: "Two tablets of stone resting on a rock on the summit of Mount Sinai, lit by a golden light breaking through the cloud; no people." },
+      { from: 1, prompt: "Two tablets of stone resting on a rock on the summit of Mount Sinai, lit by a golden light breaking through the cloud; no people. The stone tablets are smooth and blank, with no letters, writing or markings of any kind." },
       { from: 18, prompt: "The people of Israel standing far off at the foot of Mount Sinai, covering their faces, as thunder, lightning and smoke fill the sky above." },
       { from: 24, prompt: "A simple altar of uncut earth and stones in the wilderness at sunrise, a thin column of smoke rising; no people." },
     ],
@@ -341,7 +341,7 @@ export const EXODUS_PLANS: SleepChapterPlan[] = [
     scenes: [
       { from: 1, prompt: "A craftsman's workshop by lamplight, a skilled bearded craftsman engraving gold with fine tools, cut stones and carved wood around him." },
       { from: 12, prompt: "The camp of Israel at rest on the Sabbath at golden evening, tools laid aside, families sitting quietly at their tent doors." },
-      { from: 18, prompt: "Two tablets of stone engraved with writing, resting in the light on a rock high on Mount Sinai; no people." },
+      { from: 18, prompt: "Two tablets of stone resting in the light on a rock high on Mount Sinai; no people. The stone tablets are smooth and blank, with no letters, writing or markings of any kind." },
     ],
   },
   {
@@ -350,8 +350,8 @@ export const EXODUS_PLANS: SleepChapterPlan[] = [
     headings: { 1: "The Golden Calf", 15: "Moses Breaks the Tablets", 30: "Moses Intercedes" },
     scenes: [
       { from: 1, prompt: "Crowds of Israelites gathered at night around a golden calf on a pedestal, firelight flickering on its gold, Mount Sinai dark and cloud-covered behind." },
-      { from: 15, prompt: `${MOSES}, coming down a mountain path at dusk carrying two stone tablets, the glow of the festival fires in the camp far below.` },
-      { from: 19, prompt: "Two broken stone tablets lying shattered among the rocks at the foot of Mount Sinai at night, firelight in the distance; no people." },
+      { from: 15, prompt: `${MOSES}, coming down a mountain path at dusk carrying two stone tablets, the glow of the festival fires in the camp far below. The stone tablets are smooth and blank, with no letters, writing or markings of any kind.` },
+      { from: 19, prompt: "Two broken stone tablets lying shattered among the rocks at the foot of Mount Sinai at night, firelight in the distance; no people. The stone tablets are smooth and blank, with no letters, writing or markings of any kind." },
       { from: 30, prompt: `${MOSES}, kneeling alone on the mountainside at dawn with his hands lifted in prayer, the camp of Israel small below.` },
     ],
   },
@@ -370,9 +370,9 @@ export const EXODUS_PLANS: SleepChapterPlan[] = [
     title: "The Covenant Renewed",
     headings: { 1: "The Second Set of Tablets", 10: "The Covenant Renewed", 29: "The Radiant Face of Moses" },
     scenes: [
-      { from: 1, prompt: "Two newly cut stone tablets carried up a mountain path at first light, held by weathered hands; the summit in cloud above." },
+      { from: 1, prompt: "Two newly cut stone tablets carried up a mountain path at first light, held by weathered hands; the summit in cloud above. The stone tablets are smooth and blank, with no letters, writing or markings of any kind." },
       { from: 5, prompt: "The summit of Mount Sinai at dawn wrapped in a bright descending cloud, a lone old man bowing low to the ground; God as cloud and light." },
-      { from: 29, prompt: "An old white-bearded man coming down the mountain into the camp at evening carrying two stone tablets, the people stepping back in awe, his face catching the warm sunset light." },
+      { from: 29, prompt: "An old white-bearded man coming down the mountain into the camp at evening carrying two stone tablets, the people stepping back in awe, his face catching the warm sunset light. The stone tablets are smooth and blank, with no letters, writing or markings of any kind." },
     ],
   },
   {

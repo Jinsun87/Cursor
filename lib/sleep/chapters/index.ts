@@ -73,6 +73,23 @@ import ch_exodus_20 from "./exodus-20.json";
 import ch_exodus_21 from "./exodus-21.json";
 import ch_exodus_22 from "./exodus-22.json";
 import ch_exodus_23 from "./exodus-23.json";
+import ch_exodus_24 from "./exodus-24.json";
+import ch_exodus_25 from "./exodus-25.json";
+import ch_exodus_26 from "./exodus-26.json";
+import ch_exodus_27 from "./exodus-27.json";
+import ch_exodus_28 from "./exodus-28.json";
+import ch_exodus_29 from "./exodus-29.json";
+import ch_exodus_30 from "./exodus-30.json";
+import ch_exodus_31 from "./exodus-31.json";
+import ch_exodus_32 from "./exodus-32.json";
+import ch_exodus_33 from "./exodus-33.json";
+import ch_exodus_34 from "./exodus-34.json";
+import ch_exodus_35 from "./exodus-35.json";
+import ch_exodus_36 from "./exodus-36.json";
+import ch_exodus_37 from "./exodus-37.json";
+import ch_exodus_38 from "./exodus-38.json";
+import ch_exodus_39 from "./exodus-39.json";
+import ch_exodus_40 from "./exodus-40.json";
 
 /** Every Sleep chapter with narration, in reading order. */
 export const SLEEP_CHAPTERS: SleepChapter[] = [
@@ -149,6 +166,23 @@ export const SLEEP_CHAPTERS: SleepChapter[] = [
   ch_exodus_21 as SleepChapter,
   ch_exodus_22 as SleepChapter,
   ch_exodus_23 as SleepChapter,
+  ch_exodus_24 as SleepChapter,
+  ch_exodus_25 as SleepChapter,
+  ch_exodus_26 as SleepChapter,
+  ch_exodus_27 as SleepChapter,
+  ch_exodus_28 as SleepChapter,
+  ch_exodus_29 as SleepChapter,
+  ch_exodus_30 as SleepChapter,
+  ch_exodus_31 as SleepChapter,
+  ch_exodus_32 as SleepChapter,
+  ch_exodus_33 as SleepChapter,
+  ch_exodus_34 as SleepChapter,
+  ch_exodus_35 as SleepChapter,
+  ch_exodus_36 as SleepChapter,
+  ch_exodus_37 as SleepChapter,
+  ch_exodus_38 as SleepChapter,
+  ch_exodus_39 as SleepChapter,
+  ch_exodus_40 as SleepChapter,
 ];
 
 /** Length of each chapter's narration in seconds, by slug. */
@@ -226,6 +260,23 @@ export const SLEEP_SECONDS: Record<string, number> = {
   "exodus-21": 356,
   "exodus-22": 308,
   "exodus-23": 344,
+  "exodus-24": 209,
+  "exodus-25": 344,
+  "exodus-26": 320,
+  "exodus-27": 222,
+  "exodus-28": 476,
+  "exodus-29": 505,
+  "exodus-30": 381,
+  "exodus-31": 197,
+  "exodus-32": 446,
+  "exodus-33": 296,
+  "exodus-34": 445,
+  "exodus-35": 362,
+  "exodus-36": 351,
+  "exodus-37": 270,
+  "exodus-38": 338,
+  "exodus-39": 465,
+  "exodus-40": 318,
 };
 
 /** Length of each chapter's brisk Walk reading in seconds, by slug (0 = not voiced yet). */
@@ -303,4 +354,21 @@ export const WALK_SECONDS: Record<string, number> = {
   "exodus-21": 293,
   "exodus-22": 257,
   "exodus-23": 291,
+  "exodus-24": 155,
+  "exodus-25": 262,
+  "exodus-26": 259,
+  "exodus-27": 175,
+  "exodus-28": 365,
+  "exodus-29": 390,
+  "exodus-30": 296,
+  "exodus-31": 152,
+  "exodus-32": 353,
+  "exodus-33": 227,
+  "exodus-34": 362,
+  "exodus-35": 269,
+  "exodus-36": 272,
+  "exodus-37": 198,
+  "exodus-38": 265,
+  "exodus-39": 351,
+  "exodus-40": 258,
 };
