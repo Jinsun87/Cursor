@@ -1,0 +1,13 @@
+{
+  "name": "lampstand-video",
+  "private": true,
+  "description": "Renders Walk and Sleep chapters as long-form videos for YouTube. Separate from the website so Vercel never installs Remotion.",
+  "dependencies": {
+    "@remotion/bundler": "4.0.484",
+    "@remotion/cli": "4.0.484",
+    "@remotion/renderer": "4.0.484",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "remotion": "4.0.484"
+  }
+}

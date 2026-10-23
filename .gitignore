@@ -24,3 +24,7 @@ public/sleep/**/*.mp3
 public/walk/**/*.mp3
 qc-report.md
 voice-transcripts/
+
+# Sleep videos for YouTube: rendered output and scratch files stay on this computer
+video/out/
+video/.work/
