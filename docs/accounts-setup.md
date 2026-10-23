@@ -33,7 +33,13 @@ Coins, quiz attempts, and certificates are still kept in the browser **per accou
   ```
 
   `RedirectTo` already contains `/auth/confirm?next=…`, so the `&` is correct.
-- **SMTP (before launch)**: Supabase's built-in email is heavily rate-limited and meant for testing. Add a sender such as Resend under **Authentication → SMTP Settings**, from an address on lampstandbible.com.
+  Ready-made branded versions: `supabase/templates/magic-link.html` (subject "Your Lampstand sign-in link") and `supabase/templates/confirm-signup.html` (subject "Confirm your Lampstand account"). Paste each into its template.
+- **SMTP via Resend (before launch)**: Supabase's built-in email is heavily rate-limited and meant for testing.
+  1. resend.com → **Domains → Add domain** `lampstandbible.com`. Add the DNS records it shows (MX and SPF on `send.lampstandbible.com`, the `resend._domainkey` DKIM record, and a `_dmarc` record if there isn't one) at the DNS host (GoDaddy), then **Verify**.
+  2. **API Keys → Create**: "Sending access", limited to lampstandbible.com.
+  3. Supabase → **Authentication → Emails → SMTP Settings → Enable custom SMTP**: host `smtp.resend.com`, port `465`, username `resend`, password = the Resend API key, sender `hello@lampstandbible.com`, name `Lampstand`.
+  4. **Authentication → Rate Limits**: raise "emails sent per hour" (custom SMTP starts at 30/hour).
+  5. Test: register a new account and sign in with an email link; check both emails arrive (and not in spam).
 - **Google (optional)**: enable the Google provider with a Google Cloud OAuth client, then set `NEXT_PUBLIC_AUTH_GOOGLE=true`.
 
 ### 3. Paddle (sandbox first)

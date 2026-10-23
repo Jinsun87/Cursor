@@ -62,7 +62,7 @@ export function MoreSheet({ open, onClose, anchor }: { open: boolean; onClose: (
           <li>
             <Link href={user ? "/profile" : "/login"} onClick={onClose}>
               <strong>{user ? "Your profile" : "Sign in"}</strong>
-              <span>{user ? user.email : "Keep your streak and Premium on every device"}</span>
+              <span>{user ? user.email : "Keep your Premium on every device"}</span>
             </Link>
           </li>
           <li>
