@@ -78,7 +78,7 @@ export default function TermsPage() {
           You are responsible for maintaining the confidentiality of your account credentials. You agree not to share accounts or impersonate other individuals on public leaderboards.
         </p>
         <p className="text-sm text-[var(--muted)]">
-          Currently, user session data and quiz history are saved locally in your browser storage. You acknowledge that clearing local browser cache or private browsing sessions may reset local progress unless synchronized with our future cloud database.
+          Quiz history and settings are saved locally in your browser storage. When you are signed in, your listening streak, reading position and reading plan are also saved to your account. You acknowledge that clearing local browser data or using private browsing may reset progress that is kept only in your browser.
         </p>
       </section>
 

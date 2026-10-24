@@ -10,7 +10,7 @@ import { SLEEP_CHAPTERS, WALK_SECONDS } from "@/lib/sleep/chapters";
 import { useSleepAudio, type ReadingMode } from "@/lib/sleep/sleep-audio";
 import { chapterSlug, voiceIsFree } from "@/lib/plan/books";
 import { describeReadings, friendlyDate, type PlanDay, type Reading } from "@/lib/plan/build";
-import { daysOf, readSavedPlan, writeSavedPlan, type PlanPlace, type SavedPlan } from "@/lib/plan/storage";
+import { daysOf, readSavedPlan, subscribePlan, writeSavedPlan, type PlanPlace, type SavedPlan } from "@/lib/plan/storage";
 import "@/components/sleep/sleep.css";
 import "./plan.css";
 
@@ -51,6 +51,19 @@ export function PlanReader() {
     setPlan(saved);
     setDays(daysOf(saved));
   }, [router]);
+
+  // A sync from the reader's other device can bring newer progress while this page is open.
+  useEffect(
+    () =>
+      subscribePlan(() => {
+        const saved = readSavedPlan();
+        if (saved) {
+          setPlan(saved);
+          setDays(daysOf(saved));
+        }
+      }),
+    [],
+  );
 
   // Out-of-range or garbled links open the nearest real day rather than hanging.
   const lastDay = Math.max(0, days.length - 1);

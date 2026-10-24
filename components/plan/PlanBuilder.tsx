@@ -23,6 +23,7 @@ import {
   nextUnread,
   readSavedPlan,
   sameInput,
+  subscribePlan,
   writeSavedPlan,
   type SavedPlan,
 } from "@/lib/plan/storage";
@@ -54,6 +55,9 @@ export function PlanBuilder() {
     setInput(preset && !same ? { ...base, scope: preset.scope, order: preset.order, spanDays: preset.spanDays, start: todayISO() } : base);
     setReady(true);
   }, []);
+
+  // A sync from the reader's other device can bring newer progress while this page is open.
+  useEffect(() => subscribePlan(() => setSaved(readSavedPlan())), []);
 
   const savedDays = useMemo(() => (saved ? daysOf(saved) : []), [saved]);
   const unchanged = saved !== null && sameInput(saved.input, input);

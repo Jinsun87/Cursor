@@ -39,6 +39,49 @@ export function saveProgress(slug: string, verse: number, done = false) {
   }
 }
 
+/** Per chapter, the more recent of two progress records (used when syncing with the account). */
+export function mergeProgress(local: ReadingProgress, remote: ReadingProgress): ReadingProgress {
+  const out: ReadingProgress = { ...local };
+  for (const [slug, p] of Object.entries(remote)) {
+    if (!out[slug] || p.at > out[slug].at) out[slug] = p;
+  }
+  return out;
+}
+
+/** Take in progress from the account (newer per chapter wins). Returns true if anything changed. */
+export function applyRemoteProgress(remote: ReadingProgress): boolean {
+  const local = readProgress();
+  const merged = mergeProgress(local, remote);
+  if (JSON.stringify(merged) === JSON.stringify(local)) return false;
+  try {
+    localStorage.setItem(KEY, JSON.stringify(merged));
+  } catch {
+    return false;
+  }
+  window.dispatchEvent(new Event(EVENT));
+  return true;
+}
+
+/** Forget reading progress on this device (on sign-out; it is kept in the account). */
+export function clearProgress() {
+  try {
+    localStorage.removeItem(KEY);
+  } catch {
+    // nothing to clear
+  }
+  window.dispatchEvent(new Event(EVENT));
+}
+
+/** Calls onChange whenever reading progress is saved, here or in another tab. */
+export function subscribeProgress(onChange: () => void): () => void {
+  window.addEventListener(EVENT, onChange);
+  window.addEventListener("storage", onChange);
+  return () => {
+    window.removeEventListener(EVENT, onChange);
+    window.removeEventListener("storage", onChange);
+  };
+}
+
 /** Live view of the progress, updated whenever either player saves. */
 export function useReadingProgress(): ReadingProgress {
   const [progress, setProgress] = useState<ReadingProgress>({});

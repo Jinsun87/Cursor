@@ -1,6 +1,7 @@
 import { buildPlan, startForDayOn, type PlanDay, type PlanInput } from "./build";
 
 const KEY = "lampstand-plan-v2";
+const EVENT = "lampstand:plan";
 
 export type PlanPlace = { day: number; part: number; verse: number };
 
@@ -11,6 +12,8 @@ export type SavedPlan = {
   place: PlanPlace;
   /** Set when the reader caught up after missed days: the same days, dated from here. */
   scheduleStart?: string;
+  /** When this plan last changed (ms), so syncing with the account keeps the newer one. */
+  updatedAt?: number;
 };
 
 export function emptyPlace(): PlanPlace {
@@ -31,11 +34,45 @@ export function readSavedPlan(): SavedPlan | null {
 }
 
 export function writeSavedPlan(plan: SavedPlan): void {
+  store({ ...plan, updatedAt: Date.now() });
+}
+
+function store(plan: SavedPlan): void {
   try {
     localStorage.setItem(KEY, JSON.stringify(plan));
   } catch {
     // Private mode: the plan still works for this visit.
   }
+  window.dispatchEvent(new Event(EVENT));
+}
+
+/** Take in the plan from the account (already merged there), keeping its own change time. */
+export function applyRemotePlan(plan: SavedPlan, at: number): boolean {
+  const local = readSavedPlan();
+  const next = { ...plan, updatedAt: at };
+  if (local && JSON.stringify(local) === JSON.stringify(next)) return false;
+  store(next);
+  return true;
+}
+
+/** Forget the plan on this device (on sign-out; it is kept in the account). */
+export function clearSavedPlan(): void {
+  try {
+    localStorage.removeItem(KEY);
+  } catch {
+    // nothing to clear
+  }
+  window.dispatchEvent(new Event(EVENT));
+}
+
+/** Calls onChange whenever the plan is saved, here, in another tab, or by a sync. */
+export function subscribePlan(onChange: () => void): () => void {
+  window.addEventListener(EVENT, onChange);
+  window.addEventListener("storage", onChange);
+  return () => {
+    window.removeEventListener(EVENT, onChange);
+    window.removeEventListener("storage", onChange);
+  };
 }
 
 export function daysOf(plan: SavedPlan): PlanDay[] {

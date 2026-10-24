@@ -137,7 +137,7 @@ export default async function OpenBookPage() {
         <ul className="mt-3 grid gap-2 leading-relaxed text-[var(--muted)]">
           <li>No ads while you listen: none in Walk, Sleep or Breathe. Premium removes them everywhere.</li>
           <li>Scripture word for word: no edits and no commentary in Walk and Sleep.</li>
-          <li>Your listening and reading progress stay on your device. Keeping them in sync across devices is coming.</li>
+          <li>Sign in and your streak, reading place and reading plan follow you to any device. Without an account, they stay in your browser.</li>
         </ul>
       </section>
 

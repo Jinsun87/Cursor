@@ -37,7 +37,10 @@ export default function PrivacyPage() {
             <strong className="text-[var(--ink)]">Your subscription:</strong> if you subscribe, Paddle tells us your subscription status, plan and renewal date so we can switch Premium on. We never receive your card details.
           </li>
           <li>
-            <strong className="text-[var(--ink)]">On your device only:</strong> your listening streak and minutes, quiz progress, coins and display settings are kept in your browser (localStorage) and are not sent to us.
+            <strong className="text-[var(--ink)]">Your progress, if you sign in:</strong> the minutes you listen each day (with a random code for each of your devices, so minutes are not counted twice), where you are in each chapter, and your reading plan are stored with your account at Supabase, so they follow you to any device. If you don't sign in, they stay in your browser only.
+          </li>
+          <li>
+            <strong className="text-[var(--ink)]">On your device only:</strong> quiz progress, coins and display settings are kept in your browser (localStorage) and are not sent to us.
           </li>
           <li>
             <strong className="text-[var(--ink)]">Technical data:</strong> device and browser type, IP address and basic logs from our hosting provider (Vercel), used to keep the site running and secure.
@@ -97,7 +100,7 @@ export default function PrivacyPage() {
           <li>Opt out of marketing communications or newsletter updates at any time.</li>
         </ul>
         <p className="text-sm text-[var(--muted)]">
-          Data kept on your device (your streak, quiz progress and settings) is removed when you clear your browser's site data. To see or delete your account and subscription records, email{" "}
+          Data kept on your device (quiz progress and settings, and your streak and reading progress if you are not signed in) is removed when you clear your browser's site data. Signing out also clears your progress from that device; it stays with your account. To see or delete your account, progress and subscription records, email{" "}
           <a href="mailto:support@lampstandbible.com" className="text-[var(--gold)] underline underline-offset-4">
             support@lampstandbible.com
           </a>.

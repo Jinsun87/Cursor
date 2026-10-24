@@ -21,6 +21,7 @@ import {
 } from "./economy";
 import { hasPremium, planForPrice, primarySubscription, type SubscriptionRow } from "./entitlement";
 import { loadProgress, saveProgress, scrubLegacyPasswords, type LocalProgress } from "./local-progress";
+import { clearLocalProgress, syncProgress } from "./sync/progress-sync";
 import { getBrowserSupabase } from "./supabase/client";
 
 type SignUpInput = {
@@ -227,7 +228,13 @@ export function AppProvider({ children }: { children: ReactNode }) {
   };
 
   const logout = async () => {
-    await supabase?.auth.signOut();
+    if (supabase) {
+      // Save progress to the account one last time (briefly; offline is fine), then sign out.
+      await Promise.race([syncProgress(supabase).catch(() => false), new Promise((r) => setTimeout(r, 3000))]);
+      await supabase.auth.signOut();
+    }
+    // It is kept in the account; the next person on this device starts clean.
+    clearLocalProgress();
     setUser(null);
   };
 
