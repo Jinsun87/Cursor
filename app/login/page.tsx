@@ -58,7 +58,7 @@ function LoginForm() {
   return (
     <div className="mx-auto max-w-md">
       <h1 className="font-display text-4xl">Hello again</h1>
-      <p className="mt-2 text-parchment/70">Sign in to keep your Premium, coins, and certificates.</p>
+      <p className="mt-2 text-parchment/70">Sign in to pick up where you left off: your streak, your reading place and your Premium.</p>
 
       {!accountsAvailable ? <AccountsUnavailable /> : null}
 

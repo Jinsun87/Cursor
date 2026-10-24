@@ -48,10 +48,20 @@ function RegisterForm() {
 
   return (
     <div className="mx-auto max-w-md">
-      <h1 className="font-display text-4xl">Join Lampstand</h1>
-      <p className="mt-2 text-parchment/70">
-        Know the text. A free account starts you at 100 coins so packs, 50/50, and certificates can stick.
-      </p>
+      <h1 className="font-display text-4xl">Hear the Bible, day and night</h1>
+      <p className="mt-2 text-parchment/70">Every chapter read aloud, word for word, with a painting for every passage.</p>
+      <ul className="mt-4 space-y-2 text-parchment/85">
+        <li>
+          <strong className="text-[var(--gold)]">Walk</strong> · read clearly, for your walk, your commute or your morning.
+        </li>
+        <li>
+          <strong className="text-[var(--gold)]">Sleep</strong> · the same chapter read softly, with rain and a sleep timer.
+        </li>
+        <li>
+          <strong className="text-[var(--gold)]">Your place</strong> · one bookmark shared by both, and your streak and reading plan, on every device.
+        </li>
+      </ul>
+      <p className="mt-3 text-sm text-parchment/60">Free to join. Genesis is free to hear, every chapter.</p>
 
       {!accountsAvailable ? <AccountsUnavailable /> : null}
 
@@ -95,7 +105,7 @@ function RegisterForm() {
             ) : null}
             <label className="flex items-center gap-2 text-sm">
               <input name="newsletter" type="checkbox" className="h-5 w-5" />
-              Send me new quiz series
+              Email me when new books are read aloud
             </label>
             {error ? <p className="text-sm text-red-300">{error}</p> : null}
             <button type="submit" className="btn btn-primary" disabled={busy || !accountsAvailable}>
