@@ -13,6 +13,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/read", priority: 0.8, changeFrequency: "weekly" },
     { path: "/plan", priority: 0.7, changeFrequency: "monthly" },
     ...PLAN_PAGES.map((p) => ({ path: `/plan/${p.slug}`, priority: 0.7, changeFrequency: "monthly" as const })),
+    { path: "/lampstand-in-the-bible", priority: 0.7, changeFrequency: "monthly" },
     { path: "/pricing", priority: 0.6, changeFrequency: "monthly" },
     { path: "/open", priority: 0.5, changeFrequency: "weekly" },
     { path: "/premium", priority: 0.5, changeFrequency: "monthly" },

@@ -1,0 +1,52 @@
+{
+  "slug": "psalm-129",
+  "book": "Psalm",
+  "chapter": 129,
+  "title": "They Have Afflicted Me",
+  "translation": "Berean Standard Bible",
+  "audioSrc": "/sleep/psalm-129/chapter.mp3",
+  "timingSrc": "/sleep/psalm-129/timing.json",
+  "verses": [
+    {
+      "n": 1,
+      "text": "A song of ascents. Many a time they have persecuted me from my youth—let Israel now declare—",
+      "heading": "They Have Afflicted Me",
+      "image": "/images/sleep/psalm-129/s1.jpg"
+    },
+    {
+      "n": 2,
+      "text": "many a time they have persecuted me from my youth, but they have not prevailed against me.",
+      "image": "/images/sleep/psalm-129/s1.jpg"
+    },
+    {
+      "n": 3,
+      "text": "The plowmen plowed over my back; they made their furrows long.",
+      "image": "/images/sleep/psalm-129/s1.jpg"
+    },
+    {
+      "n": 4,
+      "text": "The LORD is righteous; He has cut me from the cords of the wicked.",
+      "image": "/images/sleep/psalm-129/s1.jpg"
+    },
+    {
+      "n": 5,
+      "text": "May all who hate Zion be turned back in shame.",
+      "image": "/images/sleep/psalm-129/s1.jpg"
+    },
+    {
+      "n": 6,
+      "text": "May they be like grass on the rooftops, which withers before it can grow,",
+      "image": "/images/sleep/psalm-129/s1.jpg"
+    },
+    {
+      "n": 7,
+      "text": "unable to fill the hands of the reaper, or the arms of the binder of sheaves.",
+      "image": "/images/sleep/psalm-129/s1.jpg"
+    },
+    {
+      "n": 8,
+      "text": "May none who pass by say to them, “The blessing of the LORD be on you; we bless you in the name of the LORD.”",
+      "image": "/images/sleep/psalm-129/s1.jpg"
+    }
+  ]
+}

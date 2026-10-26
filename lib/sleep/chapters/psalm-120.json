@@ -1,0 +1,47 @@
+{
+  "slug": "psalm-120",
+  "book": "Psalm",
+  "chapter": 120,
+  "title": "In My Distress I Called",
+  "translation": "Berean Standard Bible",
+  "audioSrc": "/sleep/psalm-120/chapter.mp3",
+  "timingSrc": "/sleep/psalm-120/timing.json",
+  "verses": [
+    {
+      "n": 1,
+      "text": "A song of ascents. In my distress I cried to the LORD, and He answered me.",
+      "heading": "In My Distress I Called",
+      "image": "/images/sleep/psalm-120/s1.jpg"
+    },
+    {
+      "n": 2,
+      "text": "Deliver my soul, O LORD, from lying lips and a deceitful tongue.",
+      "image": "/images/sleep/psalm-120/s1.jpg"
+    },
+    {
+      "n": 3,
+      "text": "What will He do to you, and what will be added to you, O deceitful tongue?",
+      "image": "/images/sleep/psalm-120/s1.jpg"
+    },
+    {
+      "n": 4,
+      "text": "Sharp arrows will come from the warrior, with burning coals of the broom tree!",
+      "image": "/images/sleep/psalm-120/s1.jpg"
+    },
+    {
+      "n": 5,
+      "text": "Woe to me that I dwell in Meshech, that I live among the tents of Kedar!",
+      "image": "/images/sleep/psalm-120/s1.jpg"
+    },
+    {
+      "n": 6,
+      "text": "Too long have I dwelt among those who hate peace.",
+      "image": "/images/sleep/psalm-120/s1.jpg"
+    },
+    {
+      "n": 7,
+      "text": "I am in favor of peace; but when I speak, they want war.",
+      "image": "/images/sleep/psalm-120/s1.jpg"
+    }
+  ]
+}

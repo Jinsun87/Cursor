@@ -1,0 +1,22 @@
+{
+  "slug": "psalm-117",
+  "book": "Psalm",
+  "chapter": 117,
+  "title": "Praise the Lord, All Nations",
+  "translation": "Berean Standard Bible",
+  "audioSrc": "/sleep/psalm-117/chapter.mp3",
+  "timingSrc": "/sleep/psalm-117/timing.json",
+  "verses": [
+    {
+      "n": 1,
+      "text": "Praise the LORD, all you nations! Extol Him, all you peoples!",
+      "heading": "Praise the Lord, All Nations",
+      "image": "/images/sleep/psalm-117/s1.jpg"
+    },
+    {
+      "n": 2,
+      "text": "For great is His loving devotion toward us, and the faithfulness of the LORD endures forever. Hallelujah!",
+      "image": "/images/sleep/psalm-117/s1.jpg"
+    }
+  ]
+}

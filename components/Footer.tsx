@@ -17,6 +17,7 @@ const COLUMNS: { title: string; links: { href: string; label: string }[] }[] = [
       { href: "/pricing", label: "Pricing" },
       { href: "/pricing#founding", label: "Founding members" },
       { href: "/open", label: "The open book" },
+      { href: "/lampstand-in-the-bible", label: "The lampstand in the Bible" },
       { href: "/donate", label: "Donate" },
     ],
   },

@@ -142,6 +142,24 @@ function checkLengths(c: SleepChapter) {
   if (ratio < 0.6 || ratio > 0.95) warn(c.slug, "lengths", `Walk is ${Math.round(ratio * 100)}% of Sleep (usually 70-85%): one reading may be cut short or repeat a passage`);
 }
 
+/** Files the site serves from the repo, as git sees them (staged counts): a chapter whose timing or paintings were left out plays locally but 404s live. */
+const tracked = new Set(
+  spawnSync("git", ["ls-files", "--cached", "public", "lib/sleep/chapters"], { encoding: "utf8", maxBuffer: 64 << 20 })
+    .stdout.split("\n")
+    .filter(Boolean),
+);
+
+function checkCommitted(c: SleepChapter) {
+  const files = [
+    // Genesis 1 is hand-made in lib/sleep/genesis-1.ts.
+    ...(c.slug === "genesis-1" ? [] : [`lib/sleep/chapters/${c.slug}.json`]),
+    ...(["sleep", "walk"] as const).filter((m) => existsSync(join("public", m, c.slug, "timing.json"))).map((m) => `public/${m}/${c.slug}/timing.json`),
+    ...[...new Set(c.verses.map((v) => v.image))].map((img) => `public${img}`),
+  ];
+  const missing = files.filter((f) => !tracked.has(f));
+  if (missing.length) warn(c.slug, "committed", `not in git, so not on the live site: ${missing.join(", ")}`);
+}
+
 async function checkR2(slug: string, mode: string, mp3: string) {
   if (!audioBase) return warn(slug, `${mode} r2`, "NEXT_PUBLIC_AUDIO_BASE_URL not set; skipped");
   try {
@@ -202,6 +220,7 @@ async function main() {
     if (!c.verses[0].heading && c.slug !== "genesis-1") warn(c.slug, "headings", "the chapter does not open with a section heading");
 
     checkLengths(c);
+    checkCommitted(c);
     for (const mode of ["sleep", "walk"] as const) {
       await checkWords(c, mode);
       const mp3 = checkTiming(c, mode);

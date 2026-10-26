@@ -1,0 +1,57 @@
+{
+  "slug": "psalm-113",
+  "book": "Psalm",
+  "chapter": 113,
+  "title": "Who Is Like the Lord?",
+  "translation": "Berean Standard Bible",
+  "audioSrc": "/sleep/psalm-113/chapter.mp3",
+  "timingSrc": "/sleep/psalm-113/timing.json",
+  "verses": [
+    {
+      "n": 1,
+      "text": "Hallelujah! Give praise, O servants of the LORD; praise the name of the LORD.",
+      "heading": "Who Is Like the Lord?",
+      "image": "/images/sleep/psalm-113/s1.jpg"
+    },
+    {
+      "n": 2,
+      "text": "Blessed be the name of the LORD both now and forevermore.",
+      "image": "/images/sleep/psalm-113/s1.jpg"
+    },
+    {
+      "n": 3,
+      "text": "From where the sun rises to where it sets, the name of the LORD is praised.",
+      "image": "/images/sleep/psalm-113/s1.jpg"
+    },
+    {
+      "n": 4,
+      "text": "The LORD is exalted over all the nations, His glory above the heavens.",
+      "image": "/images/sleep/psalm-113/s1.jpg"
+    },
+    {
+      "n": 5,
+      "text": "Who is like the LORD our God, the One enthroned on high?",
+      "image": "/images/sleep/psalm-113/s1.jpg"
+    },
+    {
+      "n": 6,
+      "text": "He humbles Himself to behold the heavens and the earth.",
+      "image": "/images/sleep/psalm-113/s1.jpg"
+    },
+    {
+      "n": 7,
+      "text": "He raises the poor from the dust and lifts the needy from the dump",
+      "image": "/images/sleep/psalm-113/s1.jpg"
+    },
+    {
+      "n": 8,
+      "text": "to seat them with nobles, with the princes of His people.",
+      "image": "/images/sleep/psalm-113/s1.jpg"
+    },
+    {
+      "n": 9,
+      "text": "He settles the barren woman in her home as a joyful mother to her children. Hallelujah!",
+      "image": "/images/sleep/psalm-113/s1.jpg"
+    }
+  ]
+}

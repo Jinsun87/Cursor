@@ -1,0 +1,52 @@
+{
+  "slug": "psalm-130",
+  "book": "Psalm",
+  "chapter": 130,
+  "title": "Out of the Depths",
+  "translation": "Berean Standard Bible",
+  "audioSrc": "/sleep/psalm-130/chapter.mp3",
+  "timingSrc": "/sleep/psalm-130/timing.json",
+  "verses": [
+    {
+      "n": 1,
+      "text": "A song of ascents. Out of the depths I cry to You, O LORD!",
+      "heading": "Out of the Depths",
+      "image": "/images/sleep/psalm-130/s1.jpg"
+    },
+    {
+      "n": 2,
+      "text": "O Lord, hear my voice; let Your ears be attentive to my plea for mercy.",
+      "image": "/images/sleep/psalm-130/s1.jpg"
+    },
+    {
+      "n": 3,
+      "text": "If You, O LORD, kept track of iniquities, then who, O Lord, could stand?",
+      "image": "/images/sleep/psalm-130/s1.jpg"
+    },
+    {
+      "n": 4,
+      "text": "But with You there is forgiveness, so that You may be feared.",
+      "image": "/images/sleep/psalm-130/s1.jpg"
+    },
+    {
+      "n": 5,
+      "text": "I wait for the LORD; my soul does wait, and in His word I put my hope.",
+      "image": "/images/sleep/psalm-130/s2.jpg"
+    },
+    {
+      "n": 6,
+      "text": "My soul waits for the Lord more than watchmen wait for the morning—more than watchmen wait for the morning.",
+      "image": "/images/sleep/psalm-130/s2.jpg"
+    },
+    {
+      "n": 7,
+      "text": "O Israel, put your hope in the LORD, for with the LORD is loving devotion, and with Him is redemption in abundance.",
+      "image": "/images/sleep/psalm-130/s2.jpg"
+    },
+    {
+      "n": 8,
+      "text": "And He will redeem Israel from all iniquity.",
+      "image": "/images/sleep/psalm-130/s2.jpg"
+    }
+  ]
+}

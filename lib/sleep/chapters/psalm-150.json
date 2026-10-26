@@ -1,0 +1,42 @@
+{
+  "slug": "psalm-150",
+  "book": "Psalm",
+  "chapter": 150,
+  "title": "Let Everything That Has Breath",
+  "translation": "Berean Standard Bible",
+  "audioSrc": "/sleep/psalm-150/chapter.mp3",
+  "timingSrc": "/sleep/psalm-150/timing.json",
+  "verses": [
+    {
+      "n": 1,
+      "text": "Hallelujah! Praise God in His sanctuary. Praise Him in His mighty heavens.",
+      "heading": "Let Everything That Has Breath",
+      "image": "/images/sleep/psalm-150/s1.jpg"
+    },
+    {
+      "n": 2,
+      "text": "Praise Him for His mighty acts; praise Him for His excellent greatness.",
+      "image": "/images/sleep/psalm-150/s1.jpg"
+    },
+    {
+      "n": 3,
+      "text": "Praise Him with the sound of the horn; praise Him with the harp and lyre.",
+      "image": "/images/sleep/psalm-150/s1.jpg"
+    },
+    {
+      "n": 4,
+      "text": "Praise Him with tambourine and dancing; praise Him with strings and flute.",
+      "image": "/images/sleep/psalm-150/s1.jpg"
+    },
+    {
+      "n": 5,
+      "text": "Praise Him with clashing cymbals; praise Him with resounding cymbals.",
+      "image": "/images/sleep/psalm-150/s1.jpg"
+    },
+    {
+      "n": 6,
+      "text": "Let everything that has breath praise the LORD! Hallelujah!",
+      "image": "/images/sleep/psalm-150/s1.jpg"
+    }
+  ]
+}

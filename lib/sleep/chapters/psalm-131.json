@@ -1,0 +1,27 @@
+{
+  "slug": "psalm-131",
+  "book": "Psalm",
+  "chapter": 131,
+  "title": "Like a Weaned Child",
+  "translation": "Berean Standard Bible",
+  "audioSrc": "/sleep/psalm-131/chapter.mp3",
+  "timingSrc": "/sleep/psalm-131/timing.json",
+  "verses": [
+    {
+      "n": 1,
+      "text": "A song of ascents. Of David. My heart is not proud, O LORD, my eyes are not haughty. I do not aspire to great things or matters too lofty for me.",
+      "heading": "Like a Weaned Child",
+      "image": "/images/sleep/psalm-131/s1.jpg"
+    },
+    {
+      "n": 2,
+      "text": "Surely I have stilled and quieted my soul; like a weaned child with his mother, like a weaned child is my soul within me.",
+      "image": "/images/sleep/psalm-131/s1.jpg"
+    },
+    {
+      "n": 3,
+      "text": "O Israel, put your hope in the LORD, both now and forevermore.",
+      "image": "/images/sleep/psalm-131/s1.jpg"
+    }
+  ]
+}

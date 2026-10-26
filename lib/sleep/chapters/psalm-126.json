@@ -1,0 +1,42 @@
+{
+  "slug": "psalm-126",
+  "book": "Psalm",
+  "chapter": 126,
+  "title": "Those Who Sow in Tears",
+  "translation": "Berean Standard Bible",
+  "audioSrc": "/sleep/psalm-126/chapter.mp3",
+  "timingSrc": "/sleep/psalm-126/timing.json",
+  "verses": [
+    {
+      "n": 1,
+      "text": "A song of ascents. When the LORD restored the captives of Zion, we were like dreamers.",
+      "heading": "Those Who Sow in Tears",
+      "image": "/images/sleep/psalm-126/s1.jpg"
+    },
+    {
+      "n": 2,
+      "text": "Then our mouths were filled with laughter, our tongues with shouts of joy. Then it was said among the nations, “The LORD has done great things for them.”",
+      "image": "/images/sleep/psalm-126/s1.jpg"
+    },
+    {
+      "n": 3,
+      "text": "The LORD has done great things for us; we are filled with joy.",
+      "image": "/images/sleep/psalm-126/s1.jpg"
+    },
+    {
+      "n": 4,
+      "text": "Restore our captives, O LORD, like streams in the Negev.",
+      "image": "/images/sleep/psalm-126/s1.jpg"
+    },
+    {
+      "n": 5,
+      "text": "Those who sow in tears will reap with shouts of joy.",
+      "image": "/images/sleep/psalm-126/s2.jpg"
+    },
+    {
+      "n": 6,
+      "text": "He who goes out weeping, bearing a trail of seed, will surely return with shouts of joy, carrying sheaves of grain.",
+      "image": "/images/sleep/psalm-126/s2.jpg"
+    }
+  ]
+}

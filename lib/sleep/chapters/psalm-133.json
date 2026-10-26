@@ -1,0 +1,27 @@
+{
+  "slug": "psalm-133",
+  "book": "Psalm",
+  "chapter": 133,
+  "title": "How Good When Brothers Dwell Together",
+  "translation": "Berean Standard Bible",
+  "audioSrc": "/sleep/psalm-133/chapter.mp3",
+  "timingSrc": "/sleep/psalm-133/timing.json",
+  "verses": [
+    {
+      "n": 1,
+      "text": "A song of ascents. Of David. Behold, how good and pleasant it is when brothers live together in harmony!",
+      "heading": "How Good When Brothers Dwell Together",
+      "image": "/images/sleep/psalm-133/s1.jpg"
+    },
+    {
+      "n": 2,
+      "text": "It is like fine oil on the head, running down on the beard, running down Aaron’s beard over the collar of his robes.",
+      "image": "/images/sleep/psalm-133/s1.jpg"
+    },
+    {
+      "n": 3,
+      "text": "It is like the dew of Hermon falling on the mountains of Zion. For there the LORD has bestowed the blessing of life forevermore.",
+      "image": "/images/sleep/psalm-133/s1.jpg"
+    }
+  ]
+}

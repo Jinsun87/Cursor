@@ -1,0 +1,113 @@
+.clip {
+  margin: 18px 0;
+  padding: 16px;
+  border-radius: 16px;
+  border: 1px solid rgba(228, 192, 74, 0.35);
+  background: rgba(228, 192, 74, 0.06);
+}
+.clip-head {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.clip-play {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 999px;
+  border: 0;
+  background: #e4c04a;
+  color: #1a1408;
+  cursor: pointer;
+}
+.clip-play:hover {
+  background: #edcd62;
+}
+.clip-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  flex: 1;
+}
+.clip-meta span {
+  font-size: 13px;
+  color: var(--muted, rgba(241, 235, 221, 0.72));
+}
+.clip-modes {
+  display: flex;
+  gap: 6px;
+}
+@media (max-width: 520px) {
+  .clip-modes {
+    width: 100%;
+  }
+  .clip-modes button {
+    flex: 1;
+  }
+}
+.clip-modes button {
+  border: 1px solid rgba(228, 192, 74, 0.35);
+  background: transparent;
+  color: inherit;
+  border-radius: 999px;
+  padding: 6px 12px;
+  font-size: 13px;
+  cursor: pointer;
+}
+.clip-modes button[aria-pressed="true"] {
+  background: rgba(228, 192, 74, 0.18);
+  border-color: #e4c04a;
+}
+.clip-bar {
+  height: 3px;
+  margin: 14px 0 10px;
+  border-radius: 3px;
+  background: rgba(241, 235, 221, 0.12);
+  overflow: hidden;
+}
+.clip-bar i {
+  display: block;
+  height: 100%;
+  background: #e4c04a;
+  transition: width 0.25s linear;
+}
+.clip-text p {
+  margin: 0 0 8px;
+  font-family: var(--font-display), Georgia, serif;
+  font-size: 18px;
+  line-height: 1.55;
+  color: var(--muted, rgba(241, 235, 221, 0.72));
+  transition: color 0.3s;
+}
+.clip-text p.is-reading {
+  color: inherit;
+}
+.clip-text sup {
+  font-family: system-ui, sans-serif;
+  font-size: 11px;
+  color: #e4c04a;
+}
+.clip-cta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px 16px;
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(241, 235, 221, 0.1);
+  font-size: 14px;
+  color: var(--muted, rgba(241, 235, 221, 0.72));
+}
+.clip-cta a {
+  flex: none;
+  padding: 9px 16px;
+  border-radius: 999px;
+  background: #e4c04a;
+  color: #1a1408;
+  font-weight: 650;
+}

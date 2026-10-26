@@ -1,0 +1,42 @@
+{
+  "slug": "psalm-128",
+  "book": "Psalm",
+  "chapter": 128,
+  "title": "Blessed Are All Who Fear the Lord",
+  "translation": "Berean Standard Bible",
+  "audioSrc": "/sleep/psalm-128/chapter.mp3",
+  "timingSrc": "/sleep/psalm-128/timing.json",
+  "verses": [
+    {
+      "n": 1,
+      "text": "A song of ascents. Blessed are all who fear the LORD, who walk in His ways!",
+      "heading": "Blessed Are All Who Fear the Lord",
+      "image": "/images/sleep/psalm-128/s1.jpg"
+    },
+    {
+      "n": 2,
+      "text": "For when you eat the fruit of your labor, blessings and prosperity will be yours.",
+      "image": "/images/sleep/psalm-128/s1.jpg"
+    },
+    {
+      "n": 3,
+      "text": "Your wife will be like a fruitful vine flourishing within your house, your sons like olive shoots sitting around your table.",
+      "image": "/images/sleep/psalm-128/s1.jpg"
+    },
+    {
+      "n": 4,
+      "text": "In this way indeed shall blessing come to the man who fears the LORD.",
+      "image": "/images/sleep/psalm-128/s1.jpg"
+    },
+    {
+      "n": 5,
+      "text": "May the LORD bless you from Zion, that you may see the prosperity of Jerusalem all the days of your life,",
+      "image": "/images/sleep/psalm-128/s1.jpg"
+    },
+    {
+      "n": 6,
+      "text": "that you may see your children’s children. Peace be upon Israel!",
+      "image": "/images/sleep/psalm-128/s1.jpg"
+    }
+  ]
+}

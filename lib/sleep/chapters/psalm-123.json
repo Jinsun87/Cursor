@@ -1,0 +1,32 @@
+{
+  "slug": "psalm-123",
+  "book": "Psalm",
+  "chapter": 123,
+  "title": "I Lift My Eyes to You",
+  "translation": "Berean Standard Bible",
+  "audioSrc": "/sleep/psalm-123/chapter.mp3",
+  "timingSrc": "/sleep/psalm-123/timing.json",
+  "verses": [
+    {
+      "n": 1,
+      "text": "A song of ascents. I lift up my eyes to You, the One enthroned in heaven.",
+      "heading": "I Lift My Eyes to You",
+      "image": "/images/sleep/psalm-123/s1.jpg"
+    },
+    {
+      "n": 2,
+      "text": "As the eyes of servants look to the hand of their master, as the eyes of a maidservant look to the hand of her mistress, so our eyes are on the LORD our God until He shows us mercy.",
+      "image": "/images/sleep/psalm-123/s1.jpg"
+    },
+    {
+      "n": 3,
+      "text": "Have mercy on us, O LORD, have mercy, for we have endured much contempt.",
+      "image": "/images/sleep/psalm-123/s1.jpg"
+    },
+    {
+      "n": 4,
+      "text": "We have endured much scorn from the arrogant, much contempt from the proud.",
+      "image": "/images/sleep/psalm-123/s1.jpg"
+    }
+  ]
+}

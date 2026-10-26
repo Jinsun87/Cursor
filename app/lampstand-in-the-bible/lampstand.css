@@ -1,0 +1,113 @@
+.ls p {
+  line-height: 1.65;
+}
+.ls .plan-section > p {
+  margin: 0 0 12px;
+}
+.ls-hero {
+  margin: 24px 0 8px;
+}
+.ls-hero img {
+  display: block;
+  width: 100%;
+  max-height: 520px;
+  height: auto;
+  object-fit: cover;
+  border-radius: 18px;
+  border: 1px solid rgba(228, 192, 74, 0.25);
+}
+.ls-hero figcaption {
+  margin-top: 8px;
+  font-size: 13px;
+  color: var(--muted, rgba(241, 235, 221, 0.72));
+}
+.ls-toc {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 20px;
+}
+.ls-toc a {
+  font-size: 14px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(228, 192, 74, 0.3);
+  color: #e4c04a;
+}
+.ls-toc a:hover {
+  border-color: #e4c04a;
+}
+.ls-verse {
+  margin: 16px 0;
+  padding: 14px 18px;
+  border-left: 3px solid #e4c04a;
+  border-radius: 0 12px 12px 0;
+  background: rgba(228, 192, 74, 0.06);
+}
+.ls-verse p {
+  margin: 0;
+  font-family: var(--font-display), Georgia, serif;
+  font-size: 19px;
+  line-height: 1.55;
+}
+.ls-verse cite {
+  display: block;
+  margin-top: 8px;
+  font-size: 13px;
+  font-style: normal;
+  color: #e4c04a;
+}
+.ls-points {
+  margin: 0;
+  padding-left: 20px;
+  display: grid;
+  gap: 10px;
+  line-height: 1.6;
+}
+.ls-cta {
+  margin-top: 48px;
+  padding: 24px 22px;
+  border-radius: 20px;
+  border: 1px solid rgba(228, 192, 74, 0.45);
+  background: linear-gradient(180deg, rgba(228, 192, 74, 0.12), rgba(228, 192, 74, 0.03));
+  text-align: center;
+}
+.ls-cta p {
+  margin: 0 auto;
+  max-width: 560px;
+}
+.ls-cta-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 18px;
+}
+.ls-cta-primary,
+.ls-cta-secondary {
+  display: inline-flex;
+  align-items: center;
+  min-height: 48px;
+  padding: 0 22px;
+  border-radius: 999px;
+  font-weight: 650;
+}
+.ls-cta-primary {
+  background: #e4c04a;
+  color: #1a1408;
+}
+.ls-cta-primary:hover {
+  background: #edcd62;
+}
+.ls-cta-secondary {
+  border: 1px solid rgba(228, 192, 74, 0.45);
+  color: #e4c04a;
+}
+.ls-cta-secondary:hover {
+  border-color: #e4c04a;
+}
+.ls-cta .ls-cta-note {
+  margin-top: 10px;
+  font-size: 13px;
+  color: var(--muted, rgba(241, 235, 221, 0.72));
+}

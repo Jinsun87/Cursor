@@ -1,0 +1,57 @@
+{
+  "slug": "psalm-137",
+  "book": "Psalm",
+  "chapter": 137,
+  "title": "By the Rivers of Babylon",
+  "translation": "Berean Standard Bible",
+  "audioSrc": "/sleep/psalm-137/chapter.mp3",
+  "timingSrc": "/sleep/psalm-137/timing.json",
+  "verses": [
+    {
+      "n": 1,
+      "text": "By the rivers of Babylon we sat and wept when we remembered Zion.",
+      "heading": "By the Rivers of Babylon",
+      "image": "/images/sleep/psalm-137/s1.jpg"
+    },
+    {
+      "n": 2,
+      "text": "There on the willows we hung our harps,",
+      "image": "/images/sleep/psalm-137/s1.jpg"
+    },
+    {
+      "n": 3,
+      "text": "for there our captors requested a song; our tormentors demanded songs of joy: “Sing us a song of Zion.”",
+      "image": "/images/sleep/psalm-137/s1.jpg"
+    },
+    {
+      "n": 4,
+      "text": "How can we sing a song of the LORD in a foreign land?",
+      "image": "/images/sleep/psalm-137/s1.jpg"
+    },
+    {
+      "n": 5,
+      "text": "If I forget you, O Jerusalem, may my right hand cease to function.",
+      "image": "/images/sleep/psalm-137/s1.jpg"
+    },
+    {
+      "n": 6,
+      "text": "May my tongue cling to the roof of my mouth if I do not remember you, if I do not exalt Jerusalem as my greatest joy!",
+      "image": "/images/sleep/psalm-137/s1.jpg"
+    },
+    {
+      "n": 7,
+      "text": "Remember, O LORD, the sons of Edom on the day Jerusalem fell: “Destroy it,” they said, “tear it down to its foundations!”",
+      "image": "/images/sleep/psalm-137/s1.jpg"
+    },
+    {
+      "n": 8,
+      "text": "O Daughter of Babylon, doomed to destruction, blessed is he who repays you as you have done to us.",
+      "image": "/images/sleep/psalm-137/s1.jpg"
+    },
+    {
+      "n": 9,
+      "text": "Blessed is he who seizes your infants and dashes them against the rocks.",
+      "image": "/images/sleep/psalm-137/s1.jpg"
+    }
+  ]
+}

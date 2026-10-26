@@ -1,0 +1,37 @@
+{
+  "slug": "psalm-125",
+  "book": "Psalm",
+  "chapter": 125,
+  "title": "Like Mount Zion",
+  "translation": "Berean Standard Bible",
+  "audioSrc": "/sleep/psalm-125/chapter.mp3",
+  "timingSrc": "/sleep/psalm-125/timing.json",
+  "verses": [
+    {
+      "n": 1,
+      "text": "A song of ascents. Those who trust in the LORD are like Mount Zion. It cannot be moved; it abides forever.",
+      "heading": "Like Mount Zion",
+      "image": "/images/sleep/psalm-125/s1.jpg"
+    },
+    {
+      "n": 2,
+      "text": "As the mountains surround Jerusalem, so the LORD surrounds His people, both now and forevermore.",
+      "image": "/images/sleep/psalm-125/s1.jpg"
+    },
+    {
+      "n": 3,
+      "text": "For the scepter of the wicked will not rest upon the land allotted to the righteous, so that the righteous will not put forth their hands to injustice.",
+      "image": "/images/sleep/psalm-125/s1.jpg"
+    },
+    {
+      "n": 4,
+      "text": "Do good, O LORD, to those who are good, and to the upright in heart.",
+      "image": "/images/sleep/psalm-125/s1.jpg"
+    },
+    {
+      "n": 5,
+      "text": "But those who turn to crooked ways the LORD will banish with the evildoers. Peace be upon Israel.",
+      "image": "/images/sleep/psalm-125/s1.jpg"
+    }
+  ]
+}

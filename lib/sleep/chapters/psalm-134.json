@@ -1,0 +1,27 @@
+{
+  "slug": "psalm-134",
+  "book": "Psalm",
+  "chapter": 134,
+  "title": "Bless the Lord by Night",
+  "translation": "Berean Standard Bible",
+  "audioSrc": "/sleep/psalm-134/chapter.mp3",
+  "timingSrc": "/sleep/psalm-134/timing.json",
+  "verses": [
+    {
+      "n": 1,
+      "text": "A song of ascents. Come, bless the LORD, all you servants of the LORD who serve by night in the house of the LORD!",
+      "heading": "Bless the Lord by Night",
+      "image": "/images/sleep/psalm-134/s1.jpg"
+    },
+    {
+      "n": 2,
+      "text": "Lift up your hands to the sanctuary and bless the LORD!",
+      "image": "/images/sleep/psalm-134/s1.jpg"
+    },
+    {
+      "n": 3,
+      "text": "May the LORD, the Maker of heaven and earth, bless you from Zion.",
+      "image": "/images/sleep/psalm-134/s1.jpg"
+    }
+  ]
+}

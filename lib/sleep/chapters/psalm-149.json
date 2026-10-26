@@ -1,0 +1,57 @@
+{
+  "slug": "psalm-149",
+  "book": "Psalm",
+  "chapter": 149,
+  "title": "Sing a New Song",
+  "translation": "Berean Standard Bible",
+  "audioSrc": "/sleep/psalm-149/chapter.mp3",
+  "timingSrc": "/sleep/psalm-149/timing.json",
+  "verses": [
+    {
+      "n": 1,
+      "text": "Hallelujah! Sing to the LORD a new song—His praise in the assembly of the godly.",
+      "heading": "Sing a New Song",
+      "image": "/images/sleep/psalm-149/s1.jpg"
+    },
+    {
+      "n": 2,
+      "text": "Let Israel rejoice in their Maker; let the children of Zion rejoice in their King.",
+      "image": "/images/sleep/psalm-149/s1.jpg"
+    },
+    {
+      "n": 3,
+      "text": "Let them praise His name with dancing, and make music to Him with tambourine and harp.",
+      "image": "/images/sleep/psalm-149/s1.jpg"
+    },
+    {
+      "n": 4,
+      "text": "For the LORD takes pleasure in His people; He adorns the afflicted with salvation.",
+      "image": "/images/sleep/psalm-149/s1.jpg"
+    },
+    {
+      "n": 5,
+      "text": "Let the saints exult in glory; let them shout for joy upon their beds.",
+      "image": "/images/sleep/psalm-149/s1.jpg"
+    },
+    {
+      "n": 6,
+      "text": "May the high praises of God be in their mouths, and a double-edged sword in their hands,",
+      "image": "/images/sleep/psalm-149/s1.jpg"
+    },
+    {
+      "n": 7,
+      "text": "to inflict vengeance on the nations and punishment on the peoples,",
+      "image": "/images/sleep/psalm-149/s1.jpg"
+    },
+    {
+      "n": 8,
+      "text": "to bind their kings with chains and their nobles with shackles of iron,",
+      "image": "/images/sleep/psalm-149/s1.jpg"
+    },
+    {
+      "n": 9,
+      "text": "to execute the judgment written against them. This honor is for all His saints. Hallelujah!",
+      "image": "/images/sleep/psalm-149/s1.jpg"
+    }
+  ]
+}
