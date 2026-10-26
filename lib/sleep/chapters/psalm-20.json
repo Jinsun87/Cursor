@@ -1,0 +1,57 @@
+{
+  "slug": "psalm-20",
+  "book": "Psalm",
+  "chapter": 20,
+  "title": "Some Trust in Chariots",
+  "translation": "Berean Standard Bible",
+  "audioSrc": "/sleep/psalm-20/chapter.mp3",
+  "timingSrc": "/sleep/psalm-20/timing.json",
+  "verses": [
+    {
+      "n": 1,
+      "text": "For the choirmaster. A Psalm of David. May the LORD answer you in the day of trouble; may the name of the God of Jacob protect you.",
+      "heading": "Some Trust in Chariots",
+      "image": "/images/sleep/psalm-20/s1.jpg"
+    },
+    {
+      "n": 2,
+      "text": "May He send you help from the sanctuary and sustain you from Zion.",
+      "image": "/images/sleep/psalm-20/s1.jpg"
+    },
+    {
+      "n": 3,
+      "text": "May He remember all your gifts and look favorably on your burnt offerings. Selah",
+      "image": "/images/sleep/psalm-20/s1.jpg"
+    },
+    {
+      "n": 4,
+      "text": "May He give you the desires of your heart and make all your plans succeed.",
+      "image": "/images/sleep/psalm-20/s1.jpg"
+    },
+    {
+      "n": 5,
+      "text": "May we shout for joy at your victory and raise a banner in the name of our God. May the LORD grant all your petitions.",
+      "image": "/images/sleep/psalm-20/s1.jpg"
+    },
+    {
+      "n": 6,
+      "text": "Now I know that the LORD saves His anointed; He answers him from His holy heaven with the saving power of His right hand.",
+      "image": "/images/sleep/psalm-20/s1.jpg"
+    },
+    {
+      "n": 7,
+      "text": "Some trust in chariots and others in horses, but we trust in the name of the LORD our God.",
+      "image": "/images/sleep/psalm-20/s2.jpg"
+    },
+    {
+      "n": 8,
+      "text": "They collapse and fall, but we rise up and stand firm.",
+      "image": "/images/sleep/psalm-20/s2.jpg"
+    },
+    {
+      "n": 9,
+      "text": "O LORD, save the king. Answer us on the day we call.",
+      "image": "/images/sleep/psalm-20/s2.jpg"
+    }
+  ]
+}

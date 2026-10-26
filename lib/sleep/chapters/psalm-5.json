@@ -1,0 +1,72 @@
+{
+  "slug": "psalm-5",
+  "book": "Psalm",
+  "chapter": 5,
+  "title": "A Morning Prayer",
+  "translation": "Berean Standard Bible",
+  "audioSrc": "/sleep/psalm-5/chapter.mp3",
+  "timingSrc": "/sleep/psalm-5/timing.json",
+  "verses": [
+    {
+      "n": 1,
+      "text": "For the choirmaster, to be accompanied by flutes. A Psalm of David. Give ear to my words, O LORD; consider my groaning.",
+      "heading": "A Morning Prayer",
+      "image": "/images/sleep/psalm-5/s1.jpg"
+    },
+    {
+      "n": 2,
+      "text": "Attend to the sound of my cry, my King and my God, for to You I pray.",
+      "image": "/images/sleep/psalm-5/s1.jpg"
+    },
+    {
+      "n": 3,
+      "text": "In the morning, O LORD, You hear my voice; at daybreak I lay my plea before You and wait in expectation.",
+      "image": "/images/sleep/psalm-5/s1.jpg"
+    },
+    {
+      "n": 4,
+      "text": "For You are not a God who delights in wickedness; no evil can dwell with You.",
+      "image": "/images/sleep/psalm-5/s1.jpg"
+    },
+    {
+      "n": 5,
+      "text": "The boastful cannot stand in Your presence; You hate all workers of iniquity.",
+      "image": "/images/sleep/psalm-5/s1.jpg"
+    },
+    {
+      "n": 6,
+      "text": "You destroy those who tell lies; the LORD abhors the man of bloodshed and deceit.",
+      "image": "/images/sleep/psalm-5/s1.jpg"
+    },
+    {
+      "n": 7,
+      "text": "But I will enter Your house by the abundance of Your loving devotion; in reverence I will bow down toward Your holy temple.",
+      "image": "/images/sleep/psalm-5/s1.jpg"
+    },
+    {
+      "n": 8,
+      "text": "Lead me, O LORD, in Your righteousness because of my enemies; make straight Your way before me.",
+      "image": "/images/sleep/psalm-5/s2.jpg"
+    },
+    {
+      "n": 9,
+      "text": "For not a word they speak can be trusted; destruction lies within them. Their throats are open graves; their tongues practice deceit.",
+      "image": "/images/sleep/psalm-5/s2.jpg"
+    },
+    {
+      "n": 10,
+      "text": "Declare them guilty, O God; let them fall by their own devices. Drive them out for their many transgressions, for they have rebelled against You.",
+      "image": "/images/sleep/psalm-5/s2.jpg"
+    },
+    {
+      "n": 11,
+      "text": "But let all who take refuge in You rejoice; let them ever shout for joy. May You shelter them, that those who love Your name may rejoice in You.",
+      "image": "/images/sleep/psalm-5/s2.jpg"
+    },
+    {
+      "n": 12,
+      "text": "For surely You, O LORD, bless the righteous; You surround them with the shield of Your favor.",
+      "image": "/images/sleep/psalm-5/s2.jpg"
+    }
+  ]
+}

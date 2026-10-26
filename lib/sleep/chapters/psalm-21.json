@@ -1,0 +1,77 @@
+{
+  "slug": "psalm-21",
+  "book": "Psalm",
+  "chapter": 21,
+  "title": "The King Rejoices",
+  "translation": "Berean Standard Bible",
+  "audioSrc": "/sleep/psalm-21/chapter.mp3",
+  "timingSrc": "/sleep/psalm-21/timing.json",
+  "verses": [
+    {
+      "n": 1,
+      "text": "For the choirmaster. A Psalm of David. O LORD, the king rejoices in Your strength. How greatly he exults in Your salvation!",
+      "heading": "The King Rejoices",
+      "image": "/images/sleep/psalm-21/s1.jpg"
+    },
+    {
+      "n": 2,
+      "text": "You have granted his heart’s desire and have not withheld the request of his lips. Selah",
+      "image": "/images/sleep/psalm-21/s1.jpg"
+    },
+    {
+      "n": 3,
+      "text": "For You welcomed him with rich blessings; You placed on his head a crown of pure gold.",
+      "image": "/images/sleep/psalm-21/s1.jpg"
+    },
+    {
+      "n": 4,
+      "text": "He asked You for life, and You granted it—length of days, forever and ever.",
+      "image": "/images/sleep/psalm-21/s1.jpg"
+    },
+    {
+      "n": 5,
+      "text": "Great is his glory in Your salvation; You bestow on him splendor and majesty.",
+      "image": "/images/sleep/psalm-21/s1.jpg"
+    },
+    {
+      "n": 6,
+      "text": "For You grant him blessings forever; You cheer him with joy in Your presence.",
+      "image": "/images/sleep/psalm-21/s1.jpg"
+    },
+    {
+      "n": 7,
+      "text": "For the king trusts in the LORD; through the loving devotion of the Most High, he will not be shaken.",
+      "image": "/images/sleep/psalm-21/s1.jpg"
+    },
+    {
+      "n": 8,
+      "text": "Your hand will apprehend all Your enemies; Your right hand will seize those who hate You.",
+      "image": "/images/sleep/psalm-21/s2.jpg"
+    },
+    {
+      "n": 9,
+      "text": "You will place them in a fiery furnace at the time of Your appearing. In His wrath the LORD will engulf them, and the fire will consume them.",
+      "image": "/images/sleep/psalm-21/s2.jpg"
+    },
+    {
+      "n": 10,
+      "text": "You will wipe their descendants from the earth, and their offspring from the sons of men.",
+      "image": "/images/sleep/psalm-21/s2.jpg"
+    },
+    {
+      "n": 11,
+      "text": "Though they intend You harm, the schemes they devise will not prevail.",
+      "image": "/images/sleep/psalm-21/s2.jpg"
+    },
+    {
+      "n": 12,
+      "text": "For You will put them to flight when Your bow is trained upon them.",
+      "image": "/images/sleep/psalm-21/s2.jpg"
+    },
+    {
+      "n": 13,
+      "text": "Be exalted, O LORD, in Your strength; we will sing and praise Your power.",
+      "image": "/images/sleep/psalm-21/s2.jpg"
+    }
+  ]
+}

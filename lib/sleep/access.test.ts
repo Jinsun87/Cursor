@@ -17,3 +17,11 @@ describe("access", () => {
     expect(canListen({ book: "Genesis" }, false)).toBe(true);
   });
 });
+
+describe("books named differently in the data", () => {
+  it("finds Psalms by its data name, Psalm, and keeps it Premium", () => {
+    expect(isPremiumBook("Psalm")).toBe(true);
+    expect(canListen({ book: "Psalm" }, false)).toBe(false);
+    expect(canListen({ book: "Psalm" }, true)).toBe(true);
+  });
+});

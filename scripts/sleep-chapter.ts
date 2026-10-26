@@ -17,6 +17,7 @@ import { getChapter, BSB_NAME } from "../lib/bible/bsb";
 import { generateVertexImage } from "../lib/ai/vertex-imagen";
 import { GENESIS_PLANS, NIGHT_STYLE, type SleepChapterPlan } from "../content/sleep/genesis";
 import { EXODUS_PLANS } from "../content/sleep/exodus";
+import { PSALM_PLANS } from "../content/sleep/psalms";
 import { BOOKS } from "../lib/plan/books";
 import type { SleepChapter } from "../lib/sleep/types";
 import { SLEEP_GENESIS_1 } from "../lib/sleep/genesis-1";
@@ -31,7 +32,7 @@ if (existsSync(".env.local")) {
   }
 }
 
-const PLANS: Record<string, SleepChapterPlan[]> = { Genesis: GENESIS_PLANS, Exodus: EXODUS_PLANS };
+const PLANS: Record<string, SleepChapterPlan[]> = { Genesis: GENESIS_PLANS, Exodus: EXODUS_PLANS, Psalm: PSALM_PLANS };
 const only = process.argv.find((a) => a.startsWith("--only="))?.split("=")[1];
 const redo = process.argv.includes("--redo");
 const step = (name: string) => !only || only === name;

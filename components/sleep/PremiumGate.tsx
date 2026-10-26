@@ -6,6 +6,7 @@ import { useApp } from "@/lib/store";
 import { useSleepAudio } from "@/lib/sleep/sleep-audio";
 import { FOUNDING_PRICE } from "@/lib/founding";
 import { trackEvent } from "@/lib/analytics";
+import { SHELF } from "@/lib/sleep/books";
 import "./sleep.css";
 
 /**
@@ -23,6 +24,7 @@ export function PremiumGate() {
 
   if (!locked) return null;
   const { chapter, mode } = locked;
+  const bookName = SHELF.find((b) => (b.book ?? b.name) === chapter.book)?.name ?? chapter.book;
   const lifetime = Boolean(process.env.NEXT_PUBLIC_PADDLE_LIFETIME_PRICE_ID);
 
   return (
@@ -30,7 +32,7 @@ export function PremiumGate() {
       <div className="sf-sheet pg-sheet" role="dialog" aria-modal="true" aria-labelledby="pg-title" onClick={(e) => e.stopPropagation()}>
         <div className="sf-sheet-head">
           <h2 id="pg-title">
-            {chapter.book} is part of Premium
+            {bookName} is part of Premium
           </h2>
           <button type="button" className="sf-icon" aria-label="Close" onClick={s.dismissLocked}>
             <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
@@ -48,7 +50,7 @@ export function PremiumGate() {
         ) : (
           <>
             <p>
-              Genesis is free to hear, every chapter. {chapter.book} and the books after it are read aloud in Walk and Sleep for
+              Genesis is free to hear, every chapter. {bookName} and the books after it are read aloud in Walk and Sleep for
               Premium members; the text stays free to read in the reading plan.
             </p>
             <p className="pg-price">

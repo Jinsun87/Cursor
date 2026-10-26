@@ -15,6 +15,8 @@
  *             (a sign of a misaligned or estimated verse start)
  *   audio     local MP3 length matches timing.json and the catalogue
  *   silence   no gap of 6 s or more inside the reading (a dropout or cut)
+ *   loudness  each recording near the -16 LUFS it was mastered to
+ *   lengths   Walk about 60-95% as long as Sleep (otherwise one was cut short or repeated)
  *   r2        the MP3 the app streams is on R2 and the same size as the local one
  *   words     every word of the text was said (from the Whisper transcript kept when the
  *             chapter was voiced; chapters voiced before that have no transcript yet)
@@ -28,7 +30,7 @@ import { getChapter } from "../lib/bible/bsb";
 import { SLEEP_CHAPTERS, SLEEP_SECONDS, WALK_SECONDS } from "../lib/sleep/chapters";
 import type { SleepChapter, SleepTiming } from "../lib/sleep/types";
 import { checkCoverage } from "../lib/sleep/coverage";
-import { transcribe, transcriptPath } from "./lib/sleep-voice";
+import { confirmSkipped, transcribe, transcriptPath } from "./lib/sleep-voice";
 
 const only = process.argv.slice(2).find((a) => !a.startsWith("--")) ?? "";
 const fetchTranscripts = process.argv.includes("--transcribe");
@@ -103,15 +105,41 @@ function checkTiming(c: SleepChapter, mode: "sleep" | "walk") {
 let noTranscript = 0;
 
 /** Word for word, from the transcript kept when the chapter was voiced. */
-function checkWords(c: SleepChapter, mode: "sleep" | "walk") {
+async function checkWords(c: SleepChapter, mode: "sleep" | "walk") {
   const file = transcriptPath(mode, c.slug);
   if (!existsSync(file)) return void noTranscript++;
   const { duration, words } = JSON.parse(readFileSync(file, "utf8"));
+  const mp3 = join("public", mode, c.slug, "chapter.mp3");
   for (const x of checkCoverage(c.verses, words, duration)) {
     const where = `verse ${x.verse} at ${Math.floor(x.at / 60)}:${String(Math.round(x.at % 60)).padStart(2, "0")}`;
-    if (x.kind === "skipped") fail(c.slug, `${mode} words`, `skipped at ${where}: "${x.words}"`);
-    else if (x.kind === "extra") fail(c.slug, `${mode} words`, `said but not in the text at ${where}: "${x.words}"`);
+    if (x.kind === "skipped") {
+      // Whisper drops words in long, repetitive readings: listen again to just that stretch.
+      if (existsSync(mp3) && !(await confirmSkipped(mp3, x.at, x.words))) {
+        warn(c.slug, `${mode} words`, `flagged at ${where} but the words are there when that stretch is checked on its own: "${x.words}"`);
+      } else fail(c.slug, `${mode} words`, `skipped at ${where}: "${x.words}"`);
+    } else if (x.kind === "extra") fail(c.slug, `${mode} words`, `said but not in the text at ${where}: "${x.words}"`);
   }
+}
+
+/** Integrated loudness (LUFS) of a file, from ffmpeg's EBU R128 meter. */
+function loudness(file: string): number | null {
+  const { stderr } = spawnSync("ffmpeg", ["-hide_banner", "-nostats", "-i", file, "-af", "ebur128=framelog=quiet", "-f", "null", "-"], { encoding: "utf8" });
+  const m = [...(stderr ?? "").matchAll(/I:\s+(-?[\d.]+) LUFS/g)].pop();
+  return m ? Number(m[1]) : null;
+}
+
+function checkLoudness(slug: string, mode: string, mp3: string) {
+  const lufs = loudness(mp3);
+  if (lufs === null) warn(slug, `${mode} loudness`, "could not measure");
+  else if (lufs < -19 || lufs > -13) warn(slug, `${mode} loudness`, `${lufs} LUFS, mastered for -16`);
+}
+
+function checkLengths(c: SleepChapter) {
+  const sleep = SLEEP_SECONDS[c.slug];
+  const walk = WALK_SECONDS[c.slug];
+  if (!sleep || !walk) return;
+  const ratio = walk / sleep;
+  if (ratio < 0.6 || ratio > 0.95) warn(c.slug, "lengths", `Walk is ${Math.round(ratio * 100)}% of Sleep (usually 70-85%): one reading may be cut short or repeat a passage`);
 }
 
 async function checkR2(slug: string, mode: string, mp3: string) {
@@ -173,10 +201,14 @@ async function main() {
     }
     if (!c.verses[0].heading && c.slug !== "genesis-1") warn(c.slug, "headings", "the chapter does not open with a section heading");
 
+    checkLengths(c);
     for (const mode of ["sleep", "walk"] as const) {
-      checkWords(c, mode);
+      await checkWords(c, mode);
       const mp3 = checkTiming(c, mode);
-      if (typeof mp3 === "string") await checkR2(c.slug, mode, mp3);
+      if (typeof mp3 === "string") {
+        checkLoudness(c.slug, mode, mp3);
+        await checkR2(c.slug, mode, mp3);
+      }
     }
   }
 

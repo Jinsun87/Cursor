@@ -1,0 +1,37 @@
+{
+  "slug": "psalm-15",
+  "book": "Psalm",
+  "chapter": 15,
+  "title": "Who May Dwell on Your Holy Hill?",
+  "translation": "Berean Standard Bible",
+  "audioSrc": "/sleep/psalm-15/chapter.mp3",
+  "timingSrc": "/sleep/psalm-15/timing.json",
+  "verses": [
+    {
+      "n": 1,
+      "text": "A Psalm of David. O LORD, who may abide in Your tent? Who may dwell on Your holy mountain?",
+      "heading": "Who May Dwell on Your Holy Hill?",
+      "image": "/images/sleep/psalm-15/s1.jpg"
+    },
+    {
+      "n": 2,
+      "text": "He who walks with integrity and practices righteousness, who speaks the truth from his heart,",
+      "image": "/images/sleep/psalm-15/s1.jpg"
+    },
+    {
+      "n": 3,
+      "text": "who has no slander on his tongue, who does no harm to his neighbor, who casts no scorn on his friend,",
+      "image": "/images/sleep/psalm-15/s1.jpg"
+    },
+    {
+      "n": 4,
+      "text": "who despises the vile but honors those who fear the LORD, who does not revise a costly oath,",
+      "image": "/images/sleep/psalm-15/s1.jpg"
+    },
+    {
+      "n": 5,
+      "text": "who lends his money without interest and refuses a bribe against the innocent. He who does these things will never be shaken.",
+      "image": "/images/sleep/psalm-15/s1.jpg"
+    }
+  ]
+}

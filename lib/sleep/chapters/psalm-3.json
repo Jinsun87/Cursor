@@ -1,0 +1,52 @@
+{
+  "slug": "psalm-3",
+  "book": "Psalm",
+  "chapter": 3,
+  "title": "A Morning Prayer in Trouble",
+  "translation": "Berean Standard Bible",
+  "audioSrc": "/sleep/psalm-3/chapter.mp3",
+  "timingSrc": "/sleep/psalm-3/timing.json",
+  "verses": [
+    {
+      "n": 1,
+      "text": "A Psalm of David, when he fled from his son Absalom. O LORD, how my foes have increased! How many rise up against me!",
+      "heading": "A Morning Prayer in Trouble",
+      "image": "/images/sleep/psalm-3/s1.jpg"
+    },
+    {
+      "n": 2,
+      "text": "Many say of me, “God will not deliver him.” Selah",
+      "image": "/images/sleep/psalm-3/s1.jpg"
+    },
+    {
+      "n": 3,
+      "text": "But You, O LORD, are a shield around me, my glory, and the One who lifts my head.",
+      "image": "/images/sleep/psalm-3/s1.jpg"
+    },
+    {
+      "n": 4,
+      "text": "To the LORD I cry aloud, and He answers me from His holy mountain. Selah",
+      "image": "/images/sleep/psalm-3/s1.jpg"
+    },
+    {
+      "n": 5,
+      "text": "I lie down and sleep; I wake again, for the LORD sustains me.",
+      "image": "/images/sleep/psalm-3/s1.jpg"
+    },
+    {
+      "n": 6,
+      "text": "I will not fear the myriads set against me on every side.",
+      "image": "/images/sleep/psalm-3/s1.jpg"
+    },
+    {
+      "n": 7,
+      "text": "Arise, O LORD! Save me, O my God! Strike all my enemies on the jaw; break the teeth of the wicked.",
+      "image": "/images/sleep/psalm-3/s1.jpg"
+    },
+    {
+      "n": 8,
+      "text": "Salvation belongs to the LORD; may Your blessing be on Your people. Selah",
+      "image": "/images/sleep/psalm-3/s1.jpg"
+    }
+  ]
+}

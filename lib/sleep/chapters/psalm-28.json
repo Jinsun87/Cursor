@@ -1,0 +1,57 @@
+{
+  "slug": "psalm-28",
+  "book": "Psalm",
+  "chapter": 28,
+  "title": "The Lord Is My Strength",
+  "translation": "Berean Standard Bible",
+  "audioSrc": "/sleep/psalm-28/chapter.mp3",
+  "timingSrc": "/sleep/psalm-28/timing.json",
+  "verses": [
+    {
+      "n": 1,
+      "text": "Of David. To You, O LORD, I call; be not deaf to me, O my Rock. For if You remain silent, I will be like those descending to the Pit.",
+      "heading": "The Lord Is My Strength",
+      "image": "/images/sleep/psalm-28/s1.jpg"
+    },
+    {
+      "n": 2,
+      "text": "Hear my cry for mercy when I call to You for help, when I lift up my hands toward Your holy sanctuary.",
+      "image": "/images/sleep/psalm-28/s1.jpg"
+    },
+    {
+      "n": 3,
+      "text": "Do not drag me away with the wicked, and with the workers of iniquity, who speak peace to their neighbors while malice is in their hearts.",
+      "image": "/images/sleep/psalm-28/s1.jpg"
+    },
+    {
+      "n": 4,
+      "text": "Repay them according to their deeds and for their works of evil. Repay them for what their hands have done; bring back on them what they deserve.",
+      "image": "/images/sleep/psalm-28/s1.jpg"
+    },
+    {
+      "n": 5,
+      "text": "Since they show no regard for the works of the LORD or what His hands have done, He will tear them down and never rebuild them.",
+      "image": "/images/sleep/psalm-28/s1.jpg"
+    },
+    {
+      "n": 6,
+      "text": "Blessed be the LORD, for He has heard my cry for mercy.",
+      "image": "/images/sleep/psalm-28/s2.jpg"
+    },
+    {
+      "n": 7,
+      "text": "The LORD is my strength and my shield; my heart trusts in Him, and I am helped. Therefore my heart rejoices, and I give thanks to Him with my song.",
+      "image": "/images/sleep/psalm-28/s2.jpg"
+    },
+    {
+      "n": 8,
+      "text": "The LORD is the strength of His people, a stronghold of salvation for His anointed.",
+      "image": "/images/sleep/psalm-28/s2.jpg"
+    },
+    {
+      "n": 9,
+      "text": "Save Your people and bless Your inheritance; shepherd them and carry them forever.",
+      "image": "/images/sleep/psalm-28/s2.jpg"
+    }
+  ]
+}

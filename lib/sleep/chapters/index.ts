@@ -90,6 +90,47 @@ import ch_exodus_37 from "./exodus-37.json";
 import ch_exodus_38 from "./exodus-38.json";
 import ch_exodus_39 from "./exodus-39.json";
 import ch_exodus_40 from "./exodus-40.json";
+import ch_psalm_1 from "./psalm-1.json";
+import ch_psalm_2 from "./psalm-2.json";
+import ch_psalm_3 from "./psalm-3.json";
+import ch_psalm_4 from "./psalm-4.json";
+import ch_psalm_5 from "./psalm-5.json";
+import ch_psalm_6 from "./psalm-6.json";
+import ch_psalm_7 from "./psalm-7.json";
+import ch_psalm_8 from "./psalm-8.json";
+import ch_psalm_9 from "./psalm-9.json";
+import ch_psalm_10 from "./psalm-10.json";
+import ch_psalm_11 from "./psalm-11.json";
+import ch_psalm_12 from "./psalm-12.json";
+import ch_psalm_13 from "./psalm-13.json";
+import ch_psalm_14 from "./psalm-14.json";
+import ch_psalm_15 from "./psalm-15.json";
+import ch_psalm_16 from "./psalm-16.json";
+import ch_psalm_17 from "./psalm-17.json";
+import ch_psalm_18 from "./psalm-18.json";
+import ch_psalm_19 from "./psalm-19.json";
+import ch_psalm_20 from "./psalm-20.json";
+import ch_psalm_21 from "./psalm-21.json";
+import ch_psalm_22 from "./psalm-22.json";
+import ch_psalm_23 from "./psalm-23.json";
+import ch_psalm_24 from "./psalm-24.json";
+import ch_psalm_25 from "./psalm-25.json";
+import ch_psalm_26 from "./psalm-26.json";
+import ch_psalm_27 from "./psalm-27.json";
+import ch_psalm_28 from "./psalm-28.json";
+import ch_psalm_29 from "./psalm-29.json";
+import ch_psalm_30 from "./psalm-30.json";
+import ch_psalm_31 from "./psalm-31.json";
+import ch_psalm_32 from "./psalm-32.json";
+import ch_psalm_33 from "./psalm-33.json";
+import ch_psalm_34 from "./psalm-34.json";
+import ch_psalm_35 from "./psalm-35.json";
+import ch_psalm_36 from "./psalm-36.json";
+import ch_psalm_37 from "./psalm-37.json";
+import ch_psalm_38 from "./psalm-38.json";
+import ch_psalm_39 from "./psalm-39.json";
+import ch_psalm_40 from "./psalm-40.json";
+import ch_psalm_41 from "./psalm-41.json";
 
 /** Every Sleep chapter with narration, in reading order. */
 export const SLEEP_CHAPTERS: SleepChapter[] = [
@@ -183,6 +224,47 @@ export const SLEEP_CHAPTERS: SleepChapter[] = [
   ch_exodus_38 as SleepChapter,
   ch_exodus_39 as SleepChapter,
   ch_exodus_40 as SleepChapter,
+  ch_psalm_1 as SleepChapter,
+  ch_psalm_2 as SleepChapter,
+  ch_psalm_3 as SleepChapter,
+  ch_psalm_4 as SleepChapter,
+  ch_psalm_5 as SleepChapter,
+  ch_psalm_6 as SleepChapter,
+  ch_psalm_7 as SleepChapter,
+  ch_psalm_8 as SleepChapter,
+  ch_psalm_9 as SleepChapter,
+  ch_psalm_10 as SleepChapter,
+  ch_psalm_11 as SleepChapter,
+  ch_psalm_12 as SleepChapter,
+  ch_psalm_13 as SleepChapter,
+  ch_psalm_14 as SleepChapter,
+  ch_psalm_15 as SleepChapter,
+  ch_psalm_16 as SleepChapter,
+  ch_psalm_17 as SleepChapter,
+  ch_psalm_18 as SleepChapter,
+  ch_psalm_19 as SleepChapter,
+  ch_psalm_20 as SleepChapter,
+  ch_psalm_21 as SleepChapter,
+  ch_psalm_22 as SleepChapter,
+  ch_psalm_23 as SleepChapter,
+  ch_psalm_24 as SleepChapter,
+  ch_psalm_25 as SleepChapter,
+  ch_psalm_26 as SleepChapter,
+  ch_psalm_27 as SleepChapter,
+  ch_psalm_28 as SleepChapter,
+  ch_psalm_29 as SleepChapter,
+  ch_psalm_30 as SleepChapter,
+  ch_psalm_31 as SleepChapter,
+  ch_psalm_32 as SleepChapter,
+  ch_psalm_33 as SleepChapter,
+  ch_psalm_34 as SleepChapter,
+  ch_psalm_35 as SleepChapter,
+  ch_psalm_36 as SleepChapter,
+  ch_psalm_37 as SleepChapter,
+  ch_psalm_38 as SleepChapter,
+  ch_psalm_39 as SleepChapter,
+  ch_psalm_40 as SleepChapter,
+  ch_psalm_41 as SleepChapter,
 ];
 
 /** Length of each chapter's narration in seconds, by slug. */
@@ -277,6 +359,47 @@ export const SLEEP_SECONDS: Record<string, number> = {
   "exodus-38": 338,
   "exodus-39": 465,
   "exodus-40": 318,
+  "psalm-1": 52,
+  "psalm-2": 99,
+  "psalm-3": 80,
+  "psalm-4": 83,
+  "psalm-5": 137,
+  "psalm-6": 95,
+  "psalm-7": 144,
+  "psalm-8": 95,
+  "psalm-9": 165,
+  "psalm-10": 165,
+  "psalm-11": 70,
+  "psalm-12": 88,
+  "psalm-13": 55,
+  "psalm-14": 85,
+  "psalm-15": 53,
+  "psalm-16": 98,
+  "psalm-17": 142,
+  "psalm-18": 452,
+  "psalm-19": 137,
+  "psalm-20": 89,
+  "psalm-21": 115,
+  "psalm-22": 290,
+  "psalm-23": 65,
+  "psalm-24": 99,
+  "psalm-25": 165,
+  "psalm-26": 94,
+  "psalm-27": 158,
+  "psalm-28": 105,
+  "psalm-29": 93,
+  "psalm-30": 114,
+  "psalm-31": 244,
+  "psalm-32": 115,
+  "psalm-33": 164,
+  "psalm-34": 162,
+  "psalm-35": 278,
+  "psalm-36": 109,
+  "psalm-37": 327,
+  "psalm-38": 170,
+  "psalm-39": 154,
+  "psalm-40": 201,
+  "psalm-41": 120,
 };
 
 /** Length of each chapter's brisk Walk reading in seconds, by slug (0 = not voiced yet). */
@@ -371,4 +494,45 @@ export const WALK_SECONDS: Record<string, number> = {
   "exodus-38": 265,
   "exodus-39": 351,
   "exodus-40": 258,
+  "psalm-1": 46,
+  "psalm-2": 81,
+  "psalm-3": 55,
+  "psalm-4": 66,
+  "psalm-5": 99,
+  "psalm-6": 69,
+  "psalm-7": 123,
+  "psalm-8": 67,
+  "psalm-9": 140,
+  "psalm-10": 132,
+  "psalm-11": 58,
+  "psalm-12": 65,
+  "psalm-13": 46,
+  "psalm-14": 64,
+  "psalm-15": 42,
+  "psalm-16": 79,
+  "psalm-17": 116,
+  "psalm-18": 339,
+  "psalm-19": 113,
+  "psalm-20": 63,
+  "psalm-21": 89,
+  "psalm-22": 219,
+  "psalm-23": 50,
+  "psalm-24": 73,
+  "psalm-25": 134,
+  "psalm-26": 73,
+  "psalm-27": 117,
+  "psalm-28": 74,
+  "psalm-29": 75,
+  "psalm-30": 84,
+  "psalm-31": 185,
+  "psalm-32": 90,
+  "psalm-33": 124,
+  "psalm-34": 135,
+  "psalm-35": 203,
+  "psalm-36": 87,
+  "psalm-37": 250,
+  "psalm-38": 135,
+  "psalm-39": 113,
+  "psalm-40": 150,
+  "psalm-41": 89,
 };

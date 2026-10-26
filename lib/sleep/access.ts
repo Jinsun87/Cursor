@@ -6,7 +6,7 @@ import { SHELF } from "./books";
  * The reading plan and every player entry point use this one rule.
  */
 export function isPremiumBook(book: string): boolean {
-  const shelf = SHELF.find((b) => b.name === book);
+  const shelf = SHELF.find((b) => (b.book ?? b.name) === book);
   return shelf ? Boolean(shelf.premium) : true;
 }
 

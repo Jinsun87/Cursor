@@ -1,0 +1,42 @@
+{
+  "slug": "psalm-13",
+  "book": "Psalm",
+  "chapter": 13,
+  "title": "How Long, O Lord?",
+  "translation": "Berean Standard Bible",
+  "audioSrc": "/sleep/psalm-13/chapter.mp3",
+  "timingSrc": "/sleep/psalm-13/timing.json",
+  "verses": [
+    {
+      "n": 1,
+      "text": "For the choirmaster. A Psalm of David. How long, O LORD? Will You forget me forever? How long will You hide Your face from me?",
+      "heading": "How Long, O Lord?",
+      "image": "/images/sleep/psalm-13/s1.jpg"
+    },
+    {
+      "n": 2,
+      "text": "How long must I wrestle in my soul, with sorrow in my heart each day? How long will my enemy dominate me?",
+      "image": "/images/sleep/psalm-13/s1.jpg"
+    },
+    {
+      "n": 3,
+      "text": "Consider me and respond, O LORD my God. Give light to my eyes, lest I sleep in death,",
+      "image": "/images/sleep/psalm-13/s1.jpg"
+    },
+    {
+      "n": 4,
+      "text": "lest my enemy say, “I have overcome him,” and my foes rejoice when I fall.",
+      "image": "/images/sleep/psalm-13/s1.jpg"
+    },
+    {
+      "n": 5,
+      "text": "But I have trusted in Your loving devotion; my heart will rejoice in Your salvation.",
+      "image": "/images/sleep/psalm-13/s1.jpg"
+    },
+    {
+      "n": 6,
+      "text": "I will sing to the LORD, for He has been good to me.",
+      "image": "/images/sleep/psalm-13/s1.jpg"
+    }
+  ]
+}

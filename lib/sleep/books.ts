@@ -8,7 +8,10 @@ export type StoryGroup = { title: string; from: number; to: number };
 
 export type ShelfBook = {
   slug: string;
+  /** As shown on the shelf ("Psalms"). */
   name: string;
+  /** The book's name in the Bible text and chapter data when it differs from `name` ("Psalm"). */
+  book?: string;
   /** Two letters for the cover tile, as on a Bible's spine. */
   abbr: string;
   testament: "Old Testament" | "New Testament";
@@ -58,6 +61,24 @@ export const SHELF: ShelfBook[] = [
       { title: "The Tabernacle", from: 25, to: 31 },
       { title: "The Golden Calf", from: 32, to: 34 },
       { title: "The Tabernacle Built", from: 35, to: 40 },
+    ],
+  },
+  {
+    slug: "psalm",
+    name: "Psalms",
+    book: "Psalm",
+    abbr: "Ps",
+    testament: "Old Testament",
+    section: "Poetry and Wisdom",
+    chapters: 150,
+    cover: ["#3f6a5c", "#173029"],
+    premium: true,
+    stories: [
+      { title: "Book One", from: 1, to: 41 },
+      { title: "Book Two", from: 42, to: 72 },
+      { title: "Book Three", from: 73, to: 89 },
+      { title: "Book Four", from: 90, to: 106 },
+      { title: "Book Five", from: 107, to: 150 },
     ],
   },
 ];

@@ -15,7 +15,7 @@ import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
 import { GoogleAuth } from "google-auth-library";
 import { alignVerses } from "../../lib/sleep/align";
-import { checkCoverage, type CoverageIssue } from "../../lib/sleep/coverage";
+import { checkCoverage, spokenWords, type CoverageIssue } from "../../lib/sleep/coverage";
 
 export type VoiceVerse = { n: number; text: string; heading?: string };
 
@@ -189,6 +189,24 @@ export async function transcribe(mp3: string): Promise<{ word: string; start: nu
   return (await res.json()).words;
 }
 
+/**
+ * Whisper sometimes drops words from a long recording, especially in repetitive passages,
+ * so a "skipped" flag is checked again on a short clip around it (transcribed on its own,
+ * which is far more reliable). True when the words really are missing from the audio.
+ */
+export async function confirmSkipped(mp3: string, at: number, words: string): Promise<boolean> {
+  const clip = join(tmpdir(), `skip-check-${Date.now()}-${Math.round(at)}.mp3`);
+  try {
+    execFileSync("ffmpeg", ["-y", "-loglevel", "error", "-ss", String(Math.max(0, at - 15)), "-t", "50", "-i", mp3, "-c:a", "libmp3lame", "-b:a", "64k", clip]);
+    const heard = ` ${(await transcribe(clip)).flatMap((w) => spokenWords(w.word)).join(" ")} `;
+    return !heard.includes(` ${spokenWords(words).join(" ")} `);
+  } catch {
+    return true; // could not check: keep the flag
+  } finally {
+    rmSync(clip, { force: true });
+  }
+}
+
 /** POST with a 2-minute limit per try; retries dropped connections and server errors. */
 async function post(url: string, init: RequestInit): Promise<Response> {
   for (let attempt = 1; ; attempt++) {
@@ -314,7 +332,13 @@ export async function voiceChapter(
   const tr = { words: await transcribe(plain) };
   const { timing, missed } = alignVerses(verses, tr.words, duration);
   // Word for word: was every word of the text actually said?
-  const issues = checkCoverage(verses, tr.words, duration);
+  const flagged = checkCoverage(verses, tr.words, duration);
+  // Before anyone pays to re-voice, make sure a "skipped" flag is not just Whisper missing words.
+  const issues: CoverageIssue[] = [];
+  for (const x of flagged) {
+    if (x.kind === "skipped" && !(await confirmSkipped(plain, x.at, x.words))) issues.push({ ...x, kind: "unheard" });
+    else issues.push(x);
+  }
   if (opts.transcriptFile) {
     mkdirSync(dirname(opts.transcriptFile), { recursive: true });
     writeFileSync(opts.transcriptFile, JSON.stringify({ duration, words: tr.words }) + "\n");
