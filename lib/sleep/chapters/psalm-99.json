@@ -1,0 +1,57 @@
+{
+  "slug": "psalm-99",
+  "book": "Psalm",
+  "chapter": 99,
+  "title": "The Lord Is Holy",
+  "translation": "Berean Standard Bible",
+  "audioSrc": "/sleep/psalm-99/chapter.mp3",
+  "timingSrc": "/sleep/psalm-99/timing.json",
+  "verses": [
+    {
+      "n": 1,
+      "text": "The LORD reigns; let the nations tremble! He is enthroned above the cherubim; let the earth quake!",
+      "heading": "The Lord Is Holy",
+      "image": "/images/sleep/psalm-99/s1.jpg"
+    },
+    {
+      "n": 2,
+      "text": "Great is the LORD in Zion; He is exalted above all the peoples.",
+      "image": "/images/sleep/psalm-99/s1.jpg"
+    },
+    {
+      "n": 3,
+      "text": "Let them praise Your great and awesome name—He is holy!",
+      "image": "/images/sleep/psalm-99/s1.jpg"
+    },
+    {
+      "n": 4,
+      "text": "The mighty King loves justice. You have established equity; You have exercised justice and righteousness in Jacob.",
+      "image": "/images/sleep/psalm-99/s1.jpg"
+    },
+    {
+      "n": 5,
+      "text": "Exalt the LORD our God, and worship at His footstool; He is holy!",
+      "image": "/images/sleep/psalm-99/s1.jpg"
+    },
+    {
+      "n": 6,
+      "text": "Moses and Aaron were among His priests; Samuel was among those who called on His name. They called to the LORD and He answered.",
+      "image": "/images/sleep/psalm-99/s1.jpg"
+    },
+    {
+      "n": 7,
+      "text": "He spoke to them from the pillar of cloud; they kept His decrees and the statutes He gave them.",
+      "image": "/images/sleep/psalm-99/s1.jpg"
+    },
+    {
+      "n": 8,
+      "text": "O LORD our God, You answered them. You were a forgiving God to them, yet an avenger of their misdeeds.",
+      "image": "/images/sleep/psalm-99/s1.jpg"
+    },
+    {
+      "n": 9,
+      "text": "Exalt the LORD our God and worship at His holy mountain, for the LORD our God is holy.",
+      "image": "/images/sleep/psalm-99/s1.jpg"
+    }
+  ]
+}

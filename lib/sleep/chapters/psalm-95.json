@@ -1,0 +1,67 @@
+{
+  "slug": "psalm-95",
+  "book": "Psalm",
+  "chapter": 95,
+  "title": "Come, Let Us Worship",
+  "translation": "Berean Standard Bible",
+  "audioSrc": "/sleep/psalm-95/chapter.mp3",
+  "timingSrc": "/sleep/psalm-95/timing.json",
+  "verses": [
+    {
+      "n": 1,
+      "text": "Come, let us sing for joy to the LORD; let us shout to the Rock of our salvation!",
+      "heading": "Come, Let Us Worship",
+      "image": "/images/sleep/psalm-95/s1.jpg"
+    },
+    {
+      "n": 2,
+      "text": "Let us enter His presence with thanksgiving; let us make a joyful noise to Him in song.",
+      "image": "/images/sleep/psalm-95/s1.jpg"
+    },
+    {
+      "n": 3,
+      "text": "For the LORD is a great God, a great King above all gods.",
+      "image": "/images/sleep/psalm-95/s1.jpg"
+    },
+    {
+      "n": 4,
+      "text": "In His hand are the depths of the earth, and the mountain peaks belong to Him.",
+      "image": "/images/sleep/psalm-95/s1.jpg"
+    },
+    {
+      "n": 5,
+      "text": "The sea is His, for He made it, and His hands formed the dry land.",
+      "image": "/images/sleep/psalm-95/s1.jpg"
+    },
+    {
+      "n": 6,
+      "text": "O come, let us worship and bow down; let us kneel before the LORD our Maker.",
+      "image": "/images/sleep/psalm-95/s2.jpg"
+    },
+    {
+      "n": 7,
+      "text": "For He is our God, and we are the people of His pasture, the sheep under His care. Today, if you hear His voice,",
+      "image": "/images/sleep/psalm-95/s2.jpg"
+    },
+    {
+      "n": 8,
+      "text": "do not harden your hearts as you did at Meribah, in the day at Massah in the wilderness,",
+      "image": "/images/sleep/psalm-95/s2.jpg"
+    },
+    {
+      "n": 9,
+      "text": "where your fathers tested and tried Me, though they had seen My work.",
+      "image": "/images/sleep/psalm-95/s2.jpg"
+    },
+    {
+      "n": 10,
+      "text": "For forty years I was angry with that generation, and I said, “They are a people whose hearts go astray, and they have not known My ways.”",
+      "image": "/images/sleep/psalm-95/s2.jpg"
+    },
+    {
+      "n": 11,
+      "text": "So I swore on oath in My anger, “They shall never enter My rest.”",
+      "image": "/images/sleep/psalm-95/s2.jpg"
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "slug": "psalm-100",
+  "book": "Psalm",
+  "chapter": 100,
+  "title": "Enter His Gates with Thanksgiving",
+  "translation": "Berean Standard Bible",
+  "audioSrc": "/sleep/psalm-100/chapter.mp3",
+  "timingSrc": "/sleep/psalm-100/timing.json",
+  "verses": [
+    {
+      "n": 1,
+      "text": "A Psalm of thanksgiving. Make a joyful noise to the LORD, all the earth.",
+      "heading": "Enter His Gates with Thanksgiving",
+      "image": "/images/sleep/psalm-100/s1.jpg"
+    },
+    {
+      "n": 2,
+      "text": "Serve the LORD with gladness; come into His presence with joyful songs.",
+      "image": "/images/sleep/psalm-100/s1.jpg"
+    },
+    {
+      "n": 3,
+      "text": "Know that the LORD is God. It is He who made us, and we are His; we are His people, and the sheep of His pasture.",
+      "image": "/images/sleep/psalm-100/s1.jpg"
+    },
+    {
+      "n": 4,
+      "text": "Enter His gates with thanksgiving and His courts with praise; give thanks to Him and bless His name.",
+      "image": "/images/sleep/psalm-100/s1.jpg"
+    },
+    {
+      "n": 5,
+      "text": "For the LORD is good, and His loving devotion endures forever; His faithfulness continues to all generations.",
+      "image": "/images/sleep/psalm-100/s1.jpg"
+    }
+  ]
+}

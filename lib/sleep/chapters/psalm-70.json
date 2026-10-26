@@ -1,0 +1,37 @@
+{
+  "slug": "psalm-70",
+  "book": "Psalm",
+  "chapter": 70,
+  "title": "Hasten, O God",
+  "translation": "Berean Standard Bible",
+  "audioSrc": "/sleep/psalm-70/chapter.mp3",
+  "timingSrc": "/sleep/psalm-70/timing.json",
+  "verses": [
+    {
+      "n": 1,
+      "text": "For the choirmaster. Of David. To bring remembrance. Make haste, O God, to deliver me! Hurry, O LORD, to help me!",
+      "heading": "Hasten, O God",
+      "image": "/images/sleep/psalm-70/s1.jpg"
+    },
+    {
+      "n": 2,
+      "text": "May those who seek my life be ashamed and confounded; may those who wish me harm be repelled and humiliated.",
+      "image": "/images/sleep/psalm-70/s1.jpg"
+    },
+    {
+      "n": 3,
+      "text": "May those who say, “Aha, aha!” retreat because of their shame.",
+      "image": "/images/sleep/psalm-70/s1.jpg"
+    },
+    {
+      "n": 4,
+      "text": "May all who seek You rejoice and be glad in You; may those who love Your salvation always say, “Let God be magnified!”",
+      "image": "/images/sleep/psalm-70/s1.jpg"
+    },
+    {
+      "n": 5,
+      "text": "But I am poor and needy; hurry to me, O God. You are my help and my deliverer; O LORD, do not delay.",
+      "image": "/images/sleep/psalm-70/s1.jpg"
+    }
+  ]
+}

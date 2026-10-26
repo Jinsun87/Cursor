@@ -1,0 +1,47 @@
+{
+  "slug": "psalm-67",
+  "book": "Psalm",
+  "chapter": 67,
+  "title": "May God Be Gracious",
+  "translation": "Berean Standard Bible",
+  "audioSrc": "/sleep/psalm-67/chapter.mp3",
+  "timingSrc": "/sleep/psalm-67/timing.json",
+  "verses": [
+    {
+      "n": 1,
+      "text": "For the choirmaster. With stringed instruments. A Psalm. A song. May God be gracious to us and bless us, and cause His face to shine upon us, Selah",
+      "heading": "May God Be Gracious",
+      "image": "/images/sleep/psalm-67/s1.jpg"
+    },
+    {
+      "n": 2,
+      "text": "that Your ways may be known on earth, Your salvation among all nations.",
+      "image": "/images/sleep/psalm-67/s1.jpg"
+    },
+    {
+      "n": 3,
+      "text": "Let the peoples praise You, O God; let all the peoples praise You.",
+      "image": "/images/sleep/psalm-67/s1.jpg"
+    },
+    {
+      "n": 4,
+      "text": "Let the nations be glad and sing for joy, for You judge the peoples justly and lead the nations of the earth. Selah",
+      "image": "/images/sleep/psalm-67/s1.jpg"
+    },
+    {
+      "n": 5,
+      "text": "Let the peoples praise You, O God; let all the peoples praise You.",
+      "image": "/images/sleep/psalm-67/s1.jpg"
+    },
+    {
+      "n": 6,
+      "text": "The earth has yielded its harvest; God, our God, blesses us.",
+      "image": "/images/sleep/psalm-67/s1.jpg"
+    },
+    {
+      "n": 7,
+      "text": "God blesses us, that all the ends of the earth shall fear Him.",
+      "image": "/images/sleep/psalm-67/s1.jpg"
+    }
+  ]
+}

@@ -131,6 +131,67 @@ import ch_psalm_38 from "./psalm-38.json";
 import ch_psalm_39 from "./psalm-39.json";
 import ch_psalm_40 from "./psalm-40.json";
 import ch_psalm_41 from "./psalm-41.json";
+import ch_psalm_42 from "./psalm-42.json";
+import ch_psalm_43 from "./psalm-43.json";
+import ch_psalm_44 from "./psalm-44.json";
+import ch_psalm_45 from "./psalm-45.json";
+import ch_psalm_46 from "./psalm-46.json";
+import ch_psalm_47 from "./psalm-47.json";
+import ch_psalm_48 from "./psalm-48.json";
+import ch_psalm_49 from "./psalm-49.json";
+import ch_psalm_50 from "./psalm-50.json";
+import ch_psalm_51 from "./psalm-51.json";
+import ch_psalm_52 from "./psalm-52.json";
+import ch_psalm_53 from "./psalm-53.json";
+import ch_psalm_54 from "./psalm-54.json";
+import ch_psalm_55 from "./psalm-55.json";
+import ch_psalm_56 from "./psalm-56.json";
+import ch_psalm_57 from "./psalm-57.json";
+import ch_psalm_58 from "./psalm-58.json";
+import ch_psalm_59 from "./psalm-59.json";
+import ch_psalm_60 from "./psalm-60.json";
+import ch_psalm_61 from "./psalm-61.json";
+import ch_psalm_62 from "./psalm-62.json";
+import ch_psalm_63 from "./psalm-63.json";
+import ch_psalm_64 from "./psalm-64.json";
+import ch_psalm_65 from "./psalm-65.json";
+import ch_psalm_66 from "./psalm-66.json";
+import ch_psalm_67 from "./psalm-67.json";
+import ch_psalm_68 from "./psalm-68.json";
+import ch_psalm_69 from "./psalm-69.json";
+import ch_psalm_70 from "./psalm-70.json";
+import ch_psalm_71 from "./psalm-71.json";
+import ch_psalm_72 from "./psalm-72.json";
+import ch_psalm_73 from "./psalm-73.json";
+import ch_psalm_74 from "./psalm-74.json";
+import ch_psalm_75 from "./psalm-75.json";
+import ch_psalm_76 from "./psalm-76.json";
+import ch_psalm_77 from "./psalm-77.json";
+import ch_psalm_78 from "./psalm-78.json";
+import ch_psalm_79 from "./psalm-79.json";
+import ch_psalm_80 from "./psalm-80.json";
+import ch_psalm_81 from "./psalm-81.json";
+import ch_psalm_82 from "./psalm-82.json";
+import ch_psalm_83 from "./psalm-83.json";
+import ch_psalm_84 from "./psalm-84.json";
+import ch_psalm_85 from "./psalm-85.json";
+import ch_psalm_86 from "./psalm-86.json";
+import ch_psalm_87 from "./psalm-87.json";
+import ch_psalm_88 from "./psalm-88.json";
+import ch_psalm_89 from "./psalm-89.json";
+import ch_psalm_90 from "./psalm-90.json";
+import ch_psalm_91 from "./psalm-91.json";
+import ch_psalm_92 from "./psalm-92.json";
+import ch_psalm_93 from "./psalm-93.json";
+import ch_psalm_94 from "./psalm-94.json";
+import ch_psalm_95 from "./psalm-95.json";
+import ch_psalm_96 from "./psalm-96.json";
+import ch_psalm_97 from "./psalm-97.json";
+import ch_psalm_98 from "./psalm-98.json";
+import ch_psalm_99 from "./psalm-99.json";
+import ch_psalm_100 from "./psalm-100.json";
+import ch_psalm_101 from "./psalm-101.json";
+import ch_psalm_102 from "./psalm-102.json";
 
 /** Every Sleep chapter with narration, in reading order. */
 export const SLEEP_CHAPTERS: SleepChapter[] = [
@@ -265,6 +326,67 @@ export const SLEEP_CHAPTERS: SleepChapter[] = [
   ch_psalm_39 as SleepChapter,
   ch_psalm_40 as SleepChapter,
   ch_psalm_41 as SleepChapter,
+  ch_psalm_42 as SleepChapter,
+  ch_psalm_43 as SleepChapter,
+  ch_psalm_44 as SleepChapter,
+  ch_psalm_45 as SleepChapter,
+  ch_psalm_46 as SleepChapter,
+  ch_psalm_47 as SleepChapter,
+  ch_psalm_48 as SleepChapter,
+  ch_psalm_49 as SleepChapter,
+  ch_psalm_50 as SleepChapter,
+  ch_psalm_51 as SleepChapter,
+  ch_psalm_52 as SleepChapter,
+  ch_psalm_53 as SleepChapter,
+  ch_psalm_54 as SleepChapter,
+  ch_psalm_55 as SleepChapter,
+  ch_psalm_56 as SleepChapter,
+  ch_psalm_57 as SleepChapter,
+  ch_psalm_58 as SleepChapter,
+  ch_psalm_59 as SleepChapter,
+  ch_psalm_60 as SleepChapter,
+  ch_psalm_61 as SleepChapter,
+  ch_psalm_62 as SleepChapter,
+  ch_psalm_63 as SleepChapter,
+  ch_psalm_64 as SleepChapter,
+  ch_psalm_65 as SleepChapter,
+  ch_psalm_66 as SleepChapter,
+  ch_psalm_67 as SleepChapter,
+  ch_psalm_68 as SleepChapter,
+  ch_psalm_69 as SleepChapter,
+  ch_psalm_70 as SleepChapter,
+  ch_psalm_71 as SleepChapter,
+  ch_psalm_72 as SleepChapter,
+  ch_psalm_73 as SleepChapter,
+  ch_psalm_74 as SleepChapter,
+  ch_psalm_75 as SleepChapter,
+  ch_psalm_76 as SleepChapter,
+  ch_psalm_77 as SleepChapter,
+  ch_psalm_78 as SleepChapter,
+  ch_psalm_79 as SleepChapter,
+  ch_psalm_80 as SleepChapter,
+  ch_psalm_81 as SleepChapter,
+  ch_psalm_82 as SleepChapter,
+  ch_psalm_83 as SleepChapter,
+  ch_psalm_84 as SleepChapter,
+  ch_psalm_85 as SleepChapter,
+  ch_psalm_86 as SleepChapter,
+  ch_psalm_87 as SleepChapter,
+  ch_psalm_88 as SleepChapter,
+  ch_psalm_89 as SleepChapter,
+  ch_psalm_90 as SleepChapter,
+  ch_psalm_91 as SleepChapter,
+  ch_psalm_92 as SleepChapter,
+  ch_psalm_93 as SleepChapter,
+  ch_psalm_94 as SleepChapter,
+  ch_psalm_95 as SleepChapter,
+  ch_psalm_96 as SleepChapter,
+  ch_psalm_97 as SleepChapter,
+  ch_psalm_98 as SleepChapter,
+  ch_psalm_99 as SleepChapter,
+  ch_psalm_100 as SleepChapter,
+  ch_psalm_101 as SleepChapter,
+  ch_psalm_102 as SleepChapter,
 ];
 
 /** Length of each chapter's narration in seconds, by slug. */
@@ -400,6 +522,67 @@ export const SLEEP_SECONDS: Record<string, number> = {
   "psalm-39": 154,
   "psalm-40": 201,
   "psalm-41": 120,
+  "psalm-42": 147,
+  "psalm-43": 64,
+  "psalm-44": 219,
+  "psalm-45": 188,
+  "psalm-46": 113,
+  "psalm-47": 82,
+  "psalm-48": 134,
+  "psalm-49": 163,
+  "psalm-50": 202,
+  "psalm-51": 175,
+  "psalm-52": 107,
+  "psalm-53": 85,
+  "psalm-54": 77,
+  "psalm-55": 220,
+  "psalm-56": 136,
+  "psalm-57": 141,
+  "psalm-58": 108,
+  "psalm-59": 192,
+  "psalm-60": 130,
+  "psalm-61": 80,
+  "psalm-62": 134,
+  "psalm-63": 105,
+  "psalm-64": 97,
+  "psalm-65": 116,
+  "psalm-66": 171,
+  "psalm-67": 72,
+  "psalm-68": 355,
+  "psalm-69": 300,
+  "psalm-70": 58,
+  "psalm-71": 222,
+  "psalm-72": 184,
+  "psalm-73": 188,
+  "psalm-74": 195,
+  "psalm-75": 98,
+  "psalm-76": 96,
+  "psalm-77": 178,
+  "psalm-78": 536,
+  "psalm-79": 139,
+  "psalm-80": 164,
+  "psalm-81": 135,
+  "psalm-82": 73,
+  "psalm-83": 153,
+  "psalm-84": 127,
+  "psalm-85": 107,
+  "psalm-86": 149,
+  "psalm-87": 72,
+  "psalm-88": 162,
+  "psalm-89": 407,
+  "psalm-90": 159,
+  "psalm-91": 122,
+  "psalm-92": 130,
+  "psalm-93": 58,
+  "psalm-94": 178,
+  "psalm-95": 93,
+  "psalm-96": 125,
+  "psalm-97": 106,
+  "psalm-98": 89,
+  "psalm-99": 85,
+  "psalm-100": 47,
+  "psalm-101": 76,
+  "psalm-102": 234,
 };
 
 /** Length of each chapter's brisk Walk reading in seconds, by slug (0 = not voiced yet). */
@@ -535,4 +718,65 @@ export const WALK_SECONDS: Record<string, number> = {
   "psalm-39": 113,
   "psalm-40": 150,
   "psalm-41": 89,
+  "psalm-42": 104,
+  "psalm-43": 51,
+  "psalm-44": 168,
+  "psalm-45": 139,
+  "psalm-46": 86,
+  "psalm-47": 62,
+  "psalm-48": 93,
+  "psalm-49": 128,
+  "psalm-50": 148,
+  "psalm-51": 133,
+  "psalm-52": 83,
+  "psalm-53": 64,
+  "psalm-54": 56,
+  "psalm-55": 163,
+  "psalm-56": 94,
+  "psalm-57": 93,
+  "psalm-58": 78,
+  "psalm-59": 136,
+  "psalm-60": 100,
+  "psalm-61": 60,
+  "psalm-62": 102,
+  "psalm-63": 79,
+  "psalm-64": 72,
+  "psalm-65": 96,
+  "psalm-66": 125,
+  "psalm-67": 51,
+  "psalm-68": 256,
+  "psalm-69": 235,
+  "psalm-70": 46,
+  "psalm-71": 176,
+  "psalm-72": 145,
+  "psalm-73": 156,
+  "psalm-74": 148,
+  "psalm-75": 80,
+  "psalm-76": 86,
+  "psalm-77": 138,
+  "psalm-78": 423,
+  "psalm-79": 100,
+  "psalm-80": 126,
+  "psalm-81": 109,
+  "psalm-82": 54,
+  "psalm-83": 104,
+  "psalm-84": 96,
+  "psalm-85": 85,
+  "psalm-86": 120,
+  "psalm-87": 52,
+  "psalm-88": 130,
+  "psalm-89": 337,
+  "psalm-90": 114,
+  "psalm-91": 94,
+  "psalm-92": 93,
+  "psalm-93": 47,
+  "psalm-94": 140,
+  "psalm-95": 73,
+  "psalm-96": 93,
+  "psalm-97": 82,
+  "psalm-98": 70,
+  "psalm-99": 72,
+  "psalm-100": 39,
+  "psalm-101": 62,
+  "psalm-102": 171,
 };

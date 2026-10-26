@@ -1,0 +1,52 @@
+{
+  "slug": "psalm-82",
+  "book": "Psalm",
+  "chapter": 82,
+  "title": "God Presides in the Assembly",
+  "translation": "Berean Standard Bible",
+  "audioSrc": "/sleep/psalm-82/chapter.mp3",
+  "timingSrc": "/sleep/psalm-82/timing.json",
+  "verses": [
+    {
+      "n": 1,
+      "text": "A Psalm of Asaph. God presides in the divine assembly; He renders judgment among the gods:",
+      "heading": "God Presides in the Assembly",
+      "image": "/images/sleep/psalm-82/s1.jpg"
+    },
+    {
+      "n": 2,
+      "text": "“How long will you judge unjustly and show partiality to the wicked? Selah",
+      "image": "/images/sleep/psalm-82/s1.jpg"
+    },
+    {
+      "n": 3,
+      "text": "Defend the cause of the weak and fatherless; uphold the rights of the afflicted and oppressed.",
+      "image": "/images/sleep/psalm-82/s1.jpg"
+    },
+    {
+      "n": 4,
+      "text": "Rescue the weak and needy; save them from the hand of the wicked.",
+      "image": "/images/sleep/psalm-82/s1.jpg"
+    },
+    {
+      "n": 5,
+      "text": "They do not know or understand; they wander in the darkness; all the foundations of the earth are shaken.",
+      "image": "/images/sleep/psalm-82/s1.jpg"
+    },
+    {
+      "n": 6,
+      "text": "I have said, ‘You are gods; you are all sons of the Most High.’",
+      "image": "/images/sleep/psalm-82/s1.jpg"
+    },
+    {
+      "n": 7,
+      "text": "But like mortals you will die, and like rulers you will fall.”",
+      "image": "/images/sleep/psalm-82/s1.jpg"
+    },
+    {
+      "n": 8,
+      "text": "Arise, O God, judge the earth, for all the nations are Your inheritance.",
+      "image": "/images/sleep/psalm-82/s1.jpg"
+    }
+  ]
+}

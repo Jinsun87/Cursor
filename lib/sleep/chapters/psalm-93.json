@@ -1,0 +1,37 @@
+{
+  "slug": "psalm-93",
+  "book": "Psalm",
+  "chapter": 93,
+  "title": "The Lord Reigns",
+  "translation": "Berean Standard Bible",
+  "audioSrc": "/sleep/psalm-93/chapter.mp3",
+  "timingSrc": "/sleep/psalm-93/timing.json",
+  "verses": [
+    {
+      "n": 1,
+      "text": "The LORD reigns! He is robed in majesty; the LORD has clothed and armed Himself with strength. The world indeed is firmly established; it cannot be moved.",
+      "heading": "The Lord Reigns",
+      "image": "/images/sleep/psalm-93/s1.jpg"
+    },
+    {
+      "n": 2,
+      "text": "Your throne was established long ago; You are from all eternity.",
+      "image": "/images/sleep/psalm-93/s1.jpg"
+    },
+    {
+      "n": 3,
+      "text": "The floodwaters have risen, O LORD; the rivers have raised their voice; the seas lift up their pounding waves.",
+      "image": "/images/sleep/psalm-93/s1.jpg"
+    },
+    {
+      "n": 4,
+      "text": "Above the roar of many waters—the mighty breakers of the sea—the LORD on high is majestic.",
+      "image": "/images/sleep/psalm-93/s1.jpg"
+    },
+    {
+      "n": 5,
+      "text": "Your testimonies are fully confirmed; holiness adorns Your house, O LORD, for all the days to come.",
+      "image": "/images/sleep/psalm-93/s1.jpg"
+    }
+  ]
+}

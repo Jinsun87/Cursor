@@ -1,0 +1,57 @@
+{
+  "slug": "psalm-98",
+  "book": "Psalm",
+  "chapter": 98,
+  "title": "The Whole Earth Sings",
+  "translation": "Berean Standard Bible",
+  "audioSrc": "/sleep/psalm-98/chapter.mp3",
+  "timingSrc": "/sleep/psalm-98/timing.json",
+  "verses": [
+    {
+      "n": 1,
+      "text": "A Psalm. Sing to the LORD a new song, for He has done wonders; His right hand and holy arm have gained Him the victory.",
+      "heading": "The Whole Earth Sings",
+      "image": "/images/sleep/psalm-98/s1.jpg"
+    },
+    {
+      "n": 2,
+      "text": "The LORD has proclaimed His salvation and revealed His righteousness to the nations.",
+      "image": "/images/sleep/psalm-98/s1.jpg"
+    },
+    {
+      "n": 3,
+      "text": "He has remembered His love and faithfulness to the house of Israel; all the ends of the earth have seen the salvation of our God.",
+      "image": "/images/sleep/psalm-98/s1.jpg"
+    },
+    {
+      "n": 4,
+      "text": "Make a joyful noise to the LORD, all the earth; break forth—let your cry ring out, and sing praises!",
+      "image": "/images/sleep/psalm-98/s1.jpg"
+    },
+    {
+      "n": 5,
+      "text": "Sing praises to the LORD with the lyre, in melodious song with the harp.",
+      "image": "/images/sleep/psalm-98/s1.jpg"
+    },
+    {
+      "n": 6,
+      "text": "With trumpets and the blast of the ram’s horn shout for joy before the LORD, the King.",
+      "image": "/images/sleep/psalm-98/s1.jpg"
+    },
+    {
+      "n": 7,
+      "text": "Let the sea resound, and all that fills it, the world, and all who dwell in it.",
+      "image": "/images/sleep/psalm-98/s1.jpg"
+    },
+    {
+      "n": 8,
+      "text": "Let the rivers clap their hands, let the mountains sing together for joy",
+      "image": "/images/sleep/psalm-98/s1.jpg"
+    },
+    {
+      "n": 9,
+      "text": "before the LORD, for He comes to judge the earth. He will judge the world with righteousness and the peoples with equity.",
+      "image": "/images/sleep/psalm-98/s1.jpg"
+    }
+  ]
+}

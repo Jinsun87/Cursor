@@ -71,19 +71,19 @@ const ROWS: Row[] = [
   [57, "In the Shadow of Your Wings", [[1, "A cave in the rocks at night, the shadow of great wings cast over it by moonlight; no people."], [7, "A harp and lyre resting on a rock at dawn, the sun rising over the hills; no people."]]],
   [58, "There Is a God Who Judges", [[1, "A dry riverbed and thorn bushes in a hot wilderness under a hard sky; no people."]]],
   [59, "My Fortress", [[1, "Dogs prowling the dark streets of an ancient city at night, seen from a high tower window."], [16, "Morning sunlight on a high stone fortress tower, the night over; no people."]]],
-  [60, "With God We Will Do Valiantly", [[1, "A cracked and shaken land after an earthquake at dusk, a banner raised on a hill above it."]]],
+  [60, "With God We Will Do Valiantly", [[1, "A cracked and shaken land after an earthquake at dusk, a long cloth banner streaming from a single straight pole on a hill above it, no crossbar."]]],
   [61, "The Rock Higher Than I", [[1, "A towering rock rising above the sea at the end of the earth at dusk, a light at its summit; no people."]]],
   [62, "My Soul Waits in Silence", [[1, "A still lake at dawn, perfectly calm, mountains reflected in it, total silence; no people."], [8, "A strong rock on a hillside at evening, rain clouds passing; no people."]]],
   [63, "My Soul Thirsts for You", [[1, "A dry and weary desert land under a pale night sky, cracked earth, a distant oasis."], [6, "A bed by a window at night, a man lying awake looking at the stars, seen from behind, peaceful."]]],
   [64, "Hide Me from Secret Plots", [[1, "Dark alleys of a city at night with shadows, and a lit sanctuary high above on a hill."]]],
   [65, "You Crown the Year", [[1, "The sea calming at dusk, waves stilling, light spreading over the water; no people."], [9, "Abundant fields of grain, meadows full of flocks, and valleys covered with wheat at golden harvest evening; no people."]]],
   [66, "Come and See", [[1, "The sea parted with a path through the waters, light shining on it; no people."], [13, "A temple courtyard with offerings at dawn, smoke rising; no people."]]],
-  [67, "May God Be Gracious", [[1, "The earth yielding its harvest under a smiling sun, fields of many lands stretching to the horizon; no people."]]],
+  [67, "May God Be Gracious", [[1, "The earth yielding its harvest under a warm golden sun, fields of many lands stretching to the horizon; no people."]]],
   [68, "Let God Arise", [[1, "Smoke being blown away by the wind and wax melting before a fire, clouds scattering at dawn; no people."], [7, "A column of light leading through the wilderness at night, a great camp following in the distance."], [15, "Majestic mountains of Bashan with many peaks at sunrise."], [24, "A procession of singers and musicians with tambourines entering a sanctuary at dawn, seen from far away."]]],
   [69, "Save Me, O God", [[1, "Deep waters rising around a sinking rock at night, waves overhead; no people."], [13, "Morning light breaking over calm waters, the flood receding; no people."], [30, "An ox and a song: a field at evening, a singer's lyre resting on a fence; no people."]]],
   [70, "Hasten, O God", [[1, "A lone rider galloping toward a besieged house at dawn, seen from far away."]]],
   [71, "From My Youth", [[1, "A rock refuge with an open door at dusk, a lamp inside; no people."], [17, "An elderly man with white hair sitting by a window at evening, telling a story to grandchildren, seen from behind."]]],
-  [72, "May He Rule from Sea to Sea", [[1, "Rain falling gently on mown grass in a wide field at evening, showers watering the earth; no people."], [8, "Kings' ships sailing from distant islands bringing gifts, at sunrise on the sea."]]],
+  [72, "May He Rule from Sea to Sea", [[1, "Rain falling gently on mown grass in a wide field at evening, showers watering the earth; no people."], [8, "Ancient wooden ships with a single square sail and banks of oars, sailing from distant islands bringing gifts, at sunrise on the sea."]]],
   // Book Three (73–89)
   [73, "Whom Have I in Heaven?", [[1, "A man walking on a slippery mountain path at dusk, seen from far behind, the path steep."], [17, "A sanctuary on a hill at evening lit from within, the path leading to it; no people."]]],
   [74, "Remember Your Congregation", [[1, "A ruined sanctuary with broken carved panels and smoke, at dusk; no people."], [12, "The sea divided and the sun and moon set in their places, a vast sky; no people."]]],
@@ -94,9 +94,9 @@ const ROWS: Row[] = [
   [79, "Help Us, O God of Our Salvation", [[1, "A ruined city at dusk, smoke rising, broken walls; no people."]]],
   [80, "Restore Us, O God", [[1, "A shepherd's lamp shining over a flock on a dark hillside at night; no people."], [8, "A great vine with spreading branches covering the hills, broken walls around it, at evening; no people."]]],
   [81, "Sing for Joy to God", [[1, "A ram's horn trumpet resting by a harp at the new moon at night; no people."], [10, "Honey dripping from a rock and wheat in a field at evening; no people."]]],
-  [82, "God Presides in the Assembly", [[1, "An empty judgment hall with seats at dusk, the scales of justice lit by a single shaft of light; no people."]]],
+  [82, "God Presides in the Assembly", [[1, "An open-air stone court at the city gate at dusk, low stone benches along its walls, a set of scales on a stone table lit by a shaft of light; no people."]]],
   [83, "Do Not Keep Silent", [[1, "Dark storm clouds gathering over many enemy camps on the hills at night."], [13, "Tumbleweed and chaff blowing before the wind across a plain at dusk; no people."]]],
-  [84, "How Lovely Is Your Dwelling", [[1, "A sparrow's nest near the altar in a temple courtyard at golden evening."], [10, "A doorway of the house of God at evening, warm light within; no people."]]],
+  [84, "How Lovely Is Your Dwelling", [[1, "A sparrow's nest tucked into a crack in an old stone wall beside a plain stone altar in an open courtyard at golden evening, no wooden beams."], [10, "A doorway of the house of God at evening, warm light within; no people."]]],
   [85, "Righteousness and Peace Kiss", [[1, "A land restored after rain, green fields at dawn; no people."], [10, "Truth springing up from the earth like spring grass and light shining down from the sky at sunrise; no people."]]],
   [86, "Teach Me Your Way", [[1, "A man kneeling in prayer on a rooftop at night under the stars, seen from behind."], [11, "A clear path through the hills at dawn, light shining on it; no people."]]],
   [87, "Glorious Things of Zion", [[1, "The gates of Zion at sunrise on its holy mountain, roads from many lands leading to it; no people."]]],
@@ -105,7 +105,7 @@ const ROWS: Row[] = [
   // Book Four (90–106)
   [90, "From Everlasting to Everlasting", [[1, "Ancient mountains at sunrise, mist rising, timeless and still; no people."], [5, "Grass sprouting in the morning and withering by evening in a dry field; no people."]]],
   [91, "Under His Wings", [[1, "A great bird spreading its wings over its young in a nest on a high rock at night, stars above."], [9, "A small house safe on a hillside at night while a storm passes in the distance, a lamp in the window."]]],
-  [92, "It Is Good to Give Thanks", [[1, "A lyre and harp by a window at dawn, morning light, and evening stars on the other side; no people."], [12, "A palm tree and a cedar flourishing in a temple courtyard at evening; no people."]]],
+  [92, "It Is Good to Give Thanks", [[1, "A lyre and harp resting by a small plain window in a simple stone house at dawn, morning light outside; no people."], [12, "A palm tree and a cedar flourishing in a temple courtyard at evening; no people."]]],
   [93, "The Lord Reigns", [[1, "Mighty ocean waves rising at night, and above them a calm, unshaken light in the sky; no people."]]],
   [94, "God of Vengeance, Shine Forth", [[1, "Dark city streets at night, a widow's lamp in a window; no people."], [12, "A man resting on a bed with a lamp, peace after trouble, seen from far away."]]],
   [95, "Come, Let Us Worship", [[1, "The depths of the earth and the heights of the mountains, the sea below at sunrise; no people."], [6, "Sheep resting in a green pasture at evening with a shepherd's crook nearby; no people."]]],
@@ -188,7 +188,13 @@ const PSALM_119: SleepChapterPlan = {
  * the Psalms a figure in a landscape (a shepherd above all) reads as God, who is shown only as light.
  */
 const NAMES_SOMEONE =
-  /no people|(man|men|shepherd|figure|traveller|travellers|king|kings|child|children|family|pilgrims?|watchman|singers|elders|servant|father|crowd|nations|people|rider|farmer|storyteller|Joseph|dancers|priests|hands|feet|feet|boy|widow|bride|musicians)/i;
+  /\b(man|men|shepherd|figure|traveller|travellers|king|kings|child|children|family|pilgrims?|watchman|singers|elders|servant|father|crowd|nations|people|rider|farmer|storyteller|Joseph|dancers|priests|hands|feet|boy|widow|bride|musicians)\b/i;
+/** Period details the painter gets wrong unless told: temples came out Greek, baroque or South Asian; ships as galleons. */
+const PERIOD: [RegExp, string][] = [
+  [/temple|sanctuary|house of the lord|courts|palace|royal hall|throne/i, " Ancient Israelite architecture of plain dressed stone and cedar wood: not Greek, Roman, church or Asian."],
+  [/\bships?\b/i, " Ships are ancient wooden vessels with one square sail and oars, not tall ships or galleons."],
+];
+const inPeriod = (prompt: string) => PERIOD.reduce((p, [when, add]) => (when.test(prompt) ? p + add : p), prompt);
 const EMPTY = " The scene is completely empty: no people, no figures, no silhouettes in the distance.";
 const emptyUnlessNamed = (prompt: string) =>
   /no people/i.test(prompt) || !NAMES_SOMEONE.test(prompt) ? `${prompt}${EMPTY}` : prompt;
@@ -199,7 +205,7 @@ export const PSALM_PLANS: SleepChapterPlan[] = [
     chapter,
     title,
     headings: { 1: title },
-    scenes: scenes.map(([from, prompt]) => ({ from, prompt: emptyUnlessNamed(prompt) })),
+    scenes: scenes.map(([from, prompt]) => ({ from, prompt: inPeriod(emptyUnlessNamed(prompt)) })),
   })),
   PSALM_119,
 ].sort((a, b) => a.chapter - b.chapter);
