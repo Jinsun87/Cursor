@@ -972,6 +972,19 @@ body.has-mini-player main {
   border: 1px solid rgba(228, 192, 74, 0.25);
   animation: sf-fade-in 0.25s ease both;
 }
+/* The card spans the grid under the tapped chapter's row. */
+.shelf-strip-row {
+  grid-column: 1 / -1;
+}
+.shelf-strip-row .shelf-strip {
+  margin: 2px 0;
+  scroll-margin: 96px 0 104px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .shelf-strip {
+    animation: none;
+  }
+}
 .shelf-strip img {
   flex: none;
   width: 52px;

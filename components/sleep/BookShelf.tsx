@@ -1,13 +1,17 @@
 "use client";
 
 import { useApp } from "@/lib/store";
-import { useState } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 import type { SleepChapter } from "@/lib/sleep/types";
 import { useSleepAudio, type ReadingMode } from "@/lib/sleep/sleep-audio";
 import { useReadingProgress, type ChapterProgress } from "@/lib/sleep/progress";
 import { COMING_SOON, SHELF, storyGroups, type ComingSoonShelf, type ShelfBook } from "@/lib/sleep/books";
 
 type TileState = "heard" | "started" | "new" | "unrecorded";
+
+/** Chapter tiles in a row; .shelf-grid in sleep.css has the same number of columns. */
+const ROW = 5;
+const STRIP_ID = "shelf-chapter-card";
 
 function stateOf(recorded: boolean, p: ChapterProgress | undefined): TileState {
   if (!recorded) return "unrecorded";
@@ -154,6 +158,8 @@ export function BookShelf({
       {storyGroups(book).map((g) => {
         const nums = Array.from({ length: g.to - g.from + 1 }, (_, i) => g.from + i);
         const selInGroup = selected !== null && selected >= g.from && selected <= g.to;
+        // The card opens under the tapped chapter's own row (the grid is always ROW tiles wide), so Play is right where the finger is.
+        const rowEnd = selInGroup ? Math.min(g.to, g.from + Math.ceil((selected! - g.from + 1) / ROW) * ROW - 1) : null;
         return (
           <div key={g.title} className="shelf-group">
             <h4>
@@ -175,38 +181,42 @@ export function BookShelf({
                   .filter(Boolean)
                   .join(", ");
                 return (
-                  <li key={n}>
-                    <button
-                      type="button"
-                      className={`shelf-tile is-${state}${slug === tonightSlug ? " is-tonight" : ""}${selected === n ? " is-selected" : ""}`}
-                      aria-label={label}
-                      aria-pressed={selected === n}
-                      onClick={() => setSelected(selected === n ? null : n)}
-                    >
-                      {state === "heard" ? (
-                        <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true" className="shelf-tick">
-                          <path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" />
-                        </svg>
-                      ) : null}
-                      <span>{n}</span>
-                      {state === "started" ? <i className="shelf-arc" style={{ width: `${Math.max(12, fraction * 100)}%` }} /> : null}
-                    </button>
-                  </li>
+                  <Fragment key={n}>
+                    <li>
+                      <button
+                        type="button"
+                        className={`shelf-tile is-${state}${slug === tonightSlug ? " is-tonight" : ""}${selected === n ? " is-selected" : ""}`}
+                        aria-label={label}
+                        aria-pressed={selected === n}
+                        aria-controls={selected === n ? STRIP_ID : undefined}
+                        onClick={() => setSelected(selected === n ? null : n)}
+                      >
+                        {state === "heard" ? (
+                          <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true" className="shelf-tick">
+                            <path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" />
+                          </svg>
+                        ) : null}
+                        <span>{n}</span>
+                        {state === "started" ? <i className="shelf-arc" style={{ width: `${Math.max(12, fraction * 100)}%` }} /> : null}
+                      </button>
+                    </li>
+                    {n === rowEnd ? (
+                      <li className="shelf-strip-row" id={STRIP_ID}>
+                        <ChapterStrip
+                          key={selected}
+                          bookName={book.name}
+                          number={selected!}
+                          chapter={sel}
+                          progress={sel ? progress[sel.slug] : undefined}
+                          minutes={sel ? minutes(sel.slug) : 0}
+                          onPlay={(verse) => sel && s.open(sel, { mode, verse })}
+                        />
+                      </li>
+                    ) : null}
+                  </Fragment>
                 );
               })}
             </ol>
-
-            {selInGroup ? (
-              <ChapterStrip
-                key={selected}
-                bookName={book.name}
-                number={selected!}
-                chapter={sel}
-                progress={sel ? progress[sel.slug] : undefined}
-                minutes={sel ? minutes(sel.slug) : 0}
-                onPlay={(verse) => sel && s.open(sel, { mode, verse })}
-              />
-            ) : null}
           </div>
         );
       })}
@@ -230,9 +240,18 @@ function ChapterStrip({
   minutes: number;
   onPlay: (verse: number) => void;
 }) {
+  const root = useRef<HTMLDivElement>(null);
+  const play = useRef<HTMLButtonElement>(null);
+  // Bring the card on screen only as far as needed (scroll-margin keeps it clear of the bars), and put focus on Play.
+  useEffect(() => {
+    const still = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    root.current?.scrollIntoView({ block: "nearest", behavior: still ? "auto" : "smooth" });
+    play.current?.focus({ preventScroll: true });
+  }, []);
+
   if (!chapter) {
     return (
-      <div className="shelf-strip is-empty" role="status">
+      <div ref={root} className="shelf-strip is-empty" role="status">
         <p>
           <strong>
             {bookName} {number}
@@ -244,7 +263,7 @@ function ChapterStrip({
   }
   const started = progress && progress.verse > 1;
   return (
-    <div className="shelf-strip" role="status">
+    <div ref={root} className="shelf-strip" role="status">
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img src={chapter.verses[0].image} alt="" />
       <div className="shelf-strip-text">
@@ -256,7 +275,7 @@ function ChapterStrip({
           {started ? ` · stopped at verse ${progress!.verse}` : progress?.done ? " · heard" : ""}
         </small>
       </div>
-      <button type="button" className="shelf-play" onClick={() => onPlay(started ? progress!.verse : 1)}>
+      <button ref={play} type="button" className="shelf-play" onClick={() => onPlay(started ? progress!.verse : 1)}>
         <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
           <path d="M8.5 5.2 L19 12 L8.5 18.8 Z" fill="currentColor" />
         </svg>
