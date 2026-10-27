@@ -1,13 +1,10 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { VerseClip } from "@/components/clip/VerseClip";
-import { getChapter } from "@/lib/bible/bsb";
-import { buildClip } from "@/lib/clips";
+import { Listen, Verse } from "@/components/study/Scripture";
 import { pageMetadata } from "@/lib/seo";
 import { CANONICAL_ORIGIN } from "@/lib/site";
 import "@/components/plan/plan.css";
-import "./lampstand.css";
 
 const PATH = "/lampstand-in-the-bible";
 const TITLE = "The Lampstand in the Bible: Meaning and Verses";
@@ -15,28 +12,6 @@ const DESCRIPTION =
   "The golden lampstand in the Bible: what it was, where it appears from Exodus to Revelation, and what it means for God's presence, His word and His people.";
 
 export const metadata: Metadata = pageMetadata({ title: TITLE, description: DESCRIPTION, path: PATH });
-
-/** The verses, word for word from the Berean Standard Bible, as the app reads them. */
-function quote(book: string, chapter: number, from: number, to = from) {
-  const verses = getChapter(book, chapter).filter((v) => v.n >= from && v.n <= to);
-  return { ref: `${book} ${chapter}:${from}${to > from ? `–${to}` : ""}`, text: verses.map((v) => v.text).join(" ") };
-}
-
-function Verse({ book, chapter, from, to }: { book: string; chapter: number; from: number; to?: number }) {
-  const q = quote(book, chapter, from, to);
-  return (
-    <blockquote className="ls-verse">
-      <p>{q.text}</p>
-      <cite>{q.ref} (BSB)</cite>
-    </blockquote>
-  );
-}
-
-/** The passage as the app reads it, when it has been recorded; the quoted text otherwise. */
-function Listen({ book, chapter, from, to }: { book: string; chapter: number; from: number; to?: number }) {
-  const clip = buildClip(book, chapter, from, to);
-  return clip.walk || clip.sleep ? <VerseClip clip={clip} /> : <Verse book={book} chapter={chapter} from={from} to={to} />;
-}
 
 const FAQ = [
   {

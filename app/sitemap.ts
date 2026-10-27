@@ -2,6 +2,7 @@ import type { MetadataRoute } from "next";
 import { QUIZZES, SERIES } from "@/lib/catalog";
 import { CANONICAL_ORIGIN } from "@/lib/site";
 import { PLAN_PAGES } from "@/lib/plan/landing";
+import { BIBLE_WORDS } from "@/content/bible-words";
 
 type Entry = { path: string; priority: number; changeFrequency: MetadataRoute.Sitemap[number]["changeFrequency"] };
 
@@ -14,6 +15,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/plan", priority: 0.7, changeFrequency: "monthly" },
     ...PLAN_PAGES.map((p) => ({ path: `/plan/${p.slug}`, priority: 0.7, changeFrequency: "monthly" as const })),
     { path: "/lampstand-in-the-bible", priority: 0.7, changeFrequency: "monthly" },
+    { path: "/bible-words", priority: 0.6, changeFrequency: "monthly" },
+    ...BIBLE_WORDS.map((w) => ({ path: `/bible-words/${w.slug}`, priority: 0.6, changeFrequency: "monthly" as const })),
     { path: "/pricing", priority: 0.6, changeFrequency: "monthly" },
     { path: "/open", priority: 0.5, changeFrequency: "weekly" },
     { path: "/premium", priority: 0.5, changeFrequency: "monthly" },

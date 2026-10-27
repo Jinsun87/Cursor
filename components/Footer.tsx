@@ -9,6 +9,7 @@ const COLUMNS: { title: string; links: { href: string; label: string }[] }[] = [
       { href: "/?tab=breathe", label: "Breathe" },
       { href: "/plan", label: "Bible reading plan" },
       { href: "/read", label: "Bible & life topics" },
+      { href: "/bible-words", label: "Bible words explained" },
     ],
   },
   {
