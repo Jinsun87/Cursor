@@ -90,6 +90,10 @@ import ch_exodus_37 from "./exodus-37.json";
 import ch_exodus_38 from "./exodus-38.json";
 import ch_exodus_39 from "./exodus-39.json";
 import ch_exodus_40 from "./exodus-40.json";
+import ch_ruth_1 from "./ruth-1.json";
+import ch_ruth_2 from "./ruth-2.json";
+import ch_ruth_3 from "./ruth-3.json";
+import ch_ruth_4 from "./ruth-4.json";
 import ch_psalm_1 from "./psalm-1.json";
 import ch_psalm_2 from "./psalm-2.json";
 import ch_psalm_3 from "./psalm-3.json";
@@ -240,6 +244,35 @@ import ch_psalm_147 from "./psalm-147.json";
 import ch_psalm_148 from "./psalm-148.json";
 import ch_psalm_149 from "./psalm-149.json";
 import ch_psalm_150 from "./psalm-150.json";
+import ch_jonah_1 from "./jonah-1.json";
+import ch_jonah_2 from "./jonah-2.json";
+import ch_jonah_3 from "./jonah-3.json";
+import ch_jonah_4 from "./jonah-4.json";
+import ch_john_1 from "./john-1.json";
+import ch_john_2 from "./john-2.json";
+import ch_john_3 from "./john-3.json";
+import ch_john_4 from "./john-4.json";
+import ch_john_5 from "./john-5.json";
+import ch_john_6 from "./john-6.json";
+import ch_john_7 from "./john-7.json";
+import ch_john_8 from "./john-8.json";
+import ch_john_9 from "./john-9.json";
+import ch_john_10 from "./john-10.json";
+import ch_john_11 from "./john-11.json";
+import ch_john_12 from "./john-12.json";
+import ch_john_13 from "./john-13.json";
+import ch_john_14 from "./john-14.json";
+import ch_john_15 from "./john-15.json";
+import ch_john_16 from "./john-16.json";
+import ch_john_17 from "./john-17.json";
+import ch_john_18 from "./john-18.json";
+import ch_john_19 from "./john-19.json";
+import ch_john_20 from "./john-20.json";
+import ch_john_21 from "./john-21.json";
+import ch_philippians_1 from "./philippians-1.json";
+import ch_philippians_2 from "./philippians-2.json";
+import ch_philippians_3 from "./philippians-3.json";
+import ch_philippians_4 from "./philippians-4.json";
 
 /** Every Sleep chapter with narration, in reading order. */
 export const SLEEP_CHAPTERS: SleepChapter[] = [
@@ -333,6 +366,10 @@ export const SLEEP_CHAPTERS: SleepChapter[] = [
   ch_exodus_38 as SleepChapter,
   ch_exodus_39 as SleepChapter,
   ch_exodus_40 as SleepChapter,
+  ch_ruth_1 as SleepChapter,
+  ch_ruth_2 as SleepChapter,
+  ch_ruth_3 as SleepChapter,
+  ch_ruth_4 as SleepChapter,
   ch_psalm_1 as SleepChapter,
   ch_psalm_2 as SleepChapter,
   ch_psalm_3 as SleepChapter,
@@ -483,6 +520,35 @@ export const SLEEP_CHAPTERS: SleepChapter[] = [
   ch_psalm_148 as SleepChapter,
   ch_psalm_149 as SleepChapter,
   ch_psalm_150 as SleepChapter,
+  ch_jonah_1 as SleepChapter,
+  ch_jonah_2 as SleepChapter,
+  ch_jonah_3 as SleepChapter,
+  ch_jonah_4 as SleepChapter,
+  ch_john_1 as SleepChapter,
+  ch_john_2 as SleepChapter,
+  ch_john_3 as SleepChapter,
+  ch_john_4 as SleepChapter,
+  ch_john_5 as SleepChapter,
+  ch_john_6 as SleepChapter,
+  ch_john_7 as SleepChapter,
+  ch_john_8 as SleepChapter,
+  ch_john_9 as SleepChapter,
+  ch_john_10 as SleepChapter,
+  ch_john_11 as SleepChapter,
+  ch_john_12 as SleepChapter,
+  ch_john_13 as SleepChapter,
+  ch_john_14 as SleepChapter,
+  ch_john_15 as SleepChapter,
+  ch_john_16 as SleepChapter,
+  ch_john_17 as SleepChapter,
+  ch_john_18 as SleepChapter,
+  ch_john_19 as SleepChapter,
+  ch_john_20 as SleepChapter,
+  ch_john_21 as SleepChapter,
+  ch_philippians_1 as SleepChapter,
+  ch_philippians_2 as SleepChapter,
+  ch_philippians_3 as SleepChapter,
+  ch_philippians_4 as SleepChapter,
 ];
 
 /** Length of each chapter's narration in seconds, by slug. */
@@ -577,6 +643,10 @@ export const SLEEP_SECONDS: Record<string, number> = {
   "exodus-38": 338,
   "exodus-39": 465,
   "exodus-40": 318,
+  "ruth-1": 274,
+  "ruth-2": 330,
+  "ruth-3": 222,
+  "ruth-4": 308,
   "psalm-1": 52,
   "psalm-2": 99,
   "psalm-3": 80,
@@ -727,6 +797,35 @@ export const SLEEP_SECONDS: Record<string, number> = {
   "psalm-148": 121,
   "psalm-149": 74,
   "psalm-150": 43,
+  "jonah-1": 215,
+  "jonah-2": 114,
+  "jonah-3": 121,
+  "jonah-4": 137,
+  "john-1": 470,
+  "john-2": 233,
+  "john-3": 340,
+  "john-4": 482,
+  "john-5": 420,
+  "john-6": 668,
+  "john-7": 451,
+  "john-8": 600,
+  "john-9": 421,
+  "john-10": 383,
+  "john-11": 517,
+  "john-12": 498,
+  "john-13": 380,
+  "john-14": 324,
+  "john-15": 270,
+  "john-16": 340,
+  "john-17": 293,
+  "john-18": 434,
+  "john-19": 486,
+  "john-20": 359,
+  "john-21": 332,
+  "philippians-1": 304,
+  "philippians-2": 259,
+  "philippians-3": 232,
+  "philippians-4": 256,
 };
 
 /** Length of each chapter's brisk Walk reading in seconds, by slug (0 = not voiced yet). */
@@ -821,6 +920,10 @@ export const WALK_SECONDS: Record<string, number> = {
   "exodus-38": 265,
   "exodus-39": 351,
   "exodus-40": 258,
+  "ruth-1": 218,
+  "ruth-2": 246,
+  "ruth-3": 172,
+  "ruth-4": 223,
   "psalm-1": 46,
   "psalm-2": 81,
   "psalm-3": 55,
@@ -971,4 +1074,33 @@ export const WALK_SECONDS: Record<string, number> = {
   "psalm-148": 84,
   "psalm-149": 57,
   "psalm-150": 35,
+  "jonah-1": 170,
+  "jonah-2": 85,
+  "jonah-3": 95,
+  "jonah-4": 112,
+  "john-1": 369,
+  "john-2": 183,
+  "john-3": 275,
+  "john-4": 378,
+  "john-5": 345,
+  "john-6": 507,
+  "john-7": 368,
+  "john-8": 469,
+  "john-9": 289,
+  "john-10": 305,
+  "john-11": 397,
+  "john-12": 395,
+  "john-13": 302,
+  "john-14": 261,
+  "john-15": 229,
+  "john-16": 282,
+  "john-17": 231,
+  "john-18": 335,
+  "john-19": 375,
+  "john-20": 260,
+  "john-21": 241,
+  "philippians-1": 244,
+  "philippians-2": 224,
+  "philippians-3": 182,
+  "philippians-4": 187,
 };

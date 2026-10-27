@@ -1,0 +1,63 @@
+{
+  "slug": "jonah-3",
+  "book": "Jonah",
+  "chapter": 3,
+  "title": "Jonah Goes to Nineveh",
+  "translation": "Berean Standard Bible",
+  "audioSrc": "/sleep/jonah-3/chapter.mp3",
+  "timingSrc": "/sleep/jonah-3/timing.json",
+  "verses": [
+    {
+      "n": 1,
+      "text": "Then the word of the LORD came to Jonah a second time:",
+      "heading": "Jonah Goes to Nineveh",
+      "image": "/images/sleep/jonah-3/s1.jpg"
+    },
+    {
+      "n": 2,
+      "text": "“Get up! Go to the great city of Nineveh and proclaim to it the message that I give you.”",
+      "image": "/images/sleep/jonah-3/s1.jpg"
+    },
+    {
+      "n": 3,
+      "text": "This time Jonah got up and went to Nineveh, in accordance with the word of the LORD. Now Nineveh was an exceedingly great city, requiring a three-day journey.",
+      "image": "/images/sleep/jonah-3/s1.jpg"
+    },
+    {
+      "n": 4,
+      "text": "On the first day of his journey, Jonah set out into the city and proclaimed, “Forty more days and Nineveh will be overturned!”",
+      "image": "/images/sleep/jonah-3/s2.jpg"
+    },
+    {
+      "n": 5,
+      "text": "And the Ninevites believed God. They proclaimed a fast and dressed in sackcloth, from the greatest of them to the least.",
+      "heading": "Nineveh Repents",
+      "image": "/images/sleep/jonah-3/s3.jpg"
+    },
+    {
+      "n": 6,
+      "text": "When word reached the king of Nineveh, he got up from his throne, took off his royal robe, covered himself with sackcloth, and sat in ashes.",
+      "image": "/images/sleep/jonah-3/s4.jpg"
+    },
+    {
+      "n": 7,
+      "text": "Then he issued a proclamation in Nineveh: “By the decree of the king and his nobles: Let no man or beast, herd or flock, taste anything at all. They must not eat or drink.",
+      "image": "/images/sleep/jonah-3/s4.jpg"
+    },
+    {
+      "n": 8,
+      "text": "Furthermore, let both man and beast be covered with sackcloth, and have everyone call out earnestly to God. Let each one turn from his evil ways and from the violence in his hands.",
+      "image": "/images/sleep/jonah-3/s4.jpg"
+    },
+    {
+      "n": 9,
+      "text": "Who knows? God may turn and relent; He may turn from His fierce anger, so that we will not perish.”",
+      "image": "/images/sleep/jonah-3/s4.jpg"
+    },
+    {
+      "n": 10,
+      "text": "When God saw their actions—that they had turned from their evil ways—He relented from the disaster He had threatened to bring upon them.",
+      "image": "/images/sleep/jonah-3/s5.jpg"
+    }
+  ]
+}

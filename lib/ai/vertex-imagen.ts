@@ -14,6 +14,8 @@ export interface GenerateImageOptions {
   stylePreset?: ArtStylePreset;
   personGeneration?: "ALLOW_ADULT" | "ALLOW_ALL" | "DONT_ALLOW";
   safetySetting?: "block_medium_and_above" | "block_low_and_above" | "block_only_high";
+  /** Pictures sent before the prompt, such as a character sheet the painting must follow. */
+  references?: { mimeType: string; data: Buffer }[];
 }
 
 export interface GeneratedImage {
@@ -77,7 +79,10 @@ export async function generateVertexImage(options: GenerateImageOptions): Promis
     contents: [
       {
         role: "user",
-        parts: [{ text: finalPrompt }],
+        parts: [
+          ...(options.references ?? []).map((r) => ({ inlineData: { mimeType: r.mimeType, data: r.data.toString("base64") } })),
+          { text: finalPrompt },
+        ],
       },
     ],
     generationConfig: {

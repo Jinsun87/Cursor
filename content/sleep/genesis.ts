@@ -6,7 +6,12 @@
  * Scripture itself comes from data/bsb.txt; nothing here changes the text.
  * Used by scripts/sleep-chapter.ts.
  */
-export type SleepScene = { from: number; prompt: string };
+export type SleepScene = {
+  from: number;
+  prompt: string;
+  /** Characters in the scene whose sheet (content/sleep/characters/<name>.jpg) the painting follows. */
+  cast?: string[];
+};
 export type SleepChapterPlan = {
   chapter: number;
   title: string;

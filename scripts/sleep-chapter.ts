@@ -18,6 +18,10 @@ import { generateVertexImage } from "../lib/ai/vertex-imagen";
 import { GENESIS_PLANS, NIGHT_STYLE, type SleepChapterPlan } from "../content/sleep/genesis";
 import { EXODUS_PLANS } from "../content/sleep/exodus";
 import { PSALM_PLANS } from "../content/sleep/psalms";
+import { RUTH_PLANS } from "../content/sleep/ruth";
+import { JONAH_PLANS } from "../content/sleep/jonah";
+import { PHILIPPIANS_PLANS } from "../content/sleep/philippians";
+import { GOSPEL_STYLE, JOHN_PLANS } from "../content/sleep/john";
 import { BOOKS } from "../lib/plan/books";
 import type { SleepChapter } from "../lib/sleep/types";
 import { SLEEP_GENESIS_1 } from "../lib/sleep/genesis-1";
@@ -32,7 +36,17 @@ if (existsSync(".env.local")) {
   }
 }
 
-const PLANS: Record<string, SleepChapterPlan[]> = { Genesis: GENESIS_PLANS, Exodus: EXODUS_PLANS, Psalm: PSALM_PLANS };
+const PLANS: Record<string, SleepChapterPlan[]> = {
+  Genesis: GENESIS_PLANS,
+  Exodus: EXODUS_PLANS,
+  Psalm: PSALM_PLANS,
+  Ruth: RUTH_PLANS,
+  Jonah: JONAH_PLANS,
+  Philippians: PHILIPPIANS_PLANS,
+  John: JOHN_PLANS,
+};
+/** Books painted in their own style instead of NIGHT_STYLE. */
+const STYLES: Record<string, string> = { John: GOSPEL_STYLE };
 const only = process.argv.find((a) => a.startsWith("--only="))?.split("=")[1];
 const redo = process.argv.includes("--redo");
 const step = (name: string) => !only || only === name;
@@ -63,15 +77,21 @@ async function withRetry<T>(fn: () => Promise<T>): Promise<T> {
   }
 }
 
-async function paint(plan: SleepChapterPlan, slug: string, label: string) {
+async function paint(plan: SleepChapterPlan, book: string, slug: string, label: string) {
   const dir = join("public", "images", "sleep", slug);
   mkdirSync(dir, { recursive: true });
   for (const [i, scene] of plan.scenes.entries()) {
     const file = join(dir, `s${i + 1}.jpg`);
     if (existsSync(file) && !redo) continue;
     process.stdout.write(`\r  ${label} painting ${i + 1}/${plan.scenes.length}   `);
+    // A scene with a cast sends each character's sheet along, so they look the same in every painting.
+    const cast = scene.cast ?? [];
+    const references = cast.map((name) => ({ mimeType: "image/jpeg", data: readFileSync(join("content", "sleep", "characters", `${name}.jpg`)) }));
+    const castNote = cast.length
+      ? " The attached character sheet shows the man in this scene: paint him with exactly that face, hair, beard, build and clothing, but do not copy the sheet's layout, poses or plain background."
+      : "";
     const [img] = await withRetry(() =>
-      generateVertexImage({ prompt: `${scene.prompt} ${NIGHT_STYLE}`, aspectRatio: "9:16", stylePreset: "none" }),
+      generateVertexImage({ prompt: `${scene.prompt}${castNote} ${STYLES[book] ?? NIGHT_STYLE}`, aspectRatio: "9:16", stylePreset: "none", references }),
     );
     const raw = join(dir, `s${i + 1}.raw`);
     writeFileSync(raw, img.buffer);
@@ -203,7 +223,7 @@ async function main() {
     const data = plan ? buildData(plan, book, chapter, slug) : slug === "genesis-1" ? SLEEP_GENESIS_1 : null;
     if (!data) throw new Error(`No plan for ${book} ${chapter} in content/sleep/`);
 
-    if (plan && step("images")) await paint(plan, slug, label);
+    if (plan && step("images")) await paint(plan, book, slug, label);
     if (plan && (step("data") || step("images") || step("voice"))) {
       writeFileSync(join("lib", "sleep", "chapters", `${slug}.json`), JSON.stringify(data, null, 2) + "\n");
     }
