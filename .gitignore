@@ -28,3 +28,4 @@ voice-transcripts/
 # Sleep videos for YouTube: rendered output and scratch files stay on this computer
 video/out/
 video/.work/
+public/stories/**/*.mp3

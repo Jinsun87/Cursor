@@ -7,6 +7,7 @@ import { useSleepAudio } from "@/lib/sleep/sleep-audio";
 import { FOUNDING_PRICE } from "@/lib/founding";
 import { trackEvent } from "@/lib/analytics";
 import { SHELF } from "@/lib/sleep/books";
+import { chapterLabel } from "@/lib/sleep/label";
 import "./sleep.css";
 
 /**
@@ -25,6 +26,7 @@ export function PremiumGate() {
   if (!locked) return null;
   const { chapter, mode } = locked;
   const bookName = SHELF.find((b) => (b.book ?? b.name) === chapter.book)?.name ?? chapter.book;
+  const story = chapter.kind === "story";
   const lifetime = Boolean(process.env.NEXT_PUBLIC_PADDLE_LIFETIME_PRICE_ID);
 
   return (
@@ -44,14 +46,15 @@ export function PremiumGate() {
           <>
             <p>Your Premium is on.</p>
             <button type="button" className="pg-primary" onClick={() => s.open(chapter, { mode })}>
-              Play {chapter.book} {chapter.chapter}
+              Play {chapterLabel(chapter)}
             </button>
           </>
         ) : (
           <>
             <p>
-              Genesis is free to hear, every chapter. {bookName} and the books after it are read aloud in Walk and Sleep for
-              Premium members; the text stays free to read in the reading plan.
+              {story
+                ? `Genesis is free to hear, every chapter. ${bookName} and the other story series are for Premium members, read softly for the night, with a painting for every scene.`
+                : `Genesis is free to hear, every chapter. ${bookName} and the books after it are read aloud in Walk and Sleep for Premium members; the text stays free to read in the reading plan.`}
             </p>
             <p className="pg-price">
               $4.99 a month or $39.99 a year, both with 7 days free.

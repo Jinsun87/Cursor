@@ -1079,3 +1079,16 @@ body.has-mini-player main {
   color: inherit;
   border: 1px solid rgba(255, 255, 255, 0.2);
 }
+
+/* A story series opened on the shelf: one card per episode. */
+.shelf-stories {
+  list-style: none;
+  margin: 14px 0 0;
+  padding: 0;
+  display: grid;
+  gap: 8px;
+}
+.shelf-stories .shelf-strip {
+  margin: 0;
+  animation: none;
+}

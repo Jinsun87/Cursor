@@ -1,0 +1,35 @@
+{
+  "title": "Jonah and the Great Fish",
+  "series": "Bedtime Bible Stories",
+  "duration": 722.6,
+  "sections": [
+    {
+      "title": "Settling in",
+      "start": 1.5
+    },
+    {
+      "title": "Part one: running away",
+      "start": 48.6
+    },
+    {
+      "title": "Part two: the storm",
+      "start": 121.4
+    },
+    {
+      "title": "Part three: the great fish",
+      "start": 269.6
+    },
+    {
+      "title": "Part four: Nineveh",
+      "start": 385.4
+    },
+    {
+      "title": "Part five: Jonah's shady plant",
+      "start": 481.8
+    },
+    {
+      "title": "Closing",
+      "start": 621.5
+    }
+  ]
+}

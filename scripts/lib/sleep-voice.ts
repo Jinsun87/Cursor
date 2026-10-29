@@ -138,7 +138,7 @@ export function softenEdges(pcm: Buffer): Buffer {
  * linked to the previous requests, so the voice keeps one tone across joins.
  * Returns 24 kHz 16-bit mono PCM.
  */
-async function elevenSpeak(
+export async function elevenSpeak(
   voiceId: string,
   text: string,
   ctx: { previousText?: string; nextText?: string; previousRequestIds?: string[] },

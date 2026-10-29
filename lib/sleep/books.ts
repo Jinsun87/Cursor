@@ -134,14 +134,36 @@ export const SHELF: ShelfBook[] = [
 /** Shown under the books, locked, until they are made (see the founding ladder on /open). */
 export type ComingSoonShelf = Pick<ShelfBook, "slug" | "name" | "abbr" | "section" | "cover" | "premium">;
 
-export const COMING_SOON: ComingSoonShelf[] = [
+export const COMING_SOON: ComingSoonShelf[] = [];
+
+/**
+ * The story series on the Sleep shelf, in order. Each series is a folder of scripts in
+ * content/stories/<slug>; its voiced episodes are in lib/stories/chapters. `name` is the
+ * episodes' `book`, so the Premium rule (lib/sleep/access.ts) finds the series by it.
+ */
+export type StorySeries = Pick<ShelfBook, "slug" | "name" | "abbr" | "section" | "cover" | "premium"> & {
+  /** Who reads it, as shown on the shelf. */
+  narrator: string;
+};
+
+export const STORY_SERIES: StorySeries[] = [
   {
-    slug: "bible-stories",
+    slug: "women-of-the-bible",
+    name: "Women of the Bible",
+    abbr: "Wo",
+    section: "Sarah, Ruth, Hannah, Esther, Mary and more",
+    cover: ["#8a4f5e", "#3b1f27"],
+    premium: true,
+    narrator: "Read by Leona",
+  },
+  {
+    slug: "bedtime-bible-stories",
     name: "Bedtime Bible Stories",
     abbr: "St",
     section: "Gentle retellings, from Noah to the Prodigal Son",
     cover: ["#3f5a7a", "#1b2a3d"],
     premium: true,
+    narrator: "Read by Theo",
   },
 ];
 

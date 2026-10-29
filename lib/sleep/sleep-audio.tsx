@@ -169,8 +169,13 @@ export function SleepAudioProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     if (!chapter || !("mediaSession" in navigator)) return;
     navigator.mediaSession.metadata = new MediaMetadata({
-      title: verse ? `${chapter.book} ${chapter.chapter}:${verse.n} · ${verse.text.slice(0, 60)}` : `${chapter.book} ${chapter.chapter}`,
-      artist: mode === "walk" ? "Lampstand Walk" : "Lampstand Sleep",
+      title:
+        chapter.kind === "story"
+          ? chapter.title
+          : verse
+            ? `${chapter.book} ${chapter.chapter}:${verse.n} · ${verse.text.slice(0, 60)}`
+            : `${chapter.book} ${chapter.chapter}`,
+      artist: chapter.kind === "story" ? `Lampstand · ${chapter.book}` : mode === "walk" ? "Lampstand Walk" : "Lampstand Sleep",
       album: chapter.translation,
       artwork: [{ src: verse?.image ?? chapter.verses[0].image, sizes: "768x1376", type: "image/jpeg" }],
     });
@@ -254,7 +259,8 @@ export function SleepAudioProvider({ children }: { children: ReactNode }) {
   const open = useCallback(
     (next: SleepChapter, opts: { mode?: ReadingMode; verse?: number; expand?: boolean } = {}) => {
       const el = audioRef.current;
-      const nextMode = opts.mode ?? "sleep";
+      // Stories are recorded for Sleep only.
+      const nextMode = next.kind === "story" ? "sleep" : (opts.mode ?? "sleep");
       // Every way into the player passes here, so this is where Premium is enforced.
       if (!canListen(next, premium)) {
         setLocked({ chapter: next, mode: nextMode });

@@ -1,0 +1,43 @@
+{
+  "title": "Daniel in the Lions' Den",
+  "series": "Bedtime Bible Stories",
+  "duration": 724.1,
+  "sections": [
+    {
+      "title": "Settling in",
+      "start": 1.5
+    },
+    {
+      "title": "Part one: Daniel far from home",
+      "start": 47.5
+    },
+    {
+      "title": "Part two: the best helper",
+      "start": 153.5
+    },
+    {
+      "title": "Part three: the sneaky law",
+      "start": 239.1
+    },
+    {
+      "title": "Part four: the king is sad",
+      "start": 327.5
+    },
+    {
+      "title": "Part five: a long night",
+      "start": 416.7
+    },
+    {
+      "title": "Part six: in the morning",
+      "start": 503.9
+    },
+    {
+      "title": "Part seven: the king's letter",
+      "start": 579.9
+    },
+    {
+      "title": "Closing",
+      "start": 626.1
+    }
+  ]
+}

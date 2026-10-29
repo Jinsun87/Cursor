@@ -1,0 +1,35 @@
+{
+  "title": "The Prodigal Son",
+  "series": "Bedtime Bible Stories",
+  "duration": 707.5,
+  "sections": [
+    {
+      "title": "Settling in",
+      "start": 1.5
+    },
+    {
+      "title": "Part one: why Jesus told the story",
+      "start": 54.6
+    },
+    {
+      "title": "Part two: two sons",
+      "start": 194.5
+    },
+    {
+      "title": "Part three: the pigs",
+      "start": 252.2
+    },
+    {
+      "title": "Part four: the father runs",
+      "start": 365.1
+    },
+    {
+      "title": "Part five: the older brother",
+      "start": 500.5
+    },
+    {
+      "title": "Closing",
+      "start": 615.9
+    }
+  ]
+}

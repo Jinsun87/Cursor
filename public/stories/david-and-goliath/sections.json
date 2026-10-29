@@ -1,0 +1,35 @@
+{
+  "title": "David and Goliath",
+  "series": "Bedtime Bible Stories",
+  "duration": 759,
+  "sections": [
+    {
+      "title": "Settling in",
+      "start": 1.5
+    },
+    {
+      "title": "Part one: the shepherd boy",
+      "start": 59.9
+    },
+    {
+      "title": "Part two: the giant",
+      "start": 225
+    },
+    {
+      "title": "Part three: David comes to the camp",
+      "start": 324.5
+    },
+    {
+      "title": "Part four: David and the king",
+      "start": 428.6
+    },
+    {
+      "title": "Part five: five smooth stones",
+      "start": 531.2
+    },
+    {
+      "title": "Closing",
+      "start": 660.7
+    }
+  ]
+}

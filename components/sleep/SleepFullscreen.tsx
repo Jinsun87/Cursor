@@ -6,6 +6,8 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import type { SleepChapter } from "@/lib/sleep/types";
 import { SLEEP_SPEEDS, TIMER_OPTIONS, clock, useSleepAudio } from "@/lib/sleep/sleep-audio";
 import { nextChapter } from "@/lib/sleep/next";
+import { chapterLabel, storySection } from "@/lib/sleep/label";
+import { STORY_SERIES } from "@/lib/sleep/books";
 import "./sleep.css";
 
 type Mode = "listen" | "read";
@@ -67,7 +69,7 @@ export function SleepFullscreen() {
       className={`sf${calm ? " is-calm" : ""}`}
       role="dialog"
       aria-modal="true"
-      aria-label={`${chapter.book} ${chapter.chapter}, ${s.mode === "walk" ? "Walk" : "Sleep"} player`}
+      aria-label={`${chapterLabel(chapter)}, ${s.mode === "walk" ? "Walk" : "Sleep"} player`}
       style={{ ["--sf-text" as string]: textSize }}
       onPointerDownCapture={() => {
         calmAtTap.current = calm;
@@ -175,9 +177,7 @@ function UpNext({ chapter }: { chapter: SleepChapter }) {
   const next = nextChapter(chapter.slug, s.mode);
   return (
     <div className="sf-end" role="status">
-      <p className="sf-eyebrow">
-        {chapter.book} {chapter.chapter} · finished
-      </p>
+      <p className="sf-eyebrow">{chapterLabel(chapter)} · finished</p>
       <p className="sf-end-line">{s.mode === "walk" ? "Well done. Carry it with you today." : "Rest now. The Word stays with you."}</p>
       {next ? (
         <button type="button" className="sf-next" onClick={() => s.open(next, { mode: s.mode })}>
@@ -185,10 +185,8 @@ function UpNext({ chapter }: { chapter: SleepChapter }) {
           <img src={next.verses[0].image} alt="" />
           <span>
             <small>Up next{next && !canListen(next, Boolean(user?.premium)) ? " · Premium" : ""}</small>
-            <strong>
-              {next.book} {next.chapter}
-            </strong>
-            <em>{next.title}</em>
+            <strong>{chapterLabel(next)}</strong>
+            <em>{next.kind === "story" ? next.book : next.title}</em>
           </span>
           <svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true">
             <path d="M8.5 5.2 L19 12 L8.5 18.8 Z" fill="currentColor" />
@@ -302,24 +300,22 @@ function Options({
 /** One verse at a time, large and soft, fading in as it is read. Tapping the words pauses or plays. */
 function ListenView({ chapter, index, onTap }: { chapter: SleepChapter; index: number; onTap: () => void }) {
   const v = index >= 0 ? chapter.verses[index] : null;
+  const story = chapter.kind === "story";
   return (
     <div className="sf-listen" onClick={onTap}>
       {v ? (
         <div className="sf-verse-wrap" key={v.n}>
-          <p className="sf-eyebrow">{v.heading ?? `${chapter.book} ${chapter.chapter}:${v.n}`}</p>
+          <p className="sf-eyebrow">{story ? storySection(chapter, index) : (v.heading ?? `${chapter.book} ${chapter.chapter}:${v.n}`)}</p>
           <p className="sf-verse">{v.text}</p>
           <p className="sf-count">
-            {v.heading ? `${chapter.book} ${chapter.chapter}:${v.n} · ` : null}
-            {v.n} of {chapter.verses.length}
+            {story ? chapter.title : `${v.heading ? `${chapter.book} ${chapter.chapter}:${v.n} · ` : ""}${v.n} of ${chapter.verses.length}`}
           </p>
         </div>
       ) : (
         <div className="sf-verse-wrap">
-          <p className="sf-eyebrow">{chapter.translation}</p>
-          <p className="sf-title">
-            {chapter.book} {chapter.chapter}
-          </p>
-          <p className="sf-sub">{chapter.title}</p>
+          <p className="sf-eyebrow">{story ? chapter.book : chapter.translation}</p>
+          <p className="sf-title">{chapterLabel(chapter)}</p>
+          <p className="sf-sub">{story ? (STORY_SERIES.find((x) => x.name === chapter.book)?.narrator ?? "") : chapter.title}</p>
         </div>
       )}
     </div>
@@ -347,7 +343,7 @@ function ReadView({ chapter, index, onPick }: { chapter: SleepChapter; index: nu
     >
       <article className="sf-page">
         <p className="sf-eyebrow">{chapter.book}</p>
-        <h2 className="sf-chapter">Chapter {chapter.chapter}</h2>
+        <h2 className="sf-chapter">{chapter.kind === "story" ? chapter.title : `Chapter ${chapter.chapter}`}</h2>
         {chapter.verses.map((v, k) => (
           <span key={v.n}>
             {v.heading ? <span className="sf-heading">{v.heading}</span> : null}
@@ -359,12 +355,16 @@ function ReadView({ chapter, index, onPick }: { chapter: SleepChapter; index: nu
               onClick={() => onPick(k)}
               onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && onPick(k)}
             >
-              <sup>{v.n}</sup>
+              {chapter.kind === "story" ? null : <sup>{v.n}</sup>}
               {v.text}{" "}
             </span>
           </span>
         ))}
-        <p className="sf-credit">Scripture quotations are from the {chapter.translation}.</p>
+        <p className="sf-credit">
+          {chapter.kind === "story"
+            ? `A retelling. Scripture quoted in it is from the ${chapter.translation}.`
+            : `Scripture quotations are from the ${chapter.translation}.`}
+        </p>
       </article>
     </div>
   );

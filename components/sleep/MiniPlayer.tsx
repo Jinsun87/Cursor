@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import { chapterLabel, storySection } from "@/lib/sleep/label";
 import { useSleepAudio } from "@/lib/sleep/sleep-audio";
 import "./sleep.css";
 
@@ -26,15 +27,21 @@ export function MiniPlayer() {
   return (
     <div className="mini" role="region" aria-label="Now playing">
       <div className="mini-line" style={{ transform: `scaleX(${progress})` }} aria-hidden="true" />
-      <button type="button" className="mini-open" onClick={s.expand} aria-label={`Open ${chapter.book} ${chapter.chapter} in the player`}>
+      <button type="button" className="mini-open" onClick={s.expand} aria-label={`Open ${chapterLabel(chapter)} in the player`}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src={v?.image ?? chapter.verses[0].image} alt="" />
         <span>
-          <strong>
-            {chapter.book} {chapter.chapter}
-          </strong>
-          <small>{s.mode === "walk" ? "Walk · " : "Sleep · "}
-            {s.playing ? (v ? `verse ${v.n} of ${chapter.verses.length}` : chapter.title) : "paused"}</small>
+          <strong>{chapterLabel(chapter)}</strong>
+          <small>
+            {chapter.kind === "story" ? `${chapter.book} · ` : s.mode === "walk" ? "Walk · " : "Sleep · "}
+            {s.playing
+              ? v
+                ? chapter.kind === "story"
+                  ? storySection(chapter, index)
+                  : `verse ${v.n} of ${chapter.verses.length}`
+                : chapter.title
+              : "paused"}
+          </small>
         </span>
       </button>
       <button type="button" className="mini-play" onClick={s.toggle} aria-label={s.playing ? "Pause" : "Play"}>

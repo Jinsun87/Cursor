@@ -1,0 +1,35 @@
+{
+  "title": "Jesus Calms the Storm",
+  "series": "Bedtime Bible Stories",
+  "duration": 698.2,
+  "sections": [
+    {
+      "title": "Settling in",
+      "start": 1.5
+    },
+    {
+      "title": "Part one: the fishermen",
+      "start": 56.8
+    },
+    {
+      "title": "Part two: a busy day",
+      "start": 122.6
+    },
+    {
+      "title": "Part three: asleep in the storm",
+      "start": 259.4
+    },
+    {
+      "title": "Part four: be still",
+      "start": 406
+    },
+    {
+      "title": "Part five: who is this?",
+      "start": 497.2
+    },
+    {
+      "title": "Closing",
+      "start": 591
+    }
+  ]
+}

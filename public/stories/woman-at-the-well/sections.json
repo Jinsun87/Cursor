@@ -1,0 +1,35 @@
+{
+  "title": "The Woman at the Well",
+  "series": "Women of the Bible",
+  "duration": 814,
+  "sections": [
+    {
+      "title": "Settling in",
+      "start": 1.5
+    },
+    {
+      "title": "Part one: a tired traveller",
+      "start": 55.4
+    },
+    {
+      "title": "Part two: give me a drink",
+      "start": 177.5
+    },
+    {
+      "title": "Part three: everything I ever did",
+      "start": 328.4
+    },
+    {
+      "title": "Part four: I am He",
+      "start": 466.5
+    },
+    {
+      "title": "Part five: fields ready for harvest",
+      "start": 569.9
+    },
+    {
+      "title": "Closing",
+      "start": 711.9
+    }
+  ]
+}

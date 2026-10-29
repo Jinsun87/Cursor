@@ -5,7 +5,8 @@ import { Fragment, useEffect, useRef, useState } from "react";
 import type { SleepChapter } from "@/lib/sleep/types";
 import { useSleepAudio, type ReadingMode } from "@/lib/sleep/sleep-audio";
 import { useReadingProgress, type ChapterProgress } from "@/lib/sleep/progress";
-import { COMING_SOON, SHELF, storyGroups, type ComingSoonShelf, type ShelfBook } from "@/lib/sleep/books";
+import { COMING_SOON, SHELF, STORY_SERIES, storyGroups, type ComingSoonShelf, type ShelfBook, type StorySeries } from "@/lib/sleep/books";
+import { STORY_CHAPTERS, STORY_SECONDS } from "@/lib/stories/chapters";
 
 type TileState = "heard" | "started" | "new" | "unrecorded";
 
@@ -45,6 +46,12 @@ export function BookShelf({
   const [bookSlug, setBookSlug] = useState<string | null>(null);
   const [selected, setSelected] = useState<number | null>(null);
   const book = SHELF.find((b) => b.slug === bookSlug && !b.comingSoon);
+  // Stories are recorded for Sleep only, so they sit on the Sleep shelf.
+  const series = mode === "sleep" ? STORY_SERIES.find((x) => x.slug === bookSlug) : undefined;
+
+  if (series) {
+    return <SeriesShelf series={series} premium={memberPremium} onBack={() => setBookSlug(null)} />;
+  }
 
   const minutes = (slug: string) => Math.max(1, Math.round((seconds[slug] ?? 0) / 60));
   const tally = (b: ShelfBook) => {
@@ -105,23 +112,65 @@ export function BookShelf({
             );
           })}
         </ul>
-        <h3 className="shelf-h">Coming soon</h3>
-        <ul className="shelf-books">
-          {COMING_SOON.map((b) => (
-            <li key={b.slug}>
-              <button type="button" className="shelf-book is-locked" disabled>
-                <Cover book={b} />
-                <span className="shelf-book-text">
-                  <strong>{b.name}</strong>
-                  <small>{b.section}</small>
-                  <span className="shelf-book-meta">
-                    <Padlock /> Premium · coming soon
-                  </span>
-                </span>
-              </button>
-            </li>
-          ))}
-        </ul>
+        {mode === "sleep" ? (
+          <>
+            <h3 className="shelf-h">Stories</h3>
+            <ul className="shelf-books">
+              {STORY_SERIES.map((x) => {
+                const episodes = STORY_CHAPTERS.filter((c) => c.book === x.name);
+                const totalMin = Math.round(episodes.reduce((n, c) => n + (STORY_SECONDS[c.slug] ?? 0), 0) / 60);
+                const locked = x.premium && !memberPremium;
+                return (
+                  <li key={x.slug}>
+                    <button
+                      type="button"
+                      className={`shelf-book${locked ? " is-locked" : ""}`}
+                      onClick={() => {
+                        setBookSlug(x.slug);
+                        setSelected(null);
+                      }}
+                    >
+                      <Cover book={x} />
+                      <span className="shelf-book-text">
+                        <strong>{x.name}</strong>
+                        <small>{x.section}</small>
+                        <span className="shelf-book-meta">
+                          {locked ? <Padlock /> : null}
+                          {locked ? "Premium · " : ""}
+                          {episodes.length} stories · {totalMin} min · {x.narrator}
+                        </span>
+                      </span>
+                      <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" className="shelf-chev">
+                        <path d="M9 6l6 6-6 6" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                      </svg>
+                    </button>
+                  </li>
+                );
+              })}
+            </ul>
+          </>
+        ) : null}
+        {COMING_SOON.length ? (
+          <>
+            <h3 className="shelf-h">Coming soon</h3>
+            <ul className="shelf-books">
+              {COMING_SOON.map((b) => (
+                <li key={b.slug}>
+                  <button type="button" className="shelf-book is-locked" disabled>
+                    <Cover book={b} />
+                    <span className="shelf-book-text">
+                      <strong>{b.name}</strong>
+                      <small>{b.section}</small>
+                      <span className="shelf-book-meta">
+                        <Padlock /> Premium · coming soon
+                      </span>
+                    </span>
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </>
+        ) : null}
       </section>
     );
   }
@@ -220,6 +269,68 @@ export function BookShelf({
           </div>
         );
       })}
+    </section>
+  );
+}
+
+/** A story series opened: its episodes in order, each with where the listener stopped and Play. */
+function SeriesShelf({ series, premium, onBack }: { series: StorySeries; premium: boolean; onBack: () => void }) {
+  const s = useSleepAudio();
+  const progress = useReadingProgress();
+  const episodes = STORY_CHAPTERS.filter((c) => c.book === series.name);
+  const totalMin = Math.round(episodes.reduce((n, c) => n + (STORY_SECONDS[c.slug] ?? 0), 0) / 60);
+  const heard = episodes.filter((c) => progress[c.slug]?.done && !(progress[c.slug].verse > 1)).length;
+  return (
+    <section className="shelf" aria-label={series.name}>
+      <button type="button" className="shelf-back" onClick={onBack}>
+        <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+          <path d="M15 6l-6 6 6 6" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+        All books
+      </button>
+      <header className="shelf-head">
+        <Cover book={series} large />
+        <div>
+          <h3>{series.name}</h3>
+          <p>
+            {series.section} · {series.narrator}
+          </p>
+          <p className="shelf-tally">
+            <span>{heard} heard</span> · {episodes.length} stories · {totalMin} min
+            {series.premium && !premium ? " · Premium" : ""}
+          </p>
+        </div>
+      </header>
+      <ol className="shelf-stories">
+        {episodes.map((c) => {
+          const p = progress[c.slug];
+          const started = p && p.verse > 1;
+          const minutes = Math.max(1, Math.round((STORY_SECONDS[c.slug] ?? 0) / 60));
+          return (
+            <li key={c.slug} className="shelf-strip">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={c.verses[0].image} alt="" />
+              <div className="shelf-strip-text">
+                <strong>{c.title}</strong>
+                <small>
+                  {minutes} min{started ? " · started" : p?.done ? " · heard" : ""}
+                </small>
+              </div>
+              <button
+                type="button"
+                className="shelf-play"
+                aria-label={`${started ? "Continue" : "Play"} ${c.title}`}
+                onClick={() => s.open(c, { mode: "sleep", verse: started ? p.verse : 1 })}
+              >
+                <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+                  <path d="M8.5 5.2 L19 12 L8.5 18.8 Z" fill="currentColor" />
+                </svg>
+                {started ? "Continue" : p?.done ? "Again" : "Play"}
+              </button>
+            </li>
+          );
+        })}
+      </ol>
     </section>
   );
 }

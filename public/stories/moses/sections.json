@@ -1,0 +1,43 @@
+{
+  "title": "Moses and the Red Sea",
+  "series": "Bedtime Bible Stories",
+  "duration": 835.3,
+  "sections": [
+    {
+      "title": "Settling in",
+      "start": 1.5
+    },
+    {
+      "title": "Part one: a baby in a basket",
+      "start": 51.4
+    },
+    {
+      "title": "Part two: drawn out of the water",
+      "start": 165.6
+    },
+    {
+      "title": "Part three: the burning bush",
+      "start": 262.5
+    },
+    {
+      "title": "Part four: let my people go",
+      "start": 344.6
+    },
+    {
+      "title": "Part five: trapped by the sea",
+      "start": 438.2
+    },
+    {
+      "title": "Part six: through the sea",
+      "start": 555.7
+    },
+    {
+      "title": "Part seven: a song by the sea",
+      "start": 698.3
+    },
+    {
+      "title": "Closing",
+      "start": 735.9
+    }
+  ]
+}

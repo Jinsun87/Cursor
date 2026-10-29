@@ -1,0 +1,178 @@
+{
+  "slug": "story-esther",
+  "kind": "story",
+  "book": "Women of the Bible",
+  "chapter": 5,
+  "title": "Esther: For Such a Time as This",
+  "translation": "Berean Standard Bible",
+  "audioSrc": "/stories/esther/story.mp3",
+  "timingSrc": "/stories/esther/timing.json",
+  "verses": [
+    {
+      "n": 1,
+      "text": "Let the room grow quiet around you. Breathe in, slowly. And breathe out, a little longer than you breathed in. Let your arms be heavy. Let your legs be heavy. There's nowhere you need to go, and nothing you need to do. The day is done.",
+      "heading": "Settling in",
+      "image": "/images/story/esther/city.jpg"
+    },
+    {
+      "n": 2,
+      "text": "Tonight's story takes place in a palace, among marble pillars and gold and silver couches, in the greatest empire of its time. It is about a young woman who never expected to be there, and a moment when everything depended on whether she would speak. It even has a king who couldn't sleep. You, I hope, will do better.",
+      "image": "/images/story/esther/city.jpg"
+    },
+    {
+      "n": 3,
+      "text": "Long ago, after the people of Judah had been carried away into exile, many of them lived scattered across the lands of the east. And the greatest power in all those lands was the Persian empire, ruled by King Xerxes, from his palace in the citadel of Susa. Some older Bibles call him Ahasuerus. His kingdom was vast. It stretched over a hundred and twenty-seven provinces, from India all the way to Cush. In the third year of his reign, Xerxes held a feast that lasted for months, to show off the riches of his kingdom. And at the end of it came a seven-day banquet in the palace garden, under hangings of white and blue linen, with wine served in goblets of gold, each one different from the next.",
+      "heading": "Part one: the palace at Susa",
+      "image": "/images/story/esther/garden.jpg"
+    },
+    {
+      "n": 4,
+      "text": "On the seventh day, when the king was merry with wine, he sent for his queen, Vashti, to come and show her beauty to his guests. And Vashti refused. The king was furious. His advisers told him that if the queen could refuse the king, every wife in the empire would follow her example. So Vashti was removed from her place, and a decree went out across the land. And the king was left without a queen.",
+      "image": "/images/story/esther/garden.jpg"
+    },
+    {
+      "n": 5,
+      "text": "Later, when the king's anger had cooled, his attendants suggested a search. Beautiful young women would be gathered from every province to the palace at Susa. And the one who pleased the king most would become queen. Now in Susa there lived a Jewish man named Mordecai, from the tribe of Benjamin. His family had been carried into exile from Jerusalem years before. And Mordecai had brought up his young cousin, the daughter of his uncle, because her father and mother had died. He had raised her as his own daughter. Her Hebrew name was Hadassah. But we know her by her other name. Esther.",
+      "heading": "Part two: Hadassah",
+      "image": "/images/story/esther/gate.jpg"
+    },
+    {
+      "n": 6,
+      "text": "Esther was taken to the palace with the other young women, and placed under the care of the king's official, Hegai. And she pleased him, and won his favor. He gave her seven maidservants and the best rooms. But Mordecai had told her not to reveal who her people were. So Esther kept quiet about being Jewish. And every day, Mordecai walked back and forth in front of the courtyard of the women's palace, to find out how Esther was, and what was happening to her.",
+      "image": "/images/story/esther/gate.jpg"
+    },
+    {
+      "n": 7,
+      "text": "Picture him there, day after day. Not able to go in. Just walking past the gates, waiting for news of the girl he had raised.",
+      "image": "/images/story/esther/gate.jpg"
+    },
+    {
+      "n": 8,
+      "text": "For a whole year the young women were prepared, with oil of myrrh, and perfumes, before each was taken to the king. When Esther's turn came, she asked for nothing except what Hegai advised. And everyone who saw her was drawn to her. The king loved Esther more than all the others. He set the royal crown on her head, and made her queen in place of Vashti, and held a great banquet in her honor.",
+      "image": "/images/story/esther/gate.jpg"
+    },
+    {
+      "n": 9,
+      "text": "Around that time, Mordecai was sitting at the king's gate when he overheard two of the king's officials plotting to kill the king. He told Esther, and Esther told the king, giving Mordecai the credit. The plot was stopped. And it was all written down in the royal records. Then, it seems, everyone forgot about it.",
+      "image": "/images/story/esther/gate.jpg"
+    },
+    {
+      "n": 10,
+      "text": "Some time later, King Xerxes promoted a man named Haman above all the other officials. And the king commanded everyone at the gate to bow down to him. Everyone did, except Mordecai. Day after day, the other servants asked him why he disobeyed the king's command. And he told them that he was a Jew. He would not bow.",
+      "heading": "Part three: Haman",
+      "image": "/images/story/esther/gate.jpg"
+    },
+    {
+      "n": 11,
+      "text": "When Haman saw it, he was filled with rage. And when he learned who Mordecai's people were, it wasn't enough for him to punish one man. He decided to destroy all of Mordecai's people, the Jews, in every province of the kingdom. He cast lots, which they called Pur, to pick the day. And the lot fell on a day nearly a year away, in the month of Adar. Then Haman went to the king. There is a certain people, he said, scattered among all your provinces, whose laws are different from everyone else's. It isn't in the king's interest to tolerate them. And the king, without even asking who they were, took the signet ring from his finger and gave it to Haman, and told him to do as he pleased. The decree went out to every province, sealed with the king's ring. The king and Haman sat down to drink. But the city of Susa was thrown into confusion.",
+      "image": "/images/story/esther/gate.jpg"
+    },
+    {
+      "n": 12,
+      "text": "When Mordecai heard, he tore his clothes, put on sackcloth and ashes, and went out into the city, weeping aloud. In every province where the decree arrived, there was mourning among the Jews, and fasting, and tears. Esther, inside the palace, heard that Mordecai was in distress, though she didn't yet know why. She sent one of her attendants, Hathach, to find out. Mordecai told him everything, down to the exact sum Haman had promised to pay. He gave him a copy of the decree to show Esther. And he urged her to go to the king, and beg for her people's lives.",
+      "heading": "Part four: for such a time as this",
+      "image": "/images/story/esther/gate.jpg"
+    },
+    {
+      "n": 13,
+      "text": "But Esther sent back a message. Everyone knew the law. Anyone who went into the king's inner court without being called would be put to death, unless the king held out his golden scepter to spare them. And the king had not called for her in thirty days. Mordecai's answer came back: Do not imagine that because you are in the king's palace you alone will escape the fate of all the Jews. For if you remain silent at this time, relief and deliverance for the Jews will arise from another place, but you and your father's house will perish. And who knows if perhaps you have come to the kingdom for such a time as this?",
+      "image": "/images/story/esther/gate.jpg"
+    },
+    {
+      "n": 14,
+      "text": "Such a time as this. All those years. Losing her parents. Being raised by her cousin. Being taken to the palace. Being chosen. Maybe none of it had been an accident. Maybe she had been put exactly where she was, for exactly this moment.",
+      "image": "/images/story/esther/gate.jpg"
+    },
+    {
+      "n": 15,
+      "text": "And Esther answered: Go and assemble all the Jews who can be found in Susa, and fast for me. Do not eat or drink for three days, night or day, and I and my maidens will fast as you do. After that, I will go to the king, even though it is against the law. And if I perish, I perish! And Mordecai went and did everything she asked.",
+      "image": "/images/story/esther/gate.jpg"
+    },
+    {
+      "n": 16,
+      "text": "On the third day, Esther put on her royal robes, and went and stood in the inner court of the palace, facing the king's hall. The king was on his throne, looking toward the entrance. Imagine those few seconds, standing there, waiting to see what he would do. And when the king saw Queen Esther, she found favor in his sight. He held out the golden scepter toward her. She came forward, and touched the tip of it. What is it, Queen Esther? What is your request? Even up to half the kingdom, it will be given to you.",
+      "heading": "Part five: the golden scepter",
+      "image": "/images/story/esther/court.jpg"
+    },
+    {
+      "n": 17,
+      "text": "But Esther didn't ask yet. She simply invited the king and Haman to a banquet she had prepared. And at the banquet, when the king asked again, she invited them both to come back the next day, to a second banquet. Then, she said, she would answer. Haman went home delighted. Only the queen and the king, and him! But on the way he passed Mordecai at the gate, who would not rise or tremble before him. And all his happiness turned sour. His wife and his friends told him to build a tall gallows, and ask the king in the morning to have Mordecai put to death on it. So Haman had it built.",
+      "image": "/images/story/esther/court.jpg"
+    },
+    {
+      "n": 18,
+      "text": "And now comes one of the quietest, and most wonderful, moments in the whole story. That night sleep escaped the king He tossed and turned. And so he ordered the royal records to be brought in and read aloud to him, perhaps hoping they would send him to sleep.",
+      "heading": "Part six: the king who could not sleep",
+      "image": "/images/story/esther/sleepless.jpg"
+    },
+    {
+      "n": 19,
+      "text": "And there, in the record, the reader came to the night Mordecai had saved the king's life. The king asked, “What honor or dignity has been bestowed on Mordecai for this act?” And his attendants answered, “Nothing has been done for him.”",
+      "image": "/images/story/esther/sleepless.jpg"
+    },
+    {
+      "n": 20,
+      "text": "Just then, early in the morning, Haman arrived in the outer court, coming to ask permission to put Mordecai to death. The king called him in, and asked him: What should be done for the man whom the king is delighted to honor? And Haman thought to himself, who would the king want to honor more than me? So he described the greatest honor he could imagine. A royal robe the king himself had worn. A horse the king himself had ridden. And a noble prince to lead him through the city square, calling out before him: this is what is done for the man the king delights to honor. “Hurry,” said the king to Haman, “and do just as you proposed. Take the robe and the horse to Mordecai the Jew, who is sitting at the king's gate. Do not neglect anything that you have suggested.”",
+      "image": "/images/story/esther/sleepless.jpg"
+    },
+    {
+      "n": 21,
+      "text": "So Haman led Mordecai through the square on the king's horse, in the king's robe, calling out his honor. Then Mordecai went quietly back to his place at the gate. And Haman hurried home, with his head covered in grief.",
+      "image": "/images/story/esther/sleepless.jpg"
+    },
+    {
+      "n": 22,
+      "text": "One sleepless night. One page of an old record. And everything began to turn.",
+      "image": "/images/story/esther/sleepless.jpg"
+    },
+    {
+      "n": 23,
+      "text": "That evening, at Esther's second banquet, the king asked her once more what she wanted. And now she told him. If I have found favor in your sight, O king, and if it pleases the king, grant me my life as my petition, and the lives of my people as my request. My people and I have been sold, she said, to be destroyed. The king was astonished. Who would dare to do such a thing? And Esther answered, “The adversary and enemy is this wicked man—Haman!”",
+      "heading": "Part seven: the second banquet",
+      "image": "/images/story/esther/garden.jpg"
+    },
+    {
+      "n": 24,
+      "text": "The king rose in fury and went out into the palace garden. And the end came quickly for Haman. He was put to death on the very gallows he had built for Mordecai. Then the king's anger died down.",
+      "image": "/images/story/esther/garden.jpg"
+    },
+    {
+      "n": 25,
+      "text": "But the decree against the Jews still stood. In Persia, a law sealed with the king's ring could not be taken back. So once more Esther went to the king, and fell at his feet, weeping, and begged him to undo the evil Haman had planned. Again he held out the golden scepter, and she rose and stood before him. For how could I bear to see the disaster that would befall my people? How could I bear to see the destruction of my kindred? The king gave Mordecai his signet ring, and let him write a new decree. It gave the Jews in every city the right to gather and defend their lives when the day came. Riders on swift royal horses carried it to every province.",
+      "heading": "Part eight: sorrow turned to joy",
+      "image": "/images/story/esther/city.jpg"
+    },
+    {
+      "n": 26,
+      "text": "When that day arrived, the Jews stood together, and the people who had planned to destroy them could not stand against them. The day meant for their destruction became a day of rescue. And Mordecai went out from the king's presence in royal robes of blue and white, with a crown of gold. And the whole city of Susa shouted for joy. For the Jews it was a time of light and gladness, of joy and honor.",
+      "image": "/images/story/esther/city.jpg"
+    },
+    {
+      "n": 27,
+      "text": "Mordecai wrote to the Jews in every province, asking them to remember these days every year, for all time. The days are called Purim, after the lots Haman cast. They were to be remembered as the days when their sorrow was turned to joy, and their mourning into a holiday. Days of feasting, and of sending gifts to one another, and to the poor. And they still are. To this day, every year, the story of Esther is read aloud again, and people give gifts to the poor, just as Mordecai wrote.",
+      "heading": "What Scripture remembers",
+      "image": "/images/story/esther/city.jpg"
+    },
+    {
+      "n": 28,
+      "text": "There's something unusual about the book of Esther. In the original Hebrew, the name of God never appears in it. Not once. And yet, look at what happens. An orphan raised by her cousin is chosen as queen. A man overhears a plot and saves a king. A king can't sleep, and asks for the one book that holds the right page. The lot falls nearly a year away, giving time for rescue. God is never named. But His hand is everywhere.",
+      "heading": "Closing",
+      "image": "/images/story/esther/city.jpg"
+    },
+    {
+      "n": 29,
+      "text": "Maybe tonight you can't see God's hand in your own story. That's all right. Esther couldn't either, standing in that courtyard. She simply did the brave thing in front of her, and trusted the rest.",
+      "image": "/images/story/esther/city.jpg"
+    },
+    {
+      "n": 30,
+      "text": "Let your breathing slow now. The palace at Susa is quiet. The lamps are low. And this time, the king is sleeping.",
+      "image": "/images/story/esther/city.jpg"
+    },
+    {
+      "n": 31,
+      "text": "You can sleep too. You are held, even when you can't see the hand that holds you. Rest now. Goodnight.",
+      "image": "/images/story/esther/city.jpg"
+    }
+  ]
+}

@@ -1,0 +1,47 @@
+{
+  "title": "Noah and the Ark",
+  "series": "Bedtime Bible Stories",
+  "duration": 872.8,
+  "sections": [
+    {
+      "title": "Settling in",
+      "start": 1.5
+    },
+    {
+      "title": "Part one: a good man",
+      "start": 50.6
+    },
+    {
+      "title": "Part two: build a boat",
+      "start": 116.6
+    },
+    {
+      "title": "Part three: the animals come",
+      "start": 215
+    },
+    {
+      "title": "Part four: the rain",
+      "start": 337.9
+    },
+    {
+      "title": "Part five: God remembered",
+      "start": 466.9
+    },
+    {
+      "title": "Part six: the dove",
+      "start": 523.1
+    },
+    {
+      "title": "Part seven: coming out",
+      "start": 630.9
+    },
+    {
+      "title": "Part eight: the rainbow",
+      "start": 720
+    },
+    {
+      "title": "Closing",
+      "start": 784.3
+    }
+  ]
+}

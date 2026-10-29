@@ -1,0 +1,134 @@
+{
+  "slug": "story-david-and-goliath",
+  "kind": "story",
+  "book": "Bedtime Bible Stories",
+  "chapter": 4,
+  "title": "David and Goliath",
+  "translation": "Berean Standard Bible",
+  "audioSrc": "/stories/david-and-goliath/story.mp3",
+  "timingSrc": "/stories/david-and-goliath/timing.json",
+  "verses": [
+    {
+      "n": 1,
+      "text": "Snuggle down, and let your head sink into the pillow. Take a deep breath in. Hold it for a moment. And let it all go. Let your arms flop. Let your legs flop. All floppy and heavy and warm.",
+      "heading": "Settling in",
+      "image": "/images/story/david-and-goliath/shepherd.jpg"
+    },
+    {
+      "n": 2,
+      "text": "Tonight's story is about a shepherd boy, a giant, a sling, and five smooth stones from a stream. It's about being brave, even when you're small. Close your eyes. Here's the story.",
+      "image": "/images/story/david-and-goliath/shepherd.jpg"
+    },
+    {
+      "n": 3,
+      "text": "In the little town of Bethlehem, there lived a man named Jesse. Jesse had eight sons. And the youngest of them all was a boy named David. David's job was to look after his father's sheep. Every day he led them out to the green hills to eat the grass, and found them cool streams to drink from. And at night, he watched over them, under the stars.",
+      "heading": "Part one: the shepherd boy",
+      "image": "/images/story/david-and-goliath/anoint.jpg"
+    },
+    {
+      "n": 4,
+      "text": "Being a shepherd wasn't always quiet. Sometimes a lion, or a bear, came creeping out of the dark to snatch a lamb from the flock. And when that happened, David didn't run away. He went after it, and saved the lamb. God helped him, every time. One day, a very important visitor came to Jesse's house: the prophet Samuel. God had sent him to choose the next king of Israel from among Jesse's sons. Samuel looked at the oldest son, who was tall and strong, and thought, surely this is the one. But God said to Samuel: the LORD sees the heart. One by one, seven of Jesse's sons came before Samuel. And each time, God said, not this one. At last Samuel asked, are these all your sons? And Jesse said, well, there is still the youngest. He's out looking after the sheep. So they sent for David. And when he came in from the fields, God said to Samuel, this is the one. And Samuel poured oil on David's head, to show that God had chosen him.",
+      "image": "/images/story/david-and-goliath/anoint.jpg"
+    },
+    {
+      "n": 5,
+      "text": "Out there in the fields, David played his harp and sang songs to God. Later on, he wrote one of the most famous songs ever: The LORD is my shepherd; I shall not want. He makes me lie down in green pastures; He leads me beside quiet waters.",
+      "image": "/images/story/david-and-goliath/anoint.jpg"
+    },
+    {
+      "n": 6,
+      "text": "Now in those days, the people of Israel were at war with the Philistines. The two armies faced each other across a valley, the Valley of Elah. The Philistines on one hill. The Israelites on the other. And a stream running through the valley in between. And every morning, and every evening, out from the Philistine army came a giant.",
+      "heading": "Part two: the giant",
+      "image": "/images/story/david-and-goliath/armies.jpg"
+    },
+    {
+      "n": 7,
+      "text": "His name was Goliath. He was enormous, much taller than any man in Israel. He wore a shiny bronze helmet, and heavy bronze armour, and he carried a huge spear with a point made of iron. And a soldier walked in front of him, carrying his shield. Goliath stood in the valley and shouted up at the Israelites. Send someone to fight me! Choose one man, and let him come down here!",
+      "image": "/images/story/david-and-goliath/armies.jpg"
+    },
+    {
+      "n": 8,
+      "text": "And all the soldiers of Israel, and even King Saul, were frightened. Nobody wanted to fight Goliath. For forty days he came out and shouted, morning and evening. And for forty days, no one went.",
+      "image": "/images/story/david-and-goliath/armies.jpg"
+    },
+    {
+      "n": 9,
+      "text": "David's three oldest brothers were in King Saul's army. One day, their father Jesse said to David, take this food to your brothers. Some roasted grain, and ten loaves of bread, and ten cheeses for their captain. And see how your brothers are getting on. So David got up early, left his sheep with someone to look after them, and set off with the food.",
+      "heading": "Part three: David comes to the camp",
+      "image": "/images/story/david-and-goliath/armies.jpg"
+    },
+    {
+      "n": 10,
+      "text": "He arrived at the camp just as the armies were lining up. He left the food with the man in charge of supplies, and ran to find his brothers. And while he was talking to them, out came Goliath, shouting his usual words. And all the men of Israel ran away from him, afraid.",
+      "image": "/images/story/david-and-goliath/armies.jpg"
+    },
+    {
+      "n": 11,
+      "text": "But David wasn't afraid. He said: Just who is this uncircumcised Philistine, that he should defy the armies of the living God? David's biggest brother, Eliab, was cross with him. What are you doing here? Who's looking after your few little sheep? But David just said, “What have I done now?” It was only a question.",
+      "image": "/images/story/david-and-goliath/armies.jpg"
+    },
+    {
+      "n": 12,
+      "text": "Word got to King Saul about the brave young shepherd, and Saul sent for him. David said to the king: Let no man's heart fail on account of this Philistine. Your servant will go and fight him! But Saul said, you can't fight him. You're only a boy. He's been a soldier all his life.",
+      "heading": "Part four: David and the king",
+      "image": "/images/story/david-and-goliath/stones.jpg"
+    },
+    {
+      "n": 13,
+      "text": "So David told the king about the lion and the bear. How he had chased them, and saved the lambs. And he said: The LORD, who delivered me from the claws of the lion and the bear, will deliver me from the hand of this Philistine. So Saul said, “Go… and may the LORD be with you.”",
+      "image": "/images/story/david-and-goliath/stones.jpg"
+    },
+    {
+      "n": 14,
+      "text": "King Saul tried to give David his own armour. A bronze helmet, and a coat of armour, and a big sword. David put it all on, and tried to walk. Clank. Clank. It was much too big and much too heavy. “I cannot walk in these,” said David. And he took it all off again.",
+      "image": "/images/story/david-and-goliath/stones.jpg"
+    },
+    {
+      "n": 15,
+      "text": "Instead, David took his shepherd's staff. And he went down to the stream in the valley, and knelt by the water. He chose five smooth stones, round and cool and shiny from the water, and put them in his shepherd's bag. And with his sling in his hand, he walked out to meet the giant.",
+      "heading": "Part five: five smooth stones",
+      "image": "/images/story/david-and-goliath/giant.jpg"
+    },
+    {
+      "n": 16,
+      "text": "Goliath came closer and closer. And when he saw David, he laughed at him. You're just a boy! Do you think I'm a dog, that you come at me with sticks? But David said: You come against me with sword and spear and javelin, but I come against you in the name of the LORD of Hosts for the battle is the LORD's",
+      "image": "/images/story/david-and-goliath/giant.jpg"
+    },
+    {
+      "n": 17,
+      "text": "Then David ran toward Goliath. He reached into his bag, and took out one stone. He put it in his sling. He swung it round, and round, and round. And let it go.",
+      "image": "/images/story/david-and-goliath/giant.jpg"
+    },
+    {
+      "n": 18,
+      "text": "The stone flew through the air, and hit Goliath right on the forehead. And the great giant swayed, and toppled, and fell down flat on his face on the ground. One stone. That's all it took.",
+      "image": "/images/story/david-and-goliath/giant.jpg"
+    },
+    {
+      "n": 19,
+      "text": "When the Philistines saw that their giant had fallen, they turned and ran away. And the soldiers of Israel cheered.",
+      "image": "/images/story/david-and-goliath/giant.jpg"
+    },
+    {
+      "n": 20,
+      "text": "Everyone else looked at Goliath and saw how big he was. David looked at Goliath and remembered how big God was. David wasn't the biggest, or the strongest, or the oldest. He was just a shepherd boy with a sling. But he trusted God. And that made all the difference.",
+      "heading": "Closing",
+      "image": "/images/story/david-and-goliath/shepherd.jpg"
+    },
+    {
+      "n": 21,
+      "text": "When something feels too big for you, you can remember David. You don't have to be big. God is big. And the battle is the LORD's.",
+      "image": "/images/story/david-and-goliath/shepherd.jpg"
+    },
+    {
+      "n": 22,
+      "text": "Now let your breathing slow right down. Picture the green hills outside Bethlehem at night. The sheep all safe in the fold. A shepherd boy sitting by a little fire, playing his harp softly under the stars.",
+      "image": "/images/story/david-and-goliath/shepherd.jpg"
+    },
+    {
+      "n": 23,
+      "text": "The LORD is your shepherd too. He makes you lie down. He leads you beside quiet waters. Goodnight.",
+      "image": "/images/story/david-and-goliath/shepherd.jpg"
+    }
+  ]
+}

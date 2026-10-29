@@ -10,6 +10,12 @@ export interface SleepVerse {
 
 export interface SleepChapter {
   slug: string;
+  /**
+   * "story": a retold Bible story episode (content/stories), not a chapter of Scripture.
+   * Then `book` is the series, `chapter` the episode number and each "verse" a spoken
+   * passage of the story, and it plays only in Sleep.
+   */
+  kind?: "story";
   book: string;
   chapter: number;
   title: string;

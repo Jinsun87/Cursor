@@ -20,6 +20,13 @@ describe("nextChapter", () => {
     expect(nextChapter("unknown", "sleep", chapters, {})).toBeNull();
   });
 
+  it("plays a story series on, episode by episode, and stops at its end", () => {
+    const story = (slug: string, book: string, chapter: number) => ({ slug, book, chapter, kind: "story" }) as SleepChapter;
+    const stories = [story("story-a", "Series", 1), story("story-b", "Series", 2), story("story-c", "Other", 1)];
+    expect(nextChapter("story-a", "sleep", chapters, {}, stories)?.slug).toBe("story-b");
+    expect(nextChapter("story-b", "sleep", chapters, {}, stories)).toBeNull();
+  });
+
   it("uses the real catalogue in Bible order", () => {
     expect(nextChapter("genesis-1", "sleep")?.slug).toBe("genesis-2");
     expect(nextChapter("genesis-50", "walk")?.slug).toBe("exodus-1");

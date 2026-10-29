@@ -7,6 +7,13 @@ describe("access", () => {
     expect(isPremiumBook("Exodus")).toBe(true);
   });
 
+  it("keeps both story series for Premium members", () => {
+    expect(isPremiumBook("Women of the Bible")).toBe(true);
+    expect(isPremiumBook("Bedtime Bible Stories")).toBe(true);
+    expect(canListen({ book: "Bedtime Bible Stories" }, false)).toBe(false);
+    expect(canListen({ book: "Bedtime Bible Stories" }, true)).toBe(true);
+  });
+
   it("treats books not on the shelf as Premium", () => {
     expect(isPremiumBook("Psalm")).toBe(true);
   });

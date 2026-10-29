@@ -15,6 +15,7 @@ import { existsSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync
 import { join } from "node:path";
 import { getChapter, BSB_NAME } from "../lib/bible/bsb";
 import { generateVertexImage } from "../lib/ai/vertex-imagen";
+import { withRetry } from "./lib/with-retry";
 import { GENESIS_PLANS, NIGHT_STYLE, type SleepChapterPlan } from "../content/sleep/genesis";
 import { EXODUS_PLANS } from "../content/sleep/exodus";
 import { PSALM_PLANS } from "../content/sleep/psalms";
@@ -60,22 +61,6 @@ function chaptersFrom(ref: string): { book: string; chapter: number }[] {
 }
 
 const slugOf = (book: string, chapter: number) => `${book.toLowerCase().replace(/\s+/g, "-")}-${chapter}`;
-
-/** Vertex allows only a few images a minute: on "429 Too Many Requests", wait and try again. */
-async function withRetry<T>(fn: () => Promise<T>): Promise<T> {
-  for (let attempt = 1; ; attempt++) {
-    try {
-      return await fn();
-    } catch (e) {
-      // Rate limits and dropped connections are both worth another try.
-      const limited = e instanceof Error && /\b429\b|RESOURCE_EXHAUSTED|fetch failed|ECONNRESET|ETIMEDOUT|socket hang up|\b50[234]\b/.test(e.message);
-      if (!limited || attempt >= 8) throw e;
-      const wait = Math.min(120, 15 * attempt);
-      process.stdout.write(`\r  rate limited; waiting ${wait}s   `);
-      await new Promise((r) => setTimeout(r, wait * 1000));
-    }
-  }
-}
 
 async function paint(plan: SleepChapterPlan, book: string, slug: string, label: string) {
   const dir = join("public", "images", "sleep", slug);
