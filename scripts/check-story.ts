@@ -41,8 +41,8 @@ const notes = cut >= 0 ? body.slice(cut) : "";
 const norm = (s: string) =>
   s
     .toLowerCase()
-    .replace(/[’‘]/g, "'")
-    .replace(/[^a-z0-9' ]+/g, " ")
+    .replace(/['’‘]/g, "")
+    .replace(/[^a-z0-9 ]+/g, " ")
     .replace(/\s+/g, " ")
     .trim();
 
