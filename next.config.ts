@@ -1,5 +1,6 @@
 import type { NextConfig } from "next";
 import { adsTxtRedirects } from "./lib/ezoic";
+import { retiredQuizRedirects } from "./lib/retired-quizzes";
 import { STAGING_HOSTS } from "./lib/site";
 
 const nextConfig: NextConfig = {
@@ -11,6 +12,8 @@ const nextConfig: NextConfig = {
     { source: "/read/:book/:chapter", destination: "/?tab=sleep", permanent: false },
     { source: "/ebooks", destination: "/", permanent: true },
     { source: "/ebooks/:slug", destination: "/", permanent: true },
+    // Quizzes outside the Bible, retired in October 2026.
+    ...retiredQuizRedirects(),
   ],
   headers: async () => [
     // Staging copies of the site must never compete with lampstandbible.com in search.

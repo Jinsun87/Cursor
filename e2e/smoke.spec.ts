@@ -43,6 +43,14 @@ test("retired pages redirect to the home screen", async ({ request }) => {
   }
 });
 
+test("retired quizzes outside the Bible redirect to the Bible quizzes", async ({ request }) => {
+  for (const path of ["/quizzes/us-capitals", "/series/geography-1", "/category/sports", "/certificate/science-basics"]) {
+    const res = await request.get(path, { maxRedirects: 0 });
+    expect(res.status()).toBe(308);
+    expect(res.headers().location).toBe("/quizzes");
+  }
+});
+
 test("Open the Book quiz loads its first question", async ({ page }) => {
   await page.goto("/quizzes/open-the-book");
   await expect(page.getByRole("heading", { name: /^open the book/i })).toBeVisible();
@@ -51,7 +59,7 @@ test("Open the Book quiz loads its first question", async ({ page }) => {
 });
 
 test("a guest can finish a quiz and see a score", async ({ page }) => {
-  await page.goto("/quizzes/us-capitals");
+  await page.goto("/quizzes/scripture-places");
   await expect(page.getByTestId("quiz-hud")).toBeVisible();
   await expect(page.getByTestId("hud-question")).toContainText("Question 1");
   await expect(page.getByTestId("hud-accuracy")).toContainText("0%");
@@ -73,7 +81,7 @@ test("a guest can finish a quiz and see a score", async ({ page }) => {
   await page.getByTestId("hud-restart").click();
   await expect(page.getByTestId("hud-question")).toContainText("Question 1");
   await expect(page.getByTestId("hud-accuracy")).toContainText("0%");
-  await expect(page.getByRole("heading", { name: /capital of california/i })).toBeVisible();
+  await expect(page.getByRole("heading", { name: /exodus narrative/i })).toBeVisible();
 });
 
 test("guests see quiet-room ads and need an account before checkout", async ({ page }) => {
@@ -96,7 +104,7 @@ test("sign-in offers an email link, with a password option", async ({ page }) =>
 });
 
 test("a guest can resume a sitting after reload", async ({ page }) => {
-  await page.goto("/quizzes/us-capitals");
+  await page.goto("/quizzes/scripture-places");
   await expect(page.getByTestId("choice-0")).toHaveText(/.+/);
   await expect(page.getByTestId("course-medals")).toHaveCount(0);
   await page.getByTestId("choice-0").click();
@@ -111,7 +119,7 @@ test("a guest can resume a sitting after reload", async ({ page }) => {
 });
 
 test("restart wipes a saved sitting", async ({ page }) => {
-  await page.goto("/quizzes/us-capitals");
+  await page.goto("/quizzes/scripture-places");
   await expect(page.getByTestId("choice-0")).toHaveText(/.+/);
   await page.getByTestId("choice-0").click();
   await expect(page.getByTestId("answer-fact")).toBeVisible();
@@ -130,7 +138,7 @@ test("daily sitting is ten questions", async ({ page }) => {
 });
 
 test("guests are invited to join before using a 50/50", async ({ page }) => {
-  await page.goto("/quizzes/us-capitals");
+  await page.goto("/quizzes/scripture-places");
   await expect(page.getByTestId("choice-0")).toHaveText(/.+/);
   await expect(page.getByTestId("lifeline-5050-locked")).toHaveAttribute("href", "/register");
 });

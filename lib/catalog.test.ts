@@ -1,6 +1,20 @@
 import { describe, expect, it } from "vitest";
 import { CATEGORIES, QUIZZES, SERIES, getDailyQuiz, getQuiz, getSeries } from "./catalog";
 import { DAILY_LENGTH } from "./economy";
+import { RETIRED_CATEGORIES, RETIRED_QUIZZES, RETIRED_SERIES } from "./retired-quizzes";
+
+describe("a Bible catalogue", () => {
+  it("lists only Bible quizzes, series and categories in public", () => {
+    expect(CATEGORIES.map((c) => c.slug)).toEqual(["bible"]);
+    expect(SERIES.every((s) => s.category === "bible")).toBe(true);
+    expect(QUIZZES.filter((q) => !q.isSecret).every((q) => q.category === "bible")).toBe(true);
+  });
+
+  it("no longer serves any retired quiz, series or category", () => {
+    const live = new Set([...QUIZZES.map((q) => q.slug), ...SERIES.map((s) => s.slug), ...CATEGORIES.map((c) => c.slug)]);
+    for (const slug of [...RETIRED_QUIZZES, ...RETIRED_SERIES, ...RETIRED_CATEGORIES]) expect(live.has(slug), slug).toBe(false);
+  });
+});
 
 describe("catalog integrity", () => {
   it("has unique category, series, and quiz slugs", () => {
