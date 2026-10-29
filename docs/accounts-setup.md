@@ -60,6 +60,35 @@ Coins, quiz attempts, and certificates are still kept in the browser **per accou
 
 Without the Supabase variables the site still builds and runs; sign-in shows "Accounts are not available right now".
 
+### 5. Going live with Paddle
+
+Sandbox stays for local development (`.env.local`) and Vercel **Preview**; only Vercel **Production** gets the live values. The code switches with `NEXT_PUBLIC_PADDLE_ENV=production` and refuses a `test_` client token in that mode.
+
+1. **Paddle live account approved** for selling: business verification done, and **Checkout → Website approval** lists `lampstandbible.com` as approved. Paddle reviews the pricing, terms, refund and privacy pages, which all exist.
+2. **Checkout → Checkout settings → Default payment link**: `https://lampstandbible.com/pricing`. Paddle sends people here with `?_ptxn=…` (card-update emails, payment links made in the dashboard), and only the pricing page loads Paddle.js, which then opens that checkout by itself. The home page does not load Paddle, so it would not work there.
+3. **Catalog** (live), matching the sandbox catalogue:
+   - Lampstand Pro **monthly** $4.99, recurring monthly, **7-day trial**.
+   - Lampstand Pro **annual** $39.99, recurring yearly, **7-day trial**.
+   - **Founding member** $99, one-time.
+4. **Developer tools → Authentication**: a live **client-side token** (`live_…`) and a live **API key** with permission to create customer portal sessions (the only server call besides webhooks).
+5. **Developer tools → Notifications → New destination** (live): `https://lampstandbible.com/api/webhooks/paddle`, events: every `subscription.*`, `transaction.completed`, `adjustment.created` and `adjustment.updated` (founding purchases and their refunds). Copy its secret key.
+6. **Vercel → Settings → Environment Variables, Production only**:
+
+   | Variable | Live value |
+   | --- | --- |
+   | `NEXT_PUBLIC_PADDLE_ENV` | `production` |
+   | `NEXT_PUBLIC_PADDLE_CLIENT_TOKEN` | the `live_…` token |
+   | `NEXT_PUBLIC_PADDLE_MONTHLY_PRICE_ID` | live monthly price id |
+   | `NEXT_PUBLIC_PADDLE_ANNUAL_PRICE_ID` | live annual price id |
+   | `NEXT_PUBLIC_PADDLE_LIFETIME_PRICE_ID` | live founding price id (the webhook uses it to recognise founding purchases) |
+   | `PADDLE_API_KEY` | live API key |
+   | `PADDLE_NOTIFICATION_WEBHOOK_SECRET` | live destination's secret |
+
+   Leave the `…STARTER…` and `…ADVANCED…` price variables empty in Production (an old pricing model; the code skips them when unset).
+7. **Remove sandbox test purchases** from Supabase so they do not count as founding members (SQL Editor): `delete from public.lifetime_purchases where price_id = '<sandbox founding price id>';` and the same for any sandbox rows in `public.subscriptions`.
+8. **Redeploy**, then **Promote to Production**: `NEXT_PUBLIC_…` values are built into the site, so a new build is needed after changing them.
+9. **Test with a real card**: subscribe monthly (the 7-day trial charges nothing), check `/welcome` shows Premium and `public.subscriptions` has the row, then cancel from the profile's "Manage subscription".
+
 ## Testing the full flow (sandbox)
 
 1. Register at `/register` → open the email link → you land on `/profile`.

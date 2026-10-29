@@ -84,7 +84,7 @@ export function BookShelf({
                     setSelected(null);
                   }}
                 >
-                  <Cover book={b} />
+                  <Cover book={b} locked={Boolean(locked)} />
                   <span className="shelf-book-text">
                     <strong>{b.name}</strong>
                     <small>{b.section}</small>
@@ -130,7 +130,7 @@ export function BookShelf({
                         setSelected(null);
                       }}
                     >
-                      <Cover book={x} />
+                      <Cover book={x} locked={Boolean(locked)} />
                       <span className="shelf-book-text">
                         <strong>{x.name}</strong>
                         <small>{x.section}</small>
@@ -157,7 +157,7 @@ export function BookShelf({
               {COMING_SOON.map((b) => (
                 <li key={b.slug}>
                   <button type="button" className="shelf-book is-locked" disabled>
-                    <Cover book={b} />
+                    <Cover book={b} locked />
                     <span className="shelf-book-text">
                       <strong>{b.name}</strong>
                       <small>{b.section}</small>
@@ -188,7 +188,7 @@ export function BookShelf({
       </button>
 
       <header className="shelf-head">
-        <Cover book={book} large />
+        <Cover book={book} large locked={Boolean(book.premium) && !memberPremium} />
         <div>
           <h3>{book.name}</h3>
           <p>
@@ -289,7 +289,7 @@ function SeriesShelf({ series, premium, onBack }: { series: StorySeries; premium
         All books
       </button>
       <header className="shelf-head">
-        <Cover book={series} large />
+        <Cover book={series} large locked={Boolean(series.premium) && !premium} />
         <div>
           <h3>{series.name}</h3>
           <p>
@@ -396,7 +396,8 @@ function ChapterStrip({
   );
 }
 
-function Cover({ book, large = false }: { book: ComingSoonShelf; large?: boolean }) {
+/** A book's cover tile; the padlock shows only to someone the book is locked for. */
+function Cover({ book, large = false, locked }: { book: ComingSoonShelf; large?: boolean; locked: boolean }) {
   return (
     <span
       className={`shelf-cover${large ? " is-large" : ""}`}
@@ -404,7 +405,7 @@ function Cover({ book, large = false }: { book: ComingSoonShelf; large?: boolean
       aria-hidden="true"
     >
       {book.abbr}
-      {book.premium ? (
+      {locked ? (
         <span className="shelf-cover-lock">
           <Padlock />
         </span>
