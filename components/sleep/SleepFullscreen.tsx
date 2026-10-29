@@ -5,7 +5,7 @@ import { useApp } from "@/lib/store";
 import { useEffect, useMemo, useRef, useState } from "react";
 import type { SleepChapter } from "@/lib/sleep/types";
 import { SLEEP_SPEEDS, TIMER_OPTIONS, clock, useSleepAudio } from "@/lib/sleep/sleep-audio";
-import { SLEEP_CHAPTERS, WALK_SECONDS } from "@/lib/sleep/chapters";
+import { nextChapter } from "@/lib/sleep/next";
 import "./sleep.css";
 
 type Mode = "listen" | "read";
@@ -165,13 +165,14 @@ export function SleepFullscreen() {
   );
 }
 
-/** When a chapter ends: a quiet close, and the next chapter one tap away. Nothing plays by itself. */
+/**
+ * When the reading stops at the end of a chapter (timer set to end of chapter, the last recorded
+ * chapter, or a Premium chapter next): a quiet close, and the next chapter one tap away.
+ */
 function UpNext({ chapter }: { chapter: SleepChapter }) {
   const s = useSleepAudio();
   const { user } = useApp();
-  // The next chapter that has a recording in this mode (Walk stays Walk, Sleep stays Sleep).
-  const k = SLEEP_CHAPTERS.findIndex((c) => c.slug === chapter.slug);
-  const next = SLEEP_CHAPTERS.slice(k + 1).find((c) => s.mode === "sleep" || WALK_SECONDS[c.slug] > 0);
+  const next = nextChapter(chapter.slug, s.mode);
   return (
     <div className="sf-end" role="status">
       <p className="sf-eyebrow">
@@ -232,7 +233,7 @@ function Options({
           <div className="sf-chips" role="group" aria-label="Sleep timer">
             {TIMER_OPTIONS.map((m) => (
               <button key={m} type="button" aria-pressed={s.timerMin === m} onClick={() => s.chooseTimer(m)}>
-                {m === 0 ? "End of chapter" : `${m} min`}
+                {m === "off" ? "Off" : m === "chapter" ? "End of chapter" : `${m} min`}
               </button>
             ))}
           </div>

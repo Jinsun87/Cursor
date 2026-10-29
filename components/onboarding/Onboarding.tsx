@@ -240,11 +240,12 @@ export function Onboarding({ onDone }: { onDone: () => void }) {
                 <strong>No fake inflated prices.</strong> No crossed-out prices that never existed, and no countdown timers.
               </li>
               <li>
-                <strong>Progress you can see.</strong> {SLEEP_CHAPTERS.length} chapters of Genesis recorded so far, about{" "}
+                <strong>Progress you can see.</strong> {SLEEP_CHAPTERS.length} chapters from{" "}
+                {new Set(SLEEP_CHAPTERS.map((c) => c.book)).size} books recorded so far, about{" "}
                 {Math.round(
-                  SLEEP_CHAPTERS.reduce((n, c) => n + (SLEEP_SECONDS[c.slug] ?? 0) + (WALK_SECONDS[c.slug] ?? 0), 0) / 60,
+                  SLEEP_CHAPTERS.reduce((n, c) => n + (SLEEP_SECONDS[c.slug] ?? 0) + (WALK_SECONDS[c.slug] ?? 0), 0) / 3600,
                 )}{" "}
-                minutes of readings so far, with more on the way.
+                hours of readings, with more on the way.
               </li>
             </ul>
             <button type="button" className="ob-primary" onClick={next}>

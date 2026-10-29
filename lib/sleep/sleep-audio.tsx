@@ -7,10 +7,12 @@ import { saveProgress } from "./progress";
 import { audioUrl } from "@/lib/audio-url";
 import { useApp } from "@/lib/store";
 import { canListen } from "./access";
+import { nextChapter } from "./next";
 
 export const SLEEP_SPEEDS = [0.75, 1, 1.25] as const;
 export type SleepSpeed = (typeof SLEEP_SPEEDS)[number];
-export const TIMER_OPTIONS = [0, 15, 30, 60] as const; // minutes; 0 = end of chapter
+/** Off plays on chapter after chapter; "chapter" stops at the end of this one; numbers are minutes. */
+export const TIMER_OPTIONS = ["off", "chapter", 15, 30, 60] as const;
 export type TimerMinutes = (typeof TIMER_OPTIONS)[number];
 /** Walk: a brisk daytime reading. Sleep: the soft night reading. Same text, two recordings. */
 export type ReadingMode = "walk" | "sleep";
@@ -112,7 +114,7 @@ export function SleepAudioProvider({ children }: { children: ReactNode }) {
       // ignore
     }
   }, []);
-  const [timerMin, setTimerMin] = useState<TimerMinutes>(0);
+  const [timerMin, setTimerMin] = useState<TimerMinutes>("off");
   const [timerEndsAt, setTimerEndsAt] = useState<number | null>(null);
   // Verse to jump to once this recording's timings have loaded.
   const pendingVerse = useRef(0);
@@ -239,7 +241,7 @@ export function SleepAudioProvider({ children }: { children: ReactNode }) {
     if (!el) return;
     ambient.unlock();
     void el.play();
-    if (timerMin) setTimerEndsAt(Date.now() + timerMin * 60_000);
+    if (typeof timerMin === "number") setTimerEndsAt(Date.now() + timerMin * 60_000);
   }, [ambient, timerMin]);
 
   const toggle = useCallback(() => {
@@ -276,6 +278,24 @@ export function SleepAudioProvider({ children }: { children: ReactNode }) {
     [chapter, mode, start, premium],
   );
 
+  /**
+   * At the end of a chapter, go straight on to the next one in the same mode, on the same audio
+   * element (so phones allow it with the screen locked) and without restarting the sleep timer.
+   * Stops instead when the timer says "end of chapter", at the last recorded chapter, or at a
+   * Premium chapter for someone without Premium; then the player shows Up next.
+   */
+  const playOn = useCallback((): boolean => {
+    const el = audioRef.current;
+    const next = chapter && timerMin !== "chapter" ? nextChapter(chapter.slug, mode) : null;
+    if (!el || !next || !canListen(next, premium)) return false;
+    el.src = readingSources(next, mode).audio;
+    pendingVerse.current = 0;
+    setTime(0);
+    setChapter(next);
+    void el.play();
+    return true;
+  }, [chapter, mode, timerMin, premium]);
+
   const seekTo = useCallback((seconds: number) => {
     if (audioRef.current) audioRef.current.currentTime = seconds;
   }, []);
@@ -307,7 +327,7 @@ export function SleepAudioProvider({ children }: { children: ReactNode }) {
   const chooseTimer = useCallback(
     (m: TimerMinutes) => {
       setTimerMin(m);
-      setTimerEndsAt(m && playing ? Date.now() + m * 60_000 : null);
+      setTimerEndsAt(typeof m === "number" && playing ?Date.now() + m * 60_000 : null);
     },
     [playing],
   );
@@ -364,10 +384,11 @@ export function SleepAudioProvider({ children }: { children: ReactNode }) {
           meter.stop();
         }}
         onEnded={() => {
-          setPlaying(false);
-          setEnded(true);
           meter.stop();
           if (chapter) saveProgress(chapter.slug, 1, true);
+          if (playOn()) return;
+          setPlaying(false);
+          setEnded(true);
         }}
         onTimeUpdate={(e) => {
           const t = e.currentTarget.currentTime;
