@@ -77,6 +77,28 @@ npx tsx video/render.ts "Exodus 14" --walk
 The book names are written as in the Bible: `Genesis`, `Exodus`, `Psalm` (singular, for example
 `"Psalm 1-41"`).
 
+### Bible stories
+
+The two story series, **Women of the Bible** and **Bedtime Bible Stories**, render the same way.
+Give a story's name, or a series' name for all its stories in one long video:
+
+```powershell
+# One story, about 12 to 23 minutes
+npx tsx video/render.ts "Hannah"
+npx tsx video/render.ts "Noah"
+
+# A whole series in one video, about 1 hour 45 minutes (Bedtime) or 2 hours 15 minutes (Women)
+npx tsx video/render.ts "Women of the Bible"
+npx tsx video/render.ts "Bedtime Bible Stories"
+```
+
+The stories are Sarah, Ruth, Hannah, Abigail, Esther, Mary, Woman at the Well and Mary Magdalene
+(Women of the Bible), and Noah, Joseph, Moses, David and Goliath, Daniel, Jonah, Jesus Calms the
+Storm and Prodigal Son (Bedtime Bible Stories). Each story has one voice, so `--walk` does nothing
+here. `--seconds=60` works for a test, as with chapters.
+
+Note that `"Jonah"` gives the story. For the Bible book, give a chapter: `"Jonah 1"`.
+
 Each render writes three files to `video\out\`:
 
 | File | What it is |
@@ -98,9 +120,11 @@ set. Please keep it that way, so the channel looks the same from one video to th
 - **Each scene:** the painting on the left, the same painting blurred to fill the background, and on the right
   the verse being read, with its number and the chapter and section above it. "Berean Standard Bible ·
   lampstandbible.com" sits small at the bottom.
+- **Stories:** the same layout, with no verse numbers. The story's text appears a sentence or two at a time
+  as it is read, under the series and story name.
 - **Voice:** Sleep (slow and soft) unless you add `--walk`.
 - **Thumbnail:** 1280×720, with a painting, the chapter name ("Genesis 1"), "Read softly for sleep" (or "Read for your
-  walk") and "Word for word · Lampstand".
+  walk") and "Word for word · Lampstand". For a story: its name, "A Bible story for sleep" and the series.
 - **Title and description:** from the `.txt`, word for word, including the BSB credit line at the end.
 
 ## 5. Get new chapters

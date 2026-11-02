@@ -1,10 +1,12 @@
 /**
- * Renders Walk or Sleep chapters as a long-form video for YouTube, on this computer.
+ * Renders Walk or Sleep chapters, or Bible stories, as a long-form video for YouTube, on this computer.
  * Uses what the app already has: the paintings, the narration MP3s and the verse timings.
  *
  *   npx tsx video/render.ts "Genesis 1"            # one chapter, Sleep
  *   npx tsx video/render.ts "Genesis 1-11"         # several chapters in one video
  *   npx tsx video/render.ts "Exodus 14" --walk     # the Walk reading instead
+ *   npx tsx video/render.ts "Hannah"               # one story (by name or slug)
+ *   npx tsx video/render.ts "Women of the Bible"   # a whole story series in one video
  *   npx tsx video/render.ts "Genesis 1" --seconds=60   # a short test
  *   --concurrency=8  (render threads; defaults to half the CPU threads)
  *
@@ -18,13 +20,14 @@ import { basename, join, resolve } from "node:path";
 import { bundle } from "@remotion/bundler";
 import { renderMedia, renderStill, selectComposition } from "@remotion/renderer";
 import { SLEEP_CHAPTERS } from "../lib/sleep/chapters";
+import { STORY_CHAPTERS } from "../lib/stories/chapters";
 import type { SleepChapter, SleepTiming } from "../lib/sleep/types";
 import type { VideoChapter, VideoProps } from "./src/types";
 
 const ROOT = resolve(__dirname, "..");
 const args = process.argv.slice(2);
 const ref = args.find((a) => !a.startsWith("--"));
-const mode = args.includes("--walk") ? "walk" : "sleep";
+let mode: "walk" | "sleep" | "story" = args.includes("--walk") ? "walk" : "sleep";
 const limit = Number(args.find((a) => a.startsWith("--seconds="))?.split("=")[1]) || 0;
 const concurrency = Number(args.find((a) => a.startsWith("--concurrency="))?.split("=")[1]) || undefined;
 
@@ -32,9 +35,30 @@ const LEAD = 2; // seconds before the first chapter starts
 const GAP = 3; // seconds of quiet between chapters
 const TAIL = 5; // seconds after the last chapter
 
+const key = (s: string) => s.toLowerCase().replace(/^story-/, "").replace(/[^a-z0-9]/g, "");
+
+/** A story by its name ("Hannah", "Hannah's Prayer") or slug, or a whole series by its name. */
+function storiesFor(text: string): SleepChapter[] {
+  const k = key(text);
+  const series = STORY_CHAPTERS.filter((c) => key(c.book) === k);
+  if (series.length) return series;
+  const one =
+    STORY_CHAPTERS.find((c) => key(c.slug) === k || key(c.title) === k) ??
+    STORY_CHAPTERS.find((c) => key(c.slug).startsWith(k) || key(c.title).startsWith(k));
+  return one ? [one] : [];
+}
+
 function chaptersFor(text: string): SleepChapter[] {
+  const stories = storiesFor(text);
+  if (stories.length) {
+    mode = "story";
+    return stories;
+  }
   const m = text.match(/^(.+?) (\d+)(?:\s*[-–]\s*(\d+))?$/);
-  if (!m) throw new Error(`Give a book and chapter or range, e.g. "Genesis 1-3" (got "${text}")`);
+  if (!m) {
+    const series = [...new Set(STORY_CHAPTERS.map((c) => c.book))].join('", "');
+    throw new Error(`Give a book and chapter or range ("Genesis 1-3"), a story ("Hannah") or a series ("${series}"). Got "${text}"`);
+  }
   const [book, from, to] = [m[1], Number(m[2]), Number(m[3] ?? m[2])];
   const out: SleepChapter[] = [];
   for (let n = from; n <= to; n++) {
@@ -50,16 +74,20 @@ const audioBase = () => {
   return (env.match(/^NEXT_PUBLIC_AUDIO_BASE_URL=(.*)$/m)?.[1] ?? "").trim().replace(/^["']|["']$/g, "").replace(/\/$/, "");
 };
 
+/** Where a chapter's narration and timing live under public/ and on R2, e.g. "/sleep/genesis-1/chapter.mp3". */
+const audioPath = (c: SleepChapter) => (mode === "story" ? c.audioSrc : `/${mode}/${c.slug}/chapter.mp3`);
+const timingPath = (c: SleepChapter) => (mode === "story" ? c.timingSrc : `/${mode}/${c.slug}/timing.json`);
+
 /** The narration MP3 on this computer, fetched from R2 if it isn't here. */
-async function narration(slug: string, into: string): Promise<string> {
-  const local = join(ROOT, "public", mode, slug, "chapter.mp3");
-  const name = `${slug}.mp3`;
+async function narration(c: SleepChapter, into: string): Promise<string> {
+  const local = join(ROOT, "public", audioPath(c));
+  const name = `${c.slug}.mp3`;
   if (existsSync(local)) copyFileSync(local, join(into, name));
   else {
     const base = audioBase();
     if (!base) throw new Error(`${local} is missing and NEXT_PUBLIC_AUDIO_BASE_URL is not set`);
-    const res = await fetch(`${base}/${mode}/${slug}/chapter.mp3`);
-    if (!res.ok) throw new Error(`Could not download ${slug} narration: ${res.status}`);
+    const res = await fetch(`${base}${audioPath(c)}`);
+    if (!res.ok) throw new Error(`Could not download ${c.slug} narration: ${res.status}`);
     writeFileSync(join(into, name), Buffer.from(await res.arrayBuffer()));
   }
   return name;
@@ -80,6 +108,27 @@ function painting(src: string, into: string, slug: string) {
   return { image, background };
 }
 
+/**
+ * A story piece runs a minute or more, too long to show whole, so it is shown a sentence or two
+ * at a time, each timed by its share of the piece's letters.
+ */
+function linesOf(text: string, start: number, end: number): { text: string; start: number }[] {
+  const sentences = text.match(/[^.!?]+[.!?]+["'’”)]*\s*|[^.!?]+$/g) ?? [text];
+  const parts: string[] = [];
+  for (const s of sentences) {
+    const last = parts[parts.length - 1];
+    if (last !== undefined && last.length + s.length <= 220) parts[parts.length - 1] = last + s;
+    else parts.push(s);
+  }
+  const total = parts.reduce((n, p) => n + p.length, 0);
+  let at = start;
+  return parts.map((p) => {
+    const line = { text: p.trim(), start: at };
+    at += ((end - start) * p.length) / total;
+    return line;
+  });
+}
+
 const clock = (s: number) => {
   const h = Math.floor(s / 3600);
   const m = Math.floor((s % 3600) / 60);
@@ -88,12 +137,16 @@ const clock = (s: number) => {
 };
 
 async function main() {
-  if (!ref) throw new Error('Usage: npx tsx video/render.ts "Genesis 1-3" [--walk] [--seconds=60]');
+  if (!ref) throw new Error('Usage: npx tsx video/render.ts "Genesis 1-3" [--walk] [--seconds=60], or a story: "Hannah"');
   const chapters = chaptersFor(ref);
   const first = chapters[0];
   const last = chapters[chapters.length - 1];
-  const range = first === last ? `${first.book} ${first.chapter}` : `${first.book} ${first.chapter}–${last.chapter}`;
-  const name = `${first.slug}${first === last ? "" : `-${last.chapter}`}-${mode}${limit ? `-${limit}s` : ""}`;
+  const story = mode === "story";
+  const one = first === last;
+  const range = story ? (one ? first.title : first.book) : one ? `${first.book} ${first.chapter}` : `${first.book} ${first.chapter}–${last.chapter}`;
+  const name =
+    (story ? (one ? first.slug : `stories-${first.book.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`) : `${first.slug}${one ? "" : `-${last.chapter}`}-${mode}`) +
+    (limit ? `-${limit}s` : "");
   const work = join(ROOT, "video", ".work", name);
   const out = join(ROOT, "video", "out");
   mkdirSync(work, { recursive: true });
@@ -103,15 +156,21 @@ async function main() {
   let at = LEAD;
   const laid: VideoChapter[] = [];
   for (const c of chapters) {
-    const timing: SleepTiming = JSON.parse(readFileSync(join(ROOT, "public", mode, c.slug, "timing.json"), "utf8"));
-    const audio = await narration(c.slug, work);
+    const timing: SleepTiming = JSON.parse(readFileSync(join(ROOT, "public", timingPath(c)), "utf8"));
+    const audio = await narration(c, work);
+    const startOf = (i: number) => (i < c.verses.length ? (timing.verses[String(c.verses[i].n)] ?? 0) : timing.duration);
     laid.push({
-      label: `${c.book} ${c.chapter}`,
+      label: story ? c.book : `${c.book} ${c.chapter}`,
       title: c.title,
       audio,
       start: at,
       duration: timing.duration,
-      verses: c.verses.map((v) => ({ n: v.n, text: v.text, start: at + (timing.verses[String(v.n)] ?? 0), ...painting(v.image, work, c.slug) })),
+      numbered: !story,
+      verses: c.verses.flatMap((v, i) => {
+        const art = painting(v.image, work, c.slug);
+        const pieces = story ? linesOf(v.text, startOf(i), startOf(i + 1)) : [{ text: v.text, start: startOf(i) }];
+        return pieces.map((p) => ({ n: v.n, text: p.text, start: at + p.start, ...art }));
+      }),
     });
     at += timing.duration + GAP;
   }
@@ -119,7 +178,8 @@ async function main() {
   const duration = limit ? Math.min(limit, full) : full;
   const props: VideoProps = {
     title: range,
-    subtitle: mode === "sleep" ? "Read softly for sleep" : "Read for your walk",
+    subtitle: story ? (one ? "A Bible story for sleep" : "Bible stories for sleep") : mode === "sleep" ? "Read softly for sleep" : "Read for your walk",
+    tagline: story ? (one ? `${first.book} · Lampstand` : "Told from Scripture · Lampstand") : "Word for word · Lampstand",
     chapters: laid.filter((c) => c.start < duration),
     duration,
   };
@@ -141,16 +201,24 @@ async function main() {
   await renderStill({ composition: thumb, serveUrl, output: join(out, `${name}.jpg`), inputProps: props, imageFormat: "jpeg" });
 
   // Title, description and YouTube chapters (each line "m:ss Title" becomes a clickable chapter).
-  const stamps = props.chapters.map((c, i) => `${clock(i === 0 ? 0 : c.start)} ${c.label} · ${c.title}`);
+  const stamps = props.chapters.map((c, i) => `${clock(i === 0 ? 0 : c.start)} ${story ? c.title : `${c.label} · ${c.title}`}`);
   const description = [
-    `${range}, read ${mode === "sleep" ? "softly for sleep" : "aloud for your walk"}, word for word from the Berean Standard Bible, with paintings for each passage.`,
+    story
+      ? `${one ? `${range}, from ${first.book}` : `${props.chapters.length} stories from ${range}`}: Bible stories told gently for sleep, with Scripture read word for word from the Berean Standard Bible and paintings for each part of the story.`
+      : `${range}, read ${mode === "sleep" ? "softly for sleep" : "aloud for your walk"}, word for word from the Berean Standard Bible, with paintings for each passage.`,
     "",
-    "Listen free and keep your place every night at https://lampstandbible.com",
+    story
+      ? "More Bible stories for sleep at https://lampstandbible.com, free for 7 days"
+      : "Listen free and keep your place every night at https://lampstandbible.com",
     "",
     ...(stamps.length > 1 ? ["Chapters", ...stamps, ""] : []),
     "Scripture quotations are from the Berean Standard Bible (BSB), public domain.",
   ].join("\n");
-  const title = `${range} · ${mode === "sleep" ? "Bible Reading for Sleep" : "Bible Reading"} · ${props.chapters.length > 1 ? clock(duration) : first.title}`;
+  const title = story
+    ? one
+      ? `${range} · ${first.book} · Bible Story for Sleep`
+      : `${range} · ${props.chapters.length} Bible Stories for Sleep · ${clock(duration)}`
+    : `${range} · ${mode === "sleep" ? "Bible Reading for Sleep" : "Bible Reading"} · ${props.chapters.length > 1 ? clock(duration) : first.title}`;
   writeFileSync(join(out, `${name}.txt`), `${title}\n\n${description}\n`);
 
   const secs = Math.round((Date.now() - started) / 1000);

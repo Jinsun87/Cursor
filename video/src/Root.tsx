@@ -6,7 +6,7 @@ import { END_CARD, FPS, type AdProps, type VideoProps } from "./types";
 
 // Placeholder props for the Remotion studio; render.ts always passes real ones.
 const adSample: AdProps = { hook: "Psalm 23, read slowly for sleep", kicker: "Psalm 23", audio: "", clip: 5, words: [], images: [], cta: "Listen free", ctaSub: "" };
-const sample: VideoProps = { title: "Genesis 1", subtitle: "Read softly for sleep", chapters: [], duration: 10 };
+const sample: VideoProps = { title: "Genesis 1", subtitle: "Read softly for sleep", tagline: "Word for word · Lampstand", chapters: [], duration: 10 };
 
 export const Root: React.FC = () => (
   <>

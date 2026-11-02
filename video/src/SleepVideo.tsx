@@ -71,7 +71,7 @@ export const SleepVideo: React.FC<VideoProps> = ({ title, subtitle, chapters, du
         </div>
         {now ? (
           <div style={{ opacity: textOpacity, fontFamily: "Georgia, serif", color: INK, fontSize: now.verse.text.length > 260 ? 38 : 46, lineHeight: 1.45 }}>
-            <sup style={{ fontSize: 22, color: GOLD, marginRight: 10 }}>{now.verse.n}</sup>
+            {now.chapter.numbered && <sup style={{ fontSize: 22, color: GOLD, marginRight: 10 }}>{now.verse.n}</sup>}
             {now.verse.text}
           </div>
         ) : (

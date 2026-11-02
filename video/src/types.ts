@@ -12,6 +12,8 @@ export type VideoChapter = {
   start: number;
   duration: number;
   verses: VideoVerse[];
+  /** Show verse numbers: false for stories, whose text appears a sentence or two at a time. */
+  numbered: boolean;
 };
 
 export type VideoProps = {
@@ -19,6 +21,8 @@ export type VideoProps = {
   title: string;
   /** "Read softly for sleep" or "Read for your walk" */
   subtitle: string;
+  /** Small line under the thumbnail subtitle: "Word for word · Lampstand". */
+  tagline: string;
   chapters: VideoChapter[];
   /** Total length in seconds. */
   duration: number;
