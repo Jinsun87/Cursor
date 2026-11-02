@@ -25,3 +25,25 @@ export type VideoProps = {
 };
 
 export const FPS = 30;
+
+/** A short 9:16 ad: one clip of narration with timed captions, then an end card. Times in seconds from the clip's start. */
+export type AdWord = { text: string; start: number; end: number };
+
+export type AdProps = {
+  /** The line on screen from the first frame, e.g. "Psalm 23, read slowly for sleep". */
+  hook: string;
+  /** Small line above the hook, e.g. "Psalm 23 · Berean Standard Bible". */
+  kicker: string;
+  /** Narration clip in the render's public folder. */
+  audio: string;
+  /** Length of the narration clip. */
+  clip: number;
+  words: AdWord[];
+  /** Paintings in the render's public folder, each shown from `at` until the next. */
+  images: { src: string; at: number }[];
+  /** End card lines. */
+  cta: string;
+  ctaSub: string;
+};
+
+export const END_CARD = 3.5;

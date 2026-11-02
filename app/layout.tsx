@@ -11,6 +11,7 @@ import { EzoicBoot } from "@/components/EzoicBoot";
 import { EzoicHead } from "@/components/EzoicHead";
 import { GA4Head } from "@/components/GA4Head";
 import { AnalyticsTracker } from "@/components/AnalyticsTracker";
+import { MetaPixel } from "@/components/MetaPixel";
 import { Analytics } from "@vercel/analytics/next";
 import { SleepAudioProvider } from "@/lib/sleep/sleep-audio";
 import { PremiumGate } from "@/components/sleep/PremiumGate";
@@ -85,6 +86,7 @@ export default function RootLayout({
             <SleepAudioProvider>
               <AdSenseLoader />
               <AnalyticsTracker />
+              <MetaPixel />
               <Analytics />
               <EzoicBoot />
               <a href="#main" className="skip-link">

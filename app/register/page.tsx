@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useApp } from "@/lib/store";
 import { safeNext } from "@/lib/safe-next";
 import { AccountsUnavailable, CheckEmail, GoogleButton } from "@/components/auth/CheckEmail";
+import { metaTrack } from "@/lib/meta/pixel";
 
 export default function RegisterPage() {
   return (
@@ -42,6 +43,7 @@ function RegisterForm() {
       next,
     });
     setBusy(false);
+    if (!result.error) metaTrack("CompleteRegistration", { content_name: next });
     if (result.error) setError(result.error);
     else if (!result.signedIn) setSentTo(email);
   }

@@ -8,6 +8,7 @@ import { usePaddlePrices } from "@/hooks/usePaddlePrices";
 import { useApp } from "@/lib/store";
 import { getPaddleEnvironment, getPaddleClientToken } from "@/lib/paddle/client";
 import { FoundingCard } from "./FoundingCard";
+import { checkoutAdData } from "@/lib/meta/pixel";
 
 export function PricingPageClient() {
   const { user } = useApp();
@@ -78,6 +79,7 @@ export function PricingPageClient() {
           frequency,
           userId: user.id,
           userEmail: user.email,
+          ...checkoutAdData(),
         },
         settings: {
           displayMode: "overlay",

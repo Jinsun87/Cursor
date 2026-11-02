@@ -3,6 +3,8 @@ import { getPaddleInstance } from "@/lib/paddle/get-paddle-instance";
 import { processPaddleWebhookEvent } from "@/lib/paddle/process-webhook";
 import { supabaseSubscriptionStore } from "@/lib/paddle/supabase-subscription-store";
 import { getAdminSupabase } from "@/lib/supabase/server";
+import { sendCapiEvents } from "@/lib/meta/capi";
+import { metaEventFromPaddle } from "@/lib/meta/paddle-events";
 
 export async function POST(request: NextRequest) {
   const signature = request.headers.get("paddle-signature") ?? "";
@@ -34,6 +36,9 @@ export async function POST(request: NextRequest) {
     if (eventData) {
       const result = await processPaddleWebhookEvent(eventData, supabaseSubscriptionStore(getAdminSupabase()));
       console.log(`[Paddle Webhook] ${result.eventType} ${result.entityId ?? ""}: ${result.actionTaken}`);
+      // Trials and payments, reported to Meta for buyers who allowed ad tracking. Never throws.
+      const conversion = metaEventFromPaddle(eventData);
+      if (conversion) await sendCapiEvents([conversion]);
     }
 
     return Response.json({ received: true });

@@ -13,6 +13,7 @@ import { describeReadings, friendlyDate, type PlanDay, type Reading } from "@/li
 import { daysOf, readSavedPlan, subscribePlan, writeSavedPlan, type PlanPlace, type SavedPlan } from "@/lib/plan/storage";
 import "@/components/sleep/sleep.css";
 import "./plan.css";
+import { checkoutAdData } from "@/lib/meta/pixel";
 
 type Verse = { n: number; text: string };
 
@@ -174,7 +175,7 @@ export function PlanReader() {
     const opened = await openPaddleCheckout({
       priceId,
       customerEmail: user.email,
-      customData: { userId: user.id, userEmail: user.email, plan: billing },
+      customData: { userId: user.id, userEmail: user.email, plan: billing, ...checkoutAdData() },
       successUrl: `${window.location.origin}/plan/read?day=${dayIndex}&part=${partIndex}&paid=1`,
       onError: () => {
         setPayError("Failed to open Paddle Checkout. Please try again.");

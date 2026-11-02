@@ -6,6 +6,7 @@ import type { Paddle } from "@paddle/paddle-js";
 import type { User } from "@/lib/types";
 import { FOUNDING_CAP, FOUNDING_PRICE, membersToFundBible } from "@/lib/founding";
 import { useFoundingSpots } from "@/components/founding/useFoundingSpots";
+import { checkoutAdData } from "@/lib/meta/pixel";
 
 /**
  * The founding membership: Pro for life for one payment, limited to the first
@@ -43,7 +44,7 @@ export function FoundingCard({ paddle, user }: { paddle: Paddle | null; user: Us
     paddle.Checkout.open({
       items: [{ priceId, quantity: 1 }],
       customer: { email: user.email },
-      customData: { plan: "lifetime", userId: user.id, userEmail: user.email },
+      customData: { plan: "lifetime", userId: user.id, userEmail: user.email, ...checkoutAdData() },
       settings: {
         displayMode: "overlay",
         theme: "dark",

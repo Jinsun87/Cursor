@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { pageMetadata } from "@/lib/seo";
 import Link from "next/link";
+import { AdConsentChoice } from "@/components/AdConsentChoice";
 
 export const metadata: Metadata = pageMetadata({
   title: "Privacy Policy",
@@ -16,7 +17,7 @@ export default function PrivacyPage() {
           Privacy Policy
         </h1>
         <p className="mt-2 text-sm text-[var(--muted)]">
-          Last updated: October 5, 2026 · Effective Date: September 29, 2026
+          Last updated: November 2, 2026 · Effective Date: September 29, 2026
         </p>
       </header>
 
@@ -84,6 +85,10 @@ export default function PrivacyPage() {
         <p className="text-sm text-[var(--muted)]">
           We use Vercel Analytics and Google Analytics 4 to count visits and keep the site working well. Google Analytics uses cookies. We do not sell your personal data.
         </p>
+        <p className="text-sm text-[var(--muted)]">
+          <strong className="text-[var(--ink)]">Meta (Facebook and Instagram) ads.</strong> To learn which of our ads bring people to Lampstand, we use the Meta Pixel and Meta&apos;s Conversions API. They tell Meta when someone who saw an ad starts listening, creates an account, starts a free trial or subscribes. Your email address and account id are sent only as one-way hashes, never in plain text. In Europe we ask before turning this on. Anywhere, you can switch it off below, and you can manage ad settings in your Meta account.
+        </p>
+        <AdConsentChoice />
         <p className="text-sm text-[var(--muted)]">
           <strong className="text-[var(--ink)]">Cookies we set ourselves</strong> are only the ones needed to keep you signed in.
         </p>

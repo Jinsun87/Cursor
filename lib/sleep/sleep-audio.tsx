@@ -8,6 +8,7 @@ import { audioUrl } from "@/lib/audio-url";
 import { useApp } from "@/lib/store";
 import { canListen } from "./access";
 import { nextChapter } from "./next";
+import { metaTrack } from "@/lib/meta/pixel";
 
 export const SLEEP_SPEEDS = [0.75, 1, 1.25] as const;
 export type SleepSpeed = (typeof SLEEP_SPEEDS)[number];
@@ -278,6 +279,7 @@ export function SleepAudioProvider({ children }: { children: ReactNode }) {
         setTime(0);
         setMode(nextMode);
         setChapter(next);
+        metaTrack("ViewContent", { content_name: next.slug, content_category: nextMode });
       }
       if (el.paused) start();
     },

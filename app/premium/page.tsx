@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useApp } from "@/lib/store";
 import Link from "next/link";
 import { isPaddleConfigured, openPaddleCheckout } from "@/lib/paddle/client";
+import { checkoutAdData } from "@/lib/meta/pixel";
 
 export default function PremiumPage() {
   const { user } = useApp();
@@ -37,6 +38,7 @@ export default function PremiumPage() {
           userId: user.id,
           userEmail: user.email,
           plan,
+          ...checkoutAdData(),
         },
         onError: (err) => {
           console.error("Paddle checkout error:", err);
