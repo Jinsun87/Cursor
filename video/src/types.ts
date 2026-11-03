@@ -51,3 +51,27 @@ export type AdProps = {
 };
 
 export const END_CARD = 3.5;
+
+/**
+ * A POV screen-recording ad: screenshots of the app shown in order, with taps, a slow "camera"
+ * that keeps the action clear of Instagram's buttons, step captions, then a dim and the end card.
+ * Times in seconds; x and y in the phone's CSS pixels (390×844 screen).
+ */
+export type PovProps = {
+  /** Screenshots in the render's public folder, each shown from `at` until the next. */
+  screens: { src: string; at: number }[];
+  taps: { at: number; x: number; y: number }[];
+  drags: { from: number; to: number; x0: number; x1: number; y: number }[];
+  /** Which screen y sits at the frame's focus line, over time. */
+  camera: { at: number; y: number }[];
+  /** White caption boxes, TikTok style; the first is the hook. */
+  captions: { from: number; to: number; text: string }[];
+  /** The narration starts at `at` in the video, `from` seconds into its file. */
+  narration: { src: string; at: number; from: number };
+  rain: { src: string; levels: { at: number; level: number }[] };
+  /** The screen fades to black from `dim` to `dark`, then the end card. */
+  dim: number;
+  dark: number;
+  cta: string;
+  ctaSub: string;
+};
