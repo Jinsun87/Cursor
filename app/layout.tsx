@@ -7,11 +7,10 @@ import { AppProvider } from "@/lib/store";
 import { ThemeProvider } from "@/lib/theme";
 import { CANONICAL_ORIGIN } from "@/lib/site";
 import { AdSenseLoader } from "@/components/AdSenseLoader";
-import { EzoicBoot } from "@/components/EzoicBoot";
-import { EzoicHead } from "@/components/EzoicHead";
 import { GA4Head } from "@/components/GA4Head";
 import { AnalyticsTracker } from "@/components/AnalyticsTracker";
 import { MetaPixel } from "@/components/MetaPixel";
+import { InstallTracker } from "@/components/install/InstallTracker";
 import { Analytics } from "@vercel/analytics/next";
 import { SleepAudioProvider } from "@/lib/sleep/sleep-audio";
 import { PremiumGate } from "@/components/sleep/PremiumGate";
@@ -77,7 +76,6 @@ export default function RootLayout({
     >
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeBoot }} />
-        <EzoicHead />
         <GA4Head />
       </head>
       <body className="font-sans antialiased">
@@ -87,8 +85,8 @@ export default function RootLayout({
               <AdSenseLoader />
               <AnalyticsTracker />
               <MetaPixel />
+              <InstallTracker />
               <Analytics />
-              <EzoicBoot />
               <a href="#main" className="skip-link">
                 Skip to content
               </a>

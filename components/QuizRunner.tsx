@@ -7,7 +7,6 @@ import type { Question, Quiz } from "@/lib/types";
 import { useApp } from "@/lib/store";
 import { AdSlot } from "./AdSlot";
 import { StickyMobileAd } from "./StickyMobileAd";
-import { EZOIC_PLACEHOLDERS } from "@/lib/ezoic";
 import { QuizHud } from "./QuizHud";
 import {
   FIFTY_FIFTY_COST,
@@ -309,7 +308,7 @@ export function QuizRunner({ quiz }: { quiz: Quiz }) {
     return frame(
       <div className="rounded-2xl border p-8" style={{ borderColor: "var(--line)", background: "var(--canvas-2)" }}>
         {quiz.isSecret || quiz.isLongform ? (
-          <AdSlot label="Post-quiz ad" placeholderId={EZOIC_PLACEHOLDERS.postQuiz} />
+          <AdSlot label="Post-quiz ad" />
         ) : null}
         <p className="text-sm uppercase tracking-widest" style={{ color: "var(--gold)" }} data-testid="quiz-complete">
           Complete
@@ -408,7 +407,6 @@ export function QuizRunner({ quiz }: { quiz: Quiz }) {
         <AdSlot
           key={`top-ad-${index}`}
           label="In-Quiz Advertisement"
-          placeholderId={EZOIC_PLACEHOLDERS.inQuizSecret}
           refreshIntervalSec={30}
         />
       </div>
@@ -532,7 +530,6 @@ export function QuizRunner({ quiz }: { quiz: Quiz }) {
             <AdSlot
               key={`bottom-ad-${index}`}
               label="In-Quiz Advertisement"
-              placeholderId={EZOIC_PLACEHOLDERS.inQuizSecret}
               refreshIntervalSec={30}
             />
           </div>

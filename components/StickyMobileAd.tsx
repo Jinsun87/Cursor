@@ -3,20 +3,16 @@
 import { useState, useEffect } from "react";
 import { useApp } from "@/lib/store";
 import { adsenseClient, adsenseEnabled, adsenseSlot, whenAdSenseReady, requestAdSense } from "@/lib/adsense";
-import { EZOIC_PLACEHOLDERS, ezoicAdsEnabled, runEzoic } from "@/lib/ezoic";
 
 export function StickyMobileAd({
-  placeholderId = EZOIC_PLACEHOLDERS.inQuizSecret,
   refreshIntervalSec = 30,
 }: {
-  placeholderId?: number;
   refreshIntervalSec?: number;
 }) {
   const { user } = useApp();
   const [dismissed, setDismissed] = useState(false);
   const [ready, setReady] = useState(false);
   const [refreshKey, setRefreshKey] = useState(0);
-  const ezoic = ezoicAdsEnabled();
   const adsense = adsenseEnabled();
   const client = adsenseClient();
   const slot = adsenseSlot();
@@ -38,17 +34,11 @@ export function StickyMobileAd({
     const interval = setInterval(() => {
       if (typeof window === "undefined" || document.visibilityState !== "visible") return;
 
-      if (ezoic) {
-        runEzoic(() => {
-          window.ezstandalone?.refresh?.(placeholderId);
-        });
-      } else if (adsense) {
-        setRefreshKey((prev) => prev + 1);
-      }
+      if (adsense) setRefreshKey((prev) => prev + 1);
     }, refreshIntervalSec * 1000);
 
     return () => clearInterval(interval);
-  }, [user?.premium, dismissed, ready, refreshIntervalSec, ezoic, adsense, placeholderId]);
+  }, [user?.premium, dismissed, ready, refreshIntervalSec, adsense]);
 
   if (user?.premium || dismissed) return null;
 
@@ -73,9 +63,7 @@ export function StickyMobileAd({
       </div>
 
       <div className="mx-auto mt-1 flex min-h-[50px] max-h-[90px] items-center justify-center overflow-hidden">
-        {ezoic && ready ? (
-          <div id={`ezoic-pub-ad-placeholder-${placeholderId}`} />
-        ) : adsense && ready ? (
+        {adsense && ready ? (
           <ins
             key={refreshKey}
             className="adsbygoogle"

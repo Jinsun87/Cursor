@@ -147,9 +147,10 @@ test("guests are invited to join before using a 50/50", async ({ page }) => {
 // test project and Paddle sandbox; see docs/accounts-setup.md.
 
 test("privacy and ads.txt are on the quiz host", async ({ page, request }) => {
+  // ads.txt names the AdSense publisher when AdSense is configured, and is a 404 otherwise.
   const ads = await request.get("/ads.txt", { maxRedirects: 0 });
-  expect([301, 302, 307, 308]).toContain(ads.status());
-  expect(ads.headers()["location"] ?? "").toContain("srv.adstxtmanager.com/85097/mediareferee.com");
+  expect([200, 404]).toContain(ads.status());
+  if (ads.status() === 200) expect(await ads.text()).toMatch(/^google\.com, pub-\d+, DIRECT, f08c47fec0942fa0/);
   await page.goto("/privacy");
   await expect(page.getByRole("heading", { name: "Privacy Policy", level: 1 })).toBeVisible();
   await expect(page.getByText("Lampstand on lampstandbible.com")).toBeVisible();

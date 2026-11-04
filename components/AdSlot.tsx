@@ -3,37 +3,20 @@
 import { useEffect, useState } from "react";
 import { useApp } from "@/lib/store";
 import { adsenseClient, adsenseEnabled, adsenseSlot, whenAdSenseReady, requestAdSense } from "@/lib/adsense";
-import { EZOIC_PLACEHOLDERS, ezoicAdsEnabled, runEzoic } from "@/lib/ezoic";
 
 export function AdSlot({
   label = "Advertisement",
-  placeholderId = EZOIC_PLACEHOLDERS.inQuizSecret,
   refreshIntervalSec = 30,
 }: {
   label?: string;
-  placeholderId?: number;
   refreshIntervalSec?: number;
 }) {
   const { user } = useApp();
   const [ready, setReady] = useState(false);
   const [refreshKey, setRefreshKey] = useState(0);
-  const ezoic = ezoicAdsEnabled();
   const adsense = adsenseEnabled();
   const client = adsenseClient();
   const slot = adsenseSlot();
-
-  useEffect(() => {
-    if (user?.premium || !ezoic) return;
-    setReady(true);
-    runEzoic(() => {
-      window.ezstandalone?.showAds?.(placeholderId);
-    });
-    return () => {
-      runEzoic(() => {
-        window.ezstandalone?.destroyPlaceholders?.(placeholderId);
-      });
-    };
-  }, [ezoic, placeholderId, user?.premium]);
 
   useEffect(() => {
     if (user?.premium || !adsense) return;
@@ -43,22 +26,15 @@ export function AdSlot({
 
   // Auto Ad Refresh every X seconds (e.g. 30s) when tab is active
   useEffect(() => {
-    if (user?.premium || refreshIntervalSec <= 0 || (!ezoic && !adsense)) return;
+    if (user?.premium || refreshIntervalSec <= 0 || !adsense) return;
 
     const interval = setInterval(() => {
       if (typeof window === "undefined" || document.visibilityState !== "visible") return;
-
-      if (ezoic) {
-        runEzoic(() => {
-          window.ezstandalone?.refresh?.(placeholderId);
-        });
-      } else if (adsense) {
-        setRefreshKey((prev) => prev + 1);
-      }
+      setRefreshKey((prev) => prev + 1);
     }, refreshIntervalSec * 1000);
 
     return () => clearInterval(interval);
-  }, [user?.premium, refreshIntervalSec, ezoic, adsense, placeholderId]);
+  }, [user?.premium, refreshIntervalSec, adsense]);
 
   if (user?.premium) return null;
 
@@ -69,11 +45,7 @@ export function AdSlot({
       style={{ borderColor: "var(--line)", background: "var(--canvas)" }}
     >
       <p className="text-xs uppercase tracking-widest text-pine-400">{label}</p>
-      {ezoic && ready ? (
-        <div className="mx-auto min-h-24">
-          <div id={`ezoic-pub-ad-placeholder-${placeholderId}`} />
-        </div>
-      ) : adsense && ready ? (
+      {adsense && ready ? (
         <div className="mx-auto min-h-24 overflow-hidden">
           <ins
             key={refreshKey}

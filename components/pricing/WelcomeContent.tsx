@@ -2,10 +2,12 @@
 
 import Link from "next/link";
 import { useApp } from "@/lib/store";
+import { InstallGuide } from "@/components/install/InstallGuide";
 
 /**
- * After checkout: thanks, what Pro gives them (Walk, Sleep, no ads), and a
- * straight path back to listening. Founding members get their own words.
+ * After checkout: thanks, how to put Lampstand on the home screen, what Pro
+ * gives them (Walk, Sleep, no ads), and a straight path back to listening.
+ * Founding members get their own words.
  */
 export function WelcomeContent() {
   const { user } = useApp();
@@ -35,6 +37,10 @@ export function WelcomeContent() {
           ? "Thank you. Your one payment helps bring the whole Bible to Lampstand, read aloud and painted, and everything after it. Pro is yours for life."
           : "Thank you for joining. Every chapter, by day and by night, with no ads in the way."}
       </p>
+
+      <div className="mt-10">
+        <InstallGuide next="/?tab=sleep" from={founding ? "founding" : "trial"} />
+      </div>
 
       <ul className="mt-10 grid gap-3 rounded-3xl border border-[var(--line)] bg-[var(--canvas-2)]/60 p-6 text-left">
         {benefits.map(([title, note]) => (

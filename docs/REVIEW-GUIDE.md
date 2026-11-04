@@ -30,7 +30,7 @@ Around the audio there is:
 | Billing | Paddle Billing v2 (`@paddle/paddle-js`, `@paddle/paddle-node-sdk`) | Premium is written only by the webhook (`app/api/webhooks/paddle`). Still on the Paddle **sandbox** before launch. |
 | Audio hosting | Cloudflare R2, public bucket | MP3s are gitignored. `NEXT_PUBLIC_AUDIO_BASE_URL` points at the bucket; `lib/audio-url.ts` builds URLs. |
 | Hosting | Vercel | Production branch is `main`. Pushes build a deployment, which is then promoted to production by hand. |
-| Analytics and ads | Vercel Analytics, GA4, AdSense/Ezoic loaders | Ezoic logs 403 errors on localhost. That is expected, not a bug. |
+| Analytics and ads | Vercel Analytics, GA4, AdSense loader | Ads load only when `NEXT_PUBLIC_ADSENSE_CLIENT` is set. |
 | Tests | Vitest (unit), Playwright (e2e) | CI runs typecheck, unit, e2e and build on every push and PR (`.github/workflows/test.yml`). |
 
 ### Content pipeline (offline scripts, paid APIs)

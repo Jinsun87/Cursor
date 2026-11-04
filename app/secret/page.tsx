@@ -3,7 +3,6 @@
 import { SECRET_QUIZZES } from "@/lib/catalog";
 import { QuizCard } from "@/components/QuizCard";
 import { AdSlot } from "@/components/AdSlot";
-import { EZOIC_PLACEHOLDERS } from "@/lib/ezoic";
 import { useApp } from "@/lib/store";
 import Link from "next/link";
 
@@ -26,7 +25,7 @@ export default function SecretPage() {
       ) : (
         <p className="mt-3 text-sm text-gold-400">Premium trail is clear. Enjoy the silence.</p>
       )}
-      <AdSlot label="Secret-trail ad" placeholderId={EZOIC_PLACEHOLDERS.quietRoom} />
+      <AdSlot label="Secret-trail ad" />
       <div className="mt-6 grid gap-4 md:grid-cols-2">
         {SECRET_QUIZZES.map((q) => (
           <QuizCard key={q.slug} quiz={q} />

@@ -1,12 +1,10 @@
 import type { NextConfig } from "next";
-import { adsTxtRedirects } from "./lib/ezoic";
 import { retiredQuizRedirects } from "./lib/retired-quizzes";
 import { STAGING_HOSTS } from "./lib/site";
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   redirects: async () => [
-    ...(await adsTxtRedirects()),
     // Retired pages (October 2026): the four-section home replaces them.
     { source: "/home-preview", destination: "/", permanent: false },
     { source: "/read/:book/:chapter", destination: "/?tab=sleep", permanent: false },

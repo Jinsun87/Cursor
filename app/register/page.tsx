@@ -7,6 +7,7 @@ import { useApp } from "@/lib/store";
 import { safeNext } from "@/lib/safe-next";
 import { AccountsUnavailable, CheckEmail, GoogleButton } from "@/components/auth/CheckEmail";
 import { metaTrack } from "@/lib/meta/pixel";
+import { afterSignUpPath } from "@/lib/install";
 
 export default function RegisterPage() {
   return (
@@ -20,14 +21,16 @@ function RegisterForm() {
   const { user, ready, accountsAvailable, signUp, sendSignInLink, signInWithGoogle } = useApp();
   const router = useRouter();
   const next = safeNext(useSearchParams().get("next"));
+  // New accounts see how to add Lampstand to the home screen, then go on to `next`.
+  const afterSignUp = afterSignUpPath(next);
   const [error, setError] = useState<string | null>(null);
   const [withPassword, setWithPassword] = useState(false);
   const [sentTo, setSentTo] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
 
   useEffect(() => {
-    if (ready && user) router.replace(next);
-  }, [ready, user, next, router]);
+    if (ready && user) router.replace(afterSignUp);
+  }, [ready, user, afterSignUp, router]);
 
   async function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -40,7 +43,7 @@ function RegisterForm() {
       username: String(data.get("username")),
       newsletter: Boolean(data.get("newsletter")),
       password: withPassword ? String(data.get("password")) : undefined,
-      next,
+      next: afterSignUp,
     });
     setBusy(false);
     if (!result.error) metaTrack("CompleteRegistration", { content_name: next });
@@ -70,12 +73,12 @@ function RegisterForm() {
       {sentTo ? (
         <CheckEmail
           email={sentTo}
-          onResend={() => void sendSignInLink(sentTo, next).then(setError)}
+          onResend={() => void sendSignInLink(sentTo, afterSignUp).then(setError)}
           onBack={() => setSentTo(null)}
         />
       ) : (
         <>
-          <GoogleButton onClick={() => void signInWithGoogle(next).then(setError)} />
+          <GoogleButton onClick={() => void signInWithGoogle(afterSignUp).then(setError)} />
           <form onSubmit={onSubmit} className="mt-8 grid gap-4">
             <label className="grid gap-1 text-sm">
               Email
