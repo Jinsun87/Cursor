@@ -6,7 +6,6 @@ import Link from "next/link";
 import { useApp } from "@/lib/store";
 import { safeNext } from "@/lib/safe-next";
 import { AccountsUnavailable, CheckEmail, GoogleButton } from "@/components/auth/CheckEmail";
-import { metaTrack } from "@/lib/meta/pixel";
 import { afterSignUpPath } from "@/lib/install";
 
 export default function RegisterPage() {
@@ -24,7 +23,7 @@ function RegisterForm() {
   // New accounts see how to add Lampstand to the home screen, then go on to `next`.
   const afterSignUp = afterSignUpPath(next);
   const [error, setError] = useState<string | null>(null);
-  const [withPassword, setWithPassword] = useState(false);
+  const [withPassword, setWithPassword] = useState(true);
   const [sentTo, setSentTo] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
 
@@ -46,7 +45,6 @@ function RegisterForm() {
       next: afterSignUp,
     });
     setBusy(false);
-    if (!result.error) metaTrack("CompleteRegistration", { content_name: next });
     if (result.error) setError(result.error);
     else if (!result.signedIn) setSentTo(email);
   }
@@ -78,7 +76,10 @@ function RegisterForm() {
         />
       ) : (
         <>
-          <GoogleButton onClick={() => void signInWithGoogle(afterSignUp).then(setError)} />
+          <GoogleButton
+            onClick={() => void signInWithGoogle(afterSignUp).then(setError)}
+            note="Fastest: no password and no email to confirm."
+          />
           <form onSubmit={onSubmit} className="mt-8 grid gap-4">
             <label className="grid gap-1 text-sm">
               Email
@@ -121,7 +122,7 @@ function RegisterForm() {
               onClick={() => setWithPassword((v) => !v)}
               className="text-sm text-parchment/70 underline underline-offset-4"
             >
-              {withPassword ? "Skip the password, email me a link" : "I'd rather set a password"}
+              {withPassword ? "No password? Email me a sign-in link instead" : "Set a password instead"}
             </button>
           </form>
         </>

@@ -11,6 +11,7 @@ import { GA4Head } from "@/components/GA4Head";
 import { AnalyticsTracker } from "@/components/AnalyticsTracker";
 import { MetaPixel } from "@/components/MetaPixel";
 import { InstallTracker } from "@/components/install/InstallTracker";
+import { NewAccountTracker } from "@/components/auth/NewAccountTracker";
 import { Analytics } from "@vercel/analytics/next";
 import { SleepAudioProvider } from "@/lib/sleep/sleep-audio";
 import { PremiumGate } from "@/components/sleep/PremiumGate";
@@ -86,6 +87,7 @@ export default function RootLayout({
               <AnalyticsTracker />
               <MetaPixel />
               <InstallTracker />
+              <NewAccountTracker />
               <Analytics />
               <a href="#main" className="skip-link">
                 Skip to content
