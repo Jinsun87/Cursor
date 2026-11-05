@@ -1,5 +1,5 @@
-import { AbsoluteFill, Audio, Img, Sequence, interpolate, staticFile, useCurrentFrame, useVideoConfig } from "remotion";
-import type { VideoChapter, VideoProps, VideoVerse } from "./types";
+import { AbsoluteFill, Audio, Img, OffthreadVideo, Sequence, interpolate, staticFile, useCurrentFrame, useVideoConfig } from "remotion";
+import type { VideoChapter, VideoIntro, VideoProps, VideoVerse } from "./types";
 
 const FADE = 1.5; // seconds for crossfades between paintings
 const GOLD = "#e4c04a";
@@ -16,7 +16,7 @@ function scenesOf(chapters: VideoChapter[], end: number) {
     }
   }
   scenes.forEach((s, i) => (s.to = i < scenes.length - 1 ? scenes[i + 1].from : end));
-  scenes[0].from = 0;
+  if (scenes.length) scenes[0].from = 0;
   return scenes;
 }
 
@@ -32,7 +32,78 @@ function verseAt(chapters: VideoChapter[], t: number): { chapter: VideoChapter; 
   return null;
 }
 
-export const SleepVideo: React.FC<VideoProps> = ({ title, subtitle, chapters, duration }) => {
+const CLIP_RATE = 0.75; // the animated paintings, slowed a little
+const CLIP_SECONDS = 7.9 / CLIP_RATE;
+const CLIP_FADE = 1;
+
+/** Caption lines for the intro: a sentence, or up to 9 words of a longer one. */
+function introLines(words: VideoIntro["words"]) {
+  const lines: VideoIntro["words"][] = [];
+  let line: VideoIntro["words"] = [];
+  for (const w of words) {
+    line.push(w);
+    if (/[.!?]$/.test(w.text) || (line.length >= 9 && /,$/.test(w.text)) || line.length >= 13) {
+      lines.push(line);
+      line = [];
+    }
+  }
+  if (line.length) lines.push(line);
+  return lines;
+}
+
+/** The welcome and app note before the first chapter: animated paintings, captions, then the QR code. */
+const Intro: React.FC<{ intro: VideoIntro; t: number; fps: number }> = ({ intro, t, fps }) => {
+  const lines = introLines(intro.words);
+  const index = lines.findIndex((l, i) => t >= l[0].start - 0.2 && t < (lines[i + 1]?.[0].start ?? intro.duration) - 0.2);
+  const line = index >= 0 ? lines[index] : null;
+  const qr = interpolate(t, [intro.noteAt, intro.noteAt + 1], [0, 1], clamp);
+  const count = Math.ceil(intro.duration / (CLIP_SECONDS - CLIP_FADE)) + 1;
+  return (
+    <AbsoluteFill style={{ backgroundColor: "#07080c" }}>
+      <div style={{ position: "absolute", left: 170, top: 70, width: 530, height: 940, overflow: "hidden", borderRadius: 6, boxShadow: "0 30px 80px rgba(0,0,0,0.6)" }}>
+        {Array.from({ length: count }, (_, i) => {
+          const from = i * (CLIP_SECONDS - CLIP_FADE);
+          if (t < from || t > from + CLIP_SECONDS) return null;
+          const opacity = Math.min(i === 0 ? 1 : interpolate(t, [from, from + CLIP_FADE], [0, 1], clamp), interpolate(t, [from + CLIP_SECONDS - CLIP_FADE, from + CLIP_SECONDS], [1, 0], clamp));
+          return (
+            <AbsoluteFill key={i} style={{ opacity }}>
+              <Sequence from={Math.round(from * fps)} durationInFrames={Math.round(CLIP_SECONDS * fps)} layout="none">
+                {/* Scaled past the generator's corner watermark. */}
+                <OffthreadVideo muted src={staticFile(intro.clips[i % intro.clips.length])} playbackRate={CLIP_RATE} style={{ width: "100%", height: "100%", objectFit: "cover", transform: "scale(1.1)" }} />
+              </Sequence>
+            </AbsoluteFill>
+          );
+        })}
+      </div>
+
+      <div style={{ position: "absolute", left: 820, right: 150, top: 300, fontFamily: "Georgia, serif", color: GOLD, letterSpacing: "0.22em", fontSize: 22, textTransform: "uppercase" }}>
+        {t < intro.noteAt ? "Tonight" : "Before we begin"}
+      </div>
+      {line ? (
+        <div style={{ position: "absolute", left: 820, right: 150, top: 360, fontFamily: "Georgia, serif", fontSize: 46, lineHeight: 1.45 }}>
+          {line.map((w, i) => (
+            <span key={i} style={{ color: t >= w.start - 0.05 ? (t < w.end + 0.1 ? GOLD : INK) : "rgba(241,235,221,0.5)" }}>
+              {w.text}{" "}
+            </span>
+          ))}
+        </div>
+      ) : null}
+
+      <div style={{ position: "absolute", left: 820, top: 700, display: "flex", alignItems: "center", gap: 40, opacity: qr }}>
+        <Img src={staticFile(intro.qr)} style={{ width: 240, height: 240, borderRadius: 12 }} />
+        <div style={{ fontFamily: "Georgia, serif" }}>
+          <div style={{ color: INK, fontSize: 40 }}>lampstandbible.com</div>
+          <div style={{ color: GOLD, fontSize: 28, marginTop: 14 }}>Genesis free · 7 days free</div>
+          <div style={{ color: "rgba(241,235,221,0.6)", fontSize: 24, marginTop: 14 }}>Scan, or open it in your phone's browser</div>
+        </div>
+      </div>
+
+      <Audio src={staticFile(intro.audio)} />
+    </AbsoluteFill>
+  );
+};
+
+export const SleepVideo: React.FC<VideoProps> = ({ title, subtitle, chapters, duration, intro }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   const t = frame / fps;
@@ -82,6 +153,12 @@ export const SleepVideo: React.FC<VideoProps> = ({ title, subtitle, chapters, du
       <div style={{ position: "absolute", left: 820, bottom: 60, fontFamily: "Georgia, serif", color: "rgba(241,235,221,0.5)", fontSize: 20 }}>
         Berean Standard Bible · lampstandbible.com
       </div>
+
+      {intro && t < intro.duration + 1.5 ? (
+        <AbsoluteFill style={{ opacity: interpolate(t, [intro.duration, intro.duration + 1.5], [1, 0], clamp) }}>
+          <Intro intro={intro} t={t} fps={fps} />
+        </AbsoluteFill>
+      ) : null}
 
       {chapters.map((c) => (
         <Sequence key={c.label} from={Math.round(c.start * fps)} durationInFrames={Math.ceil(c.duration * fps)}>

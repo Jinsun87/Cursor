@@ -16,6 +16,20 @@ export type VideoChapter = {
   numbered: boolean;
 };
 
+/** The spoken opening before the first chapter: a welcome, a short note about the app with a QR code, then the reading. */
+export type VideoIntro = {
+  /** Narration in the render's public folder, and its length. */
+  audio: string;
+  duration: number;
+  words: { text: string; start: number; end: number }[];
+  /** Animated paintings in the render's public folder, played in turn behind the welcome. */
+  clips: string[];
+  /** When the app note starts: the QR code shows from here. */
+  noteAt: number;
+  /** QR code image in the render's public folder. */
+  qr: string;
+};
+
 export type VideoProps = {
   /** "Genesis 1–3" */
   title: string;
@@ -26,6 +40,7 @@ export type VideoProps = {
   chapters: VideoChapter[];
   /** Total length in seconds. */
   duration: number;
+  intro?: VideoIntro;
 };
 
 export const FPS = 30;
@@ -43,8 +58,16 @@ export type AdProps = {
   /** Length of the narration clip. */
   clip: number;
   words: AdWord[];
-  /** Paintings in the render's public folder, each shown from `at` until the next. */
-  images: { src: string; at: number }[];
+  /**
+   * Paintings in the render's public folder, each shown from `at` until the next. A `video` is an
+   * animated painting: played muted (at `rate`, default 1) and held on its last frame if it runs out.
+   */
+  images: { src: string; at: number; video?: boolean; rate?: number }[];
+  /** Hide the hook and kicker from this time on (default: shown until the end card). */
+  hookUntil?: number;
+  /** App screenshots shown in a phone over the paintings, each from `at` until the next, until `phonesUntil`. */
+  phones?: { src: string; at: number }[];
+  phonesUntil?: number;
   /** End card lines. */
   cta: string;
   ctaSub: string;

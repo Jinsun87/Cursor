@@ -9,6 +9,8 @@
  *   npx tsx video/render.ts "Women of the Bible"   # a whole story series in one video
  *   npx tsx video/render.ts "Genesis 1" --seconds=60   # a short test
  *   --concurrency=8  (render threads; defaults to half the CPU threads)
+ *   --no-intro       (skip the spoken welcome and app note before the first chapter; see intro.ts)
+ *   --intro-only     (render just the intro, ending in black, to put in front of a video rendered before intros existed)
  *
  * Writes video/out/<name>.mp4, <name>.jpg (thumbnail) and <name>.txt (title, description and
  * chapter timestamps for YouTube). Scratch files go to video/.work/. Neither is committed.
@@ -22,7 +24,8 @@ import { renderMedia, renderStill, selectComposition } from "@remotion/renderer"
 import { SLEEP_CHAPTERS } from "../lib/sleep/chapters";
 import { STORY_CHAPTERS } from "../lib/stories/chapters";
 import type { SleepChapter, SleepTiming } from "../lib/sleep/types";
-import type { VideoChapter, VideoProps } from "./src/types";
+import type { VideoChapter, VideoIntro, VideoProps } from "./src/types";
+import { INTRO_LINK, buildIntro } from "./intro";
 
 const ROOT = resolve(__dirname, "..");
 const args = process.argv.slice(2);
@@ -30,8 +33,10 @@ const ref = args.find((a) => !a.startsWith("--"));
 let mode: "walk" | "sleep" | "story" = args.includes("--walk") ? "walk" : "sleep";
 const limit = Number(args.find((a) => a.startsWith("--seconds="))?.split("=")[1]) || 0;
 const concurrency = Number(args.find((a) => a.startsWith("--concurrency="))?.split("=")[1]) || undefined;
+const introOnly = args.includes("--intro-only");
+const withIntro = introOnly || !args.includes("--no-intro");
 
-const LEAD = 2; // seconds before the first chapter starts
+const LEAD = 2; // seconds before the first chapter starts (after the intro, if there is one)
 const GAP = 3; // seconds of quiet between chapters
 const TAIL = 5; // seconds after the last chapter
 
@@ -146,14 +151,25 @@ async function main() {
   const range = story ? (one ? first.title : first.book) : one ? `${first.book} ${first.chapter}` : `${first.book} ${first.chapter}–${last.chapter}`;
   const name =
     (story ? (one ? first.slug : `stories-${first.book.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`) : `${first.slug}${one ? "" : `-${last.chapter}`}-${mode}`) +
-    (limit ? `-${limit}s` : "");
+    (introOnly ? "-intro" : limit ? `-${limit}s` : "");
   const work = join(ROOT, "video", ".work", name);
   const out = join(ROOT, "video", "out");
   mkdirSync(work, { recursive: true });
   mkdirSync(out, { recursive: true });
 
+  const intro: VideoIntro | undefined = withIntro
+    ? await buildIntro(
+        story
+          ? one
+            ? { kind: "story", title: first.title, book: first.book }
+            : { kind: "series", book: first.book, count: chapters.length }
+          : { kind: "chapters", mode: mode === "walk" ? "walk" : "sleep", book: first.book, from: first.chapter, to: last.chapter },
+        work,
+      )
+    : undefined;
+
   // Lay the chapters end to end, with verse times from each recording's timing file.
-  let at = LEAD;
+  let at = (intro?.duration ?? 0) + LEAD;
   const laid: VideoChapter[] = [];
   for (const c of chapters) {
     const timing: SleepTiming = JSON.parse(readFileSync(join(ROOT, "public", timingPath(c)), "utf8"));
@@ -175,17 +191,20 @@ async function main() {
     at += timing.duration + GAP;
   }
   const full = at - GAP + TAIL;
-  const duration = limit ? Math.min(limit, full) : full;
+  // An intro on its own stops where the first chapter would start, fading to black as the full video does.
+  const duration = introOnly && intro ? intro.duration + LEAD : limit ? Math.min(limit, full) : full;
   const props: VideoProps = {
     title: range,
     subtitle: story ? (one ? "A Bible story for sleep" : "Bible stories for sleep") : mode === "sleep" ? "Read softly for sleep" : "Read for your walk",
     tagline: story ? (one ? `${first.book} · Lampstand` : "Told from Scripture · Lampstand") : "Word for word · Lampstand",
     chapters: laid.filter((c) => c.start < duration),
     duration,
+    intro,
   };
 
   console.log(`  ${range} (${mode}): ${clock(duration)} of video, ${props.chapters.length} chapter(s)`);
   const started = Date.now();
+  if (introOnly && intro) console.log(`  intro only: ${duration.toFixed(2)}s. Add this to every chapter time in the video's description.`);
   const serveUrl = await bundle({ entryPoint: join(ROOT, "video", "src", "index.ts"), publicDir: work });
   const video = await selectComposition({ serveUrl, id: "SleepVideo", inputProps: props });
   await renderMedia({
@@ -197,19 +216,26 @@ async function main() {
     concurrency,
     onProgress: ({ progress }) => process.stdout.write(`\r  rendering ${Math.round(progress * 100)}%   `),
   });
+  if (introOnly) {
+    console.log(`  done: video/out/${name}.mp4`);
+    return;
+  }
   const thumb = await selectComposition({ serveUrl, id: "Thumbnail", inputProps: props });
   await renderStill({ composition: thumb, serveUrl, output: join(out, `${name}.jpg`), inputProps: props, imageFormat: "jpeg" });
 
   // Title, description and YouTube chapters (each line "m:ss Title" becomes a clickable chapter).
-  const stamps = props.chapters.map((c, i) => `${clock(i === 0 ? 0 : c.start)} ${story ? c.title : `${c.label} · ${c.title}`}`);
+  const stamps = [
+    ...(intro ? ["0:00 Welcome"] : []),
+    ...props.chapters.map((c, i) => `${clock(i === 0 && !intro ? 0 : c.start)} ${story ? c.title : `${c.label} · ${c.title}`}`),
+  ];
   const description = [
     story
       ? `${one ? `${range}, from ${first.book}` : `${props.chapters.length} stories from ${range}`}: Bible stories told gently for sleep, with Scripture read word for word from the Berean Standard Bible and paintings for each part of the story.`
       : `${range}, read ${mode === "sleep" ? "softly for sleep" : "aloud for your walk"}, word for word from the Berean Standard Bible, with paintings for each passage.`,
     "",
     story
-      ? "More Bible stories for sleep at https://lampstandbible.com, free for 7 days"
-      : "Listen free and keep your place every night at https://lampstandbible.com",
+      ? `More Bible stories for sleep at ${intro ? INTRO_LINK : "https://lampstandbible.com"}, free for 7 days`
+      : `Listen free and keep your place every night at ${intro ? INTRO_LINK : "https://lampstandbible.com"}`,
     "",
     ...(stamps.length > 1 ? ["Chapters", ...stamps, ""] : []),
     "Scripture quotations are from the Berean Standard Bible (BSB), public domain.",
