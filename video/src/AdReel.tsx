@@ -32,7 +32,7 @@ function linesOf(words: AdWord[]): AdWord[][] {
  * 1080×1920 Reel for Meta ads. Kept clear of Instagram's own buttons and caption: nothing in the top
  * 220 px or the bottom 640 px except the painting.
  */
-export const AdReel: React.FC<AdProps> = ({ hook, kicker, audio, clip, words, images, cta, ctaSub, hookUntil, phones, phonesUntil }) => {
+export const AdReel: React.FC<AdProps> = ({ hook, kicker, audio, clip, words, images, cta, ctaSub, hookUntil, phones, phonesUntil, badge, endNote }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   const t = frame / fps;
@@ -74,7 +74,12 @@ export const AdReel: React.FC<AdProps> = ({ hook, kicker, audio, clip, words, im
       })}
       <AbsoluteFill style={{ background: "linear-gradient(180deg, rgba(7,8,12,0.78) 0%, rgba(7,8,12,0.15) 32%, rgba(7,8,12,0.2) 46%, rgba(7,8,12,0.72) 70%, rgba(7,8,12,0.9) 100%)" }} />
 
-      <div style={{ position: "absolute", left: 80, right: 80, top: 250, opacity: hookOpacity, textAlign: "center" }}>
+      <div style={{ position: "absolute", left: 80, right: 80, top: badge ? 230 : 250, opacity: hookOpacity, textAlign: "center", transform: `scale(${interpolate(t, [0, 0.45], [1.08, 1], { ...clamp, easing: (x) => 1 - (1 - x) ** 3 })})` }}>
+        {badge ? (
+          <div style={{ display: "inline-block", fontFamily: serif, color: "#1a1408", background: GOLD, borderRadius: 999, padding: "8px 22px", fontSize: 26, fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: 22 }}>
+            {badge}
+          </div>
+        ) : null}
         <div style={{ fontFamily: serif, color: GOLD, letterSpacing: "0.2em", fontSize: 28, textTransform: "uppercase" }}>{kicker}</div>
         <div style={{ fontFamily: serif, color: INK, fontSize: hook.length > 48 ? 62 : 74, lineHeight: 1.15, marginTop: 22, textWrap: "balance", textShadow: "0 4px 24px rgba(0,0,0,0.6)" }}>
           {hook}
@@ -112,7 +117,7 @@ export const AdReel: React.FC<AdProps> = ({ hook, kicker, audio, clip, words, im
         </div>
       ) : null}
 
-      <EndCard opacity={endCard} cta={cta} ctaSub={ctaSub} />
+      <EndCard opacity={endCard} cta={cta} ctaSub={ctaSub} note={endNote} />
 
       <Audio src={staticFile(audio)} />
     </AbsoluteFill>

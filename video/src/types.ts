@@ -63,6 +63,10 @@ export type AdProps = {
    * animated painting: played muted (at `rate`, default 1) and held on its last frame if it runs out.
    */
   images: { src: string; at: number; video?: boolean; rate?: number }[];
+  /** A small pill above the kicker naming the series and episode, e.g. "Night 9 · Scripture for sleep". */
+  badge?: string;
+  /** A last line on the end card, e.g. "Follow for tomorrow's verse · Save this for tonight". */
+  endNote?: string;
   /** Hide the hook and kicker from this time on (default: shown until the end card). */
   hookUntil?: number;
   /** App screenshots shown in a phone over the paintings, each from `at` until the next, until `phonesUntil`. */

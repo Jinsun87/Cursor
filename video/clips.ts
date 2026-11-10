@@ -62,6 +62,10 @@ type Series = {
   invite: string;
   comment: string;
   hashtags: string;
+  /** End-card line inviting a follow or a save. */
+  endNote?: string;
+  /** Soft rain under the voice and the end card, like the app's Sleep mode. */
+  rain?: boolean;
 };
 
 const SERIES = {
@@ -88,6 +92,7 @@ const SERIES = {
     invite: "Want a chapter read aloud for your walk or commute? Link in the comments. 👇",
     comment: "Hear every chapter of the Bible read aloud, word for word, for your walk:",
     hashtags: "#Bible #morning #VerseOfTheDay #faith #Lampstand",
+    endNote: "Follow for tomorrow morning's verse",
   },
   sleep: {
     voice: SLEEP_VOICE,
@@ -100,6 +105,8 @@ const SERIES = {
     invite: "Want Scripture read softly as you fall asleep? Link in the comments. 👇",
     comment: "Fall asleep to the Psalms, read softly with a sleep timer and gentle rain:",
     hashtags: "#Bible #Psalms #sleep #faith #Lampstand",
+    endNote: "Save this for a sleepless night",
+    rain: true,
   },
 } satisfies Record<string, Series>;
 
@@ -109,6 +116,8 @@ export type Clip = {
   id: string;
   /** Default: dailyhope. */
   series?: SeriesName;
+  /** Episode pill, e.g. "Night 9 · Scripture for sleep". */
+  badge?: string;
   hook: string;
   kicker: string;
   /** The narration, shown word for word as captions. */
@@ -191,7 +200,7 @@ const CLIPS: Clip[] = [
   ...SLEEPWALK_CLIPS,
 ];
 
-const seriesOf = (clip: Clip) => SERIES[clip.series ?? "dailyhope"];
+const seriesOf = (clip: Clip): Series => SERIES[clip.series ?? "dailyhope"];
 
 /** What the voice reads: the script, with LORD spoken as a word (same length, so timings still line up). */
 const spoken = (script: string) => script.replace(/\bLORD\b/g, "Lord");
@@ -248,11 +257,23 @@ async function propsFor(clip: Clip): Promise<AdProps> {
   const lead = 0.4;
   const spokenFor = words[words.length - 1].end;
   const length = lead + spokenFor + 0.8;
-  execFileSync("ffmpeg", [
-    "-y", "-loglevel", "error", "-i", mp3,
-    "-af", `adelay=${lead * 1000}:all=1,${seriesOf(clip).voice.finish},apad,atrim=0:${length.toFixed(2)},afade=t=out:st=${(length - 0.6).toFixed(2)}:d=0.6`,
-    join(WORK, audio),
-  ]);
+  const s = seriesOf(clip);
+  const voice = `adelay=${lead * 1000}:all=1,${s.voice.finish},apad,atrim=0:${length.toFixed(2)},afade=t=out:st=${(length - 0.6).toFixed(2)}:d=0.6`;
+  if (s.rain) {
+    // The app's rain (brown noise through a low-pass), quietly under the voice and on through the end card.
+    const total = length + END_CARD;
+    execFileSync("ffmpeg", [
+      "-y", "-loglevel", "error", "-i", mp3,
+      "-f", "lavfi", "-i", `anoisesrc=color=brown:amplitude=0.9:duration=${total.toFixed(2)}`,
+      "-filter_complex",
+      `[0:a]${voice},aformat=channel_layouts=stereo,apad,atrim=0:${total.toFixed(2)}[v];` +
+        `[1:a]lowpass=f=1100,volume=0.07,aformat=channel_layouts=stereo,afade=t=in:d=1.2,afade=t=out:st=${(total - 1.5).toFixed(2)}:d=1.5[r];` +
+        "[v][r]amix=inputs=2:normalize=0",
+      "-ar", "44100", join(WORK, audio),
+    ]);
+  } else {
+    execFileSync("ffmpeg", ["-y", "-loglevel", "error", "-i", mp3, "-af", voice, join(WORK, audio)]);
+  }
   const share = length / clip.images.length;
   const images = clip.images.map((src, i) => {
     const name = `${clip.id}-${i}-${basename(src)}`;
@@ -266,8 +287,10 @@ async function propsFor(clip: Clip): Promise<AdProps> {
     clip: length,
     words: words.map((w) => ({ ...w, start: w.start + lead, end: w.end + lead })),
     images,
-    cta: seriesOf(clip).cta,
-    ctaSub: seriesOf(clip).ctaSub,
+    cta: s.cta,
+    ctaSub: s.ctaSub,
+    badge: clip.badge,
+    endNote: s.endNote,
   };
 }
 

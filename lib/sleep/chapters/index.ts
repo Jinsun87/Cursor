@@ -248,6 +248,34 @@ import ch_jonah_1 from "./jonah-1.json";
 import ch_jonah_2 from "./jonah-2.json";
 import ch_jonah_3 from "./jonah-3.json";
 import ch_jonah_4 from "./jonah-4.json";
+import ch_matthew_1 from "./matthew-1.json";
+import ch_matthew_2 from "./matthew-2.json";
+import ch_matthew_3 from "./matthew-3.json";
+import ch_matthew_4 from "./matthew-4.json";
+import ch_matthew_5 from "./matthew-5.json";
+import ch_matthew_6 from "./matthew-6.json";
+import ch_matthew_7 from "./matthew-7.json";
+import ch_matthew_8 from "./matthew-8.json";
+import ch_matthew_9 from "./matthew-9.json";
+import ch_matthew_10 from "./matthew-10.json";
+import ch_matthew_11 from "./matthew-11.json";
+import ch_matthew_12 from "./matthew-12.json";
+import ch_matthew_13 from "./matthew-13.json";
+import ch_matthew_14 from "./matthew-14.json";
+import ch_matthew_15 from "./matthew-15.json";
+import ch_matthew_16 from "./matthew-16.json";
+import ch_matthew_17 from "./matthew-17.json";
+import ch_matthew_18 from "./matthew-18.json";
+import ch_matthew_19 from "./matthew-19.json";
+import ch_matthew_20 from "./matthew-20.json";
+import ch_matthew_21 from "./matthew-21.json";
+import ch_matthew_22 from "./matthew-22.json";
+import ch_matthew_23 from "./matthew-23.json";
+import ch_matthew_24 from "./matthew-24.json";
+import ch_matthew_25 from "./matthew-25.json";
+import ch_matthew_26 from "./matthew-26.json";
+import ch_matthew_27 from "./matthew-27.json";
+import ch_matthew_28 from "./matthew-28.json";
 import ch_john_1 from "./john-1.json";
 import ch_john_2 from "./john-2.json";
 import ch_john_3 from "./john-3.json";
@@ -524,6 +552,34 @@ export const SLEEP_CHAPTERS: SleepChapter[] = [
   ch_jonah_2 as SleepChapter,
   ch_jonah_3 as SleepChapter,
   ch_jonah_4 as SleepChapter,
+  ch_matthew_1 as SleepChapter,
+  ch_matthew_2 as SleepChapter,
+  ch_matthew_3 as SleepChapter,
+  ch_matthew_4 as SleepChapter,
+  ch_matthew_5 as SleepChapter,
+  ch_matthew_6 as SleepChapter,
+  ch_matthew_7 as SleepChapter,
+  ch_matthew_8 as SleepChapter,
+  ch_matthew_9 as SleepChapter,
+  ch_matthew_10 as SleepChapter,
+  ch_matthew_11 as SleepChapter,
+  ch_matthew_12 as SleepChapter,
+  ch_matthew_13 as SleepChapter,
+  ch_matthew_14 as SleepChapter,
+  ch_matthew_15 as SleepChapter,
+  ch_matthew_16 as SleepChapter,
+  ch_matthew_17 as SleepChapter,
+  ch_matthew_18 as SleepChapter,
+  ch_matthew_19 as SleepChapter,
+  ch_matthew_20 as SleepChapter,
+  ch_matthew_21 as SleepChapter,
+  ch_matthew_22 as SleepChapter,
+  ch_matthew_23 as SleepChapter,
+  ch_matthew_24 as SleepChapter,
+  ch_matthew_25 as SleepChapter,
+  ch_matthew_26 as SleepChapter,
+  ch_matthew_27 as SleepChapter,
+  ch_matthew_28 as SleepChapter,
   ch_john_1 as SleepChapter,
   ch_john_2 as SleepChapter,
   ch_john_3 as SleepChapter,
@@ -801,6 +857,34 @@ export const SLEEP_SECONDS: Record<string, number> = {
   "jonah-2": 114,
   "jonah-3": 121,
   "jonah-4": 137,
+  "matthew-1": 286,
+  "matthew-2": 263,
+  "matthew-3": 169,
+  "matthew-4": 259,
+  "matthew-5": 455,
+  "matthew-6": 344,
+  "matthew-7": 278,
+  "matthew-8": 345,
+  "matthew-9": 393,
+  "matthew-10": 401,
+  "matthew-11": 295,
+  "matthew-12": 480,
+  "matthew-13": 592,
+  "matthew-14": 318,
+  "matthew-15": 366,
+  "matthew-16": 317,
+  "matthew-17": 298,
+  "matthew-18": 348,
+  "matthew-19": 330,
+  "matthew-20": 331,
+  "matthew-21": 510,
+  "matthew-22": 392,
+  "matthew-23": 405,
+  "matthew-24": 490,
+  "matthew-25": 472,
+  "matthew-26": 777,
+  "matthew-27": 619,
+  "matthew-28": 198,
   "john-1": 470,
   "john-2": 233,
   "john-3": 340,
@@ -1078,6 +1162,34 @@ export const WALK_SECONDS: Record<string, number> = {
   "jonah-2": 85,
   "jonah-3": 95,
   "jonah-4": 112,
+  "matthew-1": 201,
+  "matthew-2": 206,
+  "matthew-3": 142,
+  "matthew-4": 192,
+  "matthew-5": 370,
+  "matthew-6": 287,
+  "matthew-7": 224,
+  "matthew-8": 264,
+  "matthew-9": 298,
+  "matthew-10": 329,
+  "matthew-11": 231,
+  "matthew-12": 396,
+  "matthew-13": 473,
+  "matthew-14": 253,
+  "matthew-15": 277,
+  "matthew-16": 238,
+  "matthew-17": 225,
+  "matthew-18": 287,
+  "matthew-19": 252,
+  "matthew-20": 251,
+  "matthew-21": 379,
+  "matthew-22": 298,
+  "matthew-23": 301,
+  "matthew-24": 362,
+  "matthew-25": 343,
+  "matthew-26": 578,
+  "matthew-27": 478,
+  "matthew-28": 148,
   "john-1": 369,
   "john-2": 183,
   "john-3": 275,

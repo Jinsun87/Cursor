@@ -23,6 +23,7 @@ import { RUTH_PLANS } from "../content/sleep/ruth";
 import { JONAH_PLANS } from "../content/sleep/jonah";
 import { PHILIPPIANS_PLANS } from "../content/sleep/philippians";
 import { GOSPEL_STYLE, JOHN_PLANS } from "../content/sleep/john";
+import { MATTHEW_PLANS } from "../content/sleep/matthew";
 import { BOOKS } from "../lib/plan/books";
 import type { SleepChapter } from "../lib/sleep/types";
 import { SLEEP_GENESIS_1 } from "../lib/sleep/genesis-1";
@@ -45,9 +46,10 @@ const PLANS: Record<string, SleepChapterPlan[]> = {
   Jonah: JONAH_PLANS,
   Philippians: PHILIPPIANS_PLANS,
   John: JOHN_PLANS,
+  Matthew: MATTHEW_PLANS,
 };
 /** Books painted in their own style instead of NIGHT_STYLE. */
-const STYLES: Record<string, string> = { John: GOSPEL_STYLE };
+const STYLES: Record<string, string> = { John: GOSPEL_STYLE, Matthew: GOSPEL_STYLE };
 const only = process.argv.find((a) => a.startsWith("--only="))?.split("=")[1];
 const redo = process.argv.includes("--redo");
 const step = (name: string) => !only || only === name;
@@ -184,7 +186,8 @@ async function voiceClean(verses: VoiceVerse[], mode: "sleep" | "walk", slug: st
     });
     const bad = result.issues.filter((x) => x.kind !== "unheard");
     if (!bad.length || attempt === tries.length) break;
-    console.log(`  ${label} ${mode}: ${bad.length} word problem${bad.length > 1 ? "s" : ""}, voicing again   `);
+    console.log(`
+  ${label} ${mode}: ${bad.length} word problem${bad.length > 1 ? "s" : ""}, voicing again   `);
   }
   const name = mode === "walk" ? "Walk" : "Sleep";
   problems.push(...result.issues.filter((x) => x.kind !== "unheard").map((x) => `  ${label} ${name} v${x.verse} @${x.at}s ${x.kind}: "${x.words}"`));

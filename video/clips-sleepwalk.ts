@@ -193,4 +193,198 @@ export const SLEEPWALK_CLIPS: Clip[] = [
     images: ["/images/sleep/psalm-116/s1.jpg", "/images/sleep/psalm-116/s2.jpg"],
     caption: "Return to your rest, O my soul. Psalm 116:7 🙏",
   },
+
+  // Week 2 (14–20 Nov): numbered episodes, sharper first lines, the most-read verses.
+  {
+    id: "do-not-fear",
+    series: "walk",
+    badge: "Day 8 · Morning verse",
+    hook: "Four promises before breakfast",
+    kicker: "Isaiah 41:10 · for your morning",
+    script:
+      "If fear woke up before you did this morning, read this. " +
+      "“Do not fear, for I am with you; do not be afraid, for I am your God. I will strengthen you; I will surely help you; I will uphold you with My righteous right hand.” " +
+      "Four promises before breakfast. With you. Strengthen you. Help you. Hold you. " +
+      "Carry this with you today: I will uphold you.",
+    images: ["/images/sleep/psalm-145/s1.jpg", "/images/sleep/psalm-30/s2.jpg", "/images/sleep/psalm-65/s1.jpg"],
+    caption: "Four promises before breakfast. Isaiah 41:10 ☀️",
+  },
+  {
+    id: "new-every-morning",
+    series: "walk",
+    badge: "Day 9 · Morning verse",
+    hook: "Yesterday didn't use up His mercy",
+    kicker: "Lamentations 3:22–23 · for your morning",
+    script:
+      "Yesterday's mistakes didn't use up God's mercy. " +
+      "“Because of the loving devotion of the LORD we are not consumed, for His mercies never fail. They are new every morning; great is Your faithfulness!” " +
+      "Today's mercy is brand new, made for this day. " +
+      "Carry this with you today: His mercies are new this morning.",
+    images: ["/images/sleep/psalm-5/s1.jpg", "/images/sleep/psalm-96/s1.jpg", "/images/sleep/psalm-145/s2.jpg"],
+    caption: "His mercies are new every morning. Lamentations 3:22–23 🌅",
+  },
+  {
+    id: "strong-and-courageous",
+    series: "walk",
+    badge: "Day 10 · Morning verse",
+    hook: "Walking into something hard today?",
+    kicker: "Joshua 1:9 · for your morning",
+    script:
+      "Walking into something hard today? God said this to Joshua before the biggest day of his life. " +
+      "“Have I not commanded you to be strong and courageous? Do not be afraid; do not be discouraged, for the LORD your God is with you wherever you go.” " +
+      "Wherever you go today, He's already there. " +
+      "Carry this with you today: the Lord is with me wherever I go.",
+    images: ["/images/sleep/psalm-143/s2.jpg", "/images/sleep/philippians-3/s3.jpg", "/images/sleep/psalm-119/s1.jpg"],
+    caption: "Wherever you go today, He's already there. Joshua 1:9 💪",
+  },
+  {
+    id: "trust-with-all",
+    series: "walk",
+    badge: "Day 11 · Morning verse",
+    hook: "Not sure which way to go today?",
+    kicker: "Proverbs 3:5–6 · for your morning",
+    script:
+      "Not sure which way to go today? " +
+      "“Trust in the LORD with all your heart, and lean not on your own understanding; in all your ways acknowledge Him, and He will make your paths straight.” " +
+      "You don't have to see the whole map. Just take the next step with Him. " +
+      "Carry this with you today: He will make my path straight.",
+    images: ["/images/sleep/psalm-119/s1.jpg", "/images/sleep/psalm-143/s2.jpg", "/images/sleep/psalm-30/s2.jpg"],
+    caption: "You don't have to see the whole map. Proverbs 3:5–6 🧭",
+  },
+  {
+    id: "plans-for-you",
+    series: "walk",
+    badge: "Day 12 · Morning verse",
+    hook: "Today isn't random",
+    kicker: "Jeremiah 29:11 · for your morning",
+    script:
+      "Today isn't random. God said this to people living far from home, in exile. " +
+      "“For I know the plans I have for you, declares the LORD, plans to prosper you and not to harm you, to give you a future and a hope.” " +
+      "Even in a hard season, He hasn't lost the plot. " +
+      "Carry this with you today: He has a future and a hope for me.",
+    images: ["/images/sleep/psalm-65/s1.jpg", "/images/sleep/psalm-145/s1.jpg", "/images/sleep/john-8/s2.jpg"],
+    caption: "Even in a hard season, He hasn't lost the plot. Jeremiah 29:11 ✨",
+  },
+  {
+    id: "wings-like-eagles",
+    series: "walk",
+    badge: "Day 13 · Morning verse",
+    hook: "Tired before the day has even started?",
+    kicker: "Isaiah 40:31 · for your morning",
+    script:
+      "Tired before the day has even started? " +
+      "“But those who wait upon the LORD will renew their strength; they will mount up with wings like eagles; they will run and not grow weary, they will walk and not faint.” " +
+      "Your strength for today doesn't have to come from you. " +
+      "Carry this with you today: those who wait on the Lord renew their strength.",
+    images: ["/images/sleep/psalm-30/s2.jpg", "/images/sleep/psalm-145/s2.jpg", "/images/sleep/psalm-65/s1.jpg"],
+    caption: "Your strength for today doesn't have to come from you. Isaiah 40:31 🦅",
+  },
+  {
+    id: "one-day-at-a-time",
+    series: "walk",
+    badge: "Day 14 · Morning verse",
+    hook: "Don't carry tomorrow into today",
+    kicker: "Matthew 6:34 · for your morning",
+    script:
+      "Don't carry tomorrow into today. Jesus said, " +
+      "“Therefore do not worry about tomorrow, for tomorrow will worry about itself. Today has enough trouble of its own.” " +
+      "Today is the only day you've been given to live. Live this one. " +
+      "Carry this with you today: one day at a time.",
+    images: ["/images/sleep/psalm-96/s1.jpg", "/images/sleep/psalm-65/s1.jpg", "/images/sleep/psalm-145/s2.jpg"],
+    caption: "Today is the only day you've been given to live. Matthew 6:34 🌤️",
+  },
+
+  {
+    id: "perfect-peace",
+    series: "sleep",
+    badge: "Night 8 · Scripture for sleep",
+    hook: "Can't switch your mind off?",
+    kicker: "Isaiah 26:3 · for tonight",
+    script:
+      "Can't switch your mind off tonight? Here's where perfect peace comes from. " +
+      "“You will keep in perfect peace the steadfast of mind, because he trusts in You.” " +
+      "Not a quiet mind first, and then trust. Trust first, and the peace follows. Rest your mind on Him tonight.",
+    images: ["/images/sleep/psalm-63/s2.jpg", "/images/sleep/psalm-131/s1.jpg"],
+    caption: "Trust first, and the peace follows. Isaiah 26:3 🌙",
+  },
+  {
+    id: "come-to-me",
+    series: "sleep",
+    badge: "Night 9 · Scripture for sleep",
+    hook: "Jesus has an invitation for you tonight",
+    kicker: "Matthew 11:28–29 · for tonight",
+    script:
+      "Jesus has an invitation for you tonight. " +
+      "“Come to Me, all you who are weary and burdened, and I will give you rest.” " +
+      "“I am gentle and humble in heart, and you will find rest for your souls.” " +
+      "Bring Him everything you're carrying. And rest.",
+    images: ["/images/sleep/john-14/s2.jpg", "/images/sleep/psalm-23/s2.jpg"],
+    caption: "Come to Me, and I will give you rest. Matthew 11:28 🌙",
+  },
+  {
+    id: "soul-finds-rest",
+    series: "sleep",
+    badge: "Night 10 · Scripture for sleep",
+    hook: "Talk to your own soul tonight",
+    kicker: "Psalm 62 · for tonight",
+    script:
+      "David wrote this while people were plotting against him. " +
+      "“In God alone my soul finds rest; my salvation comes from Him.” " +
+      "Then he spoke to his own soul. “Rest in God alone, O my soul, for my hope comes from Him.” " +
+      "Say it to yourself tonight, slowly. Rest in God alone.",
+    images: ["/images/sleep/psalm-62/s1.jpg", "/images/sleep/psalm-62/s2.jpg"],
+    caption: "Rest in God alone, O my soul. Psalm 62 🙏",
+  },
+  {
+    id: "when-anxiety",
+    series: "sleep",
+    badge: "Night 11 · Scripture for sleep",
+    hook: "When anxiety hits at night",
+    kicker: "Psalm 94:19 · for tonight",
+    script:
+      "When anxiety overwhelms you at night, pray this. " +
+      "“When anxiety overwhelms me, Your consolation delights my soul.” " +
+      "The anxiety is real. But so is His comfort, and it is stronger. Let Him comfort you now.",
+    images: ["/images/sleep/psalm-94/s1.jpg", "/images/sleep/psalm-94/s2.jpg"],
+    caption: "His comfort is stronger than the anxiety. Psalm 94:19 🌙",
+  },
+  {
+    id: "sweet-sleep",
+    series: "sleep",
+    badge: "Night 12 · Scripture for sleep",
+    hook: "Read this right before you close your eyes",
+    kicker: "Proverbs 3:24 · for tonight",
+    script:
+      "A promise to read right before you close your eyes. " +
+      "“When you lie down, you will not be afraid; when you rest, your sleep will be sweet.” " +
+      "Not because nothing is wrong, but because He is watching over you. Sweet sleep tonight.",
+    images: ["/images/sleep/psalm-121/s1.jpg", "/images/sleep/psalm-121/s2.jpg"],
+    caption: "When you rest, your sleep will be sweet. Proverbs 3:24 ✨",
+  },
+  {
+    id: "when-afraid",
+    series: "sleep",
+    badge: "Night 13 · Scripture for sleep",
+    hook: "One line to hold onto in the dark",
+    kicker: "Psalm 56:3 · for tonight",
+    script:
+      "Afraid of the dark, or of tomorrow? David gave us one line to hold onto. " +
+      "“When I am afraid, I put my trust in You.” " +
+      "Not if I'm afraid. When. Fear will come. Trust can come too. Hold that line tonight.",
+    images: ["/images/sleep/psalm-56/s1.jpg", "/images/sleep/psalm-57/s1.jpg"],
+    caption: "When I am afraid, I put my trust in You. Psalm 56:3 🕯️",
+  },
+  {
+    id: "singing-over-you",
+    series: "sleep",
+    badge: "Night 14 · Scripture for sleep",
+    hook: "God is singing over you tonight",
+    kicker: "Zephaniah 3:17 · for tonight",
+    script:
+      "Fall asleep to this tonight. " +
+      "“The LORD your God is among you; He is mighty to save. He will rejoice over you with gladness; He will quiet you with His love; He will rejoice over you with singing.” " +
+      "He isn't only watching over you. He's singing over you. Rest.",
+    images: ["/images/sleep/psalm-16/s1.jpg", "/images/sleep/psalm-42/s2.jpg"],
+    caption: "He will quiet you with His love. Zephaniah 3:17 🎶",
+  },
 ];
