@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { useApp } from "@/lib/store";
 import { SECTIONS, sectionHref, sectionsHome } from "@/lib/nav";
+import { LogoMark } from "@/components/LogoMark";
 import { MoreSheet } from "./MoreSheet";
 import { SECTION_LABELS } from "./SectionIcon";
 import { useSectionLink } from "./SectionNav";
@@ -22,13 +23,7 @@ export function SectionHeader() {
     <header className="sticky top-0 z-40 border-b glass" style={{ borderColor: "var(--line)" }}>
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-3">
         <Link href={sectionsHome()} className="flex min-h-11 items-center gap-2 font-display text-xl tracking-wide">
-          <span
-            className="grid h-9 w-9 place-items-center rounded-full text-sm"
-            style={{ background: "var(--gold)", color: "var(--gold-ink)" }}
-            aria-hidden
-          >
-            L
-          </span>
+          <LogoMark className="h-9 w-9" />
           <span>
             Lamp<span style={{ color: "var(--gold)" }}>stand</span>
           </span>

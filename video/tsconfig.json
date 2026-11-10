@@ -12,5 +12,5 @@
     "noEmit": true,
     "paths": { "@/*": ["../*"] }
   },
-  "include": ["src/**/*.ts", "src/**/*.tsx", "render.ts", "ads.ts", "pov.ts", "clips.ts", "calm.ts", "intro.ts"]
+  "include": ["src/**/*.ts", "src/**/*.tsx", "render.ts", "ads.ts", "pov.ts", "clips.ts", "clips-sleepwalk.ts", "calm.ts", "intro.ts"]
 }

@@ -1,0 +1,141 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Newsreader:opsz,wght@6..72,500;6..72,600&display=block" rel="stylesheet">
+<style>
+  body { margin: 0; background: #1c1a17; font-family: Newsreader, Georgia, serif; color: #f1ebdd; }
+  .sheet { width: 1800px; padding: 40px; box-sizing: border-box; }
+  h2 { font-weight: 500; margin: 0 0 18px; font-size: 34px; color: #e4c04a; letter-spacing: .02em; }
+  .row { display: flex; gap: 30px; align-items: center; margin-bottom: 60px; }
+  .tile { background: #0c0a09; border-radius: 28px; overflow: hidden; flex: none; }
+  .light { background: #f6f1e6; }
+  .small { display: flex; flex-direction: column; gap: 18px; }
+  .label { font-size: 18px; color: rgba(241,235,221,.6); margin-top: 6px; }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0" stop-color="#ffd27a" stop-opacity=".55"/>
+      <stop offset=".45" stop-color="#e4a73a" stop-opacity=".18"/>
+      <stop offset="1" stop-color="#e4a73a" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="flame" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0" stop-color="#fff3c4"/>
+      <stop offset=".35" stop-color="#ffc44d"/>
+      <stop offset="1" stop-color="#e0782a"/>
+    </linearGradient>
+    <linearGradient id="page" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f6ecd2"/>
+      <stop offset="1" stop-color="#e3d2a8"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f2d675"/>
+      <stop offset="1" stop-color="#c9a42e"/>
+    </linearGradient>
+
+    <!-- A: open Bible with the name across its pages and a flame rising from the spine -->
+    <g id="markA">
+      <circle cx="512" cy="330" r="300" fill="url(#glow)"/>
+      <!-- page stacks -->
+      <path d="M512 772 Q340 712 150 742 L150 766 Q340 738 512 798 Q684 738 874 766 L874 742 Q684 712 512 772 Z" fill="#b8913a"/>
+      <path d="M512 752 Q340 692 160 722 L160 742 Q340 714 512 774 Q684 714 864 742 L864 722 Q684 692 512 752 Z" fill="#d9bf7c"/>
+      <!-- pages -->
+      <path d="M512 430 Q350 362 170 400 L170 724 Q350 690 512 752 Z" fill="url(#page)"/>
+      <path d="M512 430 Q674 362 854 400 L854 724 Q674 690 512 752 Z" fill="url(#page)"/>
+      <path d="M512 430 L512 752" stroke="#b8913a" stroke-width="5"/>
+      <!-- the name, on the pages -->
+      <text x="342" y="606" text-anchor="middle" font-family="Cormorant Garamond" font-weight="700" font-size="92" fill="#3a2a0e" transform="rotate(-4 345 600)">LAMP</text>
+      <text x="684" y="606" text-anchor="middle" font-family="Cormorant Garamond" font-weight="700" font-size="92" fill="#3a2a0e" transform="rotate(4 683 600)">STAND</text>
+      <!-- flame -->
+      <path d="M512 130 C560 210 590 270 572 330 C560 372 532 395 512 400 C492 395 464 372 452 330 C434 270 464 210 512 130 Z" fill="url(#flame)"/>
+      <path d="M512 250 C532 290 540 318 532 346 C526 366 518 376 512 378 C506 376 498 366 492 346 C484 318 492 290 512 250 Z" fill="#fffaf0"/>
+    </g>
+
+    <!-- B: the oil lamp sitting on an open Bible (keeps today's lamp, adds the book) -->
+    <g id="markB">
+      <circle cx="560" cy="330" r="280" fill="url(#glow)"/>
+      <path d="M512 800 Q340 740 140 772 L140 796 Q340 766 512 826 Q684 766 884 796 L884 772 Q684 740 512 800 Z" fill="#b8913a"/>
+      <path d="M512 600 Q350 540 150 572 L150 784 Q350 754 512 812 Z" fill="url(#page)"/>
+      <path d="M512 600 Q674 540 874 572 L874 784 Q674 754 512 812 Z" fill="url(#page)"/>
+      <path d="M512 600 L512 812" stroke="#b8913a" stroke-width="5"/>
+      <g stroke="#c8b07a" stroke-width="7" stroke-linecap="round">
+        <path d="M220 640 Q340 612 460 646"/><path d="M220 680 Q340 652 460 686"/><path d="M220 720 Q340 692 460 726"/>
+        <path d="M564 646 Q684 612 804 640"/><path d="M564 686 Q684 652 804 680"/><path d="M564 726 Q684 692 804 720"/>
+      </g>
+      <!-- lamp -->
+      <path d="M380 555 L644 555 L620 590 L404 590 Z" fill="#8a6a2a"/>
+      <path d="M330 470 Q330 400 470 395 Q640 390 700 440 Q730 465 690 495 Q630 545 470 548 Q330 545 330 470 Z" fill="url(#gold)"/>
+      <ellipse cx="490" cy="430" rx="52" ry="16" fill="#7a5a12"/>
+      <path d="M338 452 Q290 440 300 405 Q308 382 330 392" fill="none" stroke="#c9a42e" stroke-width="18" stroke-linecap="round"/>
+      <path d="M700 250 C736 310 754 360 740 400 C732 426 716 440 700 444 C684 440 668 426 660 400 C646 360 664 310 700 250 Z" fill="url(#flame)"/>
+      <path d="M700 340 C714 368 718 388 712 404 C708 416 704 420 700 422 C696 420 692 416 688 404 C682 388 686 368 700 340 Z" fill="#fffaf0"/>
+    </g>
+
+    <!-- C: line mark: an open book whose pages rise into a flame, in one gold line -->
+    <g id="markC">
+      <circle cx="512" cy="470" r="330" fill="url(#glow)"/>
+      <g fill="none" stroke="url(#gold)" stroke-width="30" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M512 520 Q360 450 180 490 L180 760 Q360 722 512 790"/>
+        <path d="M512 520 Q664 450 844 490 L844 760 Q664 722 512 790"/>
+      </g>
+      <path d="M512 520 L512 790" stroke="#d9b74a" stroke-width="30" stroke-linecap="round"/>
+      <path d="M512 170 C566 250 600 320 580 390 C566 436 538 462 512 468 C486 462 458 436 444 390 C424 320 458 250 512 170 Z" fill="url(#flame)"/>
+      <path d="M512 300 C532 340 540 368 532 396 C526 416 518 426 512 428 C506 426 498 416 492 396 C484 368 492 340 512 300 Z" fill="#fffaf0"/>
+    </g>
+  </defs>
+</svg>
+
+<div class="sheet">
+  <h2>A · Open Bible, name on the pages</h2>
+  <div class="row">
+    <div class="tile"><svg width="420" height="420" viewBox="0 0 1024 1024"><use href="#markA"/></svg></div>
+    <div class="small">
+      <div class="tile" style="border-radius:50%"><svg width="180" height="180" viewBox="62 62 900 900"><rect x="0" y="0" width="1024" height="1024" fill="#0c0a09"/><use href="#markA"/></svg></div>
+      <div class="label">Profile picture (circle)</div>
+      <div class="tile" style="border-radius:10px;width:48px"><svg width="48" height="48" viewBox="0 0 1024 1024"><use href="#markA"/></svg></div>
+      <div class="label">Browser tab, 48 px</div>
+    </div>
+    <div class="tile" style="width:900px;height:300px;display:flex;align-items:center;padding:0 40px;box-sizing:border-box">
+      <svg width="260" height="260" viewBox="0 0 1024 1024"><use href="#markA"/></svg>
+      <div style="margin-left:24px"><div style="font-family:Cormorant Garamond;font-weight:600;font-size:110px;line-height:1;color:#f1ebdd">Lampstand</div>
+      <div style="font-size:30px;color:#e4c04a;letter-spacing:.18em;margin-top:12px">THE BIBLE, READ ALOUD</div></div>
+    </div>
+  </div>
+
+  <h2>B · The lamp on an open Bible</h2>
+  <div class="row">
+    <div class="tile"><svg width="420" height="420" viewBox="0 0 1024 1024"><use href="#markB"/></svg></div>
+    <div class="small">
+      <div class="tile" style="border-radius:50%"><svg width="180" height="180" viewBox="62 62 900 900"><use href="#markB"/></svg></div>
+      <div class="label">Profile picture (circle)</div>
+      <div class="tile" style="border-radius:10px;width:48px"><svg width="48" height="48" viewBox="0 0 1024 1024"><use href="#markB"/></svg></div>
+      <div class="label">Browser tab, 48 px</div>
+    </div>
+    <div class="tile" style="width:900px;height:300px;display:flex;align-items:center;padding:0 40px;box-sizing:border-box">
+      <svg width="260" height="260" viewBox="0 0 1024 1024"><use href="#markB"/></svg>
+      <div style="margin-left:24px"><div style="font-family:Cormorant Garamond;font-weight:600;font-size:110px;line-height:1;color:#f1ebdd">Lampstand</div>
+      <div style="font-size:30px;color:#e4c04a;letter-spacing:.18em;margin-top:12px">THE BIBLE, READ ALOUD</div></div>
+    </div>
+  </div>
+
+  <h2>C · Book and flame, simple gold line</h2>
+  <div class="row">
+    <div class="tile"><svg width="420" height="420" viewBox="0 0 1024 1024"><use href="#markC"/></svg></div>
+    <div class="small">
+      <div class="tile" style="border-radius:50%"><svg width="180" height="180" viewBox="62 62 900 900"><use href="#markC"/></svg></div>
+      <div class="label">Profile picture (circle)</div>
+      <div class="tile" style="border-radius:10px;width:48px"><svg width="48" height="48" viewBox="0 0 1024 1024"><use href="#markC"/></svg></div>
+      <div class="label">Browser tab, 48 px</div>
+    </div>
+    <div class="tile" style="width:900px;height:300px;display:flex;align-items:center;padding:0 40px;box-sizing:border-box">
+      <svg width="260" height="260" viewBox="0 0 1024 1024"><use href="#markC"/></svg>
+      <div style="margin-left:24px"><div style="font-family:Cormorant Garamond;font-weight:600;font-size:110px;line-height:1;color:#f1ebdd">Lampstand</div>
+      <div style="font-size:30px;color:#e4c04a;letter-spacing:.18em;margin-top:12px">THE BIBLE, READ ALOUD</div></div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
