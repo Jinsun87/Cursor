@@ -4,6 +4,7 @@
  *   dailyhope  "Scripture for sleepless nights" for the Jesus Your Daily Hope page (below)
  *   walk       morning reels for the Lampstand Sleep & Walk Bible page (clips-sleepwalk.ts)
  *   sleep      bedtime reels for the Lampstand Sleep & Walk Bible page (clips-sleepwalk.ts)
+ *   night      Night Stories of the Bible for the Bible For Sleep page (clips-night.ts)
  *
  *   npx tsx video/clips.ts                     # every dailyhope clip
  *   npx tsx video/clips.ts psalm-4-breath      # one dailyhope clip
@@ -25,6 +26,7 @@ import { bundle } from "@remotion/bundler";
 import { renderMedia, selectComposition } from "@remotion/renderer";
 import { END_CARD, type AdProps, type AdWord } from "./src/types";
 import { SLEEPWALK_CLIPS } from "./clips-sleepwalk";
+import { NIGHT_CLIPS } from "./clips-night";
 
 const ROOT = resolve(__dirname, "..");
 const WORK = join(ROOT, "video", ".work", "clips");
@@ -106,6 +108,20 @@ const SERIES = {
     comment: "Fall asleep to the Psalms, read softly with a sleep timer and gentle rain:",
     hashtags: "#Bible #Psalms #sleep #faith #Lampstand",
     endNote: "Save this for a sleepless night",
+    rain: true,
+  },
+  night: {
+    voice: SLEEP_VOICE,
+    dir: "night",
+    cta: "Fall asleep to Scripture tonight",
+    ctaSub: "Bible stories and Psalms, read softly for sleep",
+    path: "/?tab=sleep",
+    source: "fb-bible4sleep",
+    campaign: "night-stories",
+    invite: "Want the whole story read softly as you fall asleep? Link in the comments. 👇",
+    comment: "Fall asleep to the Bible stories, read softly with a sleep timer and gentle rain:",
+    hashtags: "#BibleForSleep #BibleStories #sleep #faith #Lampstand",
+    endNote: "Follow for tomorrow night's story",
     rain: true,
   },
 } satisfies Record<string, Series>;
@@ -198,6 +214,7 @@ const CLIPS: Clip[] = [
     caption: "Sleep isn't a reward for finishing everything. It's a gift. Psalm 127:2 ✨",
   },
   ...SLEEPWALK_CLIPS,
+  ...NIGHT_CLIPS,
 ];
 
 const seriesOf = (clip: Clip): Series => SERIES[clip.series ?? "dailyhope"];

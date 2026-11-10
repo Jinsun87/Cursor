@@ -47,3 +47,12 @@ inner = MARK.split(">", 1)[1].rsplit("</svg>", 1)[0]
     '<svg xmlns="http://www.w3.org/2000/svg" viewBox="130 105 764 764">'
     f'<rect x="130" y="105" width="764" height="764" rx="150" fill="{BG}"/>{inner}</svg>\n', encoding="utf8")
 print("icon.svg")
+
+# Cover for the Bible For Sleep Facebook page: the mark, the page's name, and what it posts.
+def named(h, name, tag):
+    return f'''<div style="display:flex;align-items:center;gap:{h*0.12:.0f}px">{mark(h)}
+      <div><div style="font-family:'Cormorant Garamond';font-weight:600;font-size:{h*0.40:.0f}px;line-height:1;color:#f1ebdd">{name}</div>
+      <div style="font-family:Newsreader;font-size:{h*0.10:.0f}px;color:#e4c04a;letter-spacing:.16em;margin-top:{h*0.07:.0f}px">{tag}</div></div></div>'''
+
+render("bible4sleep-cover-1640x624.png", 1640, 624,
+       page(1640, 624, named(280, "Bible For Sleep", "NIGHT STORIES &middot; SCRIPTURE READ SOFTLY"), glow=True))
