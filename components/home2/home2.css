@@ -250,6 +250,163 @@
   padding: 20px 40px 8px;
 }
 
+/* ---------- Calm me ---------- */
+.calm {
+  border-radius: var(--h2-radius);
+  border: 1px solid var(--h2-line);
+  background: var(--h2-surface);
+  padding: 28px 24px 32px;
+}
+.calm-kicker {
+  margin: 0 0 6px;
+  font-size: 13px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--h2-gold);
+}
+.calm-title {
+  margin: 0;
+  font-family: var(--font-display), Georgia, serif;
+  font-size: 32px;
+  font-weight: 600;
+  line-height: 1.15;
+}
+.calm-line {
+  margin: 8px 0 0;
+  max-width: 40rem;
+  font-size: 17px;
+  color: var(--h2-muted);
+}
+.calm-note {
+  margin: 18px 0 0;
+  max-width: 36rem;
+  font-size: 15px;
+  color: var(--h2-muted);
+}
+.calm-feelings {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 18px;
+}
+.calm-feelings button,
+.calm-practices button,
+.calm-back,
+.calm-secondary {
+  border-radius: 16px;
+  border: 1.5px solid var(--h2-line);
+  background: transparent;
+  color: var(--h2-ink);
+  cursor: pointer;
+}
+.calm-feelings button {
+  min-height: 52px;
+  padding: 0 18px;
+  font-size: 17px;
+}
+.calm-feelings button[aria-checked="true"] {
+  border-color: var(--h2-gold);
+  background: var(--h2-gold-soft);
+}
+.calm-offer {
+  margin-top: 22px;
+}
+.calm-practices {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 14px;
+}
+.calm-practices button {
+  min-height: 84px;
+  padding: 12px 14px;
+  text-align: left;
+}
+.calm-practices strong {
+  display: block;
+  font-size: 18px;
+}
+.calm-practices span {
+  display: block;
+  margin-top: 4px;
+  font-size: 14px;
+  color: var(--h2-muted);
+}
+.calm-back {
+  margin-bottom: 14px;
+  min-height: 40px;
+  padding: 0 14px;
+  font-size: 15px;
+}
+.calm-prayer {
+  margin: 18px 0 0;
+}
+.calm-prayer blockquote {
+  margin: 0;
+  max-width: 40rem;
+  font-family: var(--font-display), Georgia, serif;
+  font-size: 26px;
+  line-height: 1.35;
+}
+.calm-prayer figcaption,
+.calm-ref {
+  margin-top: 10px;
+  font-size: 15px;
+  color: var(--h2-muted);
+}
+.calm-secondary {
+  margin-top: 16px;
+  min-height: 48px;
+  padding: 0 16px;
+  font-size: 16px;
+}
+.calm-task ol {
+  margin: 16px 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 8px;
+}
+.calm-task li {
+  padding: 12px 14px;
+  border-radius: 14px;
+  border: 1.5px solid var(--h2-line);
+  color: var(--h2-muted);
+}
+.calm-task li.is-current {
+  border-color: var(--h2-gold);
+  background: var(--h2-gold-soft);
+  color: var(--h2-ink);
+}
+.calm-task li.is-done {
+  color: var(--h2-ink);
+}
+.calm-sound .breathe-start,
+.calm-task .breathe-start,
+.calm-sound .breathe-stop {
+  margin-top: 18px;
+}
+.calm .breathe {
+  border: 0;
+  background: transparent;
+  padding-left: 0;
+  padding-right: 0;
+}
+@media (max-width: 720px) {
+  .calm {
+    padding: 20px 14px 24px;
+  }
+  .calm-title {
+    font-size: 26px;
+  }
+  .calm-practices {
+    grid-template-columns: 1fr;
+  }
+  .calm-prayer blockquote {
+    font-size: 22px;
+  }
+}
+
 /* ---------- Breathe ---------- */
 .breathe {
   border-radius: var(--h2-radius);

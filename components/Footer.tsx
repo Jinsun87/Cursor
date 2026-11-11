@@ -6,7 +6,7 @@ const COLUMNS: { title: string; links: { href: string; label: string }[] }[] = [
     links: [
       { href: "/?tab=walk", label: "Walk: the chapter by day" },
       { href: "/?tab=sleep", label: "Sleep: the chapter by night" },
-      { href: "/?tab=breathe", label: "Breathe" },
+      { href: "/?tab=calm", label: "Calm me" },
       { href: "/plan", label: "Bible reading plan" },
       { href: "/read", label: "Bible & life topics" },
       { href: "/bible-words", label: "Bible words explained" },

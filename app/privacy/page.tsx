@@ -80,7 +80,7 @@ export default function PrivacyPage() {
           >
             adssettings.google.com
           </a>
-          . The Walk, Sleep and Breathe sessions never show ads, and Premium members see no ads anywhere.
+          . The Walk, Sleep and Calm me sessions never show ads, and Premium members see no ads anywhere.
         </p>
         <p className="text-sm text-[var(--muted)]">
           We use Vercel Analytics and Google Analytics 4 to count visits and keep the site working well. Google Analytics uses cookies. We do not sell your personal data.

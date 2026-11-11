@@ -3,11 +3,11 @@ import { SLEEP_CHAPTERS, SLEEP_SECONDS, WALK_SECONDS } from "@/lib/sleep/chapter
 import { dailyVersePool } from "@/lib/verse-of-day";
 
 type Part = "morning" | "afternoon" | "evening" | "night";
-type Tab = "walk" | "sleep" | "breathe";
+type Tab = "walk" | "sleep" | "calm";
 
 /**
  * The home page: Today (greeting, verse for today, the lamp), Walk and Sleep
- * (the same chapters, read briskly by day and softly by night) and Breathe.
+ * (the same chapters, read briskly by day and softly by night) and Calm me.
  */
 export function SectionsHome({ forcedPart, forcedTab }: { forcedPart?: Part; forcedTab?: Tab }) {
   return (

@@ -74,7 +74,7 @@ export default async function OpenBookPage() {
           No crossed-out prices that never existed, no countdown timers, no &ldquo;today only&rdquo;. The price you see is the price.
         </p>
         <ul className="mt-4 grid gap-2 text-[var(--ink)]">
-          <li>Free: Walk and Sleep readings, Breathe, Bible quizzes and Scripture for life&apos;s struggles.</li>
+          <li>Free: Walk and Sleep readings, Calm me, Bible quizzes and Scripture for life&apos;s struggles.</li>
           <li>Pro: $4.99 a month or $39.99 a year, with 7 days free on either.</li>
           <li>
             Founding member: ${FOUNDING_PRICE} once, Pro for life (every book, voice and story as it arrives), limited to the first {FOUNDING_CAP} members.
@@ -135,7 +135,7 @@ export default async function OpenBookPage() {
       <section className="mt-10">
         <h2 className="font-display text-2xl text-[var(--ink)]">What we promise</h2>
         <ul className="mt-3 grid gap-2 leading-relaxed text-[var(--muted)]">
-          <li>No ads while you listen: none in Walk, Sleep or Breathe. Premium removes them everywhere.</li>
+          <li>No ads while you listen: none in Walk, Sleep or Calm me. Premium removes them everywhere.</li>
           <li>Scripture word for word: no edits and no commentary in Walk and Sleep.</li>
           <li>Sign in and your streak, reading place and reading plan follow you to any device. Without an account, they stay in your browser.</li>
         </ul>

@@ -5,7 +5,7 @@ import Link from "next/link";
 import type { SleepChapter } from "@/lib/sleep/types";
 import { pickDailyVerse, type DailyVerse } from "@/lib/daily-verse";
 import { Lamp } from "./Lamp";
-import { BreathePanel } from "./BreathePanel";
+import { CalmPanel } from "./CalmPanel";
 import { ReadingLanding } from "@/components/sleep/ReadingLanding";
 import { useListening } from "./useListening";
 import { sectionFromUrl, setSection, useSection } from "@/lib/section-store";
@@ -13,7 +13,7 @@ import { Onboarding } from "@/components/onboarding/Onboarding";
 import { readOnboarding } from "@/lib/onboarding";
 import "./home2.css";
 
-type Tab = "walk" | "sleep" | "breathe";
+type Tab = "walk" | "sleep" | "calm";
 type Part = "morning" | "afternoon" | "evening" | "night";
 
 function partOfDay(hour: number): Part {
@@ -32,7 +32,7 @@ const COPY: Record<Part, { greeting: string; line: string }> = {
 
 /**
  * The four-section home: Today (greeting, lamp, and the panels below), Walk,
- * Sleep and Breathe. The page follows the time of day: light with Walk first in
+ * Sleep and Calm me. The page follows the time of day: light with Walk first in
  * the day, dark with Sleep first at night. The lamp is the single streak. The
  * chosen section is shared with the bottom bar and kept in the address (?tab=).
  */
@@ -150,14 +150,14 @@ export function HomePreview({
             <small>Whole chapters, read softly</small>
           </span>
         </button>
-        <button type="button" role="tab" aria-selected={tab === "breathe"} onClick={() => choose("breathe")}>
+        <button type="button" role="tab" aria-selected={tab === "calm"} onClick={() => choose("calm")}>
           <svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true">
             <circle cx="12" cy="12" r="4" fill="currentColor" />
             <circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" strokeWidth="1.6" opacity="0.6" />
           </svg>
           <span>
-            <strong>Breathe</strong>
-            <small>1 to 5 minutes</small>
+            <strong>Calm me</strong>
+            <small>For how you feel</small>
           </span>
         </button>
       </div>
@@ -168,7 +168,7 @@ export function HomePreview({
         ) : tab === "sleep" ? (
           <ReadingLanding mode="sleep" chapters={sleepChapters} seconds={sleepSeconds} />
         ) : (
-          <BreathePanel />
+          <CalmPanel />
         )}
       </div>
 

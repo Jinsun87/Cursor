@@ -30,7 +30,7 @@ export function useSectionLink() {
   return { onHome, current, go };
 }
 
-/** Phone bottom bar: Today · Walk · Sleep · Breathe · More. */
+/** Phone bottom bar: Today · Walk · Sleep · Calm me · More. */
 export function SectionBottomBar() {
   const { onHome, current, go } = useSectionLink();
   const [moreOpen, setMoreOpen] = useState(false);
