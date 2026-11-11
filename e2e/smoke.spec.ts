@@ -3,9 +3,8 @@ import { expect, test } from "@playwright/test";
 test("first visit shows the welcome, and Skip goes straight to the app", async ({ page }) => {
   await page.goto("/");
   const welcome = page.getByRole("dialog", { name: "Welcome to Lampstand" });
-  await expect(welcome.getByText("A lamp to my feet, a light to my path.")).toBeVisible();
-  await welcome.getByRole("button", { name: "Trouble sleeping" }).click();
-  await expect(welcome.getByRole("heading", { name: "When will you listen?" })).toBeVisible();
+  await expect(welcome.getByRole("heading", { name: "How would you like to use Lampstand?" })).toBeVisible();
+  await expect(welcome.getByRole("button", { name: /sleep and relax/i })).toBeVisible();
   await welcome.getByRole("button", { name: "Skip" }).click();
   await expect(welcome).toBeHidden();
   await page.reload();
@@ -16,7 +15,7 @@ test("/onboarding always shows the welcome and ends on the home screen", async (
   await page.addInitScript(() => localStorage.setItem("lampstand-onboarding", JSON.stringify({ done: true })));
   await page.goto("/onboarding");
   const welcome = page.getByRole("dialog", { name: "Welcome to Lampstand" });
-  await expect(welcome.getByText("A lamp to my feet, a light to my path.")).toBeVisible();
+  await expect(welcome.getByRole("heading", { name: "How would you like to use Lampstand?" })).toBeVisible();
   await welcome.getByRole("button", { name: "Skip" }).click();
   await expect.poll(() => new URL(page.url()).pathname).toBe("/");
   await expect(page.getByRole("tablist", { name: "Sections" })).toBeVisible();
