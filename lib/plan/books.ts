@@ -1,5 +1,5 @@
 import counts from "./verse-counts.json";
-import { isPremiumBook } from "@/lib/sleep/access";
+import { isFreeChapter, isPremiumBook } from "@/lib/sleep/access";
 
 export type Testament = "Old Testament" | "New Testament";
 
@@ -34,9 +34,9 @@ export function chapterSlug(book: string, chapter: number): string {
 
 /**
  * Whether a book's Walk and Sleep readings are free: the same rule as the shelf on the Walk
- * and Sleep tabs (lib/sleep/books.ts), so Genesis is free and premium books need Premium.
- * Books not on the shelf yet are treated as Premium.
+ * and Sleep tabs (lib/sleep/access.ts), so Genesis and the free Psalms are free and other
+ * premium books need Premium. Books not on the shelf yet are treated as Premium.
  */
-export function voiceIsFree(book: string): boolean {
-  return !isPremiumBook(book);
+export function voiceIsFree(book: string, chapter?: number): boolean {
+  return !isPremiumBook(book) || isFreeChapter(book, chapter);
 }

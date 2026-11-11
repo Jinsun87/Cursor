@@ -6,6 +6,7 @@ import type { SleepChapter } from "@/lib/sleep/types";
 import { useSleepAudio, type ReadingMode } from "@/lib/sleep/sleep-audio";
 import { useReadingProgress, type ChapterProgress } from "@/lib/sleep/progress";
 import { COMING_SOON, SHELF, STORY_SERIES, storyGroups, type ComingSoonShelf, type ShelfBook, type StorySeries } from "@/lib/sleep/books";
+import { FREE_PSALMS, isFreeChapter } from "@/lib/sleep/access";
 import { STORY_CHAPTERS, STORY_SECONDS } from "@/lib/stories/chapters";
 
 type TileState = "heard" | "started" | "new" | "unrecorded";
@@ -64,6 +65,10 @@ export function BookShelf({
     };
   };
 
+  // In a Premium book, the chapters someone without Premium may still hear (the free Psalms).
+  const freeHere = (n: number) => Boolean(book?.premium) && !memberPremium && isFreeChapter(book!.book ?? book!.name, n);
+  const freeNote = Boolean(book?.premium) && !memberPremium && book?.slug === "psalm";
+
   if (!book) {
     return (
       <section className="shelf" aria-label="Books">
@@ -95,7 +100,8 @@ export function BookShelf({
                         </>
                       ) : locked ? (
                         <>
-                          <Padlock /> Premium · {t.ready} of {b.chapters} chapters ready
+                          <Padlock /> Premium · {b.slug === "psalm" ? `${FREE_PSALMS.length} Psalms free · ` : ""}
+                          {t.ready} of {b.chapters} chapters ready
                         </>
                       ) : (
                         `${t.ready} of ${b.chapters} chapters ready · ${t.totalMin} min`
@@ -204,6 +210,8 @@ export function BookShelf({
         <b style={{ width: `${(t.ready / book.chapters) * 100}%` }} />
       </div>
 
+      {freeNote ? <p className="shelf-free-note">The chapters marked with a gold dot are free to hear: Psalms {FREE_PSALMS.join(", ")}.</p> : null}
+
       {storyGroups(book).map((g) => {
         const nums = Array.from({ length: g.to - g.from + 1 }, (_, i) => g.from + i);
         const selInGroup = selected !== null && selected >= g.from && selected <= g.to;
@@ -234,8 +242,8 @@ export function BookShelf({
                     <li>
                       <button
                         type="button"
-                        className={`shelf-tile is-${state}${slug === tonightSlug ? " is-tonight" : ""}${selected === n ? " is-selected" : ""}`}
-                        aria-label={label}
+                        className={`shelf-tile is-${state}${slug === tonightSlug ? " is-tonight" : ""}${selected === n ? " is-selected" : ""}${freeHere(n) ? " is-free" : ""}`}
+                        aria-label={freeHere(n) ? `${label}, free` : label}
                         aria-pressed={selected === n}
                         aria-controls={selected === n ? STRIP_ID : undefined}
                         onClick={() => setSelected(selected === n ? null : n)}

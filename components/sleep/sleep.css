@@ -1092,3 +1092,20 @@ body.has-mini-player main {
   margin: 0;
   animation: none;
 }
+
+/* A free chapter inside a Premium book (the free Psalms): a small gold dot. */
+.shelf-tile.is-free::after {
+  content: "";
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--gold, #e4c04a);
+}
+.shelf-free-note {
+  margin: 10px 0 2px;
+  font-size: 0.85rem;
+  color: rgba(241, 235, 221, 0.7);
+}

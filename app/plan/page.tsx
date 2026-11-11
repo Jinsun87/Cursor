@@ -30,7 +30,7 @@ export default function PlanPage() {
       <h1>Free Bible reading plan</h1>
       <p className="plan-lead">
         Choose how much of the Bible to read and how long to take, and Lampstand lays out each day for you, every chapter whole and in
-        order. The text is always free. Genesis can also be heard free in Walk (by day) and Sleep (by night); the voices for other books
+        order. The text is always free. Genesis and ten well-loved Psalms can also be heard free in Walk (by day) and Sleep (by night); the voices for other books
         come with Premium as they are recorded.
       </p>
 

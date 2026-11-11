@@ -43,6 +43,9 @@ const isIos = () => typeof navigator !== "undefined" && /iphone|ipad|ipod/i.test
 const isInstalled = () => typeof window !== "undefined" && window.matchMedia?.("(display-mode: standalone)").matches;
 
 /**
+ * NOT SHOWN AT PRESENT: QuickStart.tsx (one question) replaced this on the home screen and at
+ * /onboarding. Kept so it can be switched back on by rendering it there again.
+ *
  * First visit to the home screen: a few questions, the reader's voice, then a
  * real first moment of Scripture before anything is asked of them. Honest by
  * design: no invented numbers, no fake discounts, and "Continue free" is a

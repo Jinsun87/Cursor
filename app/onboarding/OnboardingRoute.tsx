@@ -2,13 +2,14 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { Onboarding } from "@/components/onboarding/Onboarding";
+import { QuickStart } from "@/components/onboarding/QuickStart";
 import { getSection } from "@/lib/section-store";
+import { readOnboarding } from "@/lib/onboarding";
 
 /**
- * /onboarding: the welcome, every time, even for someone who has finished it
- * before. When it ends (or is skipped) the reader lands on the home screen, on
- * the tab their answers chose.
+ * /onboarding: the one-question welcome, every time, even for someone who has
+ * finished it before. "Sleep and relax" or skipping lands on the home screen;
+ * "Read the Bible consistently" goes on to today's reading.
  */
 export function OnboardingRoute() {
   const router = useRouter();
@@ -18,10 +19,11 @@ export function OnboardingRoute() {
   if (!mounted) return <div className="min-h-[60vh]" aria-hidden="true" />;
 
   return (
-    <Onboarding
+    <QuickStart
       onDone={() => {
         const tab = getSection();
-        router.push(tab === "today" ? "/" : `/?tab=${tab}`);
+        // "Read the Bible consistently" sends them on to today's reading itself.
+        if (readOnboarding().intent !== "read") router.push(tab === "today" ? "/" : `/?tab=${tab}`);
       }}
     />
   );

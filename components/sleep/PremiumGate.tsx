@@ -53,8 +53,8 @@ export function PremiumGate() {
           <>
             <p>
               {story
-                ? `Genesis is free to hear, every chapter. ${bookName} and the other story series are for Premium members, read softly for the night, with a painting for every scene.`
-                : `Genesis is free to hear, every chapter. ${bookName} and the books after it are read aloud in Walk and Sleep for Premium members; the text stays free to read in the reading plan.`}
+                ? `Genesis and ten well-loved Psalms are free to hear. ${bookName} and the other story series are for Premium members, read softly for the night, with a painting for every scene.`
+                : `Genesis and ten well-loved Psalms are free to hear. ${bookName} and the other books are read aloud in Walk and Sleep for Premium members; the text stays free to read in the reading plan.`}
             </p>
             <p className="pg-price">
               $4.99 a month or $39.99 a year, both with 7 days free.

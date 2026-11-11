@@ -142,8 +142,8 @@ export function PlanReader() {
   const recorded = SLEEP_CHAPTERS.find((c) => c.slug === slug);
   const walkReady = Boolean(recorded) && (WALK_SECONDS[slug] ?? 0) > 0;
   const sleepReady = Boolean(recorded);
-  // The same rule as the Walk and Sleep tabs: Genesis is free, other books need Premium.
-  const free = reading ? voiceIsFree(reading.book) : false;
+  // The same rule as the Walk and Sleep tabs: Genesis and the free Psalms are free, other books need Premium.
+  const free = reading ? voiceIsFree(reading.book, reading.chapter) : false;
   const canPlay = free || premium;
   const placeVerse = plan?.place.day === dayIndex && plan.place.part === partIndex ? plan.place.verse : 1;
 
@@ -313,7 +313,7 @@ export function PlanReader() {
             </div>
             <p>
               {unlock === "walk" ? "A clear daytime reading of this chapter." : "The same chapter, read slowly for the night."}{" "}
-              Genesis is free to hear; other books come with Premium, which includes both voices.
+              Genesis and ten well-loved Psalms are free to hear; other books come with Premium, which includes both voices.
             </p>
             <div className="sf-chips" role="group" aria-label="Billing">
               <button type="button" aria-pressed={billing === "annual"} onClick={() => setBilling("annual")}>

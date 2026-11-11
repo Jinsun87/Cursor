@@ -15,6 +15,7 @@ import { NewAccountTracker } from "@/components/auth/NewAccountTracker";
 import { Analytics } from "@vercel/analytics/next";
 import { SleepAudioProvider } from "@/lib/sleep/sleep-audio";
 import { PremiumGate } from "@/components/sleep/PremiumGate";
+import { KeepYourPlace } from "@/components/auth/KeepYourPlace";
 import { ProgressSync } from "@/components/sync/ProgressSync";
 import { SleepFullscreen } from "@/components/sleep/SleepFullscreen";
 import { MiniPlayer } from "@/components/sleep/MiniPlayer";
@@ -105,6 +106,7 @@ export default function RootLayout({
               <MiniPlayer />
               <SleepFullscreen />
               <PremiumGate />
+              <KeepYourPlace />
               <ProgressSync />
             </SleepAudioProvider>
           </AppProvider>
