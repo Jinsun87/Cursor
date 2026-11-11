@@ -9,7 +9,7 @@ import { BreathePanel } from "./BreathePanel";
 import { ReadingLanding } from "@/components/sleep/ReadingLanding";
 import { useListening } from "./useListening";
 import { sectionFromUrl, setSection, useSection } from "@/lib/section-store";
-import { Onboarding } from "@/components/onboarding/Onboarding";
+import { QuickStart } from "@/components/onboarding/QuickStart";
 import { readOnboarding } from "@/lib/onboarding";
 import "./home2.css";
 
@@ -181,7 +181,7 @@ export function HomePreview({
         </Link>
       </div>
       {onboarding ? (
-        <Onboarding
+        <QuickStart
           onDone={() => {
             setOnboarding(false);
             setName(readOnboarding().name);

@@ -29,6 +29,13 @@ describe("books named differently in the data", () => {
   it("finds Psalms by its data name, Psalm, and keeps it Premium", () => {
     expect(isPremiumBook("Psalm")).toBe(true);
     expect(canListen({ book: "Psalm" }, false)).toBe(false);
+    expect(canListen({ book: "Psalm", chapter: 1 }, false)).toBe(false);
     expect(canListen({ book: "Psalm" }, true)).toBe(true);
+  });
+
+  it("lets everyone hear the free Psalms", () => {
+    for (const n of [4, 23, 27, 34, 46, 62, 63, 91, 121, 139]) expect(canListen({ book: "Psalm", chapter: n }, false)).toBe(true);
+    expect(canListen({ book: "Exodus", chapter: 23 }, false)).toBe(false);
+    expect(canListen({ book: "Bedtime Bible Stories", chapter: 4, kind: "story" }, false)).toBe(false);
   });
 });

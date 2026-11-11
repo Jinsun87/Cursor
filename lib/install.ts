@@ -125,5 +125,7 @@ const CHECKOUT_PATHS = /^\/(pricing|premium|plan\/read)(?=$|[/?#])/;
 
 /** Where a brand-new account goes: the install page first, unless they are on their way to pay. */
 export function afterSignUpPath(next: string): string {
+  // Already bound for the install page (the "keep your place" prompt asks for it by name).
+  if (/^\/install(?=$|[/?#])/.test(next)) return next;
   return CHECKOUT_PATHS.test(next) ? next : installUrl(next);
 }

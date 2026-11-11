@@ -63,4 +63,9 @@ describe("afterSignUpPath", () => {
   it("does not mistake look-alike paths for checkout", () => {
     expect(afterSignUpPath("/pricingfaq")).toBe("/install?next=%2Fpricingfaq");
   });
+
+  it("leaves a path already bound for the install page alone", () => {
+    expect(afterSignUpPath("/install?next=%2Fplan%2Fread")).toBe("/install?next=%2Fplan%2Fread");
+    expect(afterSignUpPath("/installer")).toBe("/install?next=%2Finstaller");
+  });
 });

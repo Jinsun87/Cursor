@@ -64,7 +64,7 @@ function RegisterForm() {
           <strong className="text-[var(--gold)]">Your place</strong> · one bookmark shared by both, and your streak and reading plan, on every device.
         </li>
       </ul>
-      <p className="mt-3 text-sm text-parchment/60">Free to join. Genesis is free to hear, every chapter.</p>
+      <p className="mt-3 text-sm text-parchment/60">Free to join. Genesis and ten well-loved Psalms are free to hear.</p>
 
       {!accountsAvailable ? <AccountsUnavailable /> : null}
 

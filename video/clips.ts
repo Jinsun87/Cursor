@@ -16,7 +16,7 @@
  * its script, so a re-render costs nothing unless the words change. Scripture is quoted word for
  * word from the Berean Standard Bible (data/bsb.txt), as in the app.
  * The walk series uses a clearer daytime voice (Eric). Writes video/out/clips/[<series>/]<id>.mp4
- * and <id>.txt (post caption and first comment), and a copy under fb/ that fits Facebook's 10 MB limit.
+ * and <id>.txt (post caption, and a link comment to use only once a reel passes 500 views), and a copy under fb/ that fits Facebook's 10 MB limit.
  */
 import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
@@ -60,7 +60,7 @@ type Series = {
   path: string;
   source: string;
   campaign: string;
-  /** The line under the caption, and the pinned first comment (the link is added). */
+  /** The line under the caption (no link), and the comment to add with the link once a reel passes 500 views. */
   invite: string;
   comment: string;
   hashtags: string;
@@ -79,7 +79,7 @@ const SERIES = {
     path: "/?tab=sleep",
     source: "fb-dailyhope",
     campaign: "sleep-clips",
-    invite: "Want Scripture read softly as you fall asleep? Link in the comments. 👇",
+    invite: "Follow for Scripture to fall asleep to, every night. 🌙",
     comment: "Fall asleep to the Psalms, read softly with a sleep timer and gentle rain:",
     hashtags: "#Bible #Psalms #sleep #faith #JesusYourDailyHope",
   },
@@ -91,7 +91,7 @@ const SERIES = {
     path: "/?tab=walk",
     source: "fb-sleepwalk",
     campaign: "walk-reels",
-    invite: "Want a chapter read aloud for your walk or commute? Link in the comments. 👇",
+    invite: "Follow for a verse every morning. ☀️",
     comment: "Hear every chapter of the Bible read aloud, word for word, for your walk:",
     hashtags: "#Bible #morning #VerseOfTheDay #faith #Lampstand",
     endNote: "Follow for tomorrow morning's verse",
@@ -104,7 +104,7 @@ const SERIES = {
     path: "/?tab=sleep",
     source: "fb-sleepwalk",
     campaign: "sleep-reels",
-    invite: "Want Scripture read softly as you fall asleep? Link in the comments. 👇",
+    invite: "Save this for a sleepless night, and follow for tomorrow's. 🌙",
     comment: "Fall asleep to the Psalms, read softly with a sleep timer and gentle rain:",
     hashtags: "#Bible #Psalms #sleep #faith #Lampstand",
     endNote: "Save this for a sleepless night",
@@ -118,7 +118,7 @@ const SERIES = {
     path: "/?tab=sleep",
     source: "fb-bible4sleep",
     campaign: "night-stories",
-    invite: "Want the whole story read softly as you fall asleep? Link in the comments. 👇",
+    invite: "Follow for tomorrow night's story. 🌙",
     comment: "Fall asleep to the Bible stories, read softly with a sleep timer and gentle rain:",
     hashtags: "#BibleForSleep #BibleStories #sleep #faith #Lampstand",
     endNote: "Follow for tomorrow night's story",
@@ -319,7 +319,7 @@ function postText(clip: Clip): string {
     "",
     s.invite,
     "",
-    `First comment (pin it): ${s.comment} ${link}`,
+    `No link at posting. Only if the reel passes 500 views, comment: ${s.comment} ${link}`,
     "",
     `Hashtags: ${s.hashtags}`,
   ].join("\n") + "\n";
