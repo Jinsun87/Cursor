@@ -72,6 +72,13 @@ export type AdProps = {
   /** App screenshots shown in a phone over the paintings, each from `at` until the next, until `phonesUntil`. */
   phones?: { src: string; at: number }[];
   phonesUntil?: number;
+  /**
+   * A scroll-stopping opening: the hook fills the middle of the screen for the first two seconds
+   * (captions wait), the first painting pushes in fast, then the hook settles at the top.
+   */
+  punch?: boolean;
+  /** Seconds of end card (default END_CARD). */
+  endCard?: number;
   /** End card lines. */
   cta: string;
   ctaSub: string;

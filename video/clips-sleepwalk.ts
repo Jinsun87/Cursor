@@ -194,6 +194,23 @@ export const SLEEPWALK_CLIPS: Clip[] = [
     caption: "Return to your rest, O my soul. Psalm 116:7 🙏",
   },
 
+  // Demo of the punch build (11 Nov): the Be still reel rebuilt around its first three seconds.
+  {
+    id: "be-still-v2",
+    series: "sleep",
+    punch: true,
+    hook: "God's instruction for a racing mind is two words",
+    kicker: "Psalm 46:10 · for tonight",
+    script:
+      "God gave one instruction for a racing mind. It's just two words. " +
+      "“Be still and know that I am God.” " +
+      "Not fix it. Not figure it out. Be still. " +
+      "He is God tonight, so you don't have to be. " +
+      "Type Amen if you needed this.",
+    images: ["/images/sleep/psalm-65/s1.jpg", "/images/sleep/psalm-46/s2.jpg", "/images/sleep/psalm-62/s1.jpg"],
+    caption: "Two words for a racing mind: be still. Psalm 46:10 🌊 Type Amen if you needed this tonight.",
+  },
+
   // Week 2 (14–20 Nov): numbered episodes, sharper first lines, the most-read verses.
   {
     id: "do-not-fear",

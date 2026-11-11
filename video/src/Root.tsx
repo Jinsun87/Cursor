@@ -30,7 +30,7 @@ export const Root: React.FC = () => (
       height={1920}
       durationInFrames={10 * FPS}
       defaultProps={adSample}
-      calculateMetadata={({ props }) => ({ durationInFrames: Math.ceil((props.clip + END_CARD) * FPS) })}
+      calculateMetadata={({ props }) => ({ durationInFrames: Math.ceil((props.clip + (props.endCard ?? END_CARD)) * FPS) })}
     />
     <Composition
       id="PovDemo"

@@ -33,6 +33,9 @@ const WORK = join(ROOT, "video", ".work", "clips");
 const OUT = join(ROOT, "video", "out", "clips");
 
 const MODEL = "eleven_multilingual_v2";
+/** Punch builds: a slightly brisker read, and a short end card (people leave during a long one). */
+const PUNCH_SPEED = 1.08;
+const PUNCH_END_CARD = 2.2;
 
 type Voice = { id: string; settings: Record<string, number | boolean>; finish: string };
 
@@ -142,6 +145,11 @@ export type Clip = {
   images: string[];
   /** Facebook post caption. */
   caption: string;
+  /**
+   * A scroll-stopping build: the voice starts at once, the hook fills the screen for two seconds,
+   * the end card is short, and the narration runs a little brisker.
+   */
+  punch?: boolean;
 };
 
 const CLIPS: Clip[] = [
@@ -234,7 +242,9 @@ type Alignment = { characters: string[]; character_start_times_seconds: number[]
 /** Narration and its character timings, from the cache when the script hasn't changed. */
 async function narrate(clip: Clip): Promise<{ mp3: string; alignment: Alignment }> {
   const text = spoken(clip.script);
-  const { id: VOICE, settings: SETTINGS } = seriesOf(clip).voice;
+  const voice = seriesOf(clip).voice;
+  const VOICE = voice.id;
+  const SETTINGS = clip.punch ? { ...voice.settings, speed: PUNCH_SPEED } : voice.settings;
   const hash = createHash("sha1").update(`${VOICE}|${MODEL}|${JSON.stringify(SETTINGS)}|${text}`).digest("hex").slice(0, 12);
   const raw = join(WORK, `${clip.id}-${hash}-raw.mp3`);
   const timing = join(WORK, `${clip.id}-${hash}.json`);
@@ -271,14 +281,15 @@ async function propsFor(clip: Clip): Promise<AdProps> {
   const words = wordsFrom(clip.script, alignment);
   const audio = `${clip.id}.mp3`;
   // A short breath before the first word, the voice's finish, and a soft fade at the end.
-  const lead = 0.4;
+  const lead = clip.punch ? 0.05 : 0.4;
   const spokenFor = words[words.length - 1].end;
-  const length = lead + spokenFor + 0.8;
+  const length = lead + spokenFor + (clip.punch ? 0.5 : 0.8);
+  const endCard = clip.punch ? PUNCH_END_CARD : END_CARD;
   const s = seriesOf(clip);
   const voice = `adelay=${lead * 1000}:all=1,${s.voice.finish},apad,atrim=0:${length.toFixed(2)},afade=t=out:st=${(length - 0.6).toFixed(2)}:d=0.6`;
   if (s.rain) {
     // The app's rain (brown noise through a low-pass), quietly under the voice and on through the end card.
-    const total = length + END_CARD;
+    const total = length + endCard;
     execFileSync("ffmpeg", [
       "-y", "-loglevel", "error", "-i", mp3,
       "-f", "lavfi", "-i", `anoisesrc=color=brown:amplitude=0.9:duration=${total.toFixed(2)}`,
@@ -308,6 +319,8 @@ async function propsFor(clip: Clip): Promise<AdProps> {
     ctaSub: s.ctaSub,
     badge: clip.badge,
     endNote: s.endNote,
+    punch: clip.punch,
+    endCard: clip.punch ? endCard : undefined,
   };
 }
 
@@ -359,7 +372,7 @@ async function main() {
       join(out, "fb", `${clip.id}.mp4`),
     ]);
     const where = ["video/out/clips", dir, `${clip.id}.mp4`].filter(Boolean).join("/");
-    console.log(`\r  ${clip.id}: ${where} (${(props.clip + END_CARD).toFixed(1)}s)`);
+    console.log(`\r  ${clip.id}: ${where} (${(props.clip + (props.endCard ?? END_CARD)).toFixed(1)}s)`);
   }
 }
 
