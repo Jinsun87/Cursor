@@ -109,7 +109,7 @@ export function PricingPageClient() {
           Stay in the Word
         </h1>
         <p className="mx-auto mt-4 max-w-2xl text-base sm:text-lg text-[var(--muted)]">
-          Every Walk and Sleep chapter as it is recorded, and no ads anywhere. Walk, Sleep, Breathe and the quizzes stay free.
+          Every Walk and Sleep chapter as it is recorded, and no ads anywhere. Walk, Sleep, Calm me and the quizzes stay free.
         </p>
         <p className="mx-auto mt-3 max-w-2xl text-sm sm:text-base font-semibold text-[var(--ink)]">
           No fake inflated prices: no crossed-out prices that never existed, no countdown timers. The price you see is the price.{" "}

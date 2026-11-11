@@ -237,7 +237,7 @@ export function Onboarding({ onDone }: { onDone: () => void }) {
                 <strong>Scripture, word for word.</strong> The Berean Standard Bible, with no edits and no commentary in Walk and Sleep.
               </li>
               <li>
-                <strong>No ads while you listen.</strong> None in Walk, Sleep or Breathe. Premium removes them everywhere.
+                <strong>No ads while you listen.</strong> None in Walk, Sleep or Calm me. Premium removes them everywhere.
               </li>
               <li>
                 <strong>No fake inflated prices.</strong> No crossed-out prices that never existed, and no countdown timers.

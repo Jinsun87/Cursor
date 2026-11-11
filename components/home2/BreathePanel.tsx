@@ -46,10 +46,13 @@ const WORDS: Record<Phase["kind"], string> = { in: "Breathe in", hold: "Hold", o
  * A visual breathing exercise: one glowing circle that grows on the in-breath
  * and shrinks on the out-breath, large words and a countdown, and an optional
  * soft tone at each change for eyes-closed use.
+ *
+ * `box` locks the square pattern (in 4, hold 4, out 4, hold 4) for five minutes,
+ * which is the practice Calm me offers.
  */
-export function BreathePanel() {
-  const [pattern, setPattern] = useState<Pattern>(PATTERNS[0]);
-  const [minutes, setMinutes] = useState<(typeof LENGTHS)[number]>(3);
+export function BreathePanel({ box = false }: { box?: boolean }) {
+  const [pattern, setPattern] = useState<Pattern>(box ? PATTERNS[1] : PATTERNS[0]);
+  const [minutes, setMinutes] = useState<(typeof LENGTHS)[number]>(box ? 5 : 3);
   const [sound, setSound] = useState(true);
   const [running, setRunning] = useState(false);
   const [phaseIndex, setPhaseIndex] = useState(0);
@@ -159,28 +162,32 @@ export function BreathePanel() {
         </div>
       ) : (
         <div className="breathe-setup">
-          <div className="breathe-choices" role="radiogroup" aria-label="Breathing pattern">
-            {PATTERNS.map((p) => (
-              <button
-                key={p.id}
-                type="button"
-                role="radio"
-                aria-checked={pattern.id === p.id}
-                onClick={() => setPattern(p)}
-              >
-                <strong>{p.name}</strong>
-                <span>{p.note}</span>
-              </button>
-            ))}
-          </div>
-          <div className="breathe-row">
-            <div className="breathe-lengths" role="radiogroup" aria-label="Length">
-              {LENGTHS.map((m) => (
-                <button key={m} type="button" role="radio" aria-checked={minutes === m} onClick={() => setMinutes(m)}>
-                  {m} min
+          {box ? null : (
+            <div className="breathe-choices" role="radiogroup" aria-label="Breathing pattern">
+              {PATTERNS.map((p) => (
+                <button
+                  key={p.id}
+                  type="button"
+                  role="radio"
+                  aria-checked={pattern.id === p.id}
+                  onClick={() => setPattern(p)}
+                >
+                  <strong>{p.name}</strong>
+                  <span>{p.note}</span>
                 </button>
               ))}
             </div>
+          )}
+          <div className="breathe-row">
+            {box ? null : (
+              <div className="breathe-lengths" role="radiogroup" aria-label="Length">
+                {LENGTHS.map((m) => (
+                  <button key={m} type="button" role="radio" aria-checked={minutes === m} onClick={() => setMinutes(m)}>
+                    {m} min
+                  </button>
+                ))}
+              </div>
+            )}
             <button type="button" className="breathe-sound" aria-pressed={sound} onClick={() => setSound((s) => !s)}>
               {sound ? "Soft tone on" : "Soft tone off"}
             </button>

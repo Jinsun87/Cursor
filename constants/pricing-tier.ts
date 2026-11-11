@@ -12,11 +12,11 @@ export interface Tier {
 export const PricingTier: Tier[] = [
   {
     name: "Starter",
-    description: "Free forever: Walk and Sleep readings, Breathe, Bible quizzes and Scripture for life\'s struggles.",
+    description: "Free forever: Walk and Sleep readings, Calm me, Bible quizzes and Scripture for life\'s struggles.",
     features: [
       "Free forever, no card needed",
       "Walk and Sleep: whole chapters read aloud, briskly by day or softly by night",
-      "Breathe: guided breathing exercises",
+      "Calm me: a prayer, box breathing, quiet sound, or a line to say",
       "Bible quizzes with a fact after every answer",
       "Scripture for anxiety, grief, anger and more",
     ],

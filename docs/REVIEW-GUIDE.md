@@ -59,7 +59,7 @@ One chapter's run, `npx tsx scripts/sleep-chapter.ts "John 1-4"`:
 
 ```
 app/                    Next.js routes
-  page.tsx              Home (Today / Walk / Sleep / Breathe tabs via ?tab=)
+  page.tsx              Home (Today / Walk / Sleep / Calm me tabs via ?tab=)
   bible-words/          Glossary index and [slug] word pages
   lampstand-in-the-bible/  Study page
   plan/ read/ quizzes/ daily/ series/ category/   Reading plan, topics, quizzes
@@ -118,7 +118,7 @@ Changes belong in `content/` or `scripts/`. A timing file is only hand-corrected
 - Tap targets are at least 44–48px tall.
 - Every interactive element shows a visible focus ring (`--ring`). A skip link leads to `#main`.
 - Text must keep good contrast in **both** themes.
-- **Phones first.** Every page has to work at 375px wide with no sideways scrolling. On phones a bottom tab bar (Today, Walk, Sleep, Breathe, More) replaces the footer, which is desktop-only. Pages leave room for the bar and the mini player.
+- **Phones first.** Every page has to work at 375px wide with no sideways scrolling. On phones a bottom tab bar (Today, Walk, Sleep, Calm me, More) replaces the footer, which is desktop-only. Pages leave room for the bar and the mini player.
 
 ### Copy and tone
 

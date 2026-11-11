@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import { adsenseClient, adsenseEnabled } from "@/lib/adsense";
 import { useApp } from "@/lib/store";
 
-// Pages that never carry ads: the home screen holds the Walk, Sleep and Breathe
+// Pages that never carry ads: the home screen holds the Walk, Sleep and Calm me
 // sessions, where Scripture and prayer are not interrupted.
 const AD_FREE_PATHS = new Set(["/"]);
 

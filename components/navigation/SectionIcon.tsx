@@ -43,7 +43,7 @@ export function SectionIcon({ name, active = false }: { name: Section | "more"; 
           />
         </svg>
       );
-    case "breathe":
+    case "calm":
       return (
         <svg {...common}>
           <circle cx="12" cy="12" r="3.5" {...stroke} fill={active ? "currentColor" : "none"} />
@@ -65,5 +65,5 @@ export const SECTION_LABELS: Record<Section, string> = {
   today: "Today",
   walk: "Walk",
   sleep: "Sleep",
-  breathe: "Breathe",
+  calm: "Calm me",
 };

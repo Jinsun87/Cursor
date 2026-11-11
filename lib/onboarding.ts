@@ -35,8 +35,8 @@ export function saveOnboarding(patch: Partial<OnboardingAnswers>) {
 }
 
 /** Which tab to open after onboarding. */
-export function startTab(a: OnboardingAnswers): "walk" | "sleep" | "breathe" {
-  if (a.intent === "anxious" && a.when !== "sleep") return "breathe";
+export function startTab(a: OnboardingAnswers): "walk" | "sleep" | "calm" {
+  if (a.intent === "anxious" && a.when !== "sleep") return "calm";
   if (a.when === "walk") return "walk";
   if (a.when === "sleep" || a.intent === "sleep") return "sleep";
   return new Date().getHours() >= 18 || new Date().getHours() < 5 ? "sleep" : "walk";
