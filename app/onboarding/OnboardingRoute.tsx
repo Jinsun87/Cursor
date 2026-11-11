@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { QuickStart } from "@/components/onboarding/QuickStart";
 import { getSection } from "@/lib/section-store";
 import { readOnboarding } from "@/lib/onboarding";
+import { showApp } from "@/components/landing/LandingClient";
 
 /**
  * /onboarding: the one-question welcome, every time, even for someone who has
@@ -21,6 +22,8 @@ export function OnboardingRoute() {
   return (
     <QuickStart
       onDone={() => {
+        // Welcomed now: the home screen is the app, not the landing page.
+        showApp();
         const tab = getSection();
         // "Read the Bible consistently" sends them on to today's reading itself.
         if (readOnboarding().intent !== "read") router.push(tab === "today" ? "/" : `/?tab=${tab}`);

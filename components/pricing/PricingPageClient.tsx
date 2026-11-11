@@ -13,6 +13,10 @@ import { checkoutAdData } from "@/lib/meta/pixel";
 export function PricingPageClient() {
   const { user } = useApp();
   const [frequency, setFrequency] = useState<"month" | "year">("month");
+  // /pricing?plan=year (from the home page's Yearly card) opens on annual billing.
+  useEffect(() => {
+    if (new URLSearchParams(window.location.search).get("plan") === "year") setFrequency("year");
+  }, []);
   const [paddle, setPaddle] = useState<Paddle | null>(null);
   const [paddleInitError, setPaddleInitError] = useState<string | null>(null);
   const [checkoutLoading, setCheckoutLoading] = useState<string | null>(null);

@@ -16,6 +16,7 @@ import { Analytics } from "@vercel/analytics/next";
 import { SleepAudioProvider } from "@/lib/sleep/sleep-audio";
 import { PremiumGate } from "@/components/sleep/PremiumGate";
 import { KeepYourPlace } from "@/components/auth/KeepYourPlace";
+import { LANDING_GATE } from "@/lib/landing/gate";
 import { ProgressSync } from "@/components/sync/ProgressSync";
 import { SleepFullscreen } from "@/components/sleep/SleepFullscreen";
 import { MiniPlayer } from "@/components/sleep/MiniPlayer";
@@ -79,6 +80,7 @@ export default function RootLayout({
     >
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeBoot }} />
+        <script dangerouslySetInnerHTML={{ __html: LANDING_GATE }} />
         <GA4Head />
       </head>
       <body className="font-sans antialiased">

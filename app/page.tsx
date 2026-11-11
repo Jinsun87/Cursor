@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { SectionsHome } from "@/components/home2/SectionsHome";
+import { Landing } from "@/components/landing/Landing";
 import { pageMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = {
@@ -13,5 +14,13 @@ export const metadata: Metadata = {
 };
 
 export default function HomePage() {
-  return <SectionsHome />;
+  // First-time visitors see the landing page; everyone else the app (see the gate in Landing).
+  return (
+    <>
+      <Landing />
+      <div className="home-app">
+        <SectionsHome />
+      </div>
+    </>
+  );
 }

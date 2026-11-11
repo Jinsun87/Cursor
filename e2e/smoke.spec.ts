@@ -1,7 +1,10 @@
 import { expect, test } from "@playwright/test";
 
-test("first visit shows the welcome, and Skip goes straight to the app", async ({ page }) => {
+test("first visit shows the landing page; Start listening free opens the welcome, and Skip goes to the app", async ({ page }) => {
   await page.goto("/");
+  await expect(page.getByRole("heading", { name: /For your morning, your night/ })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "How Lampstand compares" })).toBeVisible();
+  await page.locator(".lp-hero").getByRole("button", { name: "Start listening free" }).click();
   const welcome = page.getByRole("dialog", { name: "Welcome to Lampstand" });
   await expect(welcome.getByRole("heading", { name: "How would you like to use Lampstand?" })).toBeVisible();
   await expect(welcome.getByRole("button", { name: /sleep and relax/i })).toBeVisible();
@@ -34,7 +37,7 @@ test("home shows Today, Walk, Sleep and Calm me", async ({ page }) => {
   await expect(page).toHaveURL(/\?tab=calm/);
   await page.getByRole("radio", { name: "Anxious" }).click();
   await page.getByRole("button", { name: /say a quick prayer/i }).click();
-  await expect(page.getByText(/I am anxious/i)).toBeVisible();
+  await expect(page.locator(".home-app").getByText(/I am anxious/i)).toBeVisible();
   await page.getByRole("button", { name: "Other ways through this" }).click();
   await page.getByRole("button", { name: /5 min box breathing/i }).click();
   await expect(page.getByRole("button", { name: "Begin" })).toBeVisible();

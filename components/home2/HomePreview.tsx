@@ -74,7 +74,9 @@ export function HomePreview({
     // First visit to the home screen: welcome them before anything else.
     const answers = readOnboarding();
     setName(answers.name);
-    setOnboarding(!answers.done && !forcedTab && !forcedPart);
+    // The landing page (first visit) has its own "Start listening free", which opens the welcome.
+    const landing = document.documentElement.classList.contains("ls-landing");
+    setOnboarding(!answers.done && !forcedTab && !forcedPart && !landing);
     setReady(true);
   }, [forcedPart, forcedTab, dailyVerses]);
 
