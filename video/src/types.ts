@@ -86,6 +86,23 @@ export type AdProps = {
 
 export const END_CARD = 3.5;
 
+/** A "Why …?" Bible fact reel (FactReel.tsx). Times in seconds from the start. */
+export type FactProps = {
+  /** The question bar, e.g. "Why is Psalm 119 so long?" */
+  question: string;
+  /** Under the fact, e.g. "Psalm 119 · Berean Standard Bible". */
+  reference: string;
+  audio: string;
+  /** Length of the narration. */
+  clip: number;
+  words: AdWord[];
+  images: { src: string; at: number }[];
+  /** Bottom bar, e.g. "Every chapter read aloud · free in the Lampstand app". */
+  footer: string;
+  /** End screen, e.g. "Follow for tomorrow's". */
+  endLine: string;
+};
+
 /**
  * A POV screen-recording ad: screenshots of the app shown in order, with taps, a slow "camera"
  * that keeps the action clear of Instagram's buttons, step captions, then a dim and the end card.
