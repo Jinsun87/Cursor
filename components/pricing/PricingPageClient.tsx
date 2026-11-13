@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { type Environments, initializePaddle, type Paddle } from "@paddle/paddle-js";
+import { onPaddleEvent } from "@/lib/paddle/events";
 import { PricingTier, type Tier } from "@/constants/pricing-tier";
 import { usePaddlePrices } from "@/hooks/usePaddlePrices";
 import { useApp } from "@/lib/store";
@@ -30,6 +31,7 @@ export function PricingPageClient() {
       initializePaddle({
         token,
         environment: environment as Environments,
+        eventCallback: onPaddleEvent,
       })
         .then((p) => {
           if (p) {

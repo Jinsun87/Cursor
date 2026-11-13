@@ -1,6 +1,7 @@
 "use client";
 
 import { initializePaddle, type Environments, type Paddle } from "@paddle/paddle-js";
+import { onPaddleEvent } from "./events";
 
 let paddlePromise: Promise<Paddle | undefined> | null = null;
 let paddleInstance: Paddle | null = null;
@@ -65,6 +66,7 @@ export async function getClientPaddle(): Promise<Paddle | null> {
     paddlePromise = initializePaddle({
       token,
       environment,
+      eventCallback: onPaddleEvent,
       checkout: {
         settings: {
           displayMode: "overlay",
