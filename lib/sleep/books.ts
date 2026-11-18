@@ -92,6 +92,23 @@ export const SHELF: ShelfBook[] = [
     ],
   },
   {
+    slug: "proverbs",
+    name: "Proverbs",
+    abbr: "Pr",
+    testament: "Old Testament",
+    section: "Poetry and Wisdom",
+    chapters: 31,
+    cover: ["#9a7b3a", "#45340f"],
+    premium: true,
+    stories: [
+      { title: "A Father's Instruction", from: 1, to: 9 },
+      { title: "The Proverbs of Solomon", from: 10, to: 22 },
+      { title: "Sayings of the Wise", from: 23, to: 24 },
+      { title: "Proverbs Copied by Hezekiah's Men", from: 25, to: 29 },
+      { title: "Agur and King Lemuel", from: 30, to: 31 },
+    ],
+  },
+  {
     slug: "jonah",
     name: "Jonah",
     abbr: "Jon",

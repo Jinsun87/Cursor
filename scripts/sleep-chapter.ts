@@ -19,6 +19,7 @@ import { withRetry } from "./lib/with-retry";
 import { GENESIS_PLANS, NIGHT_STYLE, type SleepChapterPlan } from "../content/sleep/genesis";
 import { EXODUS_PLANS } from "../content/sleep/exodus";
 import { PSALM_PLANS } from "../content/sleep/psalms";
+import { PROVERBS_PLANS } from "../content/sleep/proverbs";
 import { RUTH_PLANS } from "../content/sleep/ruth";
 import { JONAH_PLANS } from "../content/sleep/jonah";
 import { PHILIPPIANS_PLANS } from "../content/sleep/philippians";
@@ -42,6 +43,7 @@ const PLANS: Record<string, SleepChapterPlan[]> = {
   Genesis: GENESIS_PLANS,
   Exodus: EXODUS_PLANS,
   Psalm: PSALM_PLANS,
+  Proverbs: PROVERBS_PLANS,
   Ruth: RUTH_PLANS,
   Jonah: JONAH_PLANS,
   Philippians: PHILIPPIANS_PLANS,
